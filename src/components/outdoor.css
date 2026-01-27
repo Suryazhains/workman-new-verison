@@ -1,0 +1,140 @@
+/* =======================
+   GRID
+======================= */
+.outdoor-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .outdoor-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .outdoor-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* =======================
+   CARD
+======================= */
+.service-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 1 / 0.85;
+  background-color: #111;
+  border-radius: 4px;
+  z-index: 1;
+  transform: translateZ(0);
+}
+
+
+.image-filmstrip {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+
+.filmstrip-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  opacity: 0;
+  transform: translateY(15%) scale(1);
+
+  transition:
+    transform 0.8s cubic-bezier(0.33, 1, 0.68, 1),
+    opacity 0.6s ease;
+
+  pointer-events: none;
+}
+
+
+.filmstrip-img:nth-child(1) {
+  opacity: 1;
+  transform: translateY(0%) scale(1);
+  z-index: 2;
+}
+
+
+
+
+.service-card:hover .filmstrip-img:nth-child(1) {
+  opacity: 1;
+  transform: translateY(0%) scale(1.05);
+  transition-delay: 0s;
+  z-index: 3;
+}
+
+/* Image 2 (appears after delay, SAME position) */
+.service-card:hover .filmstrip-img:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0%) scale(1.05);
+  transition-delay: 1s;
+  z-index: 4;
+}
+
+/* Image 3 (appears after delay, SAME position) */
+.service-card:hover .filmstrip-img:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0%) scale(1.05);
+  transition-delay: 2s;
+  z-index: 5;
+}
+
+/* =======================
+   TITLE
+======================= */
+.initial-label {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 1.5rem 1rem;
+  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  color: white;
+  z-index: 10;
+  transition: opacity 0.3s ease;
+}
+
+
+
+.initial-title-text {
+  font-size: 1.4rem;
+  font-weight: 580;
+  text-align: left;
+  position: relative;
+  left: 4px;
+  bottom: -8px;
+}
+
+/* =======================
+   OVERLAY (optional)
+======================= */
+.hover-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.service-card:hover .hover-overlay {
+  opacity: 1;
+}
+
+.hover-text {
+  color: white;
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
