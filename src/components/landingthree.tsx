@@ -261,8 +261,10 @@ const LandingPageThree: React.FC = () => {
         {/* --- FOOTER SECTION --- */}
         <footer className="bg-[#163B73] w-full text-white py-12 md:py-20 px-6 lg:px-[120px]">
           <div className="max-w-[1440px] mx-auto">
+            {/* Main Wrapper: Logo Left | Grouped Info Right */}
             <div className="flex flex-col lg:flex-row justify-between gap-12 mb-16 text-left items-start">
               
+              {/* LEFT CORNER: Logo and Branding */}
               <div className="max-w-[320px] space-y-6">
                 <img
                   src={circlelogo}
@@ -281,17 +283,19 @@ const LandingPageThree: React.FC = () => {
                 </button>
               </div>
 
+              {/* RIGHT CORNER: Grouped Links and Contacts */}
               <div className="flex flex-col sm:flex-row gap-10 md:gap-14 lg:gap-16">
                 
                 {/* Links Group */}
                 <div className="pt-0">
-                  <h4 className="font-bold text-[16px] mb-6 uppercase tracking-wider opacity-80">{footer.linksTitle}</h4>
+                  {/* Updated: Font-medium, 20px, and Pure White per Figma image_dbf138.jpg */}
+                  <h4 className="font-medium text-[20px] mb-6 tracking-tight text-white">{footer.linksTitle}</h4>
                   <ul className="space-y-4 text-[15px]">
                     {header.navLinks.map((link, idx) => (
                       <li 
                         key={idx} 
                         onClick={() => handleNavigation(getRoutePath(link.name))}
-                        className="hover:text-gray-300 cursor-pointer transition whitespace-nowrap"
+                        className="hover:text-gray-300 cursor-pointer transition whitespace-nowrap opacity-90"
                       >
                         {link.name}
                       </li>
@@ -301,13 +305,14 @@ const LandingPageThree: React.FC = () => {
 
                 {/* Services Group */}
                 <div className="pt-0">
-                  <h4 className="font-bold text-[16px] mb-6 uppercase tracking-wider opacity-80">{footer.productTitle}</h4>
+                  {/* Updated: Font-medium, 20px, and Pure White per Figma image_dbf138.jpg */}
+                  <h4 className="font-medium text-[20px] mb-6 tracking-tight text-white">{footer.productTitle}</h4>
                   <ul className="space-y-4 text-[15px]">
                     {footer.products.map((product, idx) => (
                       <li 
                         key={idx} 
                         onClick={() => handleNavigation(getCategoryPath(product))}
-                        className="hover:text-gray-300 cursor-pointer transition whitespace-nowrap"
+                        className="hover:text-gray-300 cursor-pointer transition whitespace-nowrap opacity-90"
                       >
                         {product}
                       </li>
@@ -317,17 +322,18 @@ const LandingPageThree: React.FC = () => {
 
                 {/* Contacts Group */}
                 <div className="space-y-6">
-                  <h4 className="font-bold text-[16px] mb-6 uppercase tracking-wider opacity-80">{footer.contactsTitle}</h4>
+                  {/* Updated: Font-medium, 20px, and Pure White per Figma image_dbf138.jpg */}
+                  <h4 className="font-medium text-[20px] mb-6 tracking-tight text-white">{footer.contactsTitle}</h4>
                   <div className="space-y-5 text-[15px]">
                     <div className="flex items-center gap-4">
                       <img src={emailIcon} alt="Email" className="w-5 h-5 opacity-80" />
-                      <a href={`mailto:${footer.email}`} className="hover:text-gray-300 transition break-all">
+                      <a href={`mailto:${footer.email}`} className="hover:text-gray-300 transition break-all opacity-90">
                         {footer.email}
                       </a>
                     </div>
                     <div className="flex items-center gap-4">
                       <img src={phoneIcon} alt="Phone" className="w-5 h-5 opacity-80" />
-                      <a href={`tel:${footer.phone.replace(/\s/g, '')}`} className="hover:text-gray-300 transition whitespace-nowrap">
+                      <a href={`tel:${footer.phone.replace(/\s/g, '')}`} className="hover:text-gray-300 transition whitespace-nowrap opacity-90">
                         {footer.phone}
                       </a>
                     </div>
