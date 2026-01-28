@@ -6,7 +6,7 @@ import LandingPageThree from './landingthree';
 // LOCAL IMAGES
 import outdoorImg from '../assets/outdoor.png';
 import indoorImg from '../assets/indoor.png';
-import ledImg from '../assets/led.png';
+import ledImg from '../assets/Led.png';
 import popImg from '../assets/pop.png';
 import modularImg from '../assets/modular.png';
 
