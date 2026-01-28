@@ -10,8 +10,6 @@ import ledImg from '../assets/Led.png';
 import popImg from '../assets/pop.png';
 import modularImg from '../assets/modular.png';
 
-
-
 const IMAGE_MAP: Record<string, string> = {
   outdoor: outdoorImg,
   indoor: indoorImg,
@@ -19,8 +17,6 @@ const IMAGE_MAP: Record<string, string> = {
   pop: popImg,
   modular: modularImg,
 };
-
-
 
 const Services: React.FC = () => {
   const navigate = useNavigate();
@@ -83,11 +79,9 @@ const Services: React.FC = () => {
             </p>
           </div>
 
-          {/* ---------------- MOBILE VIEW ---------------- */}
+          {/* ---------------- MOBILE VIEW (Shows all services now) ---------------- */}
           <div className="flex flex-col gap-6 md:hidden">
-            {tabs
-              .filter(t => t.id === activeTab)
-              .map(service => (
+            {tabs.map(service => (
               <div
                 key={service.id}
                 className="bg-white border border-[#E5E7EB] rounded-3xl overflow-hidden shadow-sm animate-[fadeSlide_0.4s_ease-in-out]"
@@ -106,7 +100,7 @@ const Services: React.FC = () => {
                   </h3>
 
                   <p className="text-sm text-[#4B5563] leading-relaxed line-clamp-4">
-                    {/* FIX: Cast service.id to keyof typeof contentMap to solve TS7053 */}
+                    {/* Fetch description for each specific service card */}
                     {(contentMap[service.id as keyof typeof contentMap] as any)?.description[0] || ""}
                   </p>
 
@@ -133,7 +127,7 @@ const Services: React.FC = () => {
             ))}
           </div>
 
-          {/* ---------------- DESKTOP VIEW (The Table) ---------------- */}
+          {/* ---------------- DESKTOP VIEW (The Table / Tabs) ---------------- */}
           <div className="hidden md:block bg-white border border-[#E5E7EB] rounded-2xl overflow-hidden shadow-sm">
 
             {/* Tabs (Navigation Row) */}
