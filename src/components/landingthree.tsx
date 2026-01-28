@@ -3,7 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import circlelogo from '../assets/whitelogo.png';
 import emailIcon from '../assets/email.png';
 import phoneIcon from '../assets/phone.png';
-import { ChevronDown, CheckCircle } from 'lucide-react';
+// Removed ChevronDown to fix TS6133, kept CheckCircle as it is used
+import { CheckCircle } from 'lucide-react'; 
 
 import { LANDING_CONTENT } from './content';
 
@@ -12,11 +13,11 @@ const LandingPageThree: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   
-  // State for mobile accordion toggles
-  const [linksOpen, setLinksOpen] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
+  // ✅ Commented out to fix build errors; uncomment these when you build the mobile accordion
+  // const [linksOpen, setLinksOpen] = useState(false);
+  // const [servicesOpen, setServicesOpen] = useState(false);
 
-  // ✅ NEW: Loading and Success states
+  // ✅ Loading and Success states
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
@@ -204,7 +205,7 @@ const LandingPageThree: React.FC = () => {
                     ></textarea>
                   </div>
 
-                  {/* ✅ SUCCESS MESSAGE: Shows on top of button */}
+                  {/* ✅ SUCCESS MESSAGE */}
                   {submitted && (
                     <div className="flex items-center gap-2 text-green-600 font-semibold text-sm animate-bounce">
                       <CheckCircle size={18} />
@@ -260,10 +261,8 @@ const LandingPageThree: React.FC = () => {
         {/* --- FOOTER SECTION --- */}
         <footer className="bg-[#163B73] w-full text-white py-12 md:py-20 px-6 lg:px-[120px]">
           <div className="max-w-[1440px] mx-auto">
-            {/* Main Wrapper: Logo Left | Grouped Info Right */}
             <div className="flex flex-col lg:flex-row justify-between gap-12 mb-16 text-left items-start">
               
-              {/* LEFT CORNER: Logo and Branding */}
               <div className="max-w-[320px] space-y-6">
                 <img
                   src={circlelogo}
@@ -282,7 +281,6 @@ const LandingPageThree: React.FC = () => {
                 </button>
               </div>
 
-              {/* RIGHT CORNER: Grouped Links and Contacts */}
               <div className="flex flex-col sm:flex-row gap-10 md:gap-14 lg:gap-16">
                 
                 {/* Links Group */}
