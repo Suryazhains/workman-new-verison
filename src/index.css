@@ -1,27 +1,44 @@
 @import "tailwindcss";
-html, body, #root { height: 100%; }
+
+/* Full height layout */
+html,
+body,
+#root {
+  height: 100%;
+}
+
+/* 🔥 FIX FOR CUT TEXT UNDER FIXED HEADER */
+html {
+  scroll-padding-top: 140px; /* mobile */
+}
+
+@media (min-width: 768px) {
+  html {
+    scroll-padding-top: 160px; /* tablet */
+  }
+}
+
+@media (min-width: 1024px) {
+  html {
+    scroll-padding-top: 180px; /* desktop */
+  }
+}
 
 @layer base {
-  /* Base body styles */
   body {
     margin: 0;
     display: block;
     background-color: #F6F7F9;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    
-    /* Set Inter as the default font */
     font-family: 'Inter', sans-serif;
-    
     color: #111827;
   }
 
-  /* Utility class for manual overrides */
   .font-inter {
     font-family: 'Inter', sans-serif;
   }
 
-  /* Reset default browser styles for images */
   img {
     border: none;
     outline: none;
@@ -30,7 +47,6 @@ html, body, #root { height: 100%; }
     display: block;
   }
 
-  /* Reset buttons */
   button {
     border: none;
     background: none;
@@ -40,14 +56,12 @@ html, body, #root { height: 100%; }
     font-size: inherit;
   }
 
-  /* Focus styles for accessibility */
   button:focus,
   a:focus {
     outline: 2px solid #4F46E5;
     outline-offset: 2px;
   }
 
-  /* Reset links */
   a {
     text-decoration: none;
     color: inherit;

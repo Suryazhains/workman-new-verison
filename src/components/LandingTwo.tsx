@@ -1,7 +1,12 @@
 import React from 'react';
 import { LANDING_CONTENT, PORTFOLIO_IMAGES } from './content';
-import LandingThree from './LandingThree';
+import LandingThree from './landingthree';
 import quotes from '../assets/Quote.png';
+// New Testimonial Image Imports
+// import a from './a.png';
+// import b from './b.png';
+// import c from './c.png';
+// import d from './d.png';
 
 const LandingTwo: React.FC = () => {
   const { portfolio, testimonials } = LANDING_CONTENT;
@@ -42,12 +47,12 @@ const LandingTwo: React.FC = () => {
 
       {/* Portfolio Marquee */}
       <div className="relative w-full overflow-hidden">
-        {/* LEFT FADE */}
-        <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-[160px]
+        {/* LEFT FADE - Reduced width on mobile (w-[60px]) */}
+        <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-[60px] md:w-[160px]
           bg-gradient-to-r from-[#F6F7F9] via-[#F6F7F9] to-transparent" />
 
-        {/* RIGHT FADE */}
-        <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-[160px]
+        {/* RIGHT FADE - Reduced width on mobile (w-[60px]) */}
+        <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-[60px] md:w-[160px]
           bg-gradient-to-l from-[#F6F7F9] via-[#F6F7F9] to-transparent" />
 
         <div className="flex flex-col gap-[6px]">
@@ -59,7 +64,8 @@ const LandingTwo: React.FC = () => {
             {row1Images.map((src, i) => (
               <div
                 key={`row1-${i}`}
-                className="w-[280px] h-[160px] md:w-[435px] md:h-[232px] flex-shrink-0"
+                // Reduced image size on mobile (w-[200px] h-[120px])
+                className="w-[200px] h-[120px] md:w-[435px] md:h-[232px] flex-shrink-0"
               >
                 <img
                   src={src}
@@ -79,7 +85,8 @@ const LandingTwo: React.FC = () => {
             {row2Images.map((src, i) => (
               <div
                 key={`row2-${i}`}
-                className="w-[280px] h-[160px] md:w-[435px] md:h-[232px] flex-shrink-0"
+                // Reduced image size on mobile (w-[200px] h-[120px])
+                className="w-[200px] h-[120px] md:w-[435px] md:h-[232px] flex-shrink-0"
               >
                 <img
                   src={src}
@@ -109,106 +116,98 @@ const LandingTwo: React.FC = () => {
 
           {/* MAIN GRID */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-[6px]">
-            
+
             {/* LEFT BIG CARD */}
-            <div className="bg-[#F9FAFB] p-8 md:p-10 rounded-[16px] border border-gray-100 flex flex-col justify-between">
+            <div className="bg-[#F9FAFB] p-8 md:p-10 border border-gray-100 flex flex-col justify-between">
               <div>
-                <img 
-                  src={quotes} 
-                  alt="quotes" 
-                  className="w-[20px] h-[20px] block mb-2 object-contain" 
+                <img
+                  src={quotes}
+                  alt="quotes"
+                  className="w-[20px] h-[20px] block mb-2 object-contain"
                 />
                 <p className="text-[#535353] text-[16px] md:text-[18px] leading-relaxed">
                   {testimonials.large.quote}
                 </p>
               </div>
 
-              <div className="flex items-center gap-4 mt-10">
-                <div className="w-12 h-12 bg-gray-300 rounded-full"></div>
-                <div>
-                  <p className="font-semibold text-[#000000]">
-                    {testimonials.large.name}
-                  </p>
-                  <p className="text-gray-400 text-sm">
-                    {testimonials.large.company}
-                  </p>
-                </div>
+              <div className="mt-10">
+                <p className="font-semibold text-[#000000]">
+                  {testimonials.large.name}
+                </p>
+                <p className="text-gray-400 text-sm">
+                  {testimonials.large.company}
+                </p>
               </div>
             </div>
 
             {/* RIGHT SIDE */}
             <div className="flex flex-col gap-[6px]">
-              
+
               {/* RIGHT TOP BIG */}
-              <div className="bg-[#F9FAFB] p-8 md:p-10 rounded-[16px] border border-gray-100 flex flex-col justify-between">
+              <div className="bg-[#F9FAFB] p-8 md:p-10 border border-gray-100 flex flex-col justify-between">
                 <div>
-                  <img 
-                    src={quotes} 
-                    alt="quotes" 
-                    className="w-[20px] h-[20px] block mb-2 object-contain" 
+                  <img
+                    src={quotes}
+                    alt="quotes"
+                    className="w-[20px] h-[20px] block mb-2 object-contain"
                   />
                   <p className="text-[#535353] text-[16px] md:text-[18px] leading-relaxed">
                     {testimonials.small[0].quote}
                   </p>
                 </div>
 
-                <div className="flex items-center gap-4 mt-10">
-                  <div className="w-12 h-12 bg-gray-300 rounded-full"></div>
-                  <div>
-                    <p className="font-semibold text-[#000000]">
-                      {testimonials.small[0].name}
-                    </p>
-                    <p className="text-gray-400 text-sm">
-                      {testimonials.small[0].company}
-                    </p>
-                  </div>
+                <div className="mt-10">
+                  <p className="font-semibold text-[#000000]">
+                    {testimonials.small[0].name}
+                  </p>
+                  <p className="text-gray-400 text-sm">
+                    {testimonials.small[0].company}
+                  </p>
                 </div>
               </div>
 
               {/* RIGHT BOTTOM SMALL CARDS */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-[6px]">
-                
-                <div className="bg-[#F9FAFB] p-6 md:p-8 rounded-[16px] border border-gray-100 flex flex-col justify-between">
-                  <img 
-                    src={quotes} 
-                    alt="quotes" 
-                    className="w-[20px] h-[20px] block mb-2 object-contain" 
-                  />
-                  <p className="text-[#535353] text-[15px] leading-relaxed mb-6">
-                    {testimonials.small[1].quote}
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
-                    <div>
-                      <p className="font-semibold text-[#000000] text-sm">
-                        {testimonials.small[1].name}
-                      </p>
-                      <p className="text-gray-400 text-xs">
-                        {testimonials.small[1].company}
-                      </p>
-                    </div>
+
+                <div className="bg-[#F9FAFB] p-6 md:p-8 border border-gray-100 flex flex-col justify-between">
+                  <div>
+                    <img
+                      src={quotes}
+                      alt="quotes"
+                      className="w-[20px] h-[20px] block mb-2 object-contain"
+                    />
+                    <p className="text-[#535353] text-[15px] leading-relaxed mb-6">
+                      {testimonials.small[1].quote}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-[#000000] text-sm">
+                      {testimonials.small[1].name}
+                    </p>
+                    <p className="text-gray-400 text-xs">
+                      {testimonials.small[1].company}
+                    </p>
                   </div>
                 </div>
 
-                <div className="bg-[#F9FAFB] p-6 md:p-8 rounded-[16px] border border-gray-100 flex flex-col justify-between">
-                  <img 
-                    src={quotes} 
-                    alt="quotes" 
-                    className="w-[20px] h-[20px] block mb-2 object-contain" 
-                  />
-                  <p className="text-[#535353] text-[15px] leading-relaxed mb-6">
-                    {testimonials.small[2].quote}
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
-                    <div>
-                      <p className="font-semibold text-[#000000] text-sm">
-                        {testimonials.small[2].name}
-                      </p>
-                      <p className="text-gray-400 text-xs">
-                        {testimonials.small[2].company}
-                      </p>
-                    </div>
+                <div className="bg-[#F9FAFB] p-6 md:p-8 border border-gray-100 flex flex-col justify-between">
+                  <div>
+                    <img
+                      src={quotes}
+                      alt="quotes"
+                      className="w-[20px] h-[20px] block mb-2 object-contain"
+                    />
+                    <p className="text-[#535353] text-[15px] leading-relaxed mb-6">
+                      {testimonials.small[2].quote}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-[#000000] text-sm">
+                      {testimonials.small[2].name}
+                    </p>
+                    <p className="text-gray-400 text-xs">
+                      {testimonials.small[2].company}
+                    </p>
                   </div>
                 </div>
 
@@ -219,7 +218,7 @@ const LandingTwo: React.FC = () => {
         </div>
       </section>
 
-      {/* Gap before next section - Margin top kept, but padding bottom of parent set to 0 */}
+      {/* Gap before next section */}
       <div className="mt-16 md:mt-24 mb-0 pb-0">
         <LandingThree />
       </div>

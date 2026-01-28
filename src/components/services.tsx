@@ -3,24 +3,24 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { LANDING_CONTENT } from './content';
 import LandingPageThree from './landingthree';
 
-// LOCAL IMAGES - Updated imports to match unique category images
+// LOCAL IMAGES
 import outdoorImg from '../assets/outdoor.png';
- import indoorImg from '../assets/indoor.png';
+import indoorImg from '../assets/indoor.png';
 import ledImg from '../assets/led.png';
-// import popImg from '../assets/pop.png';
+import popImg from '../assets/pop.png';
 import modularImg from '../assets/modular.png';
 
-/* ---------------- CONSTANT MAPS ---------------- */
+
 
 const IMAGE_MAP: Record<string, string> = {
   outdoor: outdoorImg,
-   indoor: indoorImg,
-   led: ledImg,
-  // pop: popImg,
- modular: modularImg,
+  indoor: indoorImg,
+  led: ledImg,
+  pop: popImg,
+  modular: modularImg,
 };
 
-/* ---------------- COMPONENT ---------------- */
+
 
 const Services: React.FC = () => {
   const navigate = useNavigate();
@@ -31,11 +31,11 @@ const Services: React.FC = () => {
 
   // If the data is missing, we show a console error and return null to prevent crash
   if (!servicesData) {
-    console.error("Critical Error: 'servicesSection' is missing in LANDING_CONTENT. Please check your content.ts file.");
+    console.error("Critical Error: 'servicesSection' is missing in LANDING_CONTENT.");
     return null;
   }
 
-  // Safely destructure now that we know servicesData exists
+  // Safely destructure
   const { heading, description, tabs, contentMap } = servicesData;
 
   // Initialize state with the first tab ID
@@ -43,19 +43,13 @@ const Services: React.FC = () => {
 
   /**
    * SYNC TABS WITH URL HASH
-   * This handles the "LED" and "Modular" switching from the header.
-   * If the URL is /services#led, it sets the active tab to "led".
    */
   useEffect(() => {
     const currentHash = location.hash.replace('#', '').toLowerCase();
-    
-    // Find if the hash matches one of our tab IDs
     const matchedTab = tabs.find(t => t.id === currentHash);
     
     if (matchedTab) {
       setActiveTab(matchedTab.id);
-      
-      // Smooth scroll to the services section so the user sees the table
       const element = document.getElementById('services');
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
@@ -64,21 +58,22 @@ const Services: React.FC = () => {
   }, [location.hash, tabs]);
 
   const activeIndex = tabs.findIndex(tab => tab.id === activeTab);
-  const activeContent = contentMap[activeTab];
+  
+  // FIX: Cast activeTab to keyof typeof contentMap to solve TS7053
+  const activeContent = contentMap[activeTab as keyof typeof contentMap];
 
-  // If content for the active tab is missing, provide a fallback to avoid further errors
+  // Fallback if content is missing
   if (!activeContent) return null;
 
   return (
     <>
       <section
         id="services"
-        // REDUCED TOP PADDING: Changed from py-12 md:py-20 to pt-8 pb-12 md:pt-14 md:pb-20
         className="w-full pt-8 pb-12 md:pt-14 md:pb-20 bg-[#F6F7F9] font-inter"
       >
         <div className="max-w-[1280px] mx-auto px-5 sm:px-10 lg:px-20">
 
-          {/* Header - Reduced bottom margin to pull content up */}
+          {/* Header */}
           <div className="mb-6 md:mb-10 text-center md:text-left">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#111827] mb-4 tracking-tight transition-all duration-300">
               {activeContent.heading || heading}
@@ -111,7 +106,8 @@ const Services: React.FC = () => {
                   </h3>
 
                   <p className="text-sm text-[#4B5563] leading-relaxed line-clamp-4">
-                    {contentMap[service.id]?.description[0] || ""}
+                    {/* FIX: Cast service.id to keyof typeof contentMap to solve TS7053 */}
+                    {(contentMap[service.id as keyof typeof contentMap] as any)?.description[0] || ""}
                   </p>
 
                   <button
@@ -219,7 +215,6 @@ const Services: React.FC = () => {
 
       <LandingPageThree />
 
-      {/* Animations and Focus Fixes */}
       <style>
         {`
           @keyframes fadeSlide {

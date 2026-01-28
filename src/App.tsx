@@ -1,10 +1,13 @@
-import React from 'react';
+
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import LandingPage from './components/Landingpage';
 import Services from './components/services';
 import Infrastructure from './components/infrastructure';
 import OutdoorServices from './components/outdoor'; 
+import Team from './components/Team';
+
+
 
 function App() {
   return (
@@ -23,6 +26,8 @@ function App() {
           <Route path="/modular" element={<OutdoorServices />} />
           
           <Route path="/infrastructure" element={<Infrastructure />} />
+          <Route path="/team" element={<Team />} />
+          
         </Routes>
       </main>
     </div>

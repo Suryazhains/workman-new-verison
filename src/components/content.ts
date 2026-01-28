@@ -288,12 +288,12 @@ export const LANDING_CONTENT = {
       title: "Contact Link",
       phone: "+91 98403 27575",
       email: "workmansign@hotmail.com",
-      quote: "Our range of services is deSigned to cover all your branding and Signage needs, no matter the scale."
+      quote: "Our range of services is designed to cover all your branding and signage needs, no matter the scale."
     }
   },
 
   footer: {
-    description: "Our range of services is deSigned to cover all your branding and Signage needs, no matter the scale. Our range of services",
+    description: "Our range of services is designed to cover all your branding and signage needs, no matter the scale. Our range of services",
     linksTitle: "Links",
     productTitle: "Product",
     contactsTitle: "Contacts",
@@ -352,7 +352,7 @@ export const LANDING_CONTENT = {
 
   infrastructurePage: {
     heading: "Our Equipments",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum.",
+    description: "Our facility is equipped with advanced industrial machines for printing, lamination, laser cutting, engraving, and signage fabrication. With state-of-the-art UV printers, CO₂ laser systems, laminators, vinyl cutters, and channel letter bending machines.",
     equipments: [
       {
         id: 1,
