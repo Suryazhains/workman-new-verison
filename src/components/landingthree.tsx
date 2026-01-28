@@ -16,84 +16,70 @@ const LandingPageThree: React.FC = () => {
   const [linksOpen, setLinksOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
 
+  // ✅ NEW: Loading state for the submit button
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   /**
    * ✅ AUTO-SCROLL ON MOUNT / ROUTE CHANGE
-   * Handles scrolling if the user arrives via a direct link (e.g., site.com/#contact)
-   * A 300ms delay ensures the layout has stabilized before the browser calculates position.
    */
-useEffect(() => {
-  if (!location.hash) return;
+  useEffect(() => {
+    if (!location.hash) return;
 
-  const id = location.hash.replace('#', '');
+    const id = location.hash.replace('#', '');
 
-  const scroll = () => {
-    const el = document.getElementById(id);
-    if (!el) return;
+    const scroll = () => {
+      const el = document.getElementById(id);
+      if (!el) return;
 
-    const headerOffset = 160; // FIXED HEADER HEIGHT
-    const elementPosition = el.getBoundingClientRect().top + window.scrollY;
-    const offsetPosition = elementPosition - headerOffset;
+      const headerOffset = 160; 
+      const elementPosition = el.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - headerOffset;
 
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: 'smooth',
-    });
-  };
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      });
+    };
 
-  const timer = setTimeout(scroll, 300);
-  return () => clearTimeout(timer);
-}, [location]);
-
+    const timer = setTimeout(scroll, 300);
+    return () => clearTimeout(timer);
+  }, [location]);
 
   /**
    * ✅ UNIFIED NAVIGATION HANDLER
-   * Consistent with the Header.tsx logic to prevent "cutting" of section titles.
    */
- const handleNavigation = (path: string | null) => {
-  if (!path) return;
+  const handleNavigation = (path: string | null) => {
+    if (!path) return;
 
-  const [route, hash] = path.split('#');
-  const HEADER_OFFSET = 160; // adjust if needed
+    const [route, hash] = path.split('#');
+    const HEADER_OFFSET = 160;
 
-  const scrollToHash = (id: string) => {
-    const element = document.getElementById(id);
-    if (!element) return;
+    const scrollToHash = (id: string) => {
+      const element = document.getElementById(id);
+      if (!element) return;
 
-    const elementPosition =
-      element.getBoundingClientRect().top + window.scrollY;
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - HEADER_OFFSET;
 
-    const offsetPosition = elementPosition - HEADER_OFFSET;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      });
+    };
 
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: 'smooth',
-    });
+    if (location.pathname === route && hash) {
+      scrollToHash(hash);
+    } else if (hash) {
+      navigate(route);
+      setTimeout(() => {
+        scrollToHash(hash);
+      }, 300);
+    } else {
+      navigate(route);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
-  // Case 1: Same page, scroll directly
-  if (location.pathname === route && hash) {
-    scrollToHash(hash);
-  }
-
-  // Case 2: Different page, navigate first then scroll
-  else if (hash) {
-    navigate(route);
-
-    // wait for DOM to render
-    setTimeout(() => {
-      scrollToHash(hash);
-    }, 300);
-  }
-
-  // Case 3: Normal navigation
-  else {
-    navigate(route);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-};
-
-
-  // Logic to map Footer Link names to Routes
   const getRoutePath = (name: string) => {
     switch (name) {
       case 'Home': return '/'; 
@@ -115,9 +101,17 @@ useEffect(() => {
     return '/outdoor';
   };
 
+  /**
+   * ✅ UPDATED SUBMIT HANDLER
+   * Prevents double-submission and handles the "opaque" Google Script response.
+   */
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    const formElement = e.currentTarget;
+    const formData = new FormData(formElement);
 
     try {
       await fetch(
@@ -129,10 +123,14 @@ useEffect(() => {
         }
       );
 
+      // With no-cors, if it doesn't throw a network error, we assume success.
       alert("Message sent successfully!");
-      e.currentTarget.reset();
-    } catch {
-        alert("There was an error sending your message.");
+      formElement.reset();
+    } catch (error) {
+      console.error("Submission error:", error);
+      alert("There was a network error. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -141,14 +139,12 @@ useEffect(() => {
       <div className="w-full font-inter overflow-x-hidden min-h-screen flex flex-col m-0 p-0 bg-white">
         
         {/* --- CONTACT SECTION --- */}
-        {/* FIX: scroll-mt-40 (160px) provides space for the 110px header + 50px gap */}
-     <section
-  id="contact"
-  className="bg-[#E6F0FF] py-12 md:py-20 px-6 lg:px-[120px]
-             font-inter flex-grow transition-all
-             scroll-mt-[140px] md:scroll-mt-[160px] lg:scroll-mt-[180px]"
->
-
+        <section
+          id="contact"
+          className="bg-[#E6F0FF] py-12 md:py-20 px-6 lg:px-[120px]
+                     font-inter flex-grow transition-all
+                     scroll-mt-[140px] md:scroll-mt-[160px] lg:scroll-mt-[180px]"
+        >
           <div className="max-w-[1440px] mx-auto">
             <div className="mb-10 md:mb-14 text-left">
               <h1 className="text-[32px] md:text-[40px] lg:text-[48px] font-bold text-[#163B73] mb-4 leading-tight">
@@ -205,11 +201,14 @@ useEffect(() => {
                     ></textarea>
                   </div>
 
+                  {/* ✅ UPDATED BUTTON: Disables when loading */}
                   <button
                     type="submit"
-                    className="w-full bg-[#163B73] text-white py-4 rounded-lg font-bold text-[18px] hover:bg-[#0f2a52] transition-colors mt-2"
+                    disabled={isSubmitting}
+                    className={`w-full text-white py-4 rounded-lg font-bold text-[18px] transition-colors mt-2 
+                      ${isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#163B73] hover:bg-[#0f2a52]'}`}
                   >
-                    {contactSection.form.buttonText}
+                    {isSubmitting ? 'Sending...' : contactSection.form.buttonText}
                   </button>
                 </form>
               </div>
