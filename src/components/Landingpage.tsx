@@ -11,10 +11,10 @@ const LandingPage: React.FC = () => {
     <main className="w-full bg-[#F6F7F9] overflow-x-hidden border-none outline-none selection:bg-blue-100 font-inter">
       
       {/* --- HERO SECTION --- */}
-      {/* FIX: Added pt-24 for mobile to push text below navbar, and scroll-mt-24 for anchor links */}
+      {/* ADDED: mb-12 md:mb-24 to create the requested gap between sections */}
       <section 
         id="home" 
-        className="relative w-full flex flex-col lg:flex-row items-stretch justify-between min-h-[600px] lg:h-[90vh] pt-24 lg:pt-0 scroll-mt-24"
+        className="relative w-full flex flex-col lg:flex-row items-stretch justify-between min-h-[600px] lg:h-[90vh] pt-24 lg:pt-0 scroll-mt-24 mb-12 md:mb-24"
       >
         
         {/* Left Content Container */}
@@ -56,7 +56,6 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* --- ABOUT SECTION --- */}
-      {/* scroll-mt-24 ensures the header doesn't cover the "About Us" label */}
       <section 
         id="about" 
         className="relative w-full bg-[#F3F8FF] py-16 md:py-24 px-6 md:px-12 lg:px-[50px] overflow-hidden scroll-mt-24"

@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import circlelogo from '../assets/whitelogo.png';
 import emailIcon from '../assets/email.png';
 import phoneIcon from '../assets/phone.png';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, CheckCircle } from 'lucide-react';
 
 import { LANDING_CONTENT } from './content';
 
@@ -16,8 +16,9 @@ const LandingPageThree: React.FC = () => {
   const [linksOpen, setLinksOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
 
-  // ✅ NEW: Loading state for the submit button
+  // ✅ NEW: Loading and Success states
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   /**
    * ✅ AUTO-SCROLL ON MOUNT / ROUTE CHANGE
@@ -103,13 +104,13 @@ const LandingPageThree: React.FC = () => {
 
   /**
    * ✅ UPDATED SUBMIT HANDLER
-   * Prevents double-submission and handles the "opaque" Google Script response.
    */
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isSubmitting) return;
 
     setIsSubmitting(true);
+    setSubmitted(false);
     const formElement = e.currentTarget;
     const formData = new FormData(formElement);
 
@@ -123,9 +124,11 @@ const LandingPageThree: React.FC = () => {
         }
       );
 
-      // With no-cors, if it doesn't throw a network error, we assume success.
-      alert("Message sent successfully!");
+      setSubmitted(true);
       formElement.reset();
+      
+      // Clear message after 5 seconds
+      setTimeout(() => setSubmitted(false), 5000);
     } catch (error) {
       console.error("Submission error:", error);
       alert("There was a network error. Please try again.");
@@ -201,7 +204,14 @@ const LandingPageThree: React.FC = () => {
                     ></textarea>
                   </div>
 
-                  {/* ✅ UPDATED BUTTON: Disables when loading */}
+                  {/* ✅ SUCCESS MESSAGE: Shows on top of button */}
+                  {submitted && (
+                    <div className="flex items-center gap-2 text-green-600 font-semibold text-sm animate-bounce">
+                      <CheckCircle size={18} />
+                      <span>Message submitted successfully!</span>
+                    </div>
+                  )}
+
                   <button
                     type="submit"
                     disabled={isSubmitting}
@@ -250,8 +260,10 @@ const LandingPageThree: React.FC = () => {
         {/* --- FOOTER SECTION --- */}
         <footer className="bg-[#163B73] w-full text-white py-12 md:py-20 px-6 lg:px-[120px]">
           <div className="max-w-[1440px] mx-auto">
+            {/* Main Wrapper: Logo Left | Grouped Info Right */}
             <div className="flex flex-col lg:flex-row justify-between gap-12 mb-16 text-left items-start">
               
+              {/* LEFT CORNER: Logo and Branding */}
               <div className="max-w-[320px] space-y-6">
                 <img
                   src={circlelogo}
@@ -259,33 +271,29 @@ const LandingPageThree: React.FC = () => {
                   className="w-24 h-auto cursor-pointer"
                   onClick={() => handleNavigation('/')}
                 />
-                <p className="text-[14px] leading-relaxed font-normal">
+                <p className="text-[14px] leading-relaxed font-normal opacity-90">
                   {footer.description}
                 </p>
                 <button 
                   onClick={() => handleNavigation('/#contact')}
                   className="bg-white text-[#163B73] px-8 py-3 rounded-[6px] font-bold text-[15px] hover:bg-gray-100 transition"
                 >
-                  {header.contactBtn}
+                  Contact now
                 </button>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-20 lg:gap-24">
-                {/* Links Accordion */}
-                <div className="border-t border-white/10 lg:border-none pt-6 lg:pt-0">
-                  <div 
-                    className="flex items-center justify-between cursor-pointer lg:cursor-default"
-                    onClick={() => setLinksOpen(!linksOpen)}
-                  >
-                    <h4 className="font-medium text-[18px] mb-4 lg:mb-8">{footer.linksTitle}</h4>
-                    <ChevronDown size={20} className={`lg:hidden transition-transform ${linksOpen ? 'rotate-180' : ''}`} />
-                  </div>
-                  <ul className={`space-y-4 text-[15px] transition-all overflow-hidden ${linksOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 lg:max-h-none lg:opacity-100'}`}>
+              {/* RIGHT CORNER: Grouped Links and Contacts */}
+              <div className="flex flex-col sm:flex-row gap-10 md:gap-14 lg:gap-16">
+                
+                {/* Links Group */}
+                <div className="pt-0">
+                  <h4 className="font-bold text-[16px] mb-6 uppercase tracking-wider opacity-80">{footer.linksTitle}</h4>
+                  <ul className="space-y-4 text-[15px]">
                     {header.navLinks.map((link, idx) => (
                       <li 
                         key={idx} 
                         onClick={() => handleNavigation(getRoutePath(link.name))}
-                        className="hover:text-gray-300 cursor-pointer transition"
+                        className="hover:text-gray-300 cursor-pointer transition whitespace-nowrap"
                       >
                         {link.name}
                       </li>
@@ -293,21 +301,15 @@ const LandingPageThree: React.FC = () => {
                   </ul>
                 </div>
 
-                {/* Services Accordion */}
-                <div className="border-t border-white/10 lg:border-none pt-6 lg:pt-0">
-                  <div 
-                    className="flex items-center justify-between cursor-pointer lg:cursor-default"
-                    onClick={() => setServicesOpen(!servicesOpen)}
-                  >
-                    <h4 className="font-medium text-[18px] mb-4 lg:mb-8">{footer.productTitle}</h4>
-                    <ChevronDown size={20} className={`lg:hidden transition-transform ${servicesOpen ? 'rotate-180' : ''}`} />
-                  </div>
-                  <ul className={`space-y-4 text-[15px] transition-all overflow-hidden ${servicesOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 lg:max-h-none lg:opacity-100'}`}>
+                {/* Services Group */}
+                <div className="pt-0">
+                  <h4 className="font-bold text-[16px] mb-6 uppercase tracking-wider opacity-80">{footer.productTitle}</h4>
+                  <ul className="space-y-4 text-[15px]">
                     {footer.products.map((product, idx) => (
                       <li 
                         key={idx} 
                         onClick={() => handleNavigation(getCategoryPath(product))}
-                        className="hover:text-gray-300 cursor-pointer transition"
+                        className="hover:text-gray-300 cursor-pointer transition whitespace-nowrap"
                       >
                         {product}
                       </li>
@@ -315,9 +317,9 @@ const LandingPageThree: React.FC = () => {
                   </ul>
                 </div>
 
-                {/* Contacts Info */}
-                <div className="border-t border-white/10 lg:border-none pt-6 lg:pt-0 space-y-6">
-                  <h4 className="font-medium text-[18px] mb-4 lg:mb-8">{footer.contactsTitle}</h4>
+                {/* Contacts Group */}
+                <div className="space-y-6">
+                  <h4 className="font-bold text-[16px] mb-6 uppercase tracking-wider opacity-80">{footer.contactsTitle}</h4>
                   <div className="space-y-5 text-[15px]">
                     <div className="flex items-center gap-4">
                       <img src={emailIcon} alt="Email" className="w-5 h-5 opacity-80" />
@@ -327,7 +329,7 @@ const LandingPageThree: React.FC = () => {
                     </div>
                     <div className="flex items-center gap-4">
                       <img src={phoneIcon} alt="Phone" className="w-5 h-5 opacity-80" />
-                      <a href={`tel:${footer.phone.replace(/\s/g, '')}`} className="hover:text-gray-300 transition">
+                      <a href={`tel:${footer.phone.replace(/\s/g, '')}`} className="hover:text-gray-300 transition whitespace-nowrap">
                         {footer.phone}
                       </a>
                     </div>

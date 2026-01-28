@@ -9,18 +9,18 @@ body,
 
 /* 🔥 FIX FOR CUT TEXT UNDER FIXED HEADER */
 html {
-  scroll-padding-top: 140px; /* mobile */
+  scroll-padding-top: 40px; /* mobile */
 }
 
 @media (min-width: 768px) {
   html {
-    scroll-padding-top: 160px; /* tablet */
+    scroll-padding-top: 60px; /* tablet */
   }
 }
 
 @media (min-width: 1024px) {
   html {
-    scroll-padding-top: 180px; /* desktop */
+    scroll-padding-top: 65px; /* desktop */
   }
 }
 
