@@ -93,6 +93,10 @@ import clip3 from "../assets/outdoor 51.png";
 import facade1 from "../assets/outdoor 52.png";
 import facade2 from "../assets/outdoor 53.png";
 import facade3 from "../assets/outdoor 54.png";
+import p1 from "../assets/p1.jpg";
+import p2 from "../assets/p2.jpg";
+import p3 from "../assets/p3.jpg";
+
 
 export const PORTFOLIO_IMAGES = [
   portfolio1,
@@ -134,6 +138,9 @@ export const LANDING_CONTENT = {
       ],
       'LED VIDEO WALL': [
         'LED Video Wall'
+      ],
+      POP: [
+        'POP '
       ],
       'MODULAR SIGNAGE': [
         'Standees',
@@ -303,7 +310,7 @@ export const LANDING_CONTENT = {
     copyright: `Copyright 2026 The Work Man. All Rights Reserved`
   },
 
-  categoryData: {
+categoryData: {
     OUTDOOR: {
       heading: "Outdoor Services",
       description: "Elevate your brand presence with our premium outdoor advertising and signage solutions designed for high-impact visibility."
@@ -316,6 +323,10 @@ export const LANDING_CONTENT = {
       heading: "LED Video Wall Services",
       description: "Advanced digital display solutions for dynamic visual communication and high-definition brand storytelling."
     },
+    'POP': {
+      heading: "POP Services",
+      description: "Strategic Point of Purchase (POP) branding designed to attract attention and influence buying decisions at the point of sale."
+    },
     'MODULAR SIGNAGE': {
       heading: "Modular Signage Services",
       description: "Versatile, reusable, and cost-effective display systems designed for flexible retail and exhibition environments."
@@ -323,9 +334,9 @@ export const LANDING_CONTENT = {
   },
 
   outdoorPage: {
-    heading: "Outdoor Services",
+    heading: "Signage & Branding Solutions", // Updated to be more generic since it hosts all
     description:
-      "Elevate your brand presence with our premium outdoor advertising and signage solutions designed for high-impact visibility.",
+      "Comprehensive branding and signage solutions designed for high-impact visibility across all environments.",
     backButtonText: "Categories",
 
     services: [
@@ -346,7 +357,9 @@ export const LANDING_CONTENT = {
       { id: 15, title: "Scrollers", images: [scroller1, scroller2, scroller3] },
       { id: 16, title: "Catalogue Stands", images: [catalogue1, catalogue2, catalogue3] },
       { id: 17, title: "Category Signage", images: [category1, category2, category3] },
-      { id: 18, title: "Clip On Frames", images: [clip1, clip2, clip3] }
+      { id: 18, title: "Clip On Frames", images: [clip1, clip2, clip3] },
+      // Added POP with ID 19
+      { id: 19, title: "POP", images: [p1, p2, p3] } 
     ],
   },
 

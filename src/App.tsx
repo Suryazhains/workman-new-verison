@@ -24,7 +24,7 @@ function App() {
           <Route path="/indoor" element={<OutdoorServices />} />
           <Route path="/led" element={<OutdoorServices />} />
           <Route path="/modular" element={<OutdoorServices />} />
-          
+          <Route path="/pop" element={<OutdoorServices />} />
           <Route path="/infrastructure" element={<Infrastructure />} />
           <Route path="/team" element={<Team />} />
           

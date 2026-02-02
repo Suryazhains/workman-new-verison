@@ -11,13 +11,14 @@ const OutdoorServices: React.FC = () => {
 
   /**
    * 1. IDENTIFY CATEGORY & FILTER LOGIC
-   * Checks both pathname and hash to ensure Indoor, LED, and Modular load correctly.
+   * Checks both pathname and hash to ensure Indoor, LED, POP, and Modular load correctly.
    */
   const getCategoryKey = () => {
     const currentPath = (pathname + hash).toLowerCase();
     
     if (currentPath.includes('indoor')) return 'INDOOR';
     if (currentPath.includes('led')) return 'LED VIDEO WALL';
+    if (currentPath.includes('pop')) return 'POP'; // Correctly detects POP route
     if (currentPath.includes('modular')) return 'MODULAR SIGNAGE';
     return 'OUTDOOR';
   };
@@ -30,7 +31,10 @@ const OutdoorServices: React.FC = () => {
   // Get the list of titles allowed for this specific category from the Header data
   const allowedTitles = header.servicesData[currentCategoryKey] || [];
 
-  // Filter the master services list to only show items belonging to the current category
+  /**
+   * Filter the master services list.
+   * We use .trim() on both sides to prevent mismatches caused by accidental trailing spaces.
+   */
   const filteredServices = outdoorPage.services.filter(service => 
     allowedTitles.some(title => title.toLowerCase().trim() === service.title.toLowerCase().trim())
   );
@@ -56,7 +60,6 @@ const OutdoorServices: React.FC = () => {
       
       const matchedService = filteredServices.find(s => {
         const fullSlug = formatId(s.title);
-        // Match exact slug or check if slug is part of the hash (for broader matching)
         return fullSlug === targetHash || targetHash.includes(fullSlug);
       });
 
@@ -73,7 +76,7 @@ const OutdoorServices: React.FC = () => {
       }
     } else {
       setActiveId("");
-      window.scrollTo(0, 0); // Ensures page starts at top when switching categories
+      window.scrollTo(0, 0); 
     }
   }, [hash, pathname, filteredServices]);
 
@@ -115,7 +118,7 @@ const OutdoorServices: React.FC = () => {
       <section className="w-full bg-[#F6F7F9] pt-16 pb-24">
         <div className="max-w-[1280px] mx-auto px-6 lg:px-[80px]">
 
-          {/* DYNAMIC HEADER - Updated to pull from categoryData */}
+          {/* DYNAMIC HEADER */}
           <div className="mb-12">
             <h1 className="text-[42px] md:text-[56px] font-bold text-black mb-4 capitalize tracking-tight">
               {pageHeader.heading}
@@ -139,41 +142,46 @@ const OutdoorServices: React.FC = () => {
 
           {/* FILTERED SERVICES GRID */}
           <div className="outdoor-grid">
-            {filteredServices.map((service) => {
-              const currentSlug = formatId(service.title);
-              const isActive = activeId === currentSlug;
+            {filteredServices.length > 0 ? (
+              filteredServices.map((service) => {
+                const currentSlug = formatId(service.title);
+                const isActive = activeId === currentSlug;
 
-              return (
-                <div 
-                  key={service.id} 
-                  id={currentSlug} 
-                  className={`service-card scroll-mt-32 ${isActive ? 'product-highlight' : ''}`}
-                >
-                  {/* Image Filmstrip */}
-                  {service.images && service.images.length > 0 && (
-                    <div className="image-filmstrip">
-                      {service.images.slice(0, 3).map((img, idx) => (
-                        <img
-                          key={`${service.id}-img-${idx}`}
-                          src={img}
-                          alt={service.title}
-                          className="filmstrip-img"
-                          loading="lazy"
-                        />
-                      ))}
+                return (
+                  <div 
+                    key={service.id} 
+                    id={currentSlug} 
+                    className={`service-card scroll-mt-32 ${isActive ? 'product-highlight' : ''}`}
+                  >
+                    {/* Image Filmstrip */}
+                    {service.images && service.images.length > 0 && (
+                      <div className="image-filmstrip">
+                        {service.images.slice(0, 3).map((img, idx) => (
+                          <img
+                            key={`${service.id}-img-${idx}`}
+                            src={img}
+                            alt={service.title}
+                            className="filmstrip-img"
+                            loading="lazy"
+                          />
+                        ))}
+                      </div>
+                    )}
+
+                    <div className="initial-label">
+                      <h3 className="initial-title-text">
+                        {service.title}
+                      </h3>
                     </div>
-                  )}
-
-                  <div className="initial-label">
-                    <h3 className="initial-title-text">
-                      {service.title}
-                    </h3>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            ) : (
+              <div className="col-span-full py-20 text-center text-gray-400">
+                No services found for this category. Please check naming consistency in content.ts.
+              </div>
+            )}
           </div>
-
         </div>
       </section>
 

@@ -99,7 +99,7 @@ const LandingPageThree: React.FC = () => {
     if (cat.includes('INDOOR')) return '/indoor';
     if (cat.includes('LED')) return '/led';
     if (cat.includes('MODULAR')) return '/modular';
-    if (cat.includes('POP')) return '/services'; 
+    if (cat.includes('POP')) return '/pop'; 
     return '/outdoor';
   };
 

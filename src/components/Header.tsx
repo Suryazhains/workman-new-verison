@@ -1,13 +1,14 @@
-import React, { useState} from 'react';
-
+import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-
 import logoImg from '../assets/workman LOGO.png';
 import { LANDING_CONTENT } from './content';
 
 const Header: React.FC = () => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // State for mobile sub-menu toggles
+  const [mobileSubMenu, setMobileSubMenu] = useState<string | null>(null);
+
   const { navLinks, servicesData, infrastructureData, contactBtn } = LANDING_CONTENT.header;
   
   const navigate = useNavigate();
@@ -23,21 +24,18 @@ const Header: React.FC = () => {
 
     setIsMenuOpen(false);
     setActiveDropdown(null);
+    setMobileSubMenu(null);
 
     const [route, hash] = path.split('#');
 
-    // Case 1: Already on the target page
     if (location.pathname === route && hash) {
       const element = document.getElementById(hash);
       if (element) {
-        // block: 'start' ensures it respects scroll-margin-top
         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     } 
-    // Case 2: Navigating to a different page section
     else if (hash) {
       navigate(route);
-      // Increased timeout to 300ms to ensure the page is fully rendered
       setTimeout(() => {
         const element = document.getElementById(hash);
         if (element) {
@@ -45,7 +43,6 @@ const Header: React.FC = () => {
         }
       }, 300);
     } 
-    // Case 3: Top-level page
     else {
       navigate(route);
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -69,6 +66,7 @@ const Header: React.FC = () => {
     const cat = category.toUpperCase();
     if (cat.includes('INDOOR')) return '/indoor';
     if (cat.includes('LED')) return '/led';
+    if (cat.includes('POP')) return '/pop';
     if (cat.includes('MODULAR')) return '/modular';
     return '/outdoor';
   };
@@ -78,25 +76,26 @@ const Header: React.FC = () => {
       'OUTDOOR': 'outdoor',
       'INDOOR': 'indoor',
       'LED VIDEO WALL': 'led',
+      'POP': 'pop',
       'MODULAR SIGNAGE': 'modular',
-      'Pylal signages': 'pylon-signage',
-      'Facade / signages': 'facade-signages', 
-      'Backlit signages': 'backlit-signages',
+      'Pylon Signage': 'pylon-signage',
+      'Facade / Signages': 'facade-signages', 
+      'Backlit Signages': 'backlit-signages',
       'Hoardings & Structures': 'hoardings-structures',
       'Metal Letters': 'metal-letters',
       'Unipole': 'unipole',
       'Retail Interiors': 'retail-interiors',
       'Exhibition Stalls': 'exhibition-stalls',
       'Kiosk': 'kiosk',
-      'Display stands': 'display-stands',
+      'Display Stands': 'display-stands',
       'Metal Stands': 'metal-stands',
       'Wall Graphics / Inshop Branding': 'wall-graphics',
       'LED video wall': 'led-video-wall',
       'Standees': 'standees',
       'Scrollers': 'scrollers',
-      'Catelogue stands': 'catalogue-stands',
-      'Category signage': 'category-signage',
-      'Clip on frames': 'clip-on-frames',
+      'Catalogue Stands': 'catalogue-stands',
+      'Category Signage': 'category-signage',
+      'Clip On Frames': 'clip-on-frames',
       'Equipments': 'equipments',
       'Team': 'team' 
     };
@@ -121,7 +120,6 @@ const Header: React.FC = () => {
           a, button, Link {
             -webkit-tap-highlight-color: transparent;
           }
-          /* Added global smooth scroll for browser-level anchor handling */
           html {
             scroll-behavior: smooth;
           }
@@ -169,7 +167,7 @@ const Header: React.FC = () => {
 
                 {/* Services Dropdown */}
                 {link.name === 'Our services' && activeDropdown === 'Our services' && (
-                  <div className="absolute top-[110px] left-1/2 -translate-x-1/2 w-[1000px] bg-white shadow-2xl rounded-xl p-8 grid grid-cols-4 gap-6 border border-gray-100 z-[60] outline-none">
+                  <div className="absolute top-[110px] left-1/2 -translate-x-1/2 w-[1000px] bg-white shadow-2xl rounded-xl p-8 grid grid-cols-5 gap-6 border border-gray-100 z-[60] outline-none">
                     {Object.entries(servicesData).map(([category, items]) => {
                       const baseRoute = getCategoryPath(category);
                       const categoryTarget = `${baseRoute}#${getServiceSlug(category)}`;
@@ -277,30 +275,85 @@ const Header: React.FC = () => {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="lg:hidden bg-white w-full border-t border-gray-100 absolute left-0 top-[80px] shadow-lg z-50 overflow-y-auto max-h-[calc(100vh-80px)]">
-          <nav className="flex flex-col p-6 space-y-6">
+          <nav className="flex flex-col p-6 space-y-4">
             {navLinks.map((link) => {
               const path = getRoutePath(link.name);
+              const isDropdown = link.name === 'Our services' || link.name === 'Infrastructure';
+              const isOpen = mobileSubMenu === link.name;
+
               return (
-                <Link
-                  key={link.name}
-                  to={path || '#'}
-                  className="block text-[18px] font-bold text-[#163B73]"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavigation(path);
-                  }}
-                >
-                  {link.name}
-                </Link>
+                <div key={link.name} className="flex flex-col">
+                  <div className="flex items-center justify-between">
+                    <Link
+                      to={path || '#'}
+                      className="text-[18px] font-bold text-[#163B73]"
+                      onClick={(e) => {
+                        if (isDropdown) {
+                          e.preventDefault();
+                          setMobileSubMenu(isOpen ? null : link.name);
+                        } else {
+                          handleNavigation(path);
+                        }
+                      }}
+                    >
+                      {link.name}
+                    </Link>
+                    {isDropdown && (
+                      <button onClick={() => setMobileSubMenu(isOpen ? null : link.name)} className="p-2">
+                        <svg className={`w-6 h-6 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Mobile Services Dropdown Options */}
+                  {link.name === 'Our services' && isOpen && (
+                    <div className="flex flex-col ml-4 mt-2 space-y-4 border-l-2 border-gray-100 pl-4 animate-in slide-in-from-top-2 duration-300">
+                      {Object.entries(servicesData).map(([category, items]) => (
+                        <div key={category} className="flex flex-col">
+                          <span className="text-[12px] font-black text-gray-400 uppercase tracking-widest mb-2">{category}</span>
+                          <div className="flex flex-col space-y-2">
+                            {(items as string[]).map((item) => (
+                              <button
+                                key={item}
+                                onClick={() => handleNavigation(`${getCategoryPath(category)}#${getServiceSlug(item)}`)}
+                                className="text-left text-[15px] text-gray-600 hover:text-[#163B73]"
+                              >
+                                {item}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Mobile Infrastructure Dropdown Options */}
+                  {link.name === 'Infrastructure' && isOpen && (
+                    <div className="flex flex-col ml-4 mt-2 space-y-3 border-l-2 border-gray-100 pl-4 animate-in slide-in-from-top-2 duration-300">
+                      {(infrastructureData as string[]).map((item) => (
+                        <button
+                          key={item}
+                          onClick={() => handleNavigation(item.toLowerCase() === 'team' ? '/team' : `/infrastructure#${getServiceSlug(item)}`)}
+                          className="text-left text-[15px] text-gray-600 hover:text-[#163B73]"
+                        >
+                          {item}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               );
             })}
+            
             <Link 
               to="/#contact"
               onClick={(e) => {
                 e.preventDefault();
                 handleNavigation('/#contact');
               }}
-              className="w-full bg-[#163B73] text-center text-white py-4 rounded-md font-bold block"
+              className="w-full bg-[#163B73] text-center text-white py-4 rounded-md font-bold block mt-4"
             >
               {contactBtn}
             </Link>
