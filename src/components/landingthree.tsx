@@ -249,7 +249,7 @@ const LandingPageThree: React.FC = () => {
                 </div>
 
                 <div className="mt-4 pt-4 border-t border-gray-200">
-                  <p className="text-[#5A7184] text-[14px] md:text-[15px] italic">
+                  <p className="text-[#5A7184] text-[14px] md:text-[15px] inter">
                     "{contactSection.info.quote}"
                   </p>
                 </div>

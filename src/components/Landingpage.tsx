@@ -70,9 +70,13 @@ const LandingPage: React.FC = () => {
           />
         </div>
 
-        <div className="relative z-10 max-w-[1440px] mx-auto flex flex-col lg:flex-row items-center justify-between">
-          <div className="w-full lg:w-[60%] text-left">
-            <span className="text-[#163B73] font-inter font-bold text-lg md:text-[20px] leading-none tracking-[-0.04em] mb-4 block uppercase lg:normal-case">
+        <div   className="relative z-10 max-w-[1440px] mx-auto flex flex-col lg:flex-row items-center justify-between">
+          <div
+  id="about-mobile"
+  className="w-full lg:w-[60%] text-left scroll-mt-0"
+>
+
+            <span  className="text-[#163B73] font-inter font-bold text-lg md:text-[20px] leading-none tracking-[-0.04em] mb-4 block uppercase lg:normal-case">
               {about.label}
             </span>
 

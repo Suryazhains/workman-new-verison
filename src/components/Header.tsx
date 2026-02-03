@@ -15,9 +15,9 @@ const Header: React.FC = () => {
   const location = useLocation();
 
   /**
-   * ✅ ENHANCED NAVIGATION HANDLER
-   * Fixed the cutting issue by ensuring consistent timing and 
-   * allowing CSS scroll-margin-top to take effect.
+   * ✅ FIXED NAVIGATION HANDLER
+   * Specifically handles the mobile header offset (80px) to prevent 
+   * sections from being hidden behind the sticky navbar.
    */
   const handleNavigation = (path: string | null) => {
     if (!path) return;
@@ -28,22 +28,35 @@ const Header: React.FC = () => {
 
     const [route, hash] = path.split('#');
 
-    if (location.pathname === route && hash) {
-      const element = document.getElementById(hash);
+    // Internal helper for precise offset scrolling
+    const scrollToTarget = (targetId: string) => {
+      const element = document.getElementById(targetId);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // 80px for mobile header, 110px for desktop
+        const offset = window.innerWidth < 1024 ? 70 : 120; 
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
       }
+    };
+
+    if (location.pathname === route && hash) {
+      // Same page: Scroll immediately
+      scrollToTarget(hash);
     } 
     else if (hash) {
+      // Different page: Navigate first, then scroll
       navigate(route);
       setTimeout(() => {
-        const element = document.getElementById(hash);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      }, 300);
+        scrollToTarget(hash);
+      }, 400); // Increased timeout to ensure DOM is ready on slow mobile connections
     } 
     else {
+      // Standard page navigation
       navigate(route);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -122,6 +135,15 @@ const Header: React.FC = () => {
           }
           html {
             scroll-behavior: smooth;
+          }
+          /* Fallback for standard anchor jumps */
+          section[id] {
+            scroll-margin-top: 90px;
+          }
+          @media (min-width: 1024px) {
+            section[id] {
+              scroll-margin-top: 120px;
+            }
           }
         `}
       </style>
@@ -292,6 +314,7 @@ const Header: React.FC = () => {
                           e.preventDefault();
                           setMobileSubMenu(isOpen ? null : link.name);
                         } else {
+                          e.preventDefault();
                           handleNavigation(path);
                         }
                       }}

@@ -1,13 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import LandingPageThree from './landingthree';
 import { LANDING_CONTENT } from './content';
 
 const Infrastructure: React.FC = () => {
   const { infrastructurePage } = LANDING_CONTENT;
 
+  /**
+   * ✅ FORCE SCROLL TO TOP ON MOUNT
+   * This ensures that if a user navigates from a bottom section of another page,
+   * the Infrastructure page starts at the very top.
+   */
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const getServiceSlug = (name: string) => {
+    return name
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-');
+  };
+
   return (
     <main className="bg-[#F6F7F9]">
-      <section id="infrastructure" className="w-full py-16 md:py-24">
+      {/* id="infrastructure" 
+          scroll-mt-28: Ensures that when called by ID, it starts below the sticky header.
+      */}
+      <section 
+        id="infrastructure" 
+        className="w-full py-16 md:py-24 scroll-mt-28"
+      >
         {/* Page Heading */}
         <div className="max-w-[1280px] mx-auto mb-16 px-6">
           <h2 className="text-[32px] md:text-[48px] font-bold text-black mb-4">
@@ -18,26 +42,31 @@ const Infrastructure: React.FC = () => {
           </p>
         </div>
 
-        {/* Machines Grid - No gap between rows to keep it "Connected" */}
+        {/* Machines Grid */}
         <div className="max-w-[1280px] mx-auto flex flex-col">
           {infrastructurePage.equipments.map((item, index) => (
             <div
               key={item.id}
-              className={`flex flex-col lg:flex-row items-stretch w-full ${
+              /* ✅ Added id and scroll-mt to each item.
+                 This allows the Header's handleNavigation to jump specifically to 
+                 each machine without it being cut off by the navbar.
+              */
+              id={getServiceSlug(item.title)}
+              className={`flex flex-col lg:flex-row items-stretch w-full scroll-mt-28 ${
                 index % 2 !== 0 ? 'lg:flex-row-reverse' : ''
               }`}
             >
-              {/* Image Container: object-cover ensures it fills the 50% width perfectly */}
+              {/* Image Container */}
               <div className="w-full lg:w-1/2 h-[350px] md:h-[500px] lg:h-auto overflow-hidden">
                 <img
                   src={item.imageUrl}
                   alt={item.title}
-                  className="w-full h-full object-cover display:block"
+                  className="w-full h-full object-cover block"
                 />
               </div>
 
-              {/* Text Container: White background as per design */}
-              <div className="w-full lg:w-1/2 flex flex-col justify-center #F6F7F9 px-8 py-12 md:px-16 lg:px-20">
+              {/* Text Container */}
+              <div className="w-full lg:w-1/2 flex flex-col justify-center bg-white px-8 py-12 md:px-16 lg:px-20">
                 <div className="max-w-[500px]">
                   <span className="text-gray-400 text-sm font-medium mb-2 block">
                     {item.model}
@@ -51,8 +80,6 @@ const Infrastructure: React.FC = () => {
                     <p className="text-gray-500 leading-relaxed text-base md:text-lg">
                       {item.description}
                     </p>
-                    {/* If you have more description text in your content file, 
-                        you can map it here as multiple paragraphs */}
                   </div>
                 </div>
               </div>
