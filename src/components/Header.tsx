@@ -33,7 +33,7 @@ const Header: React.FC = () => {
       const element = document.getElementById(targetId);
       if (element) {
         // 80px for mobile header, 110px for desktop
-        const offset = window.innerWidth < 1024 ? 70 : 68; 
+        const offset = window.innerWidth < 1024 ? 70 : 72; 
         const elementPosition = element.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - offset;
 
