@@ -54,7 +54,8 @@ const LandingPageThree: React.FC = () => {
     if (!path) return;
 
     const [route, hash] = path.split('#');
-    const HEADER_OFFSET = 160;
+    // Maintain offset consistency with header
+    const HEADER_OFFSET = window.innerWidth < 1024 ? 70 : 160;
 
     const scrollToHash = (id: string) => {
       const element = document.getElementById(id);
@@ -75,7 +76,7 @@ const LandingPageThree: React.FC = () => {
       navigate(route);
       setTimeout(() => {
         scrollToHash(hash);
-      }, 300);
+      }, 400); // 400ms is safer for mobile rendering
     } else {
       navigate(route);
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -259,97 +260,96 @@ const LandingPageThree: React.FC = () => {
         </section>
 
         {/* --- FOOTER SECTION --- */}
-        <footer className="bg-[#163B73] w-full text-white py-12 md:py-20 px-6 lg:px-[120px]">
-          <div className="max-w-[1440px] mx-auto">
-            {/* Main Wrapper: Logo Left | Grouped Info Right */}
-            <div className="flex flex-col lg:flex-row justify-between gap-12 mb-16 text-left items-start">
-              
-              {/* LEFT CORNER: Logo and Branding */}
-              <div className="max-w-[320px] space-y-6">
-                <img
-                  src={circlelogo}
-                  alt="Logo"
-                  className="w-24 h-auto cursor-pointer"
-                  onClick={() => handleNavigation('/')}
-                />
-                <p className="text-[14px] leading-relaxed font-normal opacity-90">
-                  {footer.description}
-                </p>
-                <button 
-                  onClick={() => handleNavigation('/#contact')}
-                  className="bg-white text-[#163B73] px-8 py-3 rounded-[6px] font-bold text-[15px] hover:bg-gray-100 transition"
-                >
-                  Contact now
-                </button>
-              </div>
+      <footer className="bg-[#163B73] w-full text-white py-12 md:py-20 px-6 lg:px-[120px]">
+  <div className="max-w-[1440px] mx-auto">
+    {/* Main Wrapper: Logo Left | Grouped Info Right */}
+    <div className="flex flex-col lg:flex-row justify-between gap-12 mb-16 text-left items-start">
+      
+      {/* LEFT CORNER: Logo and Branding */}
+      <div className="max-w-[320px] space-y-6">
+        <img
+          src={circlelogo}
+          alt="Logo"
+          className="w-24 h-auto cursor-pointer"
+          onClick={() => handleNavigation('/')}
+        />
+        <p className="text-[14px] leading-relaxed font-normal opacity-90">
+          {footer.description}
+        </p>
+        <button 
+          onClick={() => handleNavigation('/#contact')}
+          className="bg-white text-[#163B73] px-8 py-3 rounded-[6px] font-bold text-[15px] hover:bg-gray-100 transition"
+        >
+          Contact now
+        </button>
+      </div>
 
-              {/* RIGHT CORNER: Grouped Links and Contacts */}
-              <div className="flex flex-col sm:flex-row gap-10 md:gap-14 lg:gap-16">
-                
-                {/* Links Group */}
-                <div className="pt-0">
-                  {/* Updated: Font-medium, 20px, and Pure White per Figma image_dbf138.jpg */}
-                  <h4 className="font-medium text-[20px] mb-6 tracking-tight text-white">{footer.linksTitle}</h4>
-                  <ul className="space-y-4 text-[15px]">
-                    {header.navLinks.map((link, idx) => (
-                      <li 
-                        key={idx} 
-                        onClick={() => handleNavigation(getRoutePath(link.name))}
-                        className="hover:text-gray-300 cursor-pointer transition whitespace-nowrap opacity-90"
-                      >
-                        {link.name}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+      {/* RIGHT CORNER: Grouped Links and Contacts */}
+      {/* flex-row and flex-wrap ensures they stay horizontal on mobile to avoid page cuts */}
+      <div className="flex flex-row flex-wrap gap-x-10 gap-y-12 md:gap-14 lg:gap-16">
+        
+        {/* Links Group */}
+        <div className="pt-0 min-w-[140px]">
+          <h4 className="font-medium text-[20px] mb-6 tracking-tight text-white">{footer.linksTitle}</h4>
+          <ul className="space-y-4 text-[15px]">
+            {header.navLinks.map((link, idx) => (
+              <li 
+                key={idx} 
+                onClick={() => handleNavigation(getRoutePath(link.name))}
+                className="hover:text-gray-300 cursor-pointer transition whitespace-nowrap opacity-90"
+              >
+                {link.name}
+              </li>
+            ))}
+          </ul>
+        </div>
 
-                {/* Services Group */}
-                <div className="pt-0">
-                  {/* Updated: Font-medium, 20px, and Pure White per Figma image_dbf138.jpg */}
-                  <h4 className="font-medium text-[20px] mb-6 tracking-tight text-white">{footer.productTitle}</h4>
-                  <ul className="space-y-4 text-[15px]">
-                    {footer.products.map((product, idx) => (
-                      <li 
-                        key={idx} 
-                        onClick={() => handleNavigation(getCategoryPath(product))}
-                        className="hover:text-gray-300 cursor-pointer transition whitespace-nowrap opacity-90"
-                      >
-                        {product}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+        {/* Services Group */}
+        <div className="pt-0 min-w-[140px]">
+          <h4 className="font-medium text-[20px] mb-6 tracking-tight text-white">{footer.productTitle}</h4>
+          <ul className="space-y-4 text-[15px]">
+            {footer.products.map((product, idx) => (
+              <li 
+                key={idx} 
+                onClick={() => handleNavigation(getCategoryPath(product))}
+                className="hover:text-gray-300 cursor-pointer transition whitespace-nowrap opacity-90"
+              >
+                {product}
+              </li>
+            ))}
+          </ul>
+        </div>
 
-                {/* Contacts Group */}
-                <div className="space-y-6">
-                  {/* Updated: Font-medium, 20px, and Pure White per Figma image_dbf138.jpg */}
-                  <h4 className="font-medium text-[20px] mb-6 tracking-tight text-white">{footer.contactsTitle}</h4>
-                  <div className="space-y-5 text-[15px]">
-                    <div className="flex items-center gap-4">
-                      <img src={emailIcon} alt="Email" className="w-5 h-5 opacity-80" />
-                      <a href={`mailto:${footer.email}`} className="hover:text-gray-300 transition break-all opacity-90">
-                        {footer.email}
-                      </a>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <img src={phoneIcon} alt="Phone" className="w-5 h-5 opacity-80" />
-                      <a href={`tel:${footer.phone.replace(/\s/g, '')}`} className="hover:text-gray-300 transition whitespace-nowrap opacity-90">
-                        {footer.phone}
-                      </a>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
+        {/* Contacts Group */}
+        <div className="space-y-6 min-w-[240px]">
+          <h4 className="font-medium text-[20px] mb-6 tracking-tight text-white">{footer.contactsTitle}</h4>
+          <div className="space-y-5 text-[15px]">
+            <div className="flex items-center gap-4">
+              <img src={emailIcon} alt="Email" className="w-5 h-5 opacity-80" />
+              <a href={`mailto:${footer.email}`} className="hover:text-gray-300 transition break-all opacity-90">
+                {footer.email}
+              </a>
             </div>
-
-            <div className="pt-8 border-t border-white/20 text-center">
-              <p className="text-[13px] tracking-wide opacity-80">
-                {footer.copyright}
-              </p>
+            <div className="flex items-center gap-4">
+              <img src={phoneIcon} alt="Phone" className="w-5 h-5 opacity-80" />
+              <a href={`tel:${footer.phone.replace(/\s/g, '')}`} className="hover:text-gray-300 transition whitespace-nowrap opacity-90">
+                {footer.phone}
+              </a>
             </div>
           </div>
-        </footer>
+        </div>
+
+      </div>
+    </div>
+
+    {/* Bottom Copyright */}
+    <div className="pt-8 border-t border-white/20 text-center">
+      <p className="text-[13px] tracking-wide opacity-80">
+        {footer.copyright}
+      </p>
+    </div>
+  </div>
+</footer>
       </div>
     </main>
   );

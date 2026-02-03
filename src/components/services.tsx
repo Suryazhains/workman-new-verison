@@ -38,7 +38,9 @@ const Services: React.FC = () => {
   const [activeTab, setActiveTab] = useState(tabs[0]?.id || '');
 
   /**
-   * SYNC TABS WITH URL HASH
+   * ✅ SYNC TABS WITH URL HASH & RESET SCROLL
+   * This ensures that if you navigate back to this page, 
+   * or arrive via a hash link, it behaves correctly.
    */
   useEffect(() => {
     const currentHash = location.hash.replace('#', '').toLowerCase();
@@ -48,10 +50,31 @@ const Services: React.FC = () => {
       setActiveTab(matchedTab.id);
       const element = document.getElementById('services');
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        // Smooth scroll to the section if targeted by a hash
+        const headerOffset = window.innerWidth < 1024 ? 70 : 120;
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = elementPosition - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
       }
+    } else {
+      // ✅ MANDATORY RESET: Fixes the issue where "Back" or "Navigate" 
+      // loads the page at a previous scroll position.
+      window.scrollTo(0, 0);
     }
-  }, [location.hash, tabs]);
+  }, [location.pathname, location.hash, tabs]);
+
+  /**
+   * ✅ SHARED NAVIGATION HANDLER
+   * Forces the window to the top before navigating to the sub-category page
+   */
+  const handleViewMore = (id: string) => {
+    window.scrollTo(0, 0);
+    navigate(`/${id}`);
+  };
 
   const activeIndex = tabs.findIndex(tab => tab.id === activeTab);
   
@@ -91,6 +114,7 @@ const Services: React.FC = () => {
                     src={IMAGE_MAP[service.id]}
                     alt={service.label}
                     className="w-full h-full object-cover"
+                    loading="lazy"
                   />
                 </div>
 
@@ -105,7 +129,7 @@ const Services: React.FC = () => {
                   </p>
 
                   <button
-                    onClick={() => navigate(`/${service.id}`)}
+                    onClick={() => handleViewMore(service.id)}
                     className="flex items-center gap-4 px-10 py-3 bg-[#163B73] text-white text-sm font-bold rounded-lg active:scale-95 transition-all outline-none focus:outline-none border-none"
                   >
                     View more
@@ -172,9 +196,9 @@ const Services: React.FC = () => {
                   </p>
                 ))}
 
-                <div className="pt-15">
+                <div className="pt-10">
                   <button
-                    onClick={() => navigate(`/${activeTab}`)}
+                    onClick={() => handleViewMore(activeTab)}
                     className="flex items-center gap-4 px-12 py-4 bg-[#163B73] text-white font-bold rounded-lg hover:bg-[#0f2a52] active:scale-95 transition-all outline-none focus:outline-none border-none"
                   >
                     {activeContent.buttonText}
