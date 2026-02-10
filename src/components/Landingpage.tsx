@@ -1,278 +1,120 @@
 import React from 'react';
-import { LANDING_CONTENT, PORTFOLIO_IMAGES } from './content';
-import LandingThree from './landingthree';
-import quotes from '../assets/Quote.png';
+import LandingTwo from './LandingTwo';
+import { LANDING_CONTENT } from './content';
+import Home_image from '../assets/Home_image.png';
+import W_image from '../assets/w.png';
 
-const LandingTwo: React.FC = () => {
-  const { portfolio, testimonials } = LANDING_CONTENT;
-
-  // Duplicate images for seamless loop
-  const row1Images = [...PORTFOLIO_IMAGES.slice(0, 4), ...PORTFOLIO_IMAGES.slice(0, 4)];
-  const row2Images = [...PORTFOLIO_IMAGES.slice(4, 8), ...PORTFOLIO_IMAGES.slice(4, 8)];
-  // Row 3 uses a mix to ensure variety
-  const row3Images = [...PORTFOLIO_IMAGES.slice(2, 6), ...PORTFOLIO_IMAGES.slice(9, 12)];
+const LandingPage: React.FC = () => {
+  const { hero, about } = LANDING_CONTENT;
 
   return (
-    <>
-      {/* GLOBAL STYLES: Font Import and Animations */}
+    <main className="w-full bg-[#51A147] overflow-x-hidden border-none outline-none selection:bg-green-200 font-inter">
+      {/* Updated Font Import: Crimson Pro & Inter */}
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
         
         .font-crimson {
             font-family: 'Crimson Pro', serif !important;
         }
-
-        @keyframes marqueeLeft {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-
-        @keyframes marqueeRight {
-          0% { transform: translateX(-50%); }
-          100% { transform: translateX(0); }
-        }
       `}} />
 
-      {/* PORTFOLIO SECTION */}
-      <section
-        id="portfolio"
-        className="w-full bg-[#F6F7F9] pt-[90px] pb-[90px] overflow-hidden"
+      {/* --- HERO SECTION --- */}
+      <section 
+        id="home" 
+        className="relative w-full flex flex-col lg:flex-row items-stretch justify-between min-h-[600px] lg:h-[90vh] pt-24 lg:pt-0 scroll-mt-24 bg-[#51A147]"
       >
-        {/* Heading */}
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-12 mb-10">
-          {/* Crimson Pro Applied */}
-          <h2 className="font-crimson font-bold text-3xl md:text-[56px] text-[#51A147] mb-4">
-            {portfolio.heading}
-          </h2>
-          <p className="text-[#4B5563] max-w-full text-lg leading-relaxed">
-            {portfolio.description}
-          </p>
+        {/* Left Content Container */}
+        <div className="w-full lg:w-1/2 flex items-center justify-end z-20">
+          <div className="w-full max-w-[850px] px-6 md:px-12 lg:px-[90px] pt-4 lg:pt-12 pb-16">
+            {/* Heading: Now using Crimson Pro */}
+      <h1 className="font-crimson text-[26px] sm:text-[48px] md:text-[64px] lg:text-[82px] font-medium leading-[1.05] tracking-[-0.01em] text-white mb-6 text-center sm:text-left">
+  {hero.title.join(" ")}
+</h1>
+
+
+
+            <p className="text-white/90 text-base md:text-lg lg:text-[18px] leading-relaxed max-w-[500px] mb-10 text-center sm:text-left">
+              {hero.description}
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center sm:justify-start">
+              <button
+                onClick={() => {
+                  document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="bg-white text-[#51A147] rounded-[6px] w-full sm:w-[156px] h-[48px] font-inter font-bold text-[16px] tracking-[-0.04em] hover:bg-green-50 transition-all flex items-center justify-center shadow-lg active:scale-95"
+              >
+                {hero.cta}
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* Portfolio Marquee */}
-        <div className="relative w-full overflow-hidden">
-          {/* LEFT FADE */}
-          <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-[60px] md:w-[160px]
-            bg-gradient-to-r from-[#F6F7F9] via-[#F6F7F9] to-transparent" />
-
-          {/* RIGHT FADE */}
-          <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-[60px] md:w-[160px]
-            bg-gradient-to-l from-[#F6F7F9] via-[#F6F7F9] to-transparent" />
-
-          <div className="flex flex-col gap-[6px]">
-            {/* Row 1 – Right to Left */}
-            <div
-              className="flex gap-[6px] w-max"
-              style={{ animation: 'marqueeLeft 40s linear infinite' }}
-            >
-              {row1Images.map((src, i) => (
-                <div
-                  key={`row1-${i}`}
-                  className="w-[200px] h-[120px] md:w-[435px] md:h-[232px] flex-shrink-0"
-                >
-                  <img
-                    src={src}
-                    alt="Portfolio"
-                    className="w-full h-full object-cover rounded-sm"
-                    draggable={false}
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* Row 2 – Left to Right */}
-            <div
-              className="flex gap-[6px] w-max"
-              style={{ animation: 'marqueeRight 35s linear infinite' }}
-            >
-              {row2Images.map((src, i) => (
-                <div
-                  key={`row2-${i}`}
-                  className="w-[200px] h-[120px] md:w-[435px] md:h-[232px] flex-shrink-0"
-                >
-                  <img
-                    src={src}
-                    alt="Portfolio"
-                    className="w-full h-full object-cover rounded-sm"
-                    draggable={false}
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* Row 3 – Right to Left */}
-            <div
-              className="flex gap-[6px] w-max"
-              style={{ animation: 'marqueeLeft 45s linear infinite' }}
-            >
-              {row3Images.map((src, i) => (
-                <div
-                  key={`row3-${i}`}
-                  className="w-[200px] h-[120px] md:w-[435px] md:h-[232px] flex-shrink-0"
-                >
-                  <img
-                    src={src}
-                    alt="Portfolio"
-                    className="w-full h-full object-cover rounded-sm"
-                    draggable={false}
-                  />
-                </div>
-              ))}
-            </div>
+        {/* Right Image Section */}
+        <div className="relative w-full lg:w-1/2 h-[400px] lg:h-auto">
+          <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#51A147] via-[#51A147]/40 to-transparent"></div>
+          <div className="w-full h-full overflow-hidden">
+            <img 
+              src={Home_image}
+              alt="Hero Signage"
+              className="w-full h-full object-cover object-left lg:object-center"
+            />
           </div>
         </div>
       </section>
 
-      {/* TESTIMONIALS SECTION */}
-      <section
-        id="testimonials"
-        className="w-full bg-[#F6F7F9] pt-[90px] pb-[90px] px-[24px] md:px-[40px] lg:px-[64px]"
+      {/* --- ABOUT SECTION --- */}
+      <section 
+        id="about" 
+        className="relative w-full bg-[#F3F9F2] py-16 md:py-24 px-6 md:px-12 lg:px-[90px] overflow-hidden scroll-mt-24"
       >
-        <div className="max-w-[1440px] mx-auto">
-          {/* Crimson Pro Applied */}
-          <h2 className="font-crimson text-[32px] md:text-[56px] font-bold text-[#51A147] mb-4">
-            {testimonials.heading}
-          </h2>
-          <p className="text-[#535353] text-[16px] md:text-[18px] mb-12 max-w-full leading-relaxed">
-            {testimonials.description}
-          </p>
+        <div className="hidden lg:flex absolute right-0 top-0 h-full w-full lg:w-1/2 z-0 pointer-events-none select-none items-center justify-end">
+          <img 
+            src={W_image} 
+            alt="" 
+            className="h-[110%] w-auto object-contain object-right opacity-100" 
+          />
+        </div>
 
-          {/* MAIN GRID */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-[6px]">
+        <div className="relative z-10 max-w-[1440px] mx-auto flex flex-col lg:flex-row items-center justify-between">
+          <div id="about-mobile" className="w-full lg:w-[65%] text-left scroll-mt-0">
+            <span className="text-[#51A147] font-inter font-bold text-lg md:text-[20px] leading-none tracking-[-0.04em] mb-4 block uppercase lg:normal-case">
+              {about.label}
+            </span>
 
-            {/* LEFT SIDE */}
-            <div className="flex flex-col gap-[6px]">
-              {/* Box 1 (Top) */}
-              <div className="bg-[#F9FAFB] p-8 md:p-10 border border-green-50 flex flex-col justify-between h-full">
-                <div>
-                  <img
-                    src={quotes}
-                    alt="quotes"
-                    className="w-[20px] h-[20px] block mb-2 object-contain"
-                  />
-                  <p className="text-[#535353] text-[16px] md:text-[18px] leading-relaxed">
-                    {testimonials.large.quote}
+            {/* Heading: Now using Crimson Pro */}
+            <h2 className="font-crimson font-black text-[32px] sm:text-[42px] md:text-[48px] leading-[1.1] tracking-[-0.01em] text-[#000000] mb-6 max-w-[650px]">
+              {about.heading}
+            </h2>
+
+            <p className="text-[#6B7280] text-base md:text-[18px] leading-relaxed max-w-[580px] mb-12">
+              {about.description}
+            </p>
+
+            <div className="grid grid-cols-3 lg:flex lg:flex-wrap gap-4 sm:gap-8 lg:gap-16">
+              {about.stats.map((stat, index) => (
+                <div key={index} className="flex flex-col">
+                  <div className="flex items-center gap-1 md:gap-2">
+                    {/* Stats: Now using Crimson Pro */}
+                    <p className="text-[28px] sm:text-[36px] md:text-[44px] font-crimson font-black tracking-[-0.01em] text-[#51A147]">
+                      {stat.value}
+                    </p>
+                    <span className="text-[#FF7A00] text-sm sm:text-xl md:text-2xl font-bold">↗</span>
+                  </div>
+                  <p className="text-[#6B7280] text-[10px] sm:text-sm md:text-base font-medium">
+                    {stat.label}
                   </p>
                 </div>
-
-                <div className="mt-10">
-                  <p className="font-semibold text-[#000000]">
-                    {testimonials.large.name}
-                  </p>
-                  <p className="text-gray-400 text-sm">
-                    {testimonials.large.company}
-                  </p>
-                </div>
-              </div>
-
-              {/* Box 2 (Bottom) */}
-              <div className="bg-[#F9FAFB] p-8 md:p-10 border border-green-50 flex flex-col justify-between h-full">
-                <div>
-                  <img
-                    src={quotes}
-                    alt="quotes"
-                    className="w-[20px] h-[20px] block mb-2 object-contain"
-                  />
-                  <p className="text-[#535353] text-[16px] md:text-[18px] leading-relaxed">
-                    {testimonials.small[0].quote}
-                  </p>
-                </div>
-
-                <div className="mt-10">
-                  <p className="font-semibold text-[#000000]">
-                    {testimonials.small[0].name}
-                  </p>
-                  <p className="text-gray-400 text-sm">
-                    {testimonials.small[0].company}
-                  </p>
-                </div>
-              </div>
+              ))}
             </div>
-
-            {/* RIGHT SIDE */}
-            <div className="flex flex-col gap-[6px]">
-
-              {/* RIGHT TOP BOX */}
-              <div className="bg-[#F9FAFB] p-8 md:p-10 border border-green-50 flex flex-col justify-between h-full">
-                <div>
-                  <img
-                    src={quotes}
-                    alt="quotes"
-                    className="w-[20px] h-[20px] block mb-2 object-contain"
-                  />
-                  <p className="text-[#535353] text-[16px] md:text-[18px] leading-relaxed">
-                    {testimonials.small[1].quote}
-                  </p>
-                </div>
-
-                <div className="mt-10">
-                  <p className="font-semibold text-[#000000]">
-                    {testimonials.small[1].name}
-                  </p>
-                  <p className="text-gray-400 text-sm">
-                    {testimonials.small[1].company}
-                  </p>
-                </div>
-              </div>
-
-              {/* RIGHT BOTTOM SMALL CARDS */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-[6px]">
-
-                <div className="bg-[#F9FAFB] p-6 md:p-8 border border-green-50 flex flex-col justify-between">
-                  <div>
-                    <img
-                      src={quotes}
-                      alt="quotes"
-                      className="w-[20px] h-[20px] block mb-2 object-contain"
-                    />
-                    <p className="text-[#535353] text-[15px] leading-relaxed mb-6">
-                      {testimonials.small[2].quote}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-[#000000] text-sm">
-                      {testimonials.small[2].name}
-                    </p>
-                    <p className="text-gray-400 text-xs">
-                      {testimonials.small[2].company}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="bg-[#F9FAFB] p-6 md:p-8 border border-green-50 flex flex-col justify-between">
-                  <div>
-                    <img
-                      src={quotes}
-                      alt="quotes"
-                      className="w-[20px] h-[20px] block mb-2 object-contain"
-                    />
-                    <p className="text-[#535353] text-[15px] leading-relaxed mb-6">
-                      {testimonials.large.quote.substring(0, 120)}...
-                    </p>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-[#000000] text-sm">
-                      {testimonials.large.name}
-                    </p>
-                    <p className="text-gray-400 text-xs">
-                      {testimonials.large.company}
-                    </p>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
           </div>
+          <div className="hidden lg:block lg:w-[35%] h-1"></div>
         </div>
       </section>
 
-      {/* Landing Three Integration */}
-      <div className="mt-0 pb-0">
-        <LandingThree />
-      </div>
-    </>
+      <LandingTwo />
+    </main>
   );
 };
 
-export default LandingTwo;
+export default LandingPage;

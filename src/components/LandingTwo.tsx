@@ -6,13 +6,11 @@ import quotes from '../assets/Quote.png';
 const LandingTwo: React.FC = () => {
   const { portfolio, testimonials } = LANDING_CONTENT;
 
-  // Duplicate images for seamless loop (Original array + Original array)
+  // Duplicate images for seamless loop
   const row1Images = [...PORTFOLIO_IMAGES.slice(0, 4), ...PORTFOLIO_IMAGES.slice(0, 4)];
   const row2Images = [...PORTFOLIO_IMAGES.slice(4, 8), ...PORTFOLIO_IMAGES.slice(4, 8)];
-  
-  // FIXED: Row 3 now properly duplicates for a seamless loop
-  const baseRow3 = [...PORTFOLIO_IMAGES.slice(8, 12)]; 
-  const row3Images = [...baseRow3, ...baseRow3];
+  // Row 3 uses a mix to ensure variety
+  const row3Images = [...PORTFOLIO_IMAGES.slice(2, 6), ...PORTFOLIO_IMAGES.slice(9, 12)];
 
   return (
     <>
@@ -42,6 +40,7 @@ const LandingTwo: React.FC = () => {
       >
         {/* Heading */}
         <div className="max-w-[1440px] mx-auto px-6 lg:px-12 mb-10">
+          {/* Crimson Pro Applied */}
           <h2 className="font-crimson font-bold text-3xl md:text-[56px] text-[#51A147] mb-4">
             {portfolio.heading}
           </h2>
@@ -101,7 +100,7 @@ const LandingTwo: React.FC = () => {
               ))}
             </div>
 
-            {/* Row 3 – Right to Left (Seamless Loop Fixed) */}
+            {/* Row 3 – Right to Left */}
             <div
               className="flex gap-[6px] w-max"
               style={{ animation: 'marqueeLeft 45s linear infinite' }}
@@ -130,6 +129,7 @@ const LandingTwo: React.FC = () => {
         className="w-full bg-[#F6F7F9] pt-[90px] pb-[90px] px-[24px] md:px-[40px] lg:px-[64px]"
       >
         <div className="max-w-[1440px] mx-auto">
+          {/* Crimson Pro Applied */}
           <h2 className="font-crimson text-[32px] md:text-[56px] font-bold text-[#51A147] mb-4">
             {testimonials.heading}
           </h2>
@@ -137,83 +137,137 @@ const LandingTwo: React.FC = () => {
             {testimonials.description}
           </p>
 
+          {/* MAIN GRID */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-[6px]">
+
             {/* LEFT SIDE */}
             <div className="flex flex-col gap-[6px]">
+              {/* Box 1 (Top) */}
               <div className="bg-[#F9FAFB] p-8 md:p-10 border border-green-50 flex flex-col justify-between h-full">
                 <div>
-                  <img src={quotes} alt="quotes" className="w-[20px] h-[20px] block mb-2 object-contain" />
+                  <img
+                    src={quotes}
+                    alt="quotes"
+                    className="w-[20px] h-[20px] block mb-2 object-contain"
+                  />
                   <p className="text-[#535353] text-[16px] md:text-[18px] leading-relaxed">
                     {testimonials.large.quote}
                   </p>
                 </div>
+
                 <div className="mt-10">
-                  <p className="font-semibold text-[#000000]">{testimonials.large.name}</p>
-                  <p className="text-gray-400 text-sm">{testimonials.large.company}</p>
+                  <p className="font-semibold text-[#000000]">
+                    {testimonials.large.name}
+                  </p>
+                  <p className="text-gray-400 text-sm">
+                    {testimonials.large.company}
+                  </p>
                 </div>
               </div>
 
+              {/* Box 2 (Bottom) */}
               <div className="bg-[#F9FAFB] p-8 md:p-10 border border-green-50 flex flex-col justify-between h-full">
                 <div>
-                  <img src={quotes} alt="quotes" className="w-[20px] h-[20px] block mb-2 object-contain" />
+                  <img
+                    src={quotes}
+                    alt="quotes"
+                    className="w-[20px] h-[20px] block mb-2 object-contain"
+                  />
                   <p className="text-[#535353] text-[16px] md:text-[18px] leading-relaxed">
                     {testimonials.small[0].quote}
                   </p>
                 </div>
+
                 <div className="mt-10">
-                  <p className="font-semibold text-[#000000]">{testimonials.small[0].name}</p>
-                  <p className="text-gray-400 text-sm">{testimonials.small[0].company}</p>
+                  <p className="font-semibold text-[#000000]">
+                    {testimonials.small[0].name}
+                  </p>
+                  <p className="text-gray-400 text-sm">
+                    {testimonials.small[0].company}
+                  </p>
                 </div>
               </div>
             </div>
 
             {/* RIGHT SIDE */}
             <div className="flex flex-col gap-[6px]">
+
+              {/* RIGHT TOP BOX */}
               <div className="bg-[#F9FAFB] p-8 md:p-10 border border-green-50 flex flex-col justify-between h-full">
                 <div>
-                  <img src={quotes} alt="quotes" className="w-[20px] h-[20px] block mb-2 object-contain" />
+                  <img
+                    src={quotes}
+                    alt="quotes"
+                    className="w-[20px] h-[20px] block mb-2 object-contain"
+                  />
                   <p className="text-[#535353] text-[16px] md:text-[18px] leading-relaxed">
                     {testimonials.small[1].quote}
                   </p>
                 </div>
+
                 <div className="mt-10">
-                  <p className="font-semibold text-[#000000]">{testimonials.small[1].name}</p>
-                  <p className="text-gray-400 text-sm">{testimonials.small[1].company}</p>
+                  <p className="font-semibold text-[#000000]">
+                    {testimonials.small[1].name}
+                  </p>
+                  <p className="text-gray-400 text-sm">
+                    {testimonials.small[1].company}
+                  </p>
                 </div>
               </div>
 
+              {/* RIGHT BOTTOM SMALL CARDS */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-[6px]">
+
                 <div className="bg-[#F9FAFB] p-6 md:p-8 border border-green-50 flex flex-col justify-between">
                   <div>
-                    <img src={quotes} alt="quotes" className="w-[20px] h-[20px] block mb-2 object-contain" />
+                    <img
+                      src={quotes}
+                      alt="quotes"
+                      className="w-[20px] h-[20px] block mb-2 object-contain"
+                    />
                     <p className="text-[#535353] text-[15px] leading-relaxed mb-6">
                       {testimonials.small[2].quote}
                     </p>
                   </div>
                   <div>
-                    <p className="font-semibold text-[#000000] text-sm">{testimonials.small[2].name}</p>
-                    <p className="text-gray-400 text-xs">{testimonials.small[2].company}</p>
+                    <p className="font-semibold text-[#000000] text-sm">
+                      {testimonials.small[2].name}
+                    </p>
+                    <p className="text-gray-400 text-xs">
+                      {testimonials.small[2].company}
+                    </p>
                   </div>
                 </div>
 
                 <div className="bg-[#F9FAFB] p-6 md:p-8 border border-green-50 flex flex-col justify-between">
                   <div>
-                    <img src={quotes} alt="quotes" className="w-[20px] h-[20px] block mb-2 object-contain" />
+                    <img
+                      src={quotes}
+                      alt="quotes"
+                      className="w-[20px] h-[20px] block mb-2 object-contain"
+                    />
                     <p className="text-[#535353] text-[15px] leading-relaxed mb-6">
                       {testimonials.large.quote.substring(0, 120)}...
                     </p>
                   </div>
                   <div>
-                    <p className="font-semibold text-[#000000] text-sm">{testimonials.large.name}</p>
-                    <p className="text-gray-400 text-xs">{testimonials.large.company}</p>
+                    <p className="font-semibold text-[#000000] text-sm">
+                      {testimonials.large.name}
+                    </p>
+                    <p className="text-gray-400 text-xs">
+                      {testimonials.large.company}
+                    </p>
                   </div>
                 </div>
+
               </div>
             </div>
+
           </div>
         </div>
       </section>
 
+      {/* Landing Three Integration */}
       <div className="mt-0 pb-0">
         <LandingThree />
       </div>
