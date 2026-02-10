@@ -17,7 +17,7 @@ import portfolio6 from "../assets/portfolio 6.png";
 import portfolio7 from "../assets/portfolio 7.png";
 import portfolio8 from "../assets/portfolio 8.png";
 
-import portfolio9 from "../assets/outdoor 12.png";
+import portfolio9 from "../assets/row1.png";
 import portfolio10 from "../assets/outdoor 51.png";
 import portfolio11 from "../assets/outdoor 31.png";
 import portfolio12 from "../assets/outdoor 33.png";

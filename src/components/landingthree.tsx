@@ -123,10 +123,18 @@ const LandingPageThree: React.FC = () => {
 
   return (
     <main>
+      {/* GLOBAL STYLES for Crimson Pro */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+        
+        .font-crimson {
+            font-family: 'Crimson Pro', serif !important;
+        }
+      `}} />
+
       <div className="w-full font-inter overflow-x-hidden min-h-screen flex flex-col m-0 p-0 bg-white">
         
         {/* --- CONTACT SECTION --- */}
-        {/* UPDATED: bg-[#F0FDF4] for light green background */}
         <section
           id="contact"
           className="bg-[#F0FDF4] py-[90px] px-6 lg:px-[120px] font-inter flex-grow transition-all scroll-mt-[180px]"
@@ -134,8 +142,8 @@ const LandingPageThree: React.FC = () => {
           <div className="max-w-full mx-auto">
             
             <div className="mb-12 text-left">
-              {/* UPDATED: text-[#51A147] */}
-              <h1 className="text-[32px] md:text-[48px] font-bold text-[#51A147] mb-4 leading-tight">
+              {/* Crimson Pro Applied to Contact Heading */}
+              <h1 className="font-crimson text-[32px] md:text-[48px] font-bold text-[#51A147] mb-4 leading-tight">
                 {contactSection.heading}
               </h1>
               <p className="text-[#6B7280] text-[16px] md:text-[18px] max-w-[1600px] leading-relaxed">
@@ -143,10 +151,9 @@ const LandingPageThree: React.FC = () => {
               </p>
             </div>
 
-            {/* UPDATED: bg-[#F7FEE7] for card background */}
             <div className="bg-white rounded-[24px] p-8 md:p-12 shadow-sm border border-green-100 w-full">
-              {/* UPDATED: text-[#51A147] */}
-              <h2 className="text-[24px] md:text-[28px] font-bold text-[#51A147] mb-8">
+              {/* Crimson Pro Applied to Form Title */}
+              <h2 className="font-crimson text-[24px] md:text-[28px] font-bold text-[#51A147] mb-8">
                 {contactSection.form.title}
               </h2>
 
@@ -157,11 +164,10 @@ const LandingPageThree: React.FC = () => {
                     <label className="text-[14px] font-medium text-[#5A7184]">
                       {contactSection.form.fields.name}
                     </label>
-                    {/* UPDATED: focus:ring-[#51A147] */}
                     <input
                       type="text"
                       name="name"
-                      placeholder="your name"
+                      placeholder="Your Name"
                       required
                       className="w-full bg-[#F9FAFB] border border-gray-100 rounded-lg h-[54px] px-5 focus:outline-none focus:ring-1 focus:ring-[#51A147] text-[#374151] placeholder:text-gray-300"
                     />
@@ -171,11 +177,10 @@ const LandingPageThree: React.FC = () => {
                     <label className="text-[14px] font-medium text-[#5A7184]">
                       {contactSection.form.fields.phone}
                     </label>
-                    {/* UPDATED: focus:ring-[#51A147] */}
                     <input
                       type="text"
                       name="phone"
-                      placeholder="your number"
+                      placeholder="Your Number"
                       required
                       className="w-full bg-[#F9FAFB] border border-gray-100 rounded-lg h-[54px] px-5 focus:outline-none focus:ring-1 focus:ring-[#51A147] text-[#374151] placeholder:text-gray-300"
                     />
@@ -186,7 +191,6 @@ const LandingPageThree: React.FC = () => {
                   <label className="text-[14px] font-medium text-[#6B7280]">
                     {contactSection.form.fields.message}
                   </label>
-                  {/* UPDATED: focus:ring-[#51A147] */}
                   <textarea
                     name="message"
                     placeholder="Tell us about your project"
@@ -203,7 +207,6 @@ const LandingPageThree: React.FC = () => {
                     </div>
                   )}
 
-                  {/* UPDATED: bg-[#51A147] and hover:bg-[#3E7D36] */}
                   <button
                     type="submit"
                     disabled={isSubmitting}
@@ -219,7 +222,6 @@ const LandingPageThree: React.FC = () => {
         </section>
 
         {/* --- FOOTER SECTION --- */}
-        {/* UPDATED: bg-[#51A147] for main footer color */}
         <footer className="bg-[#51A147] w-full text-white py-12 md:py-20 px-6 lg:px-[120px]">
           <div className="max-w-[1440px] mx-auto">
 
@@ -236,7 +238,6 @@ const LandingPageThree: React.FC = () => {
                 <p className="text-[14px] leading-relaxed font-normal opacity-90">
                   {footer.description}
                 </p>
-                {/* UPDATED: text-[#51A147] */}
                 <button 
                   onClick={() => handleNavigation('/#contact')}
                   className="bg-white text-[#51A147] px-8 py-3 rounded-[6px] font-bold text-[15px] hover:bg-gray-100 transition"
@@ -250,7 +251,7 @@ const LandingPageThree: React.FC = () => {
 
                 {/* Links */}
                 <div className="min-w-[140px]">
-                  <h4 className="font-medium text-[20px] mb-6">{footer.linksTitle}</h4>
+                  <h4 className="font-crimson font-medium text-[22px] mb-6">{footer.linksTitle}</h4>
                   <ul className="space-y-4 text-[15px]">
                     {header.navLinks.map((link, idx) => (
                       <li
@@ -266,7 +267,7 @@ const LandingPageThree: React.FC = () => {
 
                 {/* Services */}
                 <div className="min-w-[140px]">
-                  <h4 className="font-medium text-[20px] mb-6">{footer.productTitle}</h4>
+                  <h4 className="font-crimson font-medium text-[22px] mb-6">{footer.productTitle}</h4>
                   <ul className="space-y-4 text-[15px]">
                     {footer.products.map((product, idx) => (
                       <li
@@ -282,7 +283,7 @@ const LandingPageThree: React.FC = () => {
 
                 {/* Contacts */}
                 <div className="space-y-6 min-w-[240px]">
-                  <h4 className="font-medium text-[20px] mb-6">{footer.contactsTitle}</h4>
+                  <h4 className="font-crimson font-medium text-[22px] mb-6">{footer.contactsTitle}</h4>
 
                   <div className="space-y-5 text-[15px]">
                     <div className="flex items-center gap-4">
