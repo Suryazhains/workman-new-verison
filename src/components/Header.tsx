@@ -251,7 +251,7 @@ const Header: React.FC = () => {
           })}
         </nav>
 
-        {/* Contact Button - UPDATED STYLES */}
+        {/* Contact Button - UPDATED TEXT COLOR TO #51A147 */}
         <div className="flex items-center space-x-4">
           <Link 
             to="/#contact"
@@ -259,7 +259,7 @@ const Header: React.FC = () => {
               e.preventDefault();
               handleNavigation('/#contact');
             }}
-            className="hidden md:flex items-center justify-center bg-white text-[#163B73] rounded-[6px]
+            className="hidden md:flex items-center justify-center bg-white text-[#51A147] rounded-[6px]
                        w-[150px] h-[45px] lg:w-[170px] lg:h-[50px]
                        font-inter font-bold text-[15px] lg:text-[16px]
                        hover:bg-gray-100 transition-all shadow-sm"
@@ -311,7 +311,7 @@ const Header: React.FC = () => {
                     </Link>
                     {isDropdown && (
                       <button onClick={() => setMobileSubMenu(isOpen ? null : link.name)} className="p-2">
-                        <svg className={`w-6 h-6 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''} text-[#163B73]`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className={`w-6 h-6 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''} text-[#163B73]]`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
                         </svg>
                       </button>
@@ -356,14 +356,14 @@ const Header: React.FC = () => {
               );
             })}
             
-            {/* Mobile Contact Button - UPDATED STYLES */}
+            {/* Mobile Contact Button - UPDATED TEXT COLOR TO #51A147 */}
             <Link 
               to="/#contact"
               onClick={(e) => {
                 e.preventDefault();
                 handleNavigation('/#contact');
               }}
-              className="w-full bg-white border-2 border-[#163B73] text-[#163B73] text-center py-4 rounded-md font-bold block mt-4"
+              className="w-full bg-white border-2 border-[#51A147] text-[#51A147] text-center py-4 rounded-md font-bold block mt-4"
             >
               {contactBtn}
             </Link>

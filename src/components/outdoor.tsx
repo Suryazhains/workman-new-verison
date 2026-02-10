@@ -27,7 +27,10 @@ const OutdoorServices: React.FC = () => {
   };
 
   const currentCategoryKey = getCategoryKey() as keyof typeof categoryData;
+  
+  // KEEPING POP FULL WIDTH AS REQUESTED
   const isFullWidthCategory = currentCategoryKey === 'LED VIDEO WALL' || currentCategoryKey === 'POP';
+  
   const pageHeader = categoryData[currentCategoryKey];
   
   const filteredServices = useMemo(() => {
@@ -71,36 +74,40 @@ const OutdoorServices: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full">
-      <style>
-        {`
-          .service-card { transition: all 0.4s ease; outline: none !important; border: none; }
-          .product-highlight { 
-            animation: blue-glow-pulse 2.5s ease-out forwards; 
-            background-color: rgba(22, 59, 115, 0.04); 
-            border-radius: 12px; 
-            z-index: 10; 
-          }
-          @keyframes blue-glow-pulse {
-            0% { box-shadow: 0 0 0 0px rgba(22, 59, 115, 0.4); }
-            30% { box-shadow: 0 0 0 15px rgba(22, 59, 115, 0.1); }
-            100% { box-shadow: 0 0 0 0px transparent; }
-          }
-          .full-width-layout { display: flex !important; flex-direction: column; width: 100%; gap: 5rem; }
-          .full-width-card { width: 100% !important; max-width: 1440px !important; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
-          .media-container-full { width: 100%; height: auto; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-          .media-content-full { width: 100%; height: auto; display: block; object-fit: contain; }
-          .title-container-full { margin-top: 1.5rem; text-align: center; width: 100%; }
-          @media (max-width: 768px) { .full-width-layout { gap: 3rem; } }
-        `}
-      </style>
+      <style dangerouslySetInnerHTML={{ __html: `
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
+        
+        .font-crimson {
+            font-family: 'Crimson Pro', serif !important;
+        }
+
+        .service-card { transition: all 0.4s ease; outline: none !important; border: none; }
+        .product-highlight { 
+          animation: blue-glow-pulse 2.5s ease-out forwards; 
+          background-color: rgba(22, 59, 115, 0.04); 
+          border-radius: 12px; 
+          z-index: 10; 
+        }
+        @keyframes blue-glow-pulse {
+          0% { box-shadow: 0 0 0 0px rgba(22, 59, 115, 0.4); }
+          30% { box-shadow: 0 0 0 15px rgba(22, 59, 115, 0.1); }
+          100% { box-shadow: 0 0 0 0px transparent; }
+        }
+        .full-width-layout { display: flex !important; flex-direction: column; width: 100%; gap: 5rem; }
+        .full-width-card { width: 100% !important; max-width: 1440px !important; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+        .media-container-full { width: 100%; height: auto; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .media-content-full { width: 100%; height: auto; display: block; object-fit: contain; }
+        .title-container-full { margin-top: 1.5rem; text-align: center; width: 100%; }
+        @media (max-width: 768px) { .full-width-layout { gap: 3rem; } }
+      `}} />
 
       <section className="w-full bg-white pt-[90px] pb-[90px]">
         <div className="w-full max-w-[1920px] mx-auto px-6 md:px-10 xl:px-[90px]">
           <div className="mb-12">
-            <h1 className="text-[42px] md:text-[56px] font-bold text-black mb-4 capitalize tracking-tight">
+            <h1 className="font-crimson text-[42px] md:text-[56px] font-bold text-black mb-4 capitalize tracking-tight">
               {pageHeader.heading}
             </h1>
-            <p className="text-gray-500 text-[18px] w-full leading-relaxed">
+            <p className="text-gray-500 text-[18px] w-full leading-relaxed font-inter">
               {pageHeader.description}
             </p>
           </div>
@@ -129,23 +136,25 @@ const OutdoorServices: React.FC = () => {
                     className={`service-card scroll-mt-32 ${isActive ? 'product-highlight' : ''} ${isFullWidthCategory ? 'full-width-card' : ''}`}
                   >
                     {isFullWidthCategory ? (
-                      /* LED Video Wall and POP Layout - Title moved below image and centered */
                       <>
                         <div className="media-container-full">
                           {service.videoUrl ? (
                             <video src={service.videoUrl} autoPlay loop muted playsInline className="media-content-full" />
                           ) : (
-                            <img src={service.images?.[0]} alt={service.title} className="media-content-full" />
+                            <img 
+                              src={service.images && service.images.length > 0 ? service.images[0] : ''} 
+                              alt={service.title} 
+                              className="media-content-full" 
+                            />
                           )}
                         </div>
                         <div className="title-container-full">
-                          <h3 className="text-3xl font-bold text-black text-center">
+                          <h3 className="font-crimson text-3xl font-bold text-black text-center">
                             {service.title}
                           </h3>
                         </div>
                       </>
                     ) : (
-                      /* Standard Layout for other categories */
                       <>
                         <div className="image-filmstrip">
                           {service.images?.slice(0, 3).map((img, idx) => (
@@ -153,7 +162,7 @@ const OutdoorServices: React.FC = () => {
                           ))}
                         </div>
                         <div className="initial-label">
-                          <h3 className="initial-title-text">
+                          <h3 className="font-crimson initial-title-text text-[24px] font-bold">
                             {service.title}
                           </h3>
                         </div>
@@ -163,7 +172,7 @@ const OutdoorServices: React.FC = () => {
                 );
               })
             ) : (
-              <div className="col-span-full py-20 text-center text-gray-400">
+              <div className="col-span-full py-20 text-center text-gray-400 font-inter">
                 No services found for this category.
               </div>
             )}

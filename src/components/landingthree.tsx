@@ -123,7 +123,6 @@ const LandingPageThree: React.FC = () => {
 
   return (
     <main>
-      {/* GLOBAL STYLES for Crimson Pro */}
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
         
@@ -142,7 +141,6 @@ const LandingPageThree: React.FC = () => {
           <div className="max-w-full mx-auto">
             
             <div className="mb-12 text-left">
-              {/* Crimson Pro Applied to Contact Heading */}
               <h1 className="font-crimson text-[32px] md:text-[48px] font-bold text-[#51A147] mb-4 leading-tight">
                 {contactSection.heading}
               </h1>
@@ -152,7 +150,6 @@ const LandingPageThree: React.FC = () => {
             </div>
 
             <div className="bg-white rounded-[24px] p-8 md:p-12 shadow-sm border border-green-100 w-full">
-              {/* Crimson Pro Applied to Form Title */}
               <h2 className="font-crimson text-[24px] md:text-[28px] font-bold text-[#51A147] mb-8">
                 {contactSection.form.title}
               </h2>
@@ -221,7 +218,7 @@ const LandingPageThree: React.FC = () => {
           </div>
         </section>
 
-        {/* --- FOOTER SECTION --- */}
+        {/* --- FOOTER SECTION (Updated text colors to white) --- */}
         <footer className="bg-[#51A147] w-full text-white py-12 md:py-20 px-6 lg:px-[120px]">
           <div className="max-w-[1440px] mx-auto">
 
@@ -235,7 +232,7 @@ const LandingPageThree: React.FC = () => {
                   className="w-34 h-auto cursor-pointer"
                   onClick={() => handleNavigation('/')}
                 />
-                <p className="text-[14px] leading-relaxed font-normal opacity-90">
+                <p className="text-[14px] leading-relaxed font-normal text-white opacity-100">
                   {footer.description}
                 </p>
                 <button 
@@ -251,13 +248,13 @@ const LandingPageThree: React.FC = () => {
 
                 {/* Links */}
                 <div className="min-w-[140px]">
-                  <h4 className="font-crimson font-medium text-[22px] mb-6">{footer.linksTitle}</h4>
+                  <h4 className="font-crimson font-medium text-[22px] mb-6 text-white">{footer.linksTitle}</h4>
                   <ul className="space-y-4 text-[15px]">
                     {header.navLinks.map((link, idx) => (
                       <li
                         key={idx}
                         onClick={() => handleNavigation(getRoutePath(link.name))}
-                        className="hover:text-green-100 cursor-pointer transition opacity-90"
+                        className="text-white hover:text-green-100 cursor-pointer transition opacity-100"
                       >
                         {link.name}
                       </li>
@@ -267,13 +264,13 @@ const LandingPageThree: React.FC = () => {
 
                 {/* Services */}
                 <div className="min-w-[140px]">
-                  <h4 className="font-crimson font-medium text-[22px] mb-6">{footer.productTitle}</h4>
+                  <h4 className="font-crimson font-medium text-[22px] mb-6 text-white">{footer.productTitle}</h4>
                   <ul className="space-y-4 text-[15px]">
                     {footer.products.map((product, idx) => (
                       <li
                         key={idx}
                         onClick={() => handleNavigation(getCategoryPath(product))}
-                        className="hover:text-green-100 cursor-pointer transition opacity-90"
+                        className="text-white hover:text-green-100 cursor-pointer transition opacity-100"
                       >
                         {product}
                       </li>
@@ -283,24 +280,24 @@ const LandingPageThree: React.FC = () => {
 
                 {/* Contacts */}
                 <div className="space-y-6 min-w-[240px]">
-                  <h4 className="font-crimson font-medium text-[22px] mb-6">{footer.contactsTitle}</h4>
+                  <h4 className="font-crimson font-medium text-[22px] mb-6 text-white">{footer.contactsTitle}</h4>
 
                   <div className="space-y-5 text-[15px]">
                     <div className="flex items-center gap-4">
-                      <img src={emailIcon} alt="Email" className="w-5 h-5 opacity-80" />
+                      <img src={emailIcon} alt="Email" className="w-5 h-5 invert brightness-0" />
                       <a
                         href={`mailto:${footer.email}`}
-                        className="hover:text-green-100 transition break-all opacity-90"
+                        className="text-white hover:text-green-100 transition break-all opacity-100"
                       >
                         {footer.email}
                       </a>
                     </div>
 
                     <div className="flex items-center gap-4">
-                      <img src={phoneIcon} alt="Phone" className="w-5 h-5 opacity-80" />
+                      <img src={phoneIcon} alt="Phone" className="w-5 h-5 invert brightness-0" />
                       <a
                         href={`tel:${footer.phone.replace(/\s/g, '')}`}
-                        className="hover:text-green-100 transition opacity-90"
+                        className="text-white hover:text-green-100 transition opacity-100"
                       >
                         {footer.phone}
                       </a>
@@ -323,7 +320,7 @@ const LandingPageThree: React.FC = () => {
             </div>
 
             <div className="pt-8 border-t border-white/20 text-center">
-              <p className="text-[13px] tracking-wide opacity-80">
+              <p className="text-[13px] tracking-wide text-white opacity-100">
                 {footer.copyright}
               </p>
             </div>

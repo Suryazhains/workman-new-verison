@@ -29,7 +29,6 @@ const Services: React.FC = () => {
     return null;
   }
 
-  // Destructure safely. 'description' is removed as it doesn't exist on parent.
   const { heading: mainHeading, tabs, contentMap } = servicesData;
   
   const [activeTab, setActiveTab] = useState<string>(tabs[0]?.id || '');
@@ -69,24 +68,31 @@ const Services: React.FC = () => {
   const activeIndex = tabs.findIndex(tab => tab.id === activeTab);
   const activeContent = contentMap[activeTab as keyof typeof contentMap];
 
-  // Fallback UI if content is missing
   if (!activeContent) return null;
 
   return (
     <>
+      {/* GLOBAL FONT IMPORT */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700;900&family=Inter:wght@400;500;600;700&display=swap');
+        
+        .font-crimson {
+            font-family: 'Crimson Pro', serif !important;
+        }
+      `}} />
+
       <section
         id="services"
         className="w-full pt-[90px] pb-[90px] bg-white font-inter"
       >
         <div className="w-full max-w-[1920px] mx-auto px-5 md:px-10 xl:px-[90px]">
 
-          {/* Header Section */}
+          {/* Header Section - Crimson Pro Applied */}
           <div className="mb-10 text-left animate-[fadeSlide_0.4s_ease-in-out]">
-            <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-bold text-[#51A147] mb-4 tracking-tight">
+            <h2 className="font-crimson text-3xl sm:text-4xl lg:text-[48px] font-bold text-[#51A147] mb-4 tracking-tight">
               {activeContent.heading || mainHeading}
             </h2>
             <p className="text-base sm:text-lg text-[#4B5563] w-full leading-relaxed">
-              {/* Uses tab-specific description */}
               {activeContent.topDescription || ""}
             </p>
           </div>
@@ -110,7 +116,8 @@ const Services: React.FC = () => {
                   </div>
 
                   <div className="p-6 space-y-4">
-                    <h3 className="text-2xl font-bold text-[#51A147]">
+                    {/* Heading: Crimson Pro */}
+                    <h3 className="font-crimson text-2xl font-bold text-[#51A147]">
                       {serviceContent?.heading || service.label}
                     </h3>
                     <p className="text-sm text-[#4B5563] leading-relaxed line-clamp-4">

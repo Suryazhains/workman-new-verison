@@ -64,25 +64,27 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* --- ABOUT SECTION --- */}
+    {/* ABOUT US SECTION */}
       <section 
         id="about" 
         className="relative w-full bg-[#F3F9F2] py-16 md:py-24 px-6 md:px-12 lg:px-[90px] overflow-hidden scroll-mt-24"
       >
-        <div className="hidden lg:flex absolute right-0 top-0 h-full w-full lg:w-1/2 z-0 pointer-events-none select-none items-center justify-end">
+        {/* RIGHT SIDE IMAGE - REDUCED PADDING */}
+        <div className="hidden lg:flex absolute right-0 top-0 h-full w-full lg:w-1/2 z-0 pointer-events-none select-none items-center justify-end p-4 lg:p-6">
+          {/* Changed p-20 to p-6 to reduce the gap around the logo */}
           <img 
             src={W_image} 
-            alt="" 
-            className="h-[110%] w-auto object-contain object-right opacity-100" 
+            alt="Workman Logo" 
+            className="h-[90%] w-auto object-contain object-right opacity-100" 
           />
         </div>
 
         <div className="relative z-10 max-w-[1440px] mx-auto flex flex-col lg:flex-row items-center justify-between">
-          <div id="about-mobile" className="w-full lg:w-[65%] text-left scroll-mt-0">
+          <div id="about-mobile" className="w-full lg:w-[60%] text-left scroll-mt-0">
             <span className="text-[#51A147] font-inter font-bold text-lg md:text-[20px] leading-none tracking-[-0.04em] mb-4 block uppercase lg:normal-case">
               {about.label}
             </span>
 
-            {/* Heading: Now using Crimson Pro */}
             <h2 className="font-crimson font-black text-[32px] sm:text-[42px] md:text-[48px] leading-[1.1] tracking-[-0.01em] text-[#000000] mb-6 max-w-[650px]">
               {about.heading}
             </h2>
@@ -95,7 +97,6 @@ const LandingPage: React.FC = () => {
               {about.stats.map((stat, index) => (
                 <div key={index} className="flex flex-col">
                   <div className="flex items-center gap-1 md:gap-2">
-                    {/* Stats: Now using Crimson Pro */}
                     <p className="text-[28px] sm:text-[36px] md:text-[44px] font-crimson font-black tracking-[-0.01em] text-[#51A147]">
                       {stat.value}
                     </p>
@@ -108,6 +109,8 @@ const LandingPage: React.FC = () => {
               ))}
             </div>
           </div>
+
+          {/* This empty div ensures the text doesn't overlap the logo on large screens */}
           <div className="hidden lg:block lg:w-[35%] h-1"></div>
         </div>
       </section>
