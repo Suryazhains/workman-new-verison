@@ -4,7 +4,6 @@ import './outdoor.css';
 import LandingPageThree from './landingthree';
 import { LANDING_CONTENT } from './content';
 
-// Define the Service interface to fix the "Unexpected any" error
 interface Service {
   id: string | number;
   title: string;
@@ -27,12 +26,16 @@ const OutdoorServices: React.FC = () => {
   };
 
   const currentCategoryKey = getCategoryKey() as keyof typeof categoryData;
-  
-  // KEEPING POP FULL WIDTH AS REQUESTED
   const isFullWidthCategory = currentCategoryKey === 'LED VIDEO WALL' || currentCategoryKey === 'POP';
-  
   const pageHeader = categoryData[currentCategoryKey];
   
+  const descriptionParts = useMemo(() => {
+    const text = pageHeader.description || "";
+    const splitIndex = text.indexOf('.', 200); 
+    if (splitIndex === -1) return [text, ""];
+    return [text.substring(0, splitIndex + 1), text.substring(splitIndex + 1)];
+  }, [pageHeader.description]);
+
   const filteredServices = useMemo(() => {
     const allowedTitles = header.servicesData[currentCategoryKey] || [];
     return (outdoorPage.services as Service[]).filter(service => 
@@ -82,34 +85,34 @@ const OutdoorServices: React.FC = () => {
         }
 
         .service-card { transition: all 0.4s ease; outline: none !important; border: none; }
-        .product-highlight { 
-          animation: blue-glow-pulse 2.5s ease-out forwards; 
-          background-color: rgba(22, 59, 115, 0.04); 
-          border-radius: 12px; 
-          z-index: 10; 
-        }
-        @keyframes blue-glow-pulse {
-          0% { box-shadow: 0 0 0 0px rgba(22, 59, 115, 0.4); }
-          30% { box-shadow: 0 0 0 15px rgba(22, 59, 115, 0.1); }
-          100% { box-shadow: 0 0 0 0px transparent; }
-        }
+        
         .full-width-layout { display: flex !important; flex-direction: column; width: 100%; gap: 5rem; }
-        .full-width-card { width: 100% !important; max-width: 1440px !important; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+        /* Adjusted full-width card to take maximum available space */
+        .full-width-card { width: 100% !important; max-width: 100% !important; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
         .media-container-full { width: 100%; height: auto; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .media-content-full { width: 100%; height: auto; display: block; object-fit: contain; }
-        .title-container-full { margin-top: 1.5rem; text-align: center; width: 100%; }
+        .title-container-full { margin-top: 2rem; text-align: center; width: 100%; }
         @media (max-width: 768px) { .full-width-layout { gap: 3rem; } }
       `}} />
 
-      <section className="w-full bg-white pt-[90px] pb-[90px]">
+      <section className="w-full bg-white pt-[60px] md:pt-[90px] pb-[90px]">
+        {/* Container set to max-w-full with padding for edge-to-edge look */}
         <div className="w-full max-w-[1920px] mx-auto px-6 md:px-10 xl:px-[90px]">
           <div className="mb-12">
-            <h1 className="font-crimson text-[42px] md:text-[56px] font-bold text-black mb-4 capitalize tracking-tight">
+            <h1 className="font-crimson text-[36px] md:text-[56px] font-bold text-black mb-6 capitalize tracking-tight">
               {pageHeader.heading}
             </h1>
-            <p className="text-gray-500 text-[18px] w-full leading-relaxed font-inter">
-              {pageHeader.description}
-            </p>
+            
+            <div className="flex flex-col w-full">
+              {/* Removed max-w-[1200px] to allow full-width text expansion */}
+              <p className="text-gray-500 text-[16px] md:text-[18px] leading-relaxed font-inter w-full">
+                {descriptionParts[0]}
+              </p>
+              <div className="mt-8 md:mt-12" /> 
+              <p className="text-gray-500 text-[16px] md:text-[18px] leading-relaxed font-inter w-full">
+                {descriptionParts[1]}
+              </p>
+            </div>
           </div>
 
           <div className="mb-10">
@@ -123,59 +126,54 @@ const OutdoorServices: React.FC = () => {
             </button>
           </div>
 
-          <div className={isFullWidthCategory ? "full-width-layout" : "outdoor-grid"}>
-            {filteredServices.length > 0 ? (
-              filteredServices.map((service) => {
-                const currentSlug = formatId(service.title);
-                const isActive = activeId === currentSlug;
+          {/* Grid container utilizes full width of parent padding */}
+          <div className={isFullWidthCategory ? "full-width-layout" : "outdoor-grid w-full"}>
+            {filteredServices.map((service) => {
+              const currentSlug = formatId(service.title);
+              const isActive = activeId === currentSlug;
 
-                return (
-                  <div 
-                    key={service.id} 
-                    id={currentSlug} 
-                    className={`service-card scroll-mt-32 ${isActive ? 'product-highlight' : ''} ${isFullWidthCategory ? 'full-width-card' : ''}`}
-                  >
-                    {isFullWidthCategory ? (
-                      <>
-                        <div className="media-container-full">
-                          {service.videoUrl ? (
-                            <video src={service.videoUrl} autoPlay loop muted playsInline className="media-content-full" />
-                          ) : (
-                            <img 
-                              src={service.images && service.images.length > 0 ? service.images[0] : ''} 
-                              alt={service.title} 
-                              className="media-content-full" 
-                            />
-                          )}
-                        </div>
-                        <div className="title-container-full">
-                          <h3 className="font-crimson text-3xl font-bold text-black text-center">
-                            {service.title}
-                          </h3>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <div className="image-filmstrip">
-                          {service.images?.slice(0, 3).map((img, idx) => (
-                            <img key={`${service.id}-img-${idx}`} src={img} alt={service.title} className="filmstrip-img" loading="lazy" />
-                          ))}
-                        </div>
-                        <div className="initial-label">
-                          <h3 className="font-crimson initial-title-text text-[24px] font-bold">
-                            {service.title}
-                          </h3>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                );
-              })
-            ) : (
-              <div className="col-span-full py-20 text-center text-gray-400 font-inter">
-                No services found for this category.
-              </div>
-            )}
+              return (
+                <div 
+                  key={service.id} 
+                  id={currentSlug} 
+                  className={`service-card scroll-mt-32 ${isActive ? 'product-highlight' : ''} ${isFullWidthCategory ? 'full-width-card' : ''}`}
+                >
+                  {isFullWidthCategory ? (
+                    <>
+                      <div className="media-container-full">
+                        {service.videoUrl ? (
+                          <video src={service.videoUrl} autoPlay loop muted playsInline className="media-content-full" />
+                        ) : (
+                          <img 
+                            src={service.images && service.images.length > 0 ? service.images[0] : ''} 
+                            alt={service.title} 
+                            className="media-content-full w-full" 
+                          />
+                        )}
+                      </div>
+                      <div className="title-container-full">
+                        <h3 className="font-crimson text-2xl md:text-4xl font-bold text-black text-center">
+                          {service.title}
+                        </h3>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="image-filmstrip w-full">
+                        {service.images?.slice(0, 3).map((img, idx) => (
+                          <img key={`${service.id}-img-${idx}`} src={img} alt={service.title} className="filmstrip-img" loading="lazy" />
+                        ))}
+                      </div>
+                      <div className="initial-label w-full">
+                        <h3 className="font-crimson initial-title-text text-[20px] md:text-[24px] font-bold">
+                          {service.title}
+                        </h3>
+                      </div>
+                    </>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
