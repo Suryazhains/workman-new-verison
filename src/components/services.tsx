@@ -29,8 +29,10 @@ const Services: React.FC = () => {
     return null;
   }
 
-  const { heading, description, tabs, contentMap } = servicesData;
-  const [activeTab, setActiveTab] = useState(tabs[0]?.id || '');
+  // Destructure safely. 'description' is removed as it doesn't exist on parent.
+  const { heading: mainHeading, tabs, contentMap } = servicesData;
+  
+  const [activeTab, setActiveTab] = useState<string>(tabs[0]?.id || '');
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -67,23 +69,25 @@ const Services: React.FC = () => {
   const activeIndex = tabs.findIndex(tab => tab.id === activeTab);
   const activeContent = contentMap[activeTab as keyof typeof contentMap];
 
+  // Fallback UI if content is missing
   if (!activeContent) return null;
 
   return (
     <>
       <section
         id="services"
-        className="w-full pt-[90px] pb-[90px] bg-[#FFFFF] font-inter"
+        className="w-full pt-[90px] pb-[90px] bg-white font-inter"
       >
         <div className="w-full max-w-[1920px] mx-auto px-5 md:px-10 xl:px-[90px]">
 
           {/* Header Section */}
           <div className="mb-10 text-left animate-[fadeSlide_0.4s_ease-in-out]">
             <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-bold text-[#51A147] mb-4 tracking-tight">
-              {activeContent.heading || heading}
+              {activeContent.heading || mainHeading}
             </h2>
             <p className="text-base sm:text-lg text-[#4B5563] w-full leading-relaxed">
-              {activeContent.topDescription || description}
+              {/* Uses tab-specific description */}
+              {activeContent.topDescription || ""}
             </p>
           </div>
 
@@ -98,7 +102,7 @@ const Services: React.FC = () => {
                 >
                   <div className="w-full h-[220px] overflow-hidden">
                     <img
-                      src={IMAGE_MAP[service.id]}
+                      src={IMAGE_MAP[service.id] || outdoorImg}
                       alt={service.label}
                       className="w-full h-full object-cover"
                       loading="lazy"
@@ -110,7 +114,7 @@ const Services: React.FC = () => {
                       {serviceContent?.heading || service.label}
                     </h3>
                     <p className="text-sm text-[#4B5563] leading-relaxed line-clamp-4">
-                      {serviceContent?.description[0] || ""}
+                      {serviceContent?.description?.[0] || ""}
                     </p>
                     <button
                       onClick={() => handleViewMore(service.id)}
@@ -161,7 +165,7 @@ const Services: React.FC = () => {
               <div className="order-2 xl:order-1 px-10 pb-10 xl:px-[70px] xl:pt-[80px] xl:pb-[80px] flex flex-col justify-between">
                 
                 <div className="space-y-6">
-                  {activeContent.description.map((para: string, index: number) => (
+                  {activeContent.description?.map((para: string, index: number) => (
                     <p key={index} className="text-lg text-[#4B5563] leading-relaxed">
                       {para}
                     </p>
@@ -173,7 +177,7 @@ const Services: React.FC = () => {
                     onClick={() => handleViewMore(activeTab)}
                     className="flex items-center gap-4 px-14 py-4 bg-[#51A147] text-white text-base font-bold rounded-lg hover:bg-[#3E7D36] active:scale-95 transition-all border-none outline-none"
                   >
-                    {activeContent.buttonText}
+                    {activeContent.buttonText || "View More"}
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>

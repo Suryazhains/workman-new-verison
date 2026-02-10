@@ -1,8 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import './outdoor.css';
 import LandingPageThree from './landingthree';
 import { LANDING_CONTENT } from './content';
+
+// Define the Service interface to fix the "Unexpected any" error
+interface Service {
+  id: string | number;
+  title: string;
+  videoUrl?: string;
+  images?: string[];
+}
 
 const OutdoorServices: React.FC = () => {
   const { outdoorPage, header, categoryData } = LANDING_CONTENT;
@@ -19,104 +27,72 @@ const OutdoorServices: React.FC = () => {
   };
 
   const currentCategoryKey = getCategoryKey() as keyof typeof categoryData;
-  
-  // POP and LED VIDEO WALL are now both full-width
   const isFullWidthCategory = currentCategoryKey === 'LED VIDEO WALL' || currentCategoryKey === 'POP';
-
   const pageHeader = categoryData[currentCategoryKey];
-  const allowedTitles = header.servicesData[currentCategoryKey] || [];
-
-  const filteredServices = (outdoorPage.services as any[]).filter(service => 
-    allowedTitles.some(title => title.toLowerCase().trim() === service.title.toLowerCase().trim())
-  );
+  
+  // Memoizing filteredServices to prevent unnecessary re-renders and fix dependency warnings
+  const filteredServices = useMemo(() => {
+    const allowedTitles = header.servicesData[currentCategoryKey] || [];
+    return (outdoorPage.services as Service[]).filter(service => 
+      allowedTitles.some(title => title.toLowerCase().trim() === service.title.toLowerCase().trim())
+    );
+  }, [currentCategoryKey, header.servicesData, outdoorPage.services]);
 
   const formatId = (text: string) => 
     text.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-');
 
   useEffect(() => {
-    if (!hash) window.scrollTo(0, 0);
-
-    if (hash) {
-      const targetHash = hash.replace('#', '').toLowerCase();
-      const matchedService = filteredServices.find(s => formatId(s.title) === targetHash || targetHash.includes(formatId(s.title)));
-
-      if (matchedService) {
-        const finalId = formatId(matchedService.title);
-        setActiveId(finalId);
-        requestAnimationFrame(() => {
-          const element = document.getElementById(finalId);
-          if (element) {
-            const headerOffset = 100;
-            const elementPosition = element.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-          }
-        });
-      }
+    if (!hash) {
+      window.scrollTo(0, 0);
+      return;
     }
-  }, [hash, pathname, filteredServices]);
+
+    const targetHash = hash.replace('#', '').toLowerCase();
+    const matchedService = filteredServices.find(s => 
+      formatId(s.title) === targetHash || targetHash.includes(formatId(s.title))
+    );
+
+    if (matchedService) {
+      const finalId = formatId(matchedService.title);
+      setActiveId(finalId);
+      
+      // Use a small timeout or requestAnimationFrame to ensure DOM is ready
+      const scrollTimeout = setTimeout(() => {
+        const element = document.getElementById(finalId);
+        if (element) {
+          const headerOffset = 100;
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+        }
+      }, 100);
+
+      return () => clearTimeout(scrollTimeout);
+    }
+  }, [hash, filteredServices]);
 
   return (
     <div className="flex flex-col w-full">
       <style>
         {`
-          .service-card {
-            transition: all 0.4s ease;
-            outline: none !important;
-            border: none;
+          .service-card { transition: all 0.4s ease; outline: none !important; border: none; }
+          .product-highlight { 
+            animation: blue-glow-pulse 2.5s ease-out forwards; 
+            background-color: rgba(22, 59, 115, 0.04); 
+            border-radius: 12px; 
+            z-index: 10; 
           }
-
-          .product-highlight {
-            animation: blue-glow-pulse 2.5s ease-out forwards;
-            background-color: rgba(22, 59, 115, 0.04);
-            border-radius: 12px;
-            z-index: 10;
-          }
-
           @keyframes blue-glow-pulse {
             0% { box-shadow: 0 0 0 0px rgba(22, 59, 115, 0.4); }
             30% { box-shadow: 0 0 0 15px rgba(22, 59, 115, 0.1); }
             100% { box-shadow: 0 0 0 0px transparent; }
           }
-
-          /* Full Width Layout for LED & POP */
-          .full-width-layout {
-            display: flex !important;
-            flex-direction: column;
-            width: 100%;
-            gap: 5rem;
-          }
-
-          .full-width-card {
-            width: 100% !important;
-            max-width: 1440px !important;
-            margin: 0 auto;
-          }
-
-          .media-container-full {
-            width: 100%;
-            height: auto; 
-            background: transparent;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-          }
-
-          .media-content-full {
-            width: 100%;
-            height: auto;
-            display: block;
-            object-fit: contain;
-          }
-
-          .title-container-full {
-            margin-top: 1.5rem;
-            padding: 0 0.5rem;
-          }
-
-          @media (max-width: 768px) {
-            .full-width-layout { gap: 3rem; }
-          }
+          .full-width-layout { display: flex !important; flex-direction: column; width: 100%; gap: 5rem; }
+          .full-width-card { width: 100% !important; max-width: 1440px !important; margin: 0 auto; }
+          .media-container-full { width: 100%; height: auto; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+          .media-content-full { width: 100%; height: auto; display: block; object-fit: contain; }
+          .title-container-full { margin-top: 1.5rem; padding: 0 0.5rem; }
+          @media (max-width: 768px) { .full-width-layout { gap: 3rem; } }
         `}
       </style>
 
@@ -154,41 +130,22 @@ const OutdoorServices: React.FC = () => {
                     id={currentSlug} 
                     className={`service-card scroll-mt-32 ${isActive ? 'product-highlight' : ''} ${isFullWidthCategory ? 'full-width-card' : ''}`}
                   >
-                    {/* Media Handling */}
                     {isFullWidthCategory ? (
                       <div className="media-container-full">
                         {service.videoUrl ? (
-                          <video
-                            src={service.videoUrl}
-                            autoPlay
-                            loop
-                            muted
-                            playsInline
-                            className="media-content-full"
-                          />
+                          <video src={service.videoUrl} autoPlay loop muted playsInline className="media-content-full" />
                         ) : (
-                          <img 
-                            src={service.images?.[0]} 
-                            alt={service.title} 
-                            className="media-content-full"
-                          />
+                          <img src={service.images?.[0]} alt={service.title} className="media-content-full" />
                         )}
                       </div>
                     ) : (
                       <div className="image-filmstrip">
-                        {service.images && service.images.slice(0, 3).map((img: string, idx: number) => (
-                          <img
-                            key={`${service.id}-img-${idx}`}
-                            src={img}
-                            alt={service.title}
-                            className="filmstrip-img"
-                            loading="lazy"
-                          />
+                        {service.images?.slice(0, 3).map((img, idx) => (
+                          <img key={`${service.id}-img-${idx}`} src={img} alt={service.title} className="filmstrip-img" loading="lazy" />
                         ))}
                       </div>
                     )}
 
-                    {/* Title Handling */}
                     <div className={isFullWidthCategory ? "title-container-full" : "initial-label"}>
                       <h3 className={isFullWidthCategory ? "text-3xl font-bold text-black" : "initial-title-text"}>
                         {service.title}
