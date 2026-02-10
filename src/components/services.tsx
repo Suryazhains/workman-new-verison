@@ -22,140 +22,116 @@ const Services: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // SAFETY CHECK: Get the section first to prevent destructuring error
   const servicesData = LANDING_CONTENT?.servicesSection;
 
-  // If the data is missing, we show a console error and return null to prevent crash
   if (!servicesData) {
     console.error("Critical Error: 'servicesSection' is missing in LANDING_CONTENT.");
     return null;
   }
 
-  // Safely destructure
   const { heading, description, tabs, contentMap } = servicesData;
-
-  // Initialize state with the first tab ID
   const [activeTab, setActiveTab] = useState(tabs[0]?.id || '');
 
-  /**
-   * ✅ SYNC TABS WITH URL HASH & RESET SCROLL
-   * This ensures that if you navigate back to this page, 
-   * or arrive via a hash link, it behaves correctly.
-   */
   useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+
     const currentHash = location.hash.replace('#', '').toLowerCase();
     const matchedTab = tabs.find(t => t.id === currentHash);
     
     if (matchedTab) {
       setActiveTab(matchedTab.id);
-      const element = document.getElementById('services');
-      if (element) {
-        // Smooth scroll to the section if targeted by a hash
-        const headerOffset = window.innerWidth < 1024 ? 70 : 120;
-        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-        const offsetPosition = elementPosition - headerOffset;
+      
+      const timer = setTimeout(() => {
+        const element = document.getElementById('services');
+        if (element) {
+          const headerOffset = window.innerWidth < 1024 ? 80 : 110; 
+          const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+          const offsetPosition = elementPosition - headerOffset;
 
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
-      }
-    } else {
-      // ✅ MANDATORY RESET: Fixes the issue where "Back" or "Navigate" 
-      // loads the page at a previous scroll position.
-      window.scrollTo(0, 0);
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }, 100);
+
+      return () => clearTimeout(timer);
     }
   }, [location.pathname, location.hash, tabs]);
 
-  /**
-   * ✅ SHARED NAVIGATION HANDLER
-   * Forces the window to the top before navigating to the sub-category page
-   */
   const handleViewMore = (id: string) => {
     window.scrollTo(0, 0);
     navigate(`/${id}`);
   };
 
   const activeIndex = tabs.findIndex(tab => tab.id === activeTab);
-  
-  // FIX: Cast activeTab to keyof typeof contentMap to solve TS7053
   const activeContent = contentMap[activeTab as keyof typeof contentMap];
 
-  // Fallback if content is missing
   if (!activeContent) return null;
 
   return (
     <>
       <section
         id="services"
-        className="w-full pt-8 pb-12 md:pt-14 md:pb-20 bg-[#F6F7F9] font-inter"
+        className="w-full pt-[90px] pb-[90px] bg-[#FFFFF] font-inter"
       >
-        <div className="max-w-[1280px] mx-auto px-5 sm:px-10 lg:px-20">
+        <div className="w-full max-w-[1920px] mx-auto px-5 md:px-10 xl:px-[90px]">
 
-          {/* Header */}
-          <div className="mb-6 md:mb-10 text-center md:text-left">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#111827] mb-4 tracking-tight transition-all duration-300">
+          {/* Header Section */}
+          <div className="mb-10 text-left animate-[fadeSlide_0.4s_ease-in-out]">
+            <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-bold text-[#51A147] mb-4 tracking-tight">
               {activeContent.heading || heading}
             </h2>
-            <p className="text-sm sm:text-base text-[#4B5563] max-w-[600px] leading-relaxed mx-auto md:mx-0">
-              {description}
+            <p className="text-base sm:text-lg text-[#4B5563] w-full leading-relaxed">
+              {activeContent.topDescription || description}
             </p>
           </div>
 
-          {/* ---------------- MOBILE VIEW (Shows all services now) ---------------- */}
+          {/* ---------------- MOBILE VIEW ---------------- */}
           <div className="flex flex-col gap-6 md:hidden">
-            {tabs.map(service => (
-              <div
-                key={service.id}
-                className="bg-white border border-[#E5E7EB] rounded-3xl overflow-hidden shadow-sm animate-[fadeSlide_0.4s_ease-in-out]"
-              >
-                <div className="w-full h-[220px] overflow-hidden">
-                  <img
-                    src={IMAGE_MAP[service.id]}
-                    alt={service.label}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
+            {tabs.map(service => {
+              const serviceContent = contentMap[service.id as keyof typeof contentMap];
+              return (
+                <div
+                  key={service.id}
+                  className="bg-white border border-[#E5E7EB] rounded-3xl overflow-hidden shadow-sm"
+                >
+                  <div className="w-full h-[220px] overflow-hidden">
+                    <img
+                      src={IMAGE_MAP[service.id]}
+                      alt={service.label}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
 
-                <div className="p-6 space-y-4">
-                  <h3 className="text-2xl font-bold text-[#111827]">
-                    {service.label}
-                  </h3>
-
-                  <p className="text-sm text-[#4B5563] leading-relaxed line-clamp-4">
-                    {/* Fetch description for each specific service card */}
-                    {(contentMap[service.id as keyof typeof contentMap] as any)?.description[0] || ""}
-                  </p>
-
-                  <button
-                    onClick={() => handleViewMore(service.id)}
-                    className="flex items-center gap-4 px-10 py-3 bg-[#163B73] text-white text-sm font-bold rounded-lg active:scale-95 transition-all outline-none focus:outline-none border-none"
-                  >
-                    View more
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
+                  <div className="p-6 space-y-4">
+                    <h3 className="text-2xl font-bold text-[#51A147]">
+                      {serviceContent?.heading || service.label}
+                    </h3>
+                    <p className="text-sm text-[#4B5563] leading-relaxed line-clamp-4">
+                      {serviceContent?.description[0] || ""}
+                    </p>
+                    <button
+                      onClick={() => handleViewMore(service.id)}
+                      className="flex items-center gap-4 px-10 py-3 bg-[#51A147] text-white text-sm font-bold rounded-lg active:scale-95 transition-all border-none outline-none"
                     >
-                      <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                  </button>
+                      View more
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
-          {/* ---------------- DESKTOP VIEW (The Table / Tabs) ---------------- */}
+          {/* ---------------- DESKTOP VIEW ---------------- */}
           <div className="hidden md:block bg-white border border-[#E5E7EB] rounded-2xl overflow-hidden shadow-sm">
-
-            {/* Tabs (Navigation Row) */}
-            <div className="relative flex bg-[#E6F0FF] rounded-t-2xl overflow-x-auto no-scrollbar">
+            
+            {/* Tabs Row */}
+            <div className="relative flex bg-[#F0FDF4] rounded-t-2xl overflow-x-auto no-scrollbar">
               <div
                 className="absolute top-0 left-0 h-full bg-white rounded-t-2xl transition-transform duration-300 ease-in-out pointer-events-none"
                 style={{
@@ -168,58 +144,44 @@ const Services: React.FC = () => {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`relative z-10 flex-1 py-4 px-2 text-base font-semibold transition-all outline-none focus:outline-none border-none
-                    ${
-                      activeTab === tab.id
-                        ? 'text-[#163B73]'
-                        : 'text-[#4B5563] hover:text-[#163B73]'
-                    }`}
+                  className={`relative z-10 flex-1 py-5 px-2 text-lg font-semibold transition-all border-none outline-none focus:outline-none ${
+                    activeTab === tab.id ? 'text-[#51A147]' : 'text-[#4B5563] hover:text-[#51A147]'
+                  }`}
                 >
                   {tab.label}
                 </button>
               ))}
             </div>
 
-            {/* Content (Table Body) */}
+            {/* Content Body */}
             <div
               key={activeTab}
-              className="grid grid-cols-1 lg:grid-cols-2 items-stretch animate-[fadeSlide_0.4s_ease-in-out]"
+              className="grid grid-cols-1 xl:grid-cols-2 items-stretch animate-[fadeSlide_0.4s_ease-in-out]"
             >
-              {/* Text Side */}
-              <div className="space-y-5 order-2 lg:order-1 p-7 lg:p-16 flex flex-col justify-center">
-                {activeContent.description.map((para: string, index: number) => (
-                  <p
-                    key={index}
-                    className="text-base text-[#4B5563] leading-relaxed"
-                  >
-                    {para}
-                  </p>
-                ))}
+              <div className="order-2 xl:order-1 px-10 pb-10 xl:px-[70px] xl:pt-[80px] xl:pb-[80px] flex flex-col justify-between">
+                
+                <div className="space-y-6">
+                  {activeContent.description.map((para: string, index: number) => (
+                    <p key={index} className="text-lg text-[#4B5563] leading-relaxed">
+                      {para}
+                    </p>
+                  ))}
+                </div>
 
-                <div className="pt-10">
+                <div className="pt-[90px]">
                   <button
                     onClick={() => handleViewMore(activeTab)}
-                    className="flex items-center gap-4 px-12 py-4 bg-[#163B73] text-white font-bold rounded-lg hover:bg-[#0f2a52] active:scale-95 transition-all outline-none focus:outline-none border-none"
+                    className="flex items-center gap-4 px-14 py-4 bg-[#51A147] text-white text-base font-bold rounded-lg hover:bg-[#3E7D36] active:scale-95 transition-all border-none outline-none"
                   >
                     {activeContent.buttonText}
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
                   </button>
                 </div>
               </div>
 
-              {/* Image Side */}
-              <div className="w-full h-full min-h-[450px] lg:min-h-[550px] overflow-hidden order-1 lg:order-2 animate-[fadeZoom_0.5s_ease-in-out]">
+              <div className="w-full h-full min-h-[500px] xl:min-h-[600px] overflow-hidden order-1 xl:order-2 animate-[fadeZoom_0.5s_ease-in-out]">
                 <img
                   src={IMAGE_MAP[activeTab] || outdoorImg} 
                   alt={activeContent.heading}
@@ -236,20 +198,16 @@ const Services: React.FC = () => {
       <style>
         {`
           @keyframes fadeSlide {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
           }
           @keyframes fadeZoom {
-            from { opacity: 0; transform: scale(0.95); }
+            from { opacity: 0; transform: scale(0.98); }
             to { opacity: 1; transform: scale(1); }
           }
           .no-scrollbar::-webkit-scrollbar { display: none; }
           .no-scrollbar { scrollbar-width: none; }
-          
-          button:focus, button:active {
-            outline: none !important;
-            box-shadow: none !important;
-          }
+          button:focus, button:active { outline: none !important; box-shadow: none !important; }
         `}
       </style>
     </>

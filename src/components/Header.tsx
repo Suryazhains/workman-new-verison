@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import logoImg from '../assets/workman LOGO.png';
+import logoImg from '../assets/whitelogo.png';
 import { LANDING_CONTENT } from './content';
 
 const Header: React.FC = () => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // State for mobile sub-menu toggles
   const [mobileSubMenu, setMobileSubMenu] = useState<string | null>(null);
 
   const { navLinks, servicesData, infrastructureData, contactBtn } = LANDING_CONTENT.header;
@@ -14,11 +13,6 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  /**
-   * ✅ FIXED NAVIGATION HANDLER
-   * Specifically handles the mobile header offset (80px) to prevent 
-   * sections from being hidden behind the sticky navbar.
-   */
   const handleNavigation = (path: string | null) => {
     if (!path) return;
 
@@ -28,11 +22,9 @@ const Header: React.FC = () => {
 
     const [route, hash] = path.split('#');
 
-    // Internal helper for precise offset scrolling
     const scrollToTarget = (targetId: string) => {
       const element = document.getElementById(targetId);
       if (element) {
-        // 80px for mobile header, 110px for desktop
         const offset = window.innerWidth < 1024 ? 70 : 120; 
         const elementPosition = element.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - offset;
@@ -45,18 +37,15 @@ const Header: React.FC = () => {
     };
 
     if (location.pathname === route && hash) {
-      // Same page: Scroll immediately
       scrollToTarget(hash);
     } 
     else if (hash) {
-      // Different page: Navigate first, then scroll
       navigate(route);
       setTimeout(() => {
         scrollToTarget(hash);
-      }, 400); // Increased timeout to ensure DOM is ready on slow mobile connections
+      }, 400);
     } 
     else {
-      // Standard page navigation
       navigate(route);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -123,7 +112,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="w-full bg-[#F6F7F9] sticky top-0 z-50 border-none outline-none">
+    <header className="w-full bg-[#51A147] sticky top-0 z-50 border-none outline-none">
       <style>
         {`
           *:focus {
@@ -136,7 +125,6 @@ const Header: React.FC = () => {
           html {
             scroll-behavior: smooth;
           }
-          /* Fallback for standard anchor jumps */
           section[id] {
             scroll-margin-top: 90px;
           }
@@ -182,7 +170,7 @@ const Header: React.FC = () => {
                     e.preventDefault();
                     handleNavigation(path);
                   }}
-                  className="text-[15px] font-semibold text-[#4B5563] hover:text-[#163B73] transition-colors py-2 outline-none"
+                  className="text-[15px] font-semibold text-white hover:text-[#163B73] transition-colors py-2 outline-none"
                 >
                   {link.name}
                 </Link>
@@ -263,7 +251,7 @@ const Header: React.FC = () => {
           })}
         </nav>
 
-        {/* Contact Button */}
+        {/* Contact Button - UPDATED STYLES */}
         <div className="flex items-center space-x-4">
           <Link 
             to="/#contact"
@@ -271,17 +259,17 @@ const Header: React.FC = () => {
               e.preventDefault();
               handleNavigation('/#contact');
             }}
-            className="hidden md:flex items-center justify-center bg-[#163B73] text-white rounded-[6px]
+            className="hidden md:flex items-center justify-center bg-white text-[#163B73] rounded-[6px]
                        w-[150px] h-[45px] lg:w-[170px] lg:h-[50px]
-                       font-inter font-medium text-[15px] lg:text-[16px]
-                       hover:bg-[#0f2a52] transition-all"
+                       font-inter font-bold text-[15px] lg:text-[16px]
+                       hover:bg-gray-100 transition-all shadow-sm"
           >
             {contactBtn}
           </Link>
 
           <button 
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden p-2 text-[#163B73]"
+            className="lg:hidden p-2 text-white"
           >
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {isMenuOpen ? (
@@ -323,14 +311,13 @@ const Header: React.FC = () => {
                     </Link>
                     {isDropdown && (
                       <button onClick={() => setMobileSubMenu(isOpen ? null : link.name)} className="p-2">
-                        <svg className={`w-6 h-6 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className={`w-6 h-6 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''} text-[#163B73]`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
                         </svg>
                       </button>
                     )}
                   </div>
 
-                  {/* Mobile Services Dropdown Options */}
                   {link.name === 'Our services' && isOpen && (
                     <div className="flex flex-col ml-4 mt-2 space-y-4 border-l-2 border-gray-100 pl-4 animate-in slide-in-from-top-2 duration-300">
                       {Object.entries(servicesData).map(([category, items]) => (
@@ -352,7 +339,6 @@ const Header: React.FC = () => {
                     </div>
                   )}
 
-                  {/* Mobile Infrastructure Dropdown Options */}
                   {link.name === 'Infrastructure' && isOpen && (
                     <div className="flex flex-col ml-4 mt-2 space-y-3 border-l-2 border-gray-100 pl-4 animate-in slide-in-from-top-2 duration-300">
                       {(infrastructureData as string[]).map((item) => (
@@ -370,13 +356,14 @@ const Header: React.FC = () => {
               );
             })}
             
+            {/* Mobile Contact Button - UPDATED STYLES */}
             <Link 
               to="/#contact"
               onClick={(e) => {
                 e.preventDefault();
                 handleNavigation('/#contact');
               }}
-              className="w-full bg-[#163B73] text-center text-white py-4 rounded-md font-bold block mt-4"
+              className="w-full bg-white border-2 border-[#163B73] text-[#163B73] text-center py-4 rounded-md font-bold block mt-4"
             >
               {contactBtn}
             </Link>

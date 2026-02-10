@@ -71,3 +71,12 @@ html {
     text-decoration: underline;
   }
 }
+@font-face {
+    font-family: "Britanica-Black";
+    src: url("https://db.onlinewebfonts.com/t/38c9851a552c219fba7878035cef1a1c.eot");
+    src: url("https://db.onlinewebfonts.com/t/38c9851a552c219fba7878035cef1a1c.eot?#iefix") format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/38c9851a552c219fba7878035cef1a1c.woff2") format("woff2"),
+    url("https://db.onlinewebfonts.com/t/38c9851a552c219fba7878035cef1a1c.woff") format("woff"),
+    url("https://db.onlinewebfonts.com/t/38c9851a552c219fba7878035cef1a1c.ttf") format("truetype"),
+    url("https://db.onlinewebfonts.com/t/38c9851a552c219fba7878035cef1a1c.svg#Britanica-Black") format("svg");
+}

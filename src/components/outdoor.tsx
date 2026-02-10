@@ -9,74 +9,50 @@ const OutdoorServices: React.FC = () => {
   const { hash, pathname } = useLocation();
   const [activeId, setActiveId] = useState<string>("");
 
-  /**
-   * 1. IDENTIFY CATEGORY & FILTER LOGIC
-   * Checks both pathname and hash to ensure Indoor, LED, POP, and Modular load correctly.
-   */
   const getCategoryKey = () => {
     const currentPath = (pathname + hash).toLowerCase();
-    
     if (currentPath.includes('indoor')) return 'INDOOR';
     if (currentPath.includes('led')) return 'LED VIDEO WALL';
-    if (currentPath.includes('pop')) return 'POP'; // Correctly detects POP route
+    if (currentPath.includes('pop')) return 'POP'; 
     if (currentPath.includes('modular')) return 'MODULAR SIGNAGE';
     return 'OUTDOOR';
   };
 
   const currentCategoryKey = getCategoryKey() as keyof typeof categoryData;
   
-  // Get dynamic heading and description based on the detected category
-  const pageHeader = categoryData[currentCategoryKey];
+  // POP and LED VIDEO WALL are now both full-width
+  const isFullWidthCategory = currentCategoryKey === 'LED VIDEO WALL' || currentCategoryKey === 'POP';
 
-  // Get the list of titles allowed for this specific category from the Header data
+  const pageHeader = categoryData[currentCategoryKey];
   const allowedTitles = header.servicesData[currentCategoryKey] || [];
 
-  /**
-   * Filter the master services list.
-   * We use .trim() on both sides to prevent mismatches caused by accidental trailing spaces.
-   */
-  const filteredServices = outdoorPage.services.filter(service => 
+  const filteredServices = (outdoorPage.services as any[]).filter(service => 
     allowedTitles.some(title => title.toLowerCase().trim() === service.title.toLowerCase().trim())
   );
 
-  /**
-   * Standardized ID generator
-   * Matches the logic in Header.tsx exactly
-   */
   const formatId = (text: string) => 
-    text
-      .toLowerCase()
-      .trim()
-      .replace(/[^\w\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-');
+    text.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-');
 
-  /**
-   * Effect to handle automatic scrolling and setting the active highlight
-   */
   useEffect(() => {
+    if (!hash) window.scrollTo(0, 0);
+
     if (hash) {
       const targetHash = hash.replace('#', '').toLowerCase();
-      
-      const matchedService = filteredServices.find(s => {
-        const fullSlug = formatId(s.title);
-        return fullSlug === targetHash || targetHash.includes(fullSlug);
-      });
+      const matchedService = filteredServices.find(s => formatId(s.title) === targetHash || targetHash.includes(formatId(s.title)));
 
       if (matchedService) {
         const finalId = formatId(matchedService.title);
         setActiveId(finalId);
-        
-        const element = document.getElementById(finalId);
-        if (element) {
-          setTimeout(() => {
-            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }, 150);
-        }
+        requestAnimationFrame(() => {
+          const element = document.getElementById(finalId);
+          if (element) {
+            const headerOffset = 100;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+          }
+        });
       }
-    } else {
-      setActiveId("");
-      window.scrollTo(0, 0); 
     }
   }, [hash, pathname, filteredServices]);
 
@@ -98,37 +74,63 @@ const OutdoorServices: React.FC = () => {
           }
 
           @keyframes blue-glow-pulse {
-            0% {
-              box-shadow: 0 0 0 0px rgba(22, 59, 115, 0.4);
-            }
-            30% {
-              box-shadow: 0 0 0 15px rgba(22, 59, 115, 0.1);
-            }
-            100% {
-              box-shadow: 0 0 0 0px transparent;
-            }
+            0% { box-shadow: 0 0 0 0px rgba(22, 59, 115, 0.4); }
+            30% { box-shadow: 0 0 0 15px rgba(22, 59, 115, 0.1); }
+            100% { box-shadow: 0 0 0 0px transparent; }
           }
 
-          *:focus {
-            outline: none !important;
+          /* Full Width Layout for LED & POP */
+          .full-width-layout {
+            display: flex !important;
+            flex-direction: column;
+            width: 100%;
+            gap: 5rem;
+          }
+
+          .full-width-card {
+            width: 100% !important;
+            max-width: 1440px !important;
+            margin: 0 auto;
+          }
+
+          .media-container-full {
+            width: 100%;
+            height: auto; 
+            background: transparent;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+          }
+
+          .media-content-full {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+          }
+
+          .title-container-full {
+            margin-top: 1.5rem;
+            padding: 0 0.5rem;
+          }
+
+          @media (max-width: 768px) {
+            .full-width-layout { gap: 3rem; }
           }
         `}
       </style>
 
-      <section className="w-full bg-[#F6F7F9] pt-16 pb-24">
-        <div className="max-w-[1280px] mx-auto px-6 lg:px-[80px]">
-
-          {/* DYNAMIC HEADER */}
+      <section className="w-full bg-white pt-[90px] pb-[90px]">
+        <div className="w-full max-w-[1920px] mx-auto px-6 md:px-10 xl:px-[90px]">
           <div className="mb-12">
             <h1 className="text-[42px] md:text-[56px] font-bold text-black mb-4 capitalize tracking-tight">
               {pageHeader.heading}
             </h1>
-            <p className="text-gray-500 text-[16px] max-w-xl leading-relaxed">
+            <p className="text-gray-500 text-[18px] w-full leading-relaxed">
               {pageHeader.description}
             </p>
           </div>
 
-          {/* Back Button */}
           <div className="mb-10">
             <button
               type="button"
@@ -140,8 +142,7 @@ const OutdoorServices: React.FC = () => {
             </button>
           </div>
 
-          {/* FILTERED SERVICES GRID */}
-          <div className="outdoor-grid">
+          <div className={isFullWidthCategory ? "full-width-layout" : "outdoor-grid"}>
             {filteredServices.length > 0 ? (
               filteredServices.map((service) => {
                 const currentSlug = formatId(service.title);
@@ -151,12 +152,31 @@ const OutdoorServices: React.FC = () => {
                   <div 
                     key={service.id} 
                     id={currentSlug} 
-                    className={`service-card scroll-mt-32 ${isActive ? 'product-highlight' : ''}`}
+                    className={`service-card scroll-mt-32 ${isActive ? 'product-highlight' : ''} ${isFullWidthCategory ? 'full-width-card' : ''}`}
                   >
-                    {/* Image Filmstrip */}
-                    {service.images && service.images.length > 0 && (
+                    {/* Media Handling */}
+                    {isFullWidthCategory ? (
+                      <div className="media-container-full">
+                        {service.videoUrl ? (
+                          <video
+                            src={service.videoUrl}
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            className="media-content-full"
+                          />
+                        ) : (
+                          <img 
+                            src={service.images?.[0]} 
+                            alt={service.title} 
+                            className="media-content-full"
+                          />
+                        )}
+                      </div>
+                    ) : (
                       <div className="image-filmstrip">
-                        {service.images.slice(0, 3).map((img, idx) => (
+                        {service.images && service.images.slice(0, 3).map((img: string, idx: number) => (
                           <img
                             key={`${service.id}-img-${idx}`}
                             src={img}
@@ -168,8 +188,9 @@ const OutdoorServices: React.FC = () => {
                       </div>
                     )}
 
-                    <div className="initial-label">
-                      <h3 className="initial-title-text">
+                    {/* Title Handling */}
+                    <div className={isFullWidthCategory ? "title-container-full" : "initial-label"}>
+                      <h3 className={isFullWidthCategory ? "text-3xl font-bold text-black" : "initial-title-text"}>
                         {service.title}
                       </h3>
                     </div>
@@ -178,13 +199,12 @@ const OutdoorServices: React.FC = () => {
               })
             ) : (
               <div className="col-span-full py-20 text-center text-gray-400">
-                No services found for this category. Please check naming consistency in content.ts.
+                No services found for this category.
               </div>
             )}
           </div>
         </div>
       </section>
-
       <LandingPageThree />
     </div>
   );

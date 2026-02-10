@@ -1,5 +1,5 @@
 /* =======================
-   GRID
+    GRID & LAYOUT
 ======================= */
 .outdoor-grid {
   display: grid;
@@ -15,45 +15,80 @@
   .outdoor-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
+/* Specific layout for LED & POP categories */
+.full-width-layout {
+  display: flex !important;
+  flex-direction: column;
+  width: 100%;
+  gap: 4rem; /* Space between different products */
+}
+
 /* =======================
-   CARD
+    CARD BASE
 ======================= */
 .service-card {
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  aspect-ratio: 1 / 0.85;
+  aspect-ratio: 1 / 0.85; /* Standard grid shape */
   background-color: #111;
   border-radius: 4px;
   z-index: 1;
   transform: translateZ(0);
+  transition: all 0.4s ease;
 }
 
+/* 🔥 THE FIX: Override for LED & POP full width */
+.full-width-card {
+  aspect-ratio: auto !important; /* Removes forced height/black bars */
+  background-color: transparent !important; /* Removes the black box look */
+  width: 100% !important;
+  max-width: 1440px;
+  margin: 0 auto;
+  overflow: visible !important;
+}
 
+/* =======================
+    MEDIA CONTAINERS
+======================= */
 .image-filmstrip {
   position: relative;
   width: 100%;
   height: 100%;
 }
 
+/* Container for LED/POP Media */
+.media-container-full {
+  width: 100%;
+  height: auto; 
+  background: transparent;
+  border-radius: 12px;
+  overflow: hidden;
+  line-height: 0; /* Fixes tiny gap under media */
+}
 
+.media-content-full {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+/* =======================
+    FILMSTRIP ANIMATIONS
+======================= */
 .filmstrip-img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-
   opacity: 0;
   transform: translateY(15%) scale(1);
-
-  transition:
-    transform 0.8s cubic-bezier(0.33, 1, 0.68, 1),
-    opacity 0.6s ease;
-
+  transition: transform 0.8s cubic-bezier(0.33, 1, 0.68, 1), opacity 0.6s ease;
   pointer-events: none;
 }
-
 
 .filmstrip-img:nth-child(1) {
   opacity: 1;
@@ -61,26 +96,20 @@
   z-index: 2;
 }
 
-
-
-
-.service-card:hover .filmstrip-img:nth-child(1) {
+.service-card:not(.full-width-card):hover .filmstrip-img:nth-child(1) {
   opacity: 1;
   transform: translateY(0%) scale(1.05);
-  transition-delay: 0s;
   z-index: 3;
 }
 
-/* Image 2 (appears after delay, SAME position) */
-.service-card:hover .filmstrip-img:nth-child(2) {
+.service-card:not(.full-width-card):hover .filmstrip-img:nth-child(2) {
   opacity: 1;
   transform: translateY(0%) scale(1.05);
   transition-delay: 1s;
   z-index: 4;
 }
 
-/* Image 3 (appears after delay, SAME position) */
-.service-card:hover .filmstrip-img:nth-child(3) {
+.service-card:not(.full-width-card):hover .filmstrip-img:nth-child(3) {
   opacity: 1;
   transform: translateY(0%) scale(1.05);
   transition-delay: 2s;
@@ -88,8 +117,9 @@
 }
 
 /* =======================
-   TITLE
+    TITLE LABELS
 ======================= */
+/* Standard Grid Label */
 .initial-label {
   position: absolute;
   bottom: 0;
@@ -98,10 +128,7 @@
   background: linear-gradient(transparent, rgba(0,0,0,0.8));
   color: white;
   z-index: 10;
-  transition: opacity 0.3s ease;
 }
-
-
 
 .initial-title-text {
   font-size: 1.4rem;
@@ -112,8 +139,35 @@
   bottom: -8px;
 }
 
+/* 🔥 Full Width Label (LED/POP) */
+.title-container-full {
+  margin-top: 1.5rem;
+  padding: 0 0.5rem;
+}
+
+.title-container-full h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #000;
+}
+
 /* =======================
-   OVERLAY (optional)
+    HIGHLIGHT ANIMATION
+======================= */
+.product-highlight {
+  animation: blue-glow-pulse 2.5s ease-out forwards;
+  background-color: rgba(22, 59, 115, 0.04);
+  border-radius: 12px;
+}
+
+@keyframes blue-glow-pulse {
+  0% { box-shadow: 0 0 0 0px rgba(22, 59, 115, 0.4); }
+  30% { box-shadow: 0 0 0 15px rgba(22, 59, 115, 0.1); }
+  100% { box-shadow: 0 0 0 0px transparent; }
+}
+
+/* =======================
+    OVERLAY
 ======================= */
 .hover-overlay {
   position: absolute;
@@ -127,7 +181,7 @@
   transition: opacity 0.4s ease;
 }
 
-.service-card:hover .hover-overlay {
+.service-card:not(.full-width-card):hover .hover-overlay {
   opacity: 1;
 }
 

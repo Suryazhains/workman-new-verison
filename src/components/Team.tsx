@@ -1,48 +1,55 @@
 import React from 'react';
 import LandingPageThree from './landingthree';
 
-
 // ✅ IMPORT TEAM IMAGES
 import team1 from '../assets/team.png'; 
 import team2 from '../assets/team 2.png';
+import team3 from '../assets/team 3.jpg'; 
+import team4 from '../assets/team 4.jpg';
+import team5 from '../assets/team 5.jpg'; 
+import team6 from '../assets/team 6.jpg';
+import team7 from '../assets/team 7.jpg'; 
+import team8 from '../assets/team 8.jpg';
+import team9 from '../assets/team 9.jpg'; 
 
 const Team: React.FC = () => {
-
+  // Consolidating all images into one array for a perfect uniform grid
+  const allTeamMembers = [team1, team2, team3, team4, team5, team6, team7, team8, team9];
 
   return (
-    <main className="bg-[#F6F7F9]">
+    <main className="bg-[#FFFFF] w-full">
       {/* 1. Infrastructure Equipment Section */}
-      <section id="infrastructure" className="w-full py-16 md:py-24">
+      <section id="infrastructure" className="w-full pt-[90px] pb-[90px]">
         
-
-        {/* ✅ 2. OUR TEAM SECTION WITH ID */}
-        <div id="team" className="max-w-[1280px] mx-auto px-6 mb-20 scroll-mt-24">
-          <div className="mb-10">
-            <h2 className="text-[40px] md:text-[56px] font-bold text-black mb-4">
+        {/* ✅ 2. OUR TEAM SECTION WITH 90px PADDING */}
+        <div id="team" className="w-full max-w-[1920px] mx-auto px-6 md:px-10 xl:px-[90px] scroll-mt-24">
+          
+          {/* Header & Description */}
+          <div className="mb-16">
+            <h2 className="text-[42px] md:text-[56px] font-bold text-black mb-6 tracking-tight">
               Our Team
             </h2>
-            <p className="text-gray-500 max-w-[600px] text-lg leading-relaxed">
-              Our dedicated team of professionals brings years of expertise to every project, 
-              ensuring precision and quality in every detail of our manufacturing process.
+            {/* Full width description spanning two lines */}
+            <p className="text-gray-500 text-[18px] md:text-[20px] w-full leading-relaxed">
+              Our dedicated team of professionals brings years of expertise and industry knowledge to every project we deliver. From design planning to fabrication and installation, we ensure precision, quality, and attention to detail at every stage. Driven by commitment and teamwork, we consistently deliver reliable signage solutions that meet the highest standards.
             </p>
           </div>
 
-          {/* Side-by-Side Team Images Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="rounded-xl overflow-hidden h-[400px] md:h-[550px] shadow-sm">
-              <img 
-                src={team1} 
-                alt="Our team working" 
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-              />
-            </div>
-            <div className="rounded-xl overflow-hidden h-[400px] md:h-[550px] shadow-sm">
-              <img 
-                src={team2} 
-                alt="Workshop facility" 
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-              />
-            </div>
+          {/* Grid: 3 Images Per Row, Expanded Width */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            {allTeamMembers.map((member, index) => (
+              <div 
+                key={index} 
+                className="rounded-2xl overflow-hidden h-[350px] md:h-[450px] lg:h-[550px] shadow-sm bg-white group"
+              >
+                <img 
+                  src={member} 
+                  alt={`Team member ${index + 1}`} 
+                  className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
+                  loading="lazy"
+                />
+              </div>
+            ))}
           </div>
         </div>
       </section>

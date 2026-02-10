@@ -24,7 +24,7 @@ const Infrastructure: React.FC = () => {
   };
 
   return (
-    <main className="bg-[#F6F7F9]">
+    <main className="bg-[#FFFFF]">
       {/* id="infrastructure" 
           scroll-mt-28: Ensures that when called by ID, it starts below the sticky header.
       */}
