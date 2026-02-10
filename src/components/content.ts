@@ -66,9 +66,7 @@ import wall1 from "../assets/outdoor 31.png";
 import wall2 from "../assets/outdoor 32.png";
 import wall3 from "../assets/outdoor 33.png";
 // LED Video Wall (34–36)
-import led1 from "../assets/outdoor 34.png";
-import led2 from "../assets/outdoor 35.png";
-import led3 from "../assets/outdoor 36.png";
+
 
 // Standees (37–39)
 import standee1 from "../assets/outdoor 37.png";
