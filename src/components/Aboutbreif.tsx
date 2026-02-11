@@ -174,17 +174,25 @@ const About: React.FC = () => {
             </section>
 
             {/* SECTION 4: CLIENT BRANDS */}
-            <section className="bg-white py-20">
-                <div className="max-w-[1440px] mx-auto px-6 lg:px-20 text-center">
-                    <div className="flex flex-wrap justify-center items-center gap-x-16 gap-y-12">
-                        {BRANDS.map((logo, i) => (
-                            <div key={i} className="flex items-center justify-center">
-                                <img src={logo} alt={`Brand ${i + 1}`} className="w-[160px] h-[75px] object-contain" />
-                            </div>
-                        ))}
-                    </div>
+         <section className="bg-white py-12 md:py-20">
+    <div className="max-w-[1440px] mx-auto px-6 lg:px-20 text-center">
+        {/* Changed gap for mobile and used grid logic for 2-per-row */}
+        <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-8 md:gap-x-16 md:gap-y-12">
+            {BRANDS.map((logo, i) => (
+                <div 
+                    key={i} 
+                    className="flex items-center justify-center w-[calc(50%-1rem)] md:w-auto"
+                >
+                    <img 
+                        src={logo} 
+                        alt={`Brand ${i + 1}`} 
+                        className="w-[100px] sm:w-[120px] md:w-[160px] h-[50px] md:h-[75px] object-contain" 
+                    />
                 </div>
-            </section>
+            ))}
+        </div>
+    </div>
+</section>
 
             <LandingPageThree />
         </main>
