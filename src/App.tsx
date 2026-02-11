@@ -6,6 +6,7 @@ import Services from './components/services';
 import Infrastructure from './components/infrastructure';
 import OutdoorServices from './components/outdoor'; 
 import Team from './components/Team';
+import Aboutbreif from './components/Aboutbreif';
 
 
 
@@ -27,6 +28,7 @@ function App() {
           <Route path="/modular" element={<OutdoorServices />} />
           <Route path="/pop" element={<OutdoorServices />} />
           <Route path="/infrastructure" element={<Infrastructure />} />
+               <Route path="/aboutbrief" element={<Aboutbreif />} />
           <Route path="/team" element={<Team />} />
           
         </Routes>

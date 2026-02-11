@@ -170,7 +170,7 @@ const Header: React.FC = () => {
                     e.preventDefault();
                     handleNavigation(path);
                   }}
-                  className="text-[15px] font-semibold text-white hover:text-[#163B73] transition-colors py-2 outline-none"
+                  className="text-[15px] font-semibold text-white hover:text-[#FFFFF] transition-colors py-2 outline-none"
                 >
                   {link.name}
                 </Link>

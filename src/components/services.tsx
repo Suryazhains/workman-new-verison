@@ -3,19 +3,34 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { LANDING_CONTENT } from './content';
 import LandingPageThree from './landingthree';
 
-// LOCAL IMAGES
-import outdoorImg from '../assets/outdoor.png';
-import indoorImg from '../assets/indoor.png';
-import ledImg from '../assets/Led.png';
-import popImg from '../assets/pop.png';
-import modularImg from '../assets/modular.png';
+// --- ASSET IMPORTS ---
+import out1 from '../assets/out 1.jpg';
+import out2 from '../assets/out 2.jpg';
+import out3 from '../assets/out 3.jpg';
+import out4 from '../assets/out 4.jpg';
 
-const IMAGE_MAP: Record<string, string> = {
-  outdoor: outdoorImg,
-  indoor: indoorImg,
-  led: ledImg,
-  pop: popImg,
-  modular: modularImg,
+import in1 from '../assets/in 1.png';
+import in2 from '../assets/in 2.png';
+import in3 from '../assets/in 3.jpg';
+import in4 from '../assets/in 4.jpg';
+
+import ledVideo from '../assets//ledvideo.mp4'; 
+
+import pop1 from '../assets/pops 1.png';
+import pop2 from '../assets/pops 2.png';
+import pop3 from '../assets/pops 4.jpg';
+import pop4 from '../assets/pops 1.png'; 
+
+import mod1 from '../assets/mod 1.jpeg';
+import mod2 from '../assets/mod 2.png';
+import mod3 from '../assets/mod 3.png';
+import mod4 from '../assets/mod 4.png';
+
+const MEDIA_MAP: Record<string, string[]> = {
+  outdoor: [out1, out2, out3, out4],
+  indoor: [in1, in2, in3, in4],
+  pop: [pop1, pop2, pop3, pop4],
+  modular: [mod1, mod2, mod3, mod4],
 };
 
 const Services: React.FC = () => {
@@ -25,37 +40,44 @@ const Services: React.FC = () => {
   const servicesData = LANDING_CONTENT?.servicesSection;
 
   if (!servicesData) {
-    console.error("Critical Error: 'servicesSection' is missing in LANDING_CONTENT.");
+    console.error("Critical Error: 'servicesSection' is missing.");
     return null;
   }
 
   const { heading: mainHeading, tabs, contentMap } = servicesData;
   
   const [activeTab, setActiveTab] = useState<string>(tabs[0]?.id || '');
+  const [currentIdx, setCurrentIdx] = useState(0);
+
+  useEffect(() => {
+    setCurrentIdx(0);
+    if (activeTab === 'led') return;
+
+    const images = MEDIA_MAP[activeTab] || [];
+    if (images.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentIdx((prev) => (prev + 1) % images.length);
+      }, 3000);
+      return () => clearInterval(interval);
+    }
+  }, [activeTab]); 
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-
     const currentHash = location.hash.replace('#', '').toLowerCase();
     const matchedTab = tabs.find(t => t.id === currentHash);
     
     if (matchedTab) {
       setActiveTab(matchedTab.id);
-      
       const timer = setTimeout(() => {
         const element = document.getElementById('services');
         if (element) {
           const headerOffset = window.innerWidth < 1024 ? 80 : 110; 
           const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
           const offsetPosition = elementPosition - headerOffset;
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
+          window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
         }
       }, 100);
-
       return () => clearTimeout(timer);
     }
   }, [location.pathname, location.hash, tabs]);
@@ -72,28 +94,29 @@ const Services: React.FC = () => {
 
   return (
     <>
-      {/* GLOBAL FONT IMPORT */}
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700;900&family=Inter:wght@400;500;600;700&display=swap');
+        .font-crimson { font-family: 'Crimson Pro', serif !important; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { scrollbar-width: none; }
         
-        .font-crimson {
-            font-family: 'Crimson Pro', serif !important;
+        @keyframes fadeSlide {
+          from { opacity: 0; transform: translateY(15px); }
+          to { opacity: 1; transform: translateY(0); }
         }
       `}} />
 
-      <section
-        id="services"
-        className="w-full pt-[90px] pb-[90px] bg-white font-inter"
-      >
+      {/* Background set to design green #51A147 */}
+      <section id="services" className="w-full pt-[90px] pb-[90px] bg-[#51A147] font-inter">
         <div className="w-full max-w-[1920px] mx-auto px-5 md:px-10 xl:px-[90px]">
 
-          {/* Header Section - Crimson Pro Applied */}
+          {/* Restored Main Heading */}
           <div className="mb-10 text-left animate-[fadeSlide_0.4s_ease-in-out]">
-            <h2 className="font-crimson text-3xl sm:text-4xl lg:text-[48px] font-bold text-[#51A147] mb-4 tracking-tight">
-              {activeContent.heading || mainHeading}
+            <h2 className="font-crimson text-4xl md:text-[56px] font-bold text-white mb-4 tracking-tight">
+              Our Services
             </h2>
-            <p className="text-base sm:text-lg text-[#4B5563] w-full leading-relaxed">
-              {activeContent.topDescription || ""}
+            <p className="text-base sm:text-lg text-white/90 w-full leading-relaxed max-w-[1600px]">
+              {activeContent.topDescription || "Explore our range of premium signage and display solutions designed to elevate your brand presence."}
             </p>
           </div>
 
@@ -101,36 +124,30 @@ const Services: React.FC = () => {
           <div className="flex flex-col gap-6 md:hidden">
             {tabs.map(service => {
               const serviceContent = contentMap[service.id as keyof typeof contentMap];
-              return (
-                <div
-                  key={service.id}
-                  className="bg-white border border-[#E5E7EB] rounded-3xl overflow-hidden shadow-sm"
-                >
-                  <div className="w-full h-[220px] overflow-hidden">
-                    <img
-                      src={IMAGE_MAP[service.id] || outdoorImg}
-                      alt={service.label}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                  </div>
+              const serviceImages = MEDIA_MAP[service.id] || [];
+              const isCurrentlyActive = activeTab === service.id;
 
+              return (
+                <div key={service.id} className="bg-white border border-white/20 rounded-3xl overflow-hidden shadow-xl">
+                  <div className="w-full h-[240px] overflow-hidden relative bg-black">
+                    {service.id === 'led' ? (
+                      <video src={ledVideo} autoPlay loop muted playsInline className="w-full h-full object-cover" />
+                    ) : (
+                      <div 
+                        className="flex h-full transition-transform duration-700 ease-in-out" 
+                        style={{ transform: `translateX(-${(isCurrentlyActive ? currentIdx : 0) * 100}%)` }}
+                      >
+                        {serviceImages.map((img, i) => (
+                          <img key={i} src={img} className="w-full h-full object-cover flex-shrink-0" alt={service.label} />
+                        ))}
+                      </div>
+                    )}
+                  </div>
                   <div className="p-6 space-y-4">
-                    {/* Heading: Crimson Pro */}
-                    <h3 className="font-crimson text-2xl font-bold text-[#51A147]">
-                      {serviceContent?.heading || service.label}
-                    </h3>
-                    <p className="text-sm text-[#4B5563] leading-relaxed line-clamp-4">
-                      {serviceContent?.description?.[0] || ""}
-                    </p>
-                    <button
-                      onClick={() => handleViewMore(service.id)}
-                      className="flex items-center gap-4 px-10 py-3 bg-[#51A147] text-white text-sm font-bold rounded-lg active:scale-95 transition-all border-none outline-none"
-                    >
+                    <h3 className="font-crimson text-2xl font-bold text-[#51A147]">{serviceContent?.heading || service.label}</h3>
+                    <p className="text-sm text-[#4B5563] line-clamp-4">{serviceContent?.description?.[0]}</p>
+                    <button onClick={() => handleViewMore(service.id)} className="w-full py-3 bg-[#51A147] text-white text-sm font-bold rounded-lg">
                       View more
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                      </svg>
                     </button>
                   </div>
                 </div>
@@ -139,51 +156,33 @@ const Services: React.FC = () => {
           </div>
 
           {/* ---------------- DESKTOP VIEW ---------------- */}
-          <div className="hidden md:block bg-white border border-[#E5E7EB] rounded-2xl overflow-hidden shadow-sm">
-            
-            {/* Tabs Row */}
-            <div className="relative flex bg-[#F0FDF4] rounded-t-2xl overflow-x-auto no-scrollbar">
+          <div className="hidden md:block bg-white rounded-3xl overflow-hidden shadow-2xl border border-white/10">
+            {/* Tabs Navigation */}
+            <div className="relative flex bg-[#F0FDF4] border-b border-gray-100 no-scrollbar">
               <div
-                className="absolute top-0 left-0 h-full bg-white rounded-t-2xl transition-transform duration-300 ease-in-out pointer-events-none"
-                style={{
-                  width: `${100 / tabs.length}%`,
-                  transform: `translateX(${activeIndex * 100}%)`,
-                }}
+                className="absolute top-0 left-0 h-full bg-white transition-transform duration-300 ease-in-out pointer-events-none"
+                style={{ width: `${100 / tabs.length}%`, transform: `translateX(${activeIndex * 100}%)` }}
               />
-
               {tabs.map(tab => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`relative z-10 flex-1 py-5 px-2 text-lg font-semibold transition-all border-none outline-none focus:outline-none ${
-                    activeTab === tab.id ? 'text-[#51A147]' : 'text-[#4B5563] hover:text-[#51A147]'
-                  }`}
-                >
+                <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`relative z-10 flex-1 py-6 px-2 text-lg font-semibold transition-all outline-none border-none ${activeTab === tab.id ? 'text-[#51A147]' : 'text-[#4B5563] hover:text-[#51A147]'}`}>
                   {tab.label}
                 </button>
               ))}
             </div>
 
-            {/* Content Body */}
-            <div
-              key={activeTab}
-              className="grid grid-cols-1 xl:grid-cols-2 items-stretch animate-[fadeSlide_0.4s_ease-in-out]"
-            >
-              <div className="order-2 xl:order-1 px-10 pb-10 xl:px-[70px] xl:pt-[80px] xl:pb-[80px] flex flex-col justify-between">
-                
+            <div className="grid grid-cols-1 xl:grid-cols-2 items-stretch">
+              <div className="order-2 xl:order-1 px-10 pb-10 xl:px-[70px] xl:pt-[80px] xl:pb-[80px] flex flex-col justify-between animate-[fadeSlide_0.4s_ease-in-out]">
                 <div className="space-y-6">
+                  {/* Category Heading Inside Content Box */}
+                  <h3 className="font-crimson text-3xl md:text-4xl font-bold text-[#51A147]">
+                    {activeContent.heading || activeTab}
+                  </h3>
                   {activeContent.description?.map((para: string, index: number) => (
-                    <p key={index} className="text-lg text-[#4B5563] leading-relaxed">
-                      {para}
-                    </p>
+                    <p key={index} className="text-lg text-[#4B5563] leading-relaxed">{para}</p>
                   ))}
                 </div>
-
-                <div className="pt-[90px]">
-                  <button
-                    onClick={() => handleViewMore(activeTab)}
-                    className="flex items-center gap-4 px-14 py-4 bg-[#51A147] text-white text-base font-bold rounded-lg hover:bg-[#3E7D36] active:scale-95 transition-all border-none outline-none"
-                  >
+                <div className="pt-12">
+                  <button onClick={() => handleViewMore(activeTab)} className="flex items-center gap-4 px-14 py-4 bg-[#51A147] text-white text-base font-bold rounded-xl hover:bg-[#3E7D36] transition-all outline-none border-none shadow-lg shadow-green-900/20">
                     {activeContent.buttonText || "View More"}
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12h14M12 5l7 7-7 7" />
@@ -192,12 +191,33 @@ const Services: React.FC = () => {
                 </div>
               </div>
 
-              <div className="w-full h-full min-h-[500px] xl:min-h-[600px] overflow-hidden order-1 xl:order-2 animate-[fadeZoom_0.5s_ease-in-out]">
-                <img
-                  src={IMAGE_MAP[activeTab] || outdoorImg} 
-                  alt={activeContent.heading}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-                />
+              {/* MEDIA SECTION */}
+              <div className="w-full h-full min-h-[500px] xl:min-h-[600px] overflow-hidden order-1 xl:order-2 relative bg-black">
+                {activeTab === 'led' ? (
+                  <video key="led-video" src={ledVideo} autoPlay loop muted playsInline className="w-full h-full object-cover" />
+                ) : (
+                  <>
+                    <div 
+                      className="flex h-full transition-transform duration-1000 ease-in-out" 
+                      style={{ transform: `translateX(-${currentIdx * 100}%)` }}
+                    >
+                      {(MEDIA_MAP[activeTab] || []).map((img, i) => (
+                        <div key={i} className="w-full h-full flex-shrink-0">
+                          <img src={img} alt={`${activeTab}-${i}`} className="w-full h-full object-cover" />
+                        </div>
+                      ))}
+                    </div>
+                    
+                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+                      {(MEDIA_MAP[activeTab] || []).map((_, i) => (
+                        <div 
+                          key={i} 
+                          className={`h-2 rounded-full transition-all duration-500 ${currentIdx === i ? 'bg-[#51A147] w-8' : 'bg-white/60 w-2'}`} 
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -205,22 +225,6 @@ const Services: React.FC = () => {
       </section>
 
       <LandingPageThree />
-
-      <style>
-        {`
-          @keyframes fadeSlide {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-          }
-          @keyframes fadeZoom {
-            from { opacity: 0; transform: scale(0.98); }
-            to { opacity: 1; transform: scale(1); }
-          }
-          .no-scrollbar::-webkit-scrollbar { display: none; }
-          .no-scrollbar { scrollbar-width: none; }
-          button:focus, button:active { outline: none !important; box-shadow: none !important; }
-        `}
-      </style>
     </>
   );
 };

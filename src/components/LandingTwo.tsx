@@ -6,11 +6,9 @@ import quotes from '../assets/Quote.png';
 const LandingTwo: React.FC = () => {
   const { portfolio, testimonials } = LANDING_CONTENT;
 
-  // Duplicate images for seamless loop (Original array + Original array)
+  // Duplicate images for seamless loop
   const row1Images = [...PORTFOLIO_IMAGES.slice(0, 4), ...PORTFOLIO_IMAGES.slice(0, 4)];
   const row2Images = [...PORTFOLIO_IMAGES.slice(4, 8), ...PORTFOLIO_IMAGES.slice(4, 8)];
-  
-  // FIXED: Row 3 now properly duplicates for a seamless loop
   const baseRow3 = [...PORTFOLIO_IMAGES.slice(8, 12)]; 
   const row3Images = [...baseRow3, ...baseRow3];
 
@@ -38,7 +36,7 @@ const LandingTwo: React.FC = () => {
       {/* PORTFOLIO SECTION */}
       <section
         id="portfolio"
-        className="w-full bg-[#F6F7F9] pt-[90px] pb-[90px] overflow-hidden"
+        className="w-full bg-[#F2FFF0] pt-[90px] pb-[90px] overflow-hidden"
       >
         {/* Heading */}
         <div className="max-w-[1440px] mx-auto px-6 lg:px-12 mb-10">
@@ -52,13 +50,13 @@ const LandingTwo: React.FC = () => {
 
         {/* Portfolio Marquee */}
         <div className="relative w-full overflow-hidden">
-          {/* LEFT FADE */}
+          {/* LEFT FADE - Matches updated background color */}
           <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-[60px] md:w-[160px]
-            bg-gradient-to-r from-[#F6F7F9] via-[#F6F7F9] to-transparent" />
+            bg-gradient-to-r from-[#F2FFF0] via-[#F2FFF0] to-transparent" />
 
-          {/* RIGHT FADE */}
+          {/* RIGHT FADE - Matches updated background color */}
           <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-[60px] md:w-[160px]
-            bg-gradient-to-l from-[#F6F7F9] via-[#F6F7F9] to-transparent" />
+            bg-gradient-to-l from-[#F2FFF0] via-[#F2FFF0] to-transparent" />
 
           <div className="flex flex-col gap-[6px]">
             {/* Row 1 – Right to Left */}
@@ -101,7 +99,7 @@ const LandingTwo: React.FC = () => {
               ))}
             </div>
 
-            {/* Row 3 – Right to Left (Seamless Loop Fixed) */}
+            {/* Row 3 – Right to Left */}
             <div
               className="flex gap-[6px] w-max"
               style={{ animation: 'marqueeLeft 45s linear infinite' }}
@@ -127,7 +125,7 @@ const LandingTwo: React.FC = () => {
       {/* TESTIMONIALS SECTION */}
       <section
         id="testimonials"
-        className="w-full bg-[#F6F7F9] pt-[90px] pb-[90px] px-[24px] md:px-[40px] lg:px-[64px]"
+        className="w-full bg-[#F2FFF0] pt-[90px] pb-[90px] px-[24px] md:px-[40px] lg:px-[64px]"
       >
         <div className="max-w-[1440px] mx-auto">
           <h2 className="font-crimson text-[32px] md:text-[56px] font-bold text-[#51A147] mb-4">
@@ -140,7 +138,7 @@ const LandingTwo: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-[6px]">
             {/* LEFT SIDE */}
             <div className="flex flex-col gap-[6px]">
-              <div className="bg-[#F9FAFB] p-8 md:p-10 border border-green-50 flex flex-col justify-between h-full">
+              <div className="bg-white p-8 md:p-10 border border-[#E5E7EB] flex flex-col justify-between h-full rounded-sm shadow-sm">
                 <div>
                   <img src={quotes} alt="quotes" className="w-[20px] h-[20px] block mb-2 object-contain" />
                   <p className="text-[#535353] text-[16px] md:text-[18px] leading-relaxed">
@@ -153,7 +151,7 @@ const LandingTwo: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-[#F9FAFB] p-8 md:p-10 border border-green-50 flex flex-col justify-between h-full">
+              <div className="bg-white p-8 md:p-10 border border-[#E5E7EB] flex flex-col justify-between h-full rounded-sm shadow-sm">
                 <div>
                   <img src={quotes} alt="quotes" className="w-[20px] h-[20px] block mb-2 object-contain" />
                   <p className="text-[#535353] text-[16px] md:text-[18px] leading-relaxed">
@@ -169,7 +167,7 @@ const LandingTwo: React.FC = () => {
 
             {/* RIGHT SIDE */}
             <div className="flex flex-col gap-[6px]">
-              <div className="bg-[#F9FAFB] p-8 md:p-10 border border-green-50 flex flex-col justify-between h-full">
+              <div className="bg-white p-8 md:p-10 border border-[#E5E7EB] flex flex-col justify-between h-full rounded-sm shadow-sm">
                 <div>
                   <img src={quotes} alt="quotes" className="w-[20px] h-[20px] block mb-2 object-contain" />
                   <p className="text-[#535353] text-[16px] md:text-[18px] leading-relaxed">
@@ -183,7 +181,7 @@ const LandingTwo: React.FC = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-[6px]">
-                <div className="bg-[#F9FAFB] p-6 md:p-8 border border-green-50 flex flex-col justify-between">
+                <div className="bg-white p-6 md:p-8 border border-[#E5E7EB] flex flex-col justify-between rounded-sm shadow-sm">
                   <div>
                     <img src={quotes} alt="quotes" className="w-[20px] h-[20px] block mb-2 object-contain" />
                     <p className="text-[#535353] text-[15px] leading-relaxed mb-6">
@@ -196,7 +194,7 @@ const LandingTwo: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="bg-[#F9FAFB] p-6 md:p-8 border border-green-50 flex flex-col justify-between">
+                <div className="bg-white p-6 md:p-8 border border-[#E5E7EB] flex flex-col justify-between rounded-sm shadow-sm">
                   <div>
                     <img src={quotes} alt="quotes" className="w-[20px] h-[20px] block mb-2 object-contain" />
                     <p className="text-[#535353] text-[15px] leading-relaxed mb-6">

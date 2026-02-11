@@ -22,7 +22,7 @@ const Team: React.FC = () => {
   const allTeamMembers = [team1, team2, team3, team4, team5, team6, team7, team8, team9];
 
   return (
-    <main className="bg-white w-full">
+    <main className="bg-[#51A147] w-full">
       {/* GLOBAL FONT IMPORT & CRIMSON CLASS */}
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
@@ -41,11 +41,11 @@ const Team: React.FC = () => {
           {/* Header & Description */}
           <div className="mb-16">
             {/* Heading: Crimson Pro Applied */}
-            <h2 className="font-crimson text-[42px] md:text-[56px] font-bold text-black mb-6 tracking-tight">
+            <h2 className="font-crimson text-[42px] md:text-[56px] font-bold text-white mb-6 tracking-tight">
               Our Team
             </h2>
             {/* Full width description spanning two lines */}
-            <p className="text-gray-500 text-[18px] md:text-[20px] w-full leading-relaxed">
+            <p className="text-white text-[18px] md:text-[20px] w-full leading-relaxed">
               Our dedicated team of professionals brings years of expertise and industry knowledge to every project we deliver. From design planning to fabrication and installation, we ensure precision, quality, and attention to detail at every stage. Driven by commitment and teamwork, we consistently deliver reliable signage solutions that meet the highest standards.
             </p>
           </div>

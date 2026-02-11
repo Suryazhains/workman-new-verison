@@ -22,7 +22,7 @@ const Infrastructure: React.FC = () => {
   };
 
   return (
-    <main className="bg-white">
+    <main className="bg-[#51A147]">
       {/* GLOBAL FONT IMPORT & CRIMSON CLASS */}
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
@@ -39,28 +39,28 @@ const Infrastructure: React.FC = () => {
         id="infrastructure" 
         className="w-full py-16 md:py-24 scroll-mt-28 font-inter"
       >
-        {/* Page Heading - Crimson Pro Applied */}
+        {/* Page Heading - Colors updated to White to match image background theme */}
         <div className="max-w-[1280px] mx-auto mb-16 px-6">
-          <h2 className="font-crimson text-[32px] md:text-[48px] font-bold text-black mb-4">
+          <h2 className="font-crimson text-[32px] md:text-[48px] font-bold text-white mb-4">
             {infrastructurePage.heading}
           </h2>
-          <p className="text-gray-500 max-w-[650px] text-lg">
+          <p className="text-white/80 max-w-[650px] text-lg">
             {infrastructurePage.description}
           </p>
         </div>
 
         {/* Machines Grid */}
-        <div className="max-w-[1280px] mx-auto flex flex-col">
+        <div className="max-w-[1280px] mx-auto flex flex-col px-4">
           {infrastructurePage.equipments.map((item, index) => (
             <div
               key={item.id}
               id={getServiceSlug(item.title)}
-              className={`flex flex-col lg:flex-row items-stretch w-full scroll-mt-28 ${
+              className={`flex flex-col lg:flex-row items-stretch w-full scroll-mt-28 overflow-hidden rounded-sm mb-1 lg:mb-0 ${
                 index % 2 !== 0 ? 'lg:flex-row-reverse' : ''
               }`}
             >
               {/* Image Container */}
-              <div className="w-full lg:w-1/2 h-[350px] md:h-[500px] lg:h-auto overflow-hidden">
+              <div className="w-full lg:w-1/2 h-[350px] md:h-[500px] lg:h-[600px] overflow-hidden">
                 <img
                   src={item.imageUrl}
                   alt={item.title}
@@ -68,20 +68,22 @@ const Infrastructure: React.FC = () => {
                 />
               </div>
 
-              {/* Text Container */}
-              <div className="w-full lg:w-1/2 flex flex-col justify-center bg-white px-8 py-12 md:px-16 lg:px-20">
+              {/* Text Container - Colors adjusted to match the "Our Equipments" card style */}
+              <div className={`w-full lg:w-1/2 flex flex-col justify-center px-8 py-12 md:px-16 lg:px-20 ${
+                index % 2 === 0 ? 'bg-[#51A147]' : 'bg-[#51A147]'
+              }`}>
                 <div className="max-w-[500px]">
-                  <span className="text-gray-400 text-sm font-medium mb-2 block font-inter">
+                  <span className="text-white/60 text-sm font-medium mb-2 block font-inter uppercase tracking-widest">
                     {item.model}
                   </span>
 
-                  {/* Machine Title - Crimson Pro Applied */}
-                  <h3 className="font-crimson text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+                  {/* Machine Title */}
+                  <h3 className="font-crimson text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-6">
                     {item.title}
                   </h3>
 
                   <div className="space-y-4">
-                    <p className="text-gray-500 leading-relaxed text-base md:text-lg font-inter">
+                    <p className="text-white/80 leading-relaxed text-base md:text-lg font-inter">
                       {item.description}
                     </p>
                   </div>
