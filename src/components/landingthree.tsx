@@ -219,114 +219,120 @@ const LandingPageThree: React.FC = () => {
         </section>
 
         {/* --- FOOTER SECTION (Updated text colors to white) --- */}
-        <footer className="bg-[#51A147] w-full text-white py-12 md:py-20 px-6 lg:px-[120px]">
-          <div className="max-w-[1440px] mx-auto">
+      <footer className="bg-[#51A147] w-full text-white py-12 md:py-20 px-6 lg:px-[80px] xl:px-[120px]">
+  <div className="max-w-[1440px] mx-auto">
+    
+    {/* Main Container: Adjusted to allow more room for the horizontal list */}
+    <div className="flex flex-col lg:flex-row justify-between gap-12 mb-16 text-left items-start">
 
-            <div className="flex flex-col lg:flex-row justify-between gap-12 mb-16 text-left items-start">
+      {/* LEFT: Logo & Branding */}
+      <div className="max-w-[300px] xl:max-w-[390px] space-y-6 shrink-0">
+        <img
+          src={circlelogo}
+          alt="Logo"
+          className="w-34 h-auto cursor-pointer"
+          onClick={() => handleNavigation('/')}
+        />
+        <p className="text-[14px] leading-relaxed font-normal text-white opacity-100">
+          {footer.description}
+        </p>
+        <button 
+          onClick={() => handleNavigation('/#contact')}
+          className="bg-white text-[#51A147] px-8 py-3 rounded-[6px] font-bold text-[15px] hover:bg-gray-100 transition"
+        >
+          Contact now
+        </button>
+      </div>
 
-              {/* LEFT: Logo & Branding */}
-              <div className="max-w-[390px] space-y-6">
-                <img
-                  src={circlelogo}
-                  alt="Logo"
-                  className="w-34 h-auto cursor-pointer"
-                  onClick={() => handleNavigation('/')}
-                />
-                <p className="text-[14px] leading-relaxed font-normal text-white opacity-100">
-                  {footer.description}
-                </p>
-                <button 
-                  onClick={() => handleNavigation('/#contact')}
-                  className="bg-white text-[#51A147] px-8 py-3 rounded-[6px] font-bold text-[15px] hover:bg-gray-100 transition"
-                >
-                  Contact now
-                </button>
-              </div>
+      {/* RIGHT: Links | Services | Contacts | Map */}
+      {/* Changed flex-wrap to lg:flex-nowrap to prevent the map from dropping down */}
+      <div className="flex flex-row flex-wrap lg:flex-nowrap justify-between w-full gap-x-8 gap-y-12">
 
-              {/* RIGHT: Links | Services | Contacts | Map */}
-              <div className="flex flex-row flex-wrap gap-x-10 gap-y-12 md:gap-14 lg:gap-16">
+        {/* Links */}
+        <div className="min-w-[120px]">
+          <h4 className="font-crimson font-medium text-[20px] xl:text-[22px] mb-6 text-white">
+            {footer.linksTitle}
+          </h4>
+          <ul className="space-y-4 text-[15px]">
+            {header.navLinks.map((link, idx) => (
+              <li
+                key={idx}
+                onClick={() => handleNavigation(getRoutePath(link.name))}
+                className="text-white hover:text-green-100 cursor-pointer transition opacity-100"
+              >
+                {link.name}
+              </li>
+            ))}
+          </ul>
+        </div>
 
-                {/* Links */}
-                <div className="min-w-[140px]">
-                  <h4 className="font-crimson font-medium text-[22px] mb-6 text-white">{footer.linksTitle}</h4>
-                  <ul className="space-y-4 text-[15px]">
-                    {header.navLinks.map((link, idx) => (
-                      <li
-                        key={idx}
-                        onClick={() => handleNavigation(getRoutePath(link.name))}
-                        className="text-white hover:text-green-100 cursor-pointer transition opacity-100"
-                      >
-                        {link.name}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+        {/* Services */}
+        <div className="min-w-[120px]">
+          <h4 className="font-crimson font-medium text-[20px] xl:text-[22px] mb-6 text-white">
+            {footer.productTitle}
+          </h4>
+          <ul className="space-y-4 text-[15px]">
+            {footer.products.map((product, idx) => (
+              <li
+                key={idx}
+                onClick={() => handleNavigation(getCategoryPath(product))}
+                className="text-white hover:text-green-100 cursor-pointer transition opacity-100"
+              >
+                {product}
+              </li>
+            ))}
+          </ul>
+        </div>
 
-                {/* Services */}
-                <div className="min-w-[140px]">
-                  <h4 className="font-crimson font-medium text-[22px] mb-6 text-white">{footer.productTitle}</h4>
-                  <ul className="space-y-4 text-[15px]">
-                    {footer.products.map((product, idx) => (
-                      <li
-                        key={idx}
-                        onClick={() => handleNavigation(getCategoryPath(product))}
-                        className="text-white hover:text-green-100 cursor-pointer transition opacity-100"
-                      >
-                        {product}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Contacts */}
-                <div className="space-y-6 min-w-[240px]">
-                  <h4 className="font-crimson font-medium text-[22px] mb-6 text-white">{footer.contactsTitle}</h4>
-
-                  <div className="space-y-5 text-[15px]">
-                    <div className="flex items-center gap-4">
-                      <img src={emailIcon} alt="Email" className="w-5 h-5 invert brightness-0" />
-                      <a
-                        href={`mailto:${footer.email}`}
-                        className="text-white hover:text-green-100 transition break-all opacity-100"
-                      >
-                        {footer.email}
-                      </a>
-                    </div>
-
-                    <div className="flex items-center gap-4">
-                      <img src={phoneIcon} alt="Phone" className="w-5 h-5 invert brightness-0" />
-                      <a
-                        href={`tel:${footer.phone.replace(/\s/g, '')}`}
-                        className="text-white hover:text-green-100 transition opacity-100"
-                      >
-                        {footer.phone}
-                      </a>
-                    </div>
-                  </div>
-                </div>
-
-                {/* MAP */}
-                <div className="min-w-[200px] max-w-[180px]">
-                  <iframe
-                    title="Location"
-                    src="https://www.google.com/maps?q=Chennai,Tamil%20Nadu,India&z=13&output=embed"
-                    className="w-full h-[180px] rounded-lg border border-white/20 bg-green-50/10"
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                  />
-                </div>
-
-              </div>
+        {/* Contacts */}
+        <div className="space-y-6 min-w-[200px] xl:min-w-[240px]">
+          <h4 className="font-crimson font-medium text-[20px] xl:text-[22px] mb-6 text-white">
+            {footer.contactsTitle}
+          </h4>
+          <div className="space-y-5 text-[15px]">
+            <div className="flex items-center gap-4">
+              <img src={emailIcon} alt="Email" className="w-5 h-5 invert brightness-0" />
+              <a
+                href={`mailto:${footer.email}`}
+                className="text-white hover:text-green-100 transition break-all opacity-100"
+              >
+                {footer.email}
+              </a>
             </div>
-
-            <div className="pt-8 border-t border-white/20 text-center">
-              <p className="text-[13px] tracking-wide text-white opacity-100">
-                {footer.copyright}
-              </p>
+            <div className="flex items-center gap-4">
+              <img src={phoneIcon} alt="Phone" className="w-5 h-5 invert brightness-0" />
+              <a
+                href={`tel:${footer.phone.replace(/\s/g, '')}`}
+                className="text-white hover:text-green-100 transition opacity-100"
+              >
+                {footer.phone}
+              </a>
             </div>
-
           </div>
-        </footer>
+        </div>
+
+        {/* MAP: Removed strict max-width and added shrink-0 to maintain size */}
+        <div className="w-full lg:w-[250px] xl:w-[300px] shrink-0">
+          <iframe
+            title="Location"
+            src="https://www.google.com/maps?q=Chennai,Tamil%20Nadu,India&z=13&output=embed"
+            className="w-full h-[180px] rounded-lg border border-white/20 bg-green-50/10"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </div>
+
+      </div>
+    </div>
+
+    <div className="pt-8 border-t border-white/20 text-center">
+      <p className="text-[13px] tracking-wide text-white opacity-100">
+        {footer.copyright}
+      </p>
+    </div>
+
+  </div>
+</footer>
 
       </div>
     </main>

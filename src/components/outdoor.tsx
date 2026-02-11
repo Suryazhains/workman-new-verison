@@ -14,7 +14,6 @@ interface Service {
 const OutdoorServices: React.FC = () => {
   const { outdoorPage, header, categoryData } = LANDING_CONTENT;
   const { hash, pathname } = useLocation();
-  // FIXED: Removed activeId and setActiveId as they were unused and causing build errors
   const [selectedFullscreenService, setSelectedFullscreenService] = useState<Service | null>(null);
 
   const getCategoryKey = () => {
@@ -30,18 +29,15 @@ const OutdoorServices: React.FC = () => {
   const isFullWidthCategory = currentCategoryKey === 'LED VIDEO WALL' || currentCategoryKey === 'POP';
   const pageHeader = categoryData[currentCategoryKey];
   
-  const fullDescription = useMemo(() => {
+  // Logic to split description into 3-line style paragraphs (approx. 40 words per para)
+  const formattedParagraphs = useMemo(() => {
     const text = pageHeader.description || "";
     const words = text.split(/\s+/);
-    if (words.length <= 100) return text;
-    return words.slice(0, 100).join(' ') + '...';
-  }, [pageHeader.description]);
-
-  const descriptionParts = useMemo(() => {
-    const text = pageHeader.description || "";
-    const splitIndex = text.indexOf('.', 200); 
-    if (splitIndex === -1) return [text, ""];
-    return [text.substring(0, splitIndex + 1), text.substring(splitIndex + 1)];
+    const paragraphs = [];
+    for (let i = 0; i < words.length; i += 40) {
+      paragraphs.push(words.slice(i, i + 40).join(' '));
+    }
+    return paragraphs;
   }, [pageHeader.description]);
 
   const filteredServices = useMemo(() => {
@@ -154,6 +150,7 @@ const OutdoorServices: React.FC = () => {
         @media (max-width: 768px) { .outdoor-grid { grid-template-columns: 1fr; } .media-content-overlay { padding: 0 24px; } }
       `}} />
 
+      {/* Fullscreen Slider */}
       {selectedFullscreenService && (
         <div className="fs-slider-overlay">
           <div className="fs-close" onClick={() => setSelectedFullscreenService(null)}>&times;</div>
@@ -164,22 +161,24 @@ const OutdoorServices: React.FC = () => {
             {selectedFullscreenService.images && <img src={selectedFullscreenService.images[0]} alt="" />}
           </div>
           <div className="absolute bottom-12 left-12 z-[10000] text-white">
-            <span className="text-sm uppercase tracking-[0.3em] opacity-60 mb-4 block">{currentCategoryKey}</span>
             <h2 className="font-crimson text-5xl md:text-7xl font-bold">{selectedFullscreenService.title}</h2>
           </div>
         </div>
       )}
 
+      {/* Header Section with 3-line paragraph chunks */}
       {!isFullWidthCategory && (
         <section className="w-full pt-[80px] md:pt-[100px] pb-12">
           <div className="w-full max-w-[1920px] mx-auto px-6 md:px-[8%]">
-            <span className="text-gray-400 text-sm uppercase tracking-[0.2em] block mb-4">{currentCategoryKey}</span>
             <h1 className="font-crimson text-[40px] md:text-[64px] font-bold text-black mb-10 leading-tight">
               {pageHeader.heading}
             </h1>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 text-gray-500 text-lg md:text-xl leading-relaxed">
-              <p>{descriptionParts[0]}</p>
-              <p>{descriptionParts[1]}</p>
+            <div className="text-gray-500 text-lg md:text-xl leading-relaxed max-w-[1200px]">
+              {formattedParagraphs.map((para, index) => (
+                <p key={index} className="mb-6">
+                  {para}
+                </p>
+              ))}
             </div>
             <div className="mt-12">
                 <button className="flex items-center text-gray-400 hover:text-black transition-colors font-medium text-sm" onClick={() => window.history.back()}>
@@ -190,6 +189,7 @@ const OutdoorServices: React.FC = () => {
         </section>
       )}
 
+      {/* Main Grid Section */}
       <section className={`w-full ${isFullWidthCategory ? '' : 'px-6 md:px-[8%] pb-24'}`}>
         <div className={isFullWidthCategory ? "flex flex-col" : "outdoor-grid"}>
           {filteredServices.map((service) => (
@@ -209,9 +209,6 @@ const OutdoorServices: React.FC = () => {
                     )}
                     
                     <div className="media-content-overlay">
-                      <span className="text-sm md:text-base uppercase tracking-[0.5em] text-white/80 mb-6 block font-inter">
-                          {currentCategoryKey}
-                      </span>
                       <h2 className="font-crimson text-5xl md:text-8xl font-bold leading-none tracking-tight text-white">
                           {service.title}
                       </h2>
@@ -221,7 +218,9 @@ const OutdoorServices: React.FC = () => {
                   <div className="centered-description-container">
                     <div className="w-16 h-[1px] bg-black/20 mx-auto mb-10" />
                     <div className="text-gray-600 text-lg md:text-2xl leading-relaxed font-inter font-light">
-                        <p>{fullDescription}</p>
+                        {formattedParagraphs.slice(0, 2).map((para, idx) => (
+                           <p key={idx} className="mb-4">{para}</p>
+                        ))}
                     </div>
                   </div>
                 </>
