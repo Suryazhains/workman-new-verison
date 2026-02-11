@@ -54,7 +54,7 @@ const Header: React.FC = () => {
   const getRoutePath = (name: string) => {
     switch (name) {
       case 'Home': return '/';
-      case 'About us': return '/#about'; 
+      case 'About us': return '/aboutbrief'; 
       case 'Our services': return '/services';
       case 'Infrastructure': return '/infrastructure'; 
       case 'Team': return '/team';
