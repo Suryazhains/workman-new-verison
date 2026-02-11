@@ -14,7 +14,7 @@ interface Service {
 const OutdoorServices: React.FC = () => {
   const { outdoorPage, header, categoryData } = LANDING_CONTENT;
   const { hash, pathname } = useLocation();
-  const [activeId, setActiveId] = useState<string>("");
+  // FIXED: Removed activeId and setActiveId as they were unused and causing build errors
   const [selectedFullscreenService, setSelectedFullscreenService] = useState<Service | null>(null);
 
   const getCategoryKey = () => {
@@ -30,7 +30,6 @@ const OutdoorServices: React.FC = () => {
   const isFullWidthCategory = currentCategoryKey === 'LED VIDEO WALL' || currentCategoryKey === 'POP';
   const pageHeader = categoryData[currentCategoryKey];
   
-  // Logic to handle 100-word description for LED/POP
   const fullDescription = useMemo(() => {
     const text = pageHeader.description || "";
     const words = text.split(/\s+/);
@@ -68,7 +67,6 @@ const OutdoorServices: React.FC = () => {
         .font-crimson { font-family: 'Crimson Pro', serif !important; }
         .font-inter { font-family: 'Inter', sans-serif !important; }
 
-        /* Full Bleed Layout for LED/POP */
         .full-bleed-container {
             width: 100vw;
             margin-left: calc(-50vw + 50%);
@@ -84,7 +82,7 @@ const OutdoorServices: React.FC = () => {
             height: 90vh;
             overflow: hidden;
             display: flex;
-            align-items: center; /* Vertical center for the text inside */
+            align-items: center;
         }
 
         .full-bleed-media {
@@ -109,7 +107,7 @@ const OutdoorServices: React.FC = () => {
             padding: 0 8%;
             color: white;
             width: 100%;
-            text-align: left; /* Aligned like your other category headers */
+            text-align: left;
         }
 
         .centered-description-container {
@@ -119,12 +117,10 @@ const OutdoorServices: React.FC = () => {
             margin: 0 auto;
         }
 
-        /* Standard Grid Styles */
         .outdoor-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
         .service-card { transition: all 0.4s ease; position: relative; overflow: hidden; aspect-ratio: 1/0.85; cursor: pointer; }
         .initial-label { position: absolute; bottom: 0; width: 100%; padding: 2rem 1.5rem; background: linear-gradient(transparent, rgba(0,0,0,0.9)); color: white; }
 
-        /* Full Screen Slider Overlay */
         .fs-slider-overlay {
           position: fixed;
           inset: 0;
@@ -158,7 +154,6 @@ const OutdoorServices: React.FC = () => {
         @media (max-width: 768px) { .outdoor-grid { grid-template-columns: 1fr; } .media-content-overlay { padding: 0 24px; } }
       `}} />
 
-      {/* Full Screen Slider Overlay */}
       {selectedFullscreenService && (
         <div className="fs-slider-overlay">
           <div className="fs-close" onClick={() => setSelectedFullscreenService(null)}>&times;</div>
@@ -175,7 +170,6 @@ const OutdoorServices: React.FC = () => {
         </div>
       )}
 
-      {/* TOP HEADER: Hidden for LED/POP, visible for others */}
       {!isFullWidthCategory && (
         <section className="w-full pt-[80px] md:pt-[100px] pb-12">
           <div className="w-full max-w-[1920px] mx-auto px-6 md:px-[8%]">
@@ -196,7 +190,6 @@ const OutdoorServices: React.FC = () => {
         </section>
       )}
 
-      {/* Main Content Section */}
       <section className={`w-full ${isFullWidthCategory ? '' : 'px-6 md:px-[8%] pb-24'}`}>
         <div className={isFullWidthCategory ? "flex flex-col" : "outdoor-grid"}>
           {filteredServices.map((service) => (
@@ -215,7 +208,6 @@ const OutdoorServices: React.FC = () => {
                       <img src={service.images?.[0]} alt={service.title} className="full-bleed-media" />
                     )}
                     
-                    {/* Title and Category Name inside the image */}
                     <div className="media-content-overlay">
                       <span className="text-sm md:text-base uppercase tracking-[0.5em] text-white/80 mb-6 block font-inter">
                           {currentCategoryKey}
@@ -226,7 +218,6 @@ const OutdoorServices: React.FC = () => {
                     </div>
                   </div>
                   
-                  {/* 100-word Description centered below the media */}
                   <div className="centered-description-container">
                     <div className="w-16 h-[1px] bg-black/20 mx-auto mb-10" />
                     <div className="text-gray-600 text-lg md:text-2xl leading-relaxed font-inter font-light">

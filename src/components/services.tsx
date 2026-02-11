@@ -14,7 +14,7 @@ import in2 from '../assets/in 2.png';
 import in3 from '../assets/in 3.jpg';
 import in4 from '../assets/in 4.jpg';
 
-import ledVideo from '../assets//ledvideo.mp4'; 
+import ledVideo from '../assets/ledvideo.mp4'; 
 
 import pop1 from '../assets/pops 1.png';
 import pop2 from '../assets/pops 2.png';
@@ -44,7 +44,8 @@ const Services: React.FC = () => {
     return null;
   }
 
-  const { heading: mainHeading, tabs, contentMap } = servicesData;
+  // FIXED: Removed 'mainHeading' from destructuring as it was unused and causing build errors
+  const { tabs, contentMap } = servicesData;
   
   const [activeTab, setActiveTab] = useState<string>(tabs[0]?.id || '');
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -106,11 +107,9 @@ const Services: React.FC = () => {
         }
       `}} />
 
-      {/* Background set to design green #51A147 */}
       <section id="services" className="w-full pt-[90px] pb-[90px] bg-[#51A147] font-inter">
         <div className="w-full max-w-[1920px] mx-auto px-5 md:px-10 xl:px-[90px]">
 
-          {/* Restored Main Heading */}
           <div className="mb-10 text-left animate-[fadeSlide_0.4s_ease-in-out]">
             <h2 className="font-crimson text-4xl md:text-[56px] font-bold text-white mb-4 tracking-tight">
               Our Services
@@ -157,7 +156,6 @@ const Services: React.FC = () => {
 
           {/* ---------------- DESKTOP VIEW ---------------- */}
           <div className="hidden md:block bg-white rounded-3xl overflow-hidden shadow-2xl border border-white/10">
-            {/* Tabs Navigation */}
             <div className="relative flex bg-[#F0FDF4] border-b border-gray-100 no-scrollbar">
               <div
                 className="absolute top-0 left-0 h-full bg-white transition-transform duration-300 ease-in-out pointer-events-none"
@@ -173,7 +171,6 @@ const Services: React.FC = () => {
             <div className="grid grid-cols-1 xl:grid-cols-2 items-stretch">
               <div className="order-2 xl:order-1 px-10 pb-10 xl:px-[70px] xl:pt-[80px] xl:pb-[80px] flex flex-col justify-between animate-[fadeSlide_0.4s_ease-in-out]">
                 <div className="space-y-6">
-                  {/* Category Heading Inside Content Box */}
                   <h3 className="font-crimson text-3xl md:text-4xl font-bold text-[#51A147]">
                     {activeContent.heading || activeTab}
                   </h3>
@@ -191,7 +188,6 @@ const Services: React.FC = () => {
                 </div>
               </div>
 
-              {/* MEDIA SECTION */}
               <div className="w-full h-full min-h-[500px] xl:min-h-[600px] overflow-hidden order-1 xl:order-2 relative bg-black">
                 {activeTab === 'led' ? (
                   <video key="led-video" src={ledVideo} autoPlay loop muted playsInline className="w-full h-full object-cover" />
