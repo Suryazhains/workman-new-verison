@@ -133,45 +133,71 @@ const About: React.FC = () => {
             </section>
 
             {/* SECTION 3: OUR SPECIALIZATION */}
-            <section className="max-w-[1440px] mx-auto px-6 lg:px-20 py-24 text-white">
-                <div className="flex flex-col lg:flex-row items-center gap-20">
-                    <div className="lg:w-1/2">
-                        <h2 className="font-crimson text-[42px] md:text-[56px] font-bold mb-12 leading-tight">Our Specialization</h2>
-                        <div className="rounded-xl overflow-hidden shadow-xl">
-                            <img src={main2} alt="Specialization" className="w-full h-[500px] object-cover" />
-                        </div>
-                    </div>
+       <section className="bg-[#51A147] text-white py-20 px-6 lg:px-20">
+    <div className="max-w-[1440px] mx-auto">
+        {/* Changed items-start to items-center to bring text down level with image */}
+        <div className="flex flex-col lg:flex-row items-center gap-16">
+            
+            {/* Left Side: Title and Image */}
+            <div className="lg:w-1/2 w-full">
+                <h2 className="font-crimson text-[42px] md:text-[56px] font-bold mb-8 leading-tight border-t border-white/30 pt-4 inline-block">
+                    Our Specialization
+                </h2>
+                <div className="rounded-xl overflow-hidden shadow-2xl">
+                    <img 
+                        src={main2} 
+                        alt="Specialization" 
+                        className="w-full h-auto object-cover" 
+                    />
+                </div>
+            </div>
 
-                    <div className="lg:w-1/2 space-y-10 mt-10 lg:mt-24">
-                        {specializationData.map((item, index) => (
-                            <div key={index} className="border-b border-white/20 pb-8">
-                                <div className="flex items-start gap-6 cursor-pointer group" onClick={() => toggleAccordion(index)}>
-                                    <span className="text-[#51A147] text-3xl font-bold transition-transform duration-300 select-none">
-                                        {activeIndex === index ? '−' : '+'}
-                                    </span>
-                                    <div className="flex-1">
-                                        <h3 className={`text-2xl md:text-3xl font-bold font-crimson mb-3 transition-colors ${activeIndex === index ? 'text-[#51A147]' : 'text-white'}`}>
-                                            {item.title}
-                                        </h3>
-                                        <p className="text-lg opacity-90">{item.shortDesc}</p>
-                                        <div className={`overflow-hidden transition-all duration-500 ease-in-out ${activeIndex === index ? 'max-h-[600px] opacity-100 mt-6' : 'max-h-0 opacity-0'}`}>
-                                            {item.highlight && <p className="text-[#51A147] font-bold mb-4 italic">{item.highlight}</p>}
-                                            <ul className="space-y-3">
-                                                {item.fullContent.map((point, i) => (
-                                                    <li key={i} className="flex items-start gap-3">
-                                                        <span className="w-1.5 h-1.5 rounded-full bg-[#51A147] mt-2.5 shrink-0" />
-                                                        <span>{point}</span>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    </div>
+            {/* Right Side: Accordion */}
+            {/* Removed mt-10 and used lg:mt-0 to keep it centered with the image */}
+            <div className="lg:w-1/2 w-full space-y-6">
+                {specializationData.map((item, index) => (
+                    <div key={index} className="border-b border-white/20 pb-6">
+                        <div 
+                            className="flex items-start gap-6 cursor-pointer" 
+                            onClick={() => toggleAccordion(index)}
+                        >
+                            {/* The + / - Icon */}
+                            <span className="text-white text-3xl font-light w-8 shrink-0">
+                                {activeIndex === index ? '−' : '+'}
+                            </span>
+                            
+                            <div className="flex-1">
+                                <h3 className="text-2xl md:text-3xl font-bold font-crimson mb-2">
+                                    {item.title}
+                                </h3>
+                                
+                                {/* Animated Container */}
+                                <div 
+                                    className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                                        activeIndex === index ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
+                                    }`}
+                                >
+                                    <p className="text-lg opacity-90 mb-4">{item.shortDesc}</p>
+                                    {item.highlight && (
+                                        <p className="font-bold mb-2 italic text-white/80">{item.highlight}</p>
+                                    )}
+                                    <ul className="space-y-2 pb-4">
+                                        {item.fullContent.map((point, i) => (
+                                            <li key={i} className="flex items-center gap-3">
+                                                <span className="w-1.5 h-1.5 rounded-full bg-white shrink-0" />
+                                                <span>{point}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </div>
                             </div>
-                        ))}
+                        </div>
                     </div>
-                </div>
-            </section>
+                ))}
+            </div>
+        </div>
+    </div>
+</section>
 
             {/* SECTION 4: CLIENT BRANDS */}
          <section className="bg-white py-12 md:py-20">
