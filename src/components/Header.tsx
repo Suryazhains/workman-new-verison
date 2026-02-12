@@ -170,12 +170,12 @@ const Header: React.FC = () => {
                     e.preventDefault();
                     handleNavigation(path);
                   }}
-                  className="text-[15px] font-semibold text-white hover:text-[#FFFFF] transition-colors py-2 outline-none"
+                  className="text-[15px] font-semibold text-white hover:text-white transition-colors py-2 outline-none"
                 >
                   {link.name}
                 </Link>
 
-                {/* Services Dropdown */}
+                {/* Services Dropdown (Desktop) */}
                 {link.name === 'Our services' && activeDropdown === 'Our services' && (
                   <div className="absolute top-[110px] left-1/2 -translate-x-1/2 w-[1000px] bg-white shadow-2xl rounded-xl p-8 grid grid-cols-5 gap-6 border border-gray-100 z-[60] outline-none">
                     {Object.entries(servicesData).map(([category, items]) => {
@@ -219,7 +219,7 @@ const Header: React.FC = () => {
                   </div>
                 )}
 
-                {/* Infrastructure Dropdown */}
+                {/* Infrastructure Dropdown (Desktop) */}
                 {link.name === 'Infrastructure' && activeDropdown === 'Infrastructure' && (
                   <div className="absolute top-[110px] left-0 w-[220px] bg-white shadow-2xl rounded-lg p-4 border border-gray-100 z-[60] outline-none">
                     <ul className="space-y-3">
@@ -251,7 +251,7 @@ const Header: React.FC = () => {
           })}
         </nav>
 
-        {/* Contact Button - UPDATED TEXT COLOR TO #51A147 */}
+        {/* Contact Button */}
         <div className="flex items-center space-x-4">
           <Link 
             to="/#contact"
@@ -294,35 +294,45 @@ const Header: React.FC = () => {
               return (
                 <div key={link.name} className="flex flex-col">
                   <div className="flex items-center justify-between">
+                    {/* The Text navigates to the page */}
                     <Link
                       to={path || '#'}
-                      className="text-[18px] font-bold text-[#163B73]"
+                      className="text-[18px] font-bold text-[#163B73] py-2 flex-grow"
                       onClick={(e) => {
-                        if (isDropdown) {
-                          e.preventDefault();
-                          setMobileSubMenu(isOpen ? null : link.name);
-                        } else {
-                          e.preventDefault();
-                          handleNavigation(path);
-                        }
+                        e.preventDefault();
+                        handleNavigation(path);
                       }}
                     >
                       {link.name}
                     </Link>
+                    
+                    {/* The Arrow only toggles the dropdown */}
                     {isDropdown && (
-                      <button onClick={() => setMobileSubMenu(isOpen ? null : link.name)} className="p-2">
-                        <svg className={`w-6 h-6 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''} text-[#163B73]]`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div 
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setMobileSubMenu(isOpen ? null : link.name);
+                        }} 
+                        className="p-3 cursor-pointer"
+                      >
+                        <svg className={`w-6 h-6 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''} text-[#163B73]`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
                         </svg>
-                      </button>
+                      </div>
                     )}
                   </div>
 
+                  {/* Submenu for Our Services */}
                   {link.name === 'Our services' && isOpen && (
                     <div className="flex flex-col ml-4 mt-2 space-y-4 border-l-2 border-gray-100 pl-4 animate-in slide-in-from-top-2 duration-300">
                       {Object.entries(servicesData).map(([category, items]) => (
                         <div key={category} className="flex flex-col">
-                          <span className="text-[12px] font-black text-gray-400 uppercase tracking-widest mb-2">{category}</span>
+                          <button 
+                             onClick={() => handleNavigation(`${getCategoryPath(category)}#${getServiceSlug(category)}`)}
+                             className="text-left text-[12px] font-black text-gray-400 uppercase tracking-widest mb-2"
+                          >
+                            {category}
+                          </button>
                           <div className="flex flex-col space-y-2">
                             {(items as string[]).map((item) => (
                               <button
@@ -339,6 +349,7 @@ const Header: React.FC = () => {
                     </div>
                   )}
 
+                  {/* Submenu for Infrastructure */}
                   {link.name === 'Infrastructure' && isOpen && (
                     <div className="flex flex-col ml-4 mt-2 space-y-3 border-l-2 border-gray-100 pl-4 animate-in slide-in-from-top-2 duration-300">
                       {(infrastructureData as string[]).map((item) => (
@@ -356,7 +367,7 @@ const Header: React.FC = () => {
               );
             })}
             
-            {/* Mobile Contact Button - UPDATED TEXT COLOR TO #51A147 */}
+            {/* Mobile Contact Button */}
             <Link 
               to="/#contact"
               onClick={(e) => {
