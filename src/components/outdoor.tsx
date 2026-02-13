@@ -201,7 +201,7 @@ const OutdoorServices: React.FC = () => {
         @media (max-width: 1024px) { 
           .outdoor-grid { grid-template-columns: repeat(2, 1fr); } 
           .split-hero-container, .fs-top-horizontal-row { flex-direction: column; height: auto; }
-          .split-hero-left, .split-hero-right, .fs-left-content, .fs-right-media { width: 100%; height: 50vh; }
+          .split-hero-left, .split-hero-right, .fs-left-content, .fs-right-media { width: 100%; height: auto; min-height: 40vh; }
           .fs-track-inner img, .fs-track-inner video { width: 100vw; height: 50vh; }
           
           @keyframes horizontalScroll {
@@ -216,6 +216,8 @@ const OutdoorServices: React.FC = () => {
         @media (max-width: 640px) {
             .outdoor-grid { grid-template-columns: 1fr; }
             .fs-close { top: 15px; right: 15px; font-size: 2.2rem; width: 44px; height: 44px; }
+            /* Hide the main nav/header on mobile for full-width categories to prevent overlap */
+            .mobile-hide-header { display: none !important; }
         }
 
         body:has(.fs-split-overlay) { overflow: hidden; }
@@ -278,11 +280,12 @@ const OutdoorServices: React.FC = () => {
       {isFullWidthCategory ? (
         <div className="flex flex-col w-full">
           <div className="split-hero-container">
-            <div className="split-hero-left">
+            <div className="split-hero-left py-12 md:py-0">
               <span className="uppercase tracking-widest font-bold text-white/60 mb-3 block text-[10px] md:text-xs">
                 Service Details
               </span>
-              <h1 className="font-crimson text-4xl md:text-7xl lg:text-8xl font-bold mb-6 leading-[1.1]">
+              {/* Reduced size for LED Video Wall text specifically */}
+              <h1 className={`font-crimson font-bold mb-6 leading-[1.1] ${currentCategoryKey === 'LED VIDEO WALL' ? 'text-3xl md:text-5xl lg:text-6xl' : 'text-4xl md:text-7xl lg:text-8xl'}`}>
                 {pageHeader?.heading}
               </h1>
               <div className="space-y-4 text-white/80 text-sm md:text-lg font-light max-w-lg leading-relaxed">
@@ -291,7 +294,7 @@ const OutdoorServices: React.FC = () => {
                 ))}
               </div>
             </div>
-            <div className="split-hero-right">
+            <div className="split-hero-right min-h-[40vh]">
               {filteredServices[0]?.videoUrl ? (
                 <video 
                   src={filteredServices[0].videoUrl} 
