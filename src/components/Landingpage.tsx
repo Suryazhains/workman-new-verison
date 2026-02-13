@@ -1,7 +1,7 @@
 import React from 'react';
 import LandingTwo from './LandingTwo';
 import { LANDING_CONTENT } from './content';
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom"; // This was causing the error if unused
 
 // Asset Imports
 import Home_1 from '../assets/home 1.jpg'; 
@@ -13,7 +13,7 @@ import W_image from '../assets/w.png';
 const LandingPage: React.FC = () => {
   const { hero, about } = LANDING_CONTENT;
   const heroImages = [Home_1, Home_2, Home_3, Home_4];
-  const navigate = useNavigate();
+  // const navigate = useNavigate(); // REMOVED to fix TS6133
 
   return (
     <main className="w-full min-h-screen bg-white overflow-x-hidden selection:bg-red-200 font-inter">
@@ -82,7 +82,6 @@ const LandingPage: React.FC = () => {
         <div className="absolute inset-0 z-10 gradient-overlay" />
 
         <div className="relative z-20 h-full flex items-center">
-          {/* Moved text left: Changed pl-24 to pl-12 for a cleaner 48px-ish gap */}
           <div className="w-full px-6 md:px-12 lg:pl-12"> 
             <div className="max-w-[750px]">
               <h1 className="font-crimson text-[48px] md:text-[68px] lg:text-[84px] font-bold leading-[1.05] tracking-tight text-white mb-8">
@@ -103,7 +102,6 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* --- ABOUT SECTION --- */}
-      {/* Fixed: flex-row ensures items sit side-by-side without the gap */}
     <section 
         id="about" 
         className="relative w-full bg-[#FFEBEA] py-16 md:py-24 px-6 md:px-12 lg:px-[50px] overflow-hidden scroll-mt-24"
@@ -118,13 +116,10 @@ const LandingPage: React.FC = () => {
           />
         </div>
 
-        <div   className="relative z-10 max-w-[1440px] mx-auto flex flex-col lg:flex-row items-center justify-between">
-          <div
-  id="about-mobile"
-  className="w-full lg:w-[60%] text-left scroll-mt-0"
->
+        <div className="relative z-10 max-w-[1440px] mx-auto flex flex-col lg:flex-row items-center justify-between">
+          <div id="about-mobile" className="w-full lg:w-[60%] text-left scroll-mt-0">
 
-            <span  className="text-[#FE4E5D] font-inter font-bold text-lg md:text-[20px] leading-none tracking-[-0.04em] mb-4 block uppercase lg:normal-case">
+            <span className="text-[#FE4E5D] font-inter font-bold text-lg md:text-[20px] leading-none tracking-[-0.04em] mb-4 block uppercase lg:normal-case">
               {about.label}
             </span>
 
