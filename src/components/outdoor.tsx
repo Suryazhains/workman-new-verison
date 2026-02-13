@@ -2,6 +2,8 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import './outdoor.css';
 import LandingPageThree from './landingthree';
+import ServiceDetails from "./servicedetails";
+
 import { LANDING_CONTENT } from './content';
 
 interface Service {
@@ -9,6 +11,7 @@ interface Service {
   title: string;
   videoUrl?: string;
   images?: string[];
+  description_points?: string[];
 }
 
 const OutdoorServices: React.FC = () => {
@@ -29,7 +32,6 @@ const OutdoorServices: React.FC = () => {
   const isFullWidthCategory = currentCategoryKey === 'LED VIDEO WALL' || currentCategoryKey === 'POP';
   const pageHeader = categoryData[currentCategoryKey];
   
-  // Logic to split description into 3-line style paragraphs (approx. 40 words per para)
   const formattedParagraphs = useMemo(() => {
     const text = pageHeader.description || "";
     const words = text.split(/\s+/);
@@ -63,179 +65,315 @@ const OutdoorServices: React.FC = () => {
         .font-crimson { font-family: 'Crimson Pro', serif !important; }
         .font-inter { font-family: 'Inter', sans-serif !important; }
 
-        .full-bleed-container {
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
+        /* Split Layout for LED/POP */
+        .split-hero-container {
+            display: flex;
+            width: 100%;
+            height: 100vh;
             background: white;
+            overflow: hidden;
+        }
+
+        .split-hero-left {
+            width: 50%;
+            height: 100%;
+            background: #FE4E5D;
+            color: white;
+            padding: 6% 8%; /* Adjusted Padding */
             display: flex;
             flex-direction: column;
-            align-items: center;
-        }
-
-        .full-bleed-media-wrapper {
+            justify-content: center;
             position: relative;
-            width: 100%;
-            height: 90vh;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
         }
 
-        .full-bleed-media {
-            position: absolute;
-            inset: 0;
+        .split-hero-right {
+            width: 50%;
+            height: 100%;
+            position: relative;
+            background: #000;
+        }
+
+        .split-video-bg {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            z-index: 0;
         }
 
-        .media-overlay-gradient {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
-            z-index: 1;
-        }
-
-        .media-content-overlay {
-            position: relative;
-            z-index: 10;
-            padding: 0 8%;
-            color: white;
-            width: 100%;
-            text-align: left;
-        }
-
-        .centered-description-container {
-            max-width: 1000px;
-            text-align: center;
-            padding: 6rem 1.5rem;
-            margin: 0 auto;
-        }
-
+        /* Standard Grid */
         .outdoor-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
         .service-card { transition: all 0.4s ease; position: relative; overflow: hidden; aspect-ratio: 1/0.85; cursor: pointer; }
         .initial-label { position: absolute; bottom: 0; width: 100%; padding: 2rem 1.5rem; background: linear-gradient(transparent, rgba(0,0,0,0.9)); color: white; }
 
-        .fs-slider-overlay {
+        /* Fullscreen Overlay Styles */
+        .fs-split-overlay {
           position: fixed;
           inset: 0;
           z-index: 9999;
-          background: black;
-          display: flex;
-          align-items: center;
-          overflow: hidden;
+          background: white;
+          overflow-y: auto;
+          display: block;
+          animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        .fs-track {
+        @keyframes slideUp {
+          from { transform: translateY(100%); }
+          to { transform: translateY(0); }
+        }
+
+        .fs-top-horizontal-row {
+          display: flex;
+          width: 100%;
+          height: 100vh;
+        }
+
+        .fs-left-content {
+          width: 50%;
+          height: 100%;
+          background: #FE4E5D;
+          color: white;
+          padding: 8% 6%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+
+        .fs-right-media {
+          width: 50%;
+          height: 100%;
+          position: relative;
+          overflow: hidden;
+          background: #000;
+        }
+
+        .fs-track-inner {
           display: flex;
           width: fit-content;
-          animation: stopAndGoScroll 15s cubic-bezier(0.85, 0, 0.15, 1) infinite;
+          height: 100%;
+          animation: horizontalScroll 16s cubic-bezier(0.45, 0, 0.55, 1) infinite;
         }
 
-        .fs-track img { height: 100vh; width: 100vw; object-fit: cover; flex-shrink: 0; }
+        .fs-track-inner img, .fs-track-inner video { 
+          height: 100vh; 
+          width: 50vw; 
+          object-fit: cover; 
+          flex-shrink: 0; 
+        }
 
-        @keyframes stopAndGoScroll {
+        @keyframes horizontalScroll {
           0%, 20% { transform: translateX(0); }
-          25%, 45% { transform: translateX(-100vw); }
-          50%, 70% { transform: translateX(-200vw); }
-          75%, 95% { transform: translateX(-300vw); }
-          100% { transform: translateX(-400vw); }
+          25%, 45% { transform: translateX(-50vw); }
+          50%, 70% { transform: translateX(-100vw); }
+          75%, 95% { transform: translateX(-150vw); }
+          100% { transform: translateX(0); }
         }
 
-        .fs-close { position: absolute; top: 30px; right: 40px; color: white; font-size: 3.5rem; cursor: pointer; z-index: 10001; }
-        body:has(.fs-slider-overlay) { overflow: hidden; }
+    .fs-close { 
+    /* Force it to stay pinned to the screen corner */
+    position: fixed !important; 
+    top: 20px; 
+    right: 20px; /* Moves it to the right side */
+    left: auto;  /* Clears any previous left positioning */
+    
+    /* Visuals */
+    color: #ffffff !important; 
+    font-size: 2.5rem; 
+    font-family: Arial, sans-serif;
+    cursor: pointer; 
+    line-height: 1;
+    
+    /* Layering */
+    z-index: 10001; 
+    
+    /* Interaction Area */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    
+    /* Depth */
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3); 
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
 
-        @media (max-width: 1024px) { .outdoor-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 768px) { .outdoor-grid { grid-template-columns: 1fr; } .media-content-overlay { padding: 0 24px; } }
+.fs-close:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+
+/* Desktop Adjustments (keeps it on the left if you prefer desktop that way) */
+@media (min-width: 1024px) {
+    .fs-close {
+        top: 30px;
+        left: 40px;  /* Traditional left side for desktop */
+        right: auto;
+        font-size: 3.5rem;
+    }
+}
+
+/* Small Mobile Override (ensures it's on the right for thumbs) */
+@media (max-width: 640px) {
+    .fs-close {
+        top: 15px;
+        right: 15px; /* Pinned to right corner */
+        left: auto;
+        font-size: 2.2rem;
+        width: 44px;
+        height: 44px;
+    }
+}
+
+
+
+        body:has(.fs-split-overlay) { overflow: hidden; }
+
+        @media (max-width: 1024px) { 
+          .outdoor-grid { grid-template-columns: repeat(2, 1fr); } 
+          .split-hero-container, .fs-top-horizontal-row { flex-direction: column; height: auto; }
+          .split-hero-left, .split-hero-right, .fs-left-content, .fs-right-media { width: 100%; height: 50vh; }
+          .fs-track-inner img, .fs-track-inner video { width: 100vw; height: 50vh; }
+        }
       `}} />
 
-      {/* Fullscreen Slider */}
-      {selectedFullscreenService && (
-        <div className="fs-slider-overlay">
-          <div className="fs-close" onClick={() => setSelectedFullscreenService(null)}>&times;</div>
-          <div className="fs-track">
-            {selectedFullscreenService.images?.map((img, idx) => (
-              <img key={idx} src={img} alt="" />
-            ))}
-            {selectedFullscreenService.images && <img src={selectedFullscreenService.images[0]} alt="" />}
+      {/* --- FULLSCREEN OVERLAY FOR GRID ITEMS --- */}
+  {selectedFullscreenService && (
+  <div className="fs-split-overlay fixed inset-0 z-[100] bg-black overflow-y-auto">
+    <div 
+      className="fs-close fixed top-6 right-6 z-[110] text-3xl cursor-pointer text-white hover:rotate-90 transition-transform" 
+      onClick={() => setSelectedFullscreenService(null)}
+    >
+      &times;
+    </div>
+    
+    <div className="fs-top-horizontal-row flex flex-col md:flex-row min-h-screen">
+      <div className="fs-left-content w-full md:w-1/2 p-8 md:p-20 flex flex-col justify-center bg-[#FE4E5D] text-white">
+        <span className="uppercase tracking-[0.2em] font-bold text-white/70 mb-4 block text-[10px] md:text-xs">
+          Service Details
+        </span>
+        <h2 className="font-crimson text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-[1.1]">
+          {selectedFullscreenService.title}
+        </h2>
+        <div className="space-y-6 max-w-md">
+          <div className="flex items-start gap-4">
+            <span className="bg-white text-[#FE4E5D] w-6 h-6 rounded-full flex items-center justify-center shrink-0 font-bold text-[10px] mt-1">1</span>
+            <p className="text-base md:text-xl font-light text-white/90 leading-relaxed">
+              Precision engineering designed for high-impact visibility and performance.
+            </p>
           </div>
-          <div className="absolute bottom-12 left-12 z-[10000] text-white">
-            <h2 className="font-crimson text-5xl md:text-7xl font-bold">{selectedFullscreenService.title}</h2>
+          <div className="flex items-start gap-4">
+            <span className="bg-white text-[#FE4E5D] w-6 h-6 rounded-full flex items-center justify-center shrink-0 font-bold text-[10px] mt-1">2</span>
+            <p className="text-base md:text-xl font-light text-white/90 leading-relaxed">
+              Seamlessly integrated solutions crafted with premium materials.
+            </p>
           </div>
         </div>
-      )}
-
-      {/* Header Section with 3-line paragraph chunks */}
-      {!isFullWidthCategory && (
-        <section className="w-full pt-[80px] md:pt-[100px] pb-12">
-          <div className="w-full max-w-[1920px] mx-auto px-6 md:px-[8%]">
-            <h1 className="font-crimson text-[40px] md:text-[64px] font-bold text-black mb-10 leading-tight">
-              {pageHeader.heading}
-            </h1>
-            <div className="text-gray-500 text-lg md:text-xl leading-relaxed max-w-[1200px]">
-              {formattedParagraphs.map((para, index) => (
-                <p key={index} className="mb-6">
-                  {para}
-                </p>
+      </div>
+      
+      <div className="fs-right-media w-full md:w-1/2 h-[50vh] md:h-auto relative overflow-hidden bg-zinc-900">
+        <div className="fs-track-inner h-full w-full">
+          {selectedFullscreenService.videoUrl ? (
+            <video 
+              src={selectedFullscreenService.videoUrl} 
+              autoPlay loop muted playsInline 
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="h-full w-full flex overflow-x-auto snap-x snap-mandatory">
+              {selectedFullscreenService.images?.map((img, idx) => (
+                <img key={idx} src={img} alt="" className="w-full h-full object-cover shrink-0 snap-center" />
               ))}
             </div>
-            <div className="mt-12">
-                <button className="flex items-center text-gray-400 hover:text-black transition-colors font-medium text-sm" onClick={() => window.history.back()}>
-                    <span className="mr-2 text-xl">←</span> {outdoorPage.backButtonText}
-                </button>
-            </div>
-          </div>
-        </section>
-      )}
+          )}
+        </div>
+      </div>
+    </div>
+    <div className="w-full bg-white">
+      <ServiceDetails service={selectedFullscreenService} />
+    </div>
+  </div>
+)}
 
-      {/* Main Grid Section */}
-      <section className={`w-full ${isFullWidthCategory ? '' : 'px-6 md:px-[8%] pb-24'}`}>
-        <div className={isFullWidthCategory ? "flex flex-col" : "outdoor-grid"}>
-          {filteredServices.map((service) => (
-            <div 
-              key={service.id} 
-              onClick={() => !isFullWidthCategory && setSelectedFullscreenService(service)}
-              className={isFullWidthCategory ? "full-bleed-container" : "service-card"}
-            >
-              {isFullWidthCategory ? (
-                <>
-                  <div className="full-bleed-media-wrapper">
-                    <div className="media-overlay-gradient" />
-                    {service.videoUrl ? (
-                      <video src={service.videoUrl} autoPlay loop muted playsInline className="full-bleed-media" />
-                    ) : (
-                      <img src={service.images?.[0]} alt={service.title} className="full-bleed-media" />
-                    )}
-                    
-                    <div className="media-content-overlay">
-                      <h2 className="font-crimson text-5xl md:text-8xl font-bold leading-none tracking-tight text-white">
-                          {service.title}
-                      </h2>
-                    </div>
-                  </div>
-                  
-                  <div className="centered-description-container">
-                    <div className="w-16 h-[1px] bg-black/20 mx-auto mb-10" />
-                    <div className="text-gray-600 text-lg md:text-2xl leading-relaxed font-inter font-light">
-                        {formattedParagraphs.slice(0, 2).map((para, idx) => (
-                           <p key={idx} className="mb-4">{para}</p>
-                        ))}
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <img src={service.images?.[0]} alt={service.title} className="w-full h-full object-cover transition-transform duration-700 hover:scale-110" />
-                  <div className="initial-label">
-                    <h3 className="font-crimson text-2xl md:text-3xl font-bold">{service.title}</h3>
-                  </div>
-                </>
-              )}
-            </div>
+{/* --- MAIN PAGE LAYOUT --- */}
+{isFullWidthCategory ? (
+  <div className="flex flex-col w-full">
+    <div className="split-hero-container flex flex-col md:flex-row w-full min-h-screen">
+      <div className="split-hero-left w-full md:w-1/2 p-8 md:p-[8%] flex flex-col justify-center bg-black text-white">
+        <span className="uppercase tracking-widest font-bold text-white/60 mb-3 block text-[10px] md:text-xs">
+          Service Details
+        </span>
+        <h1 className="font-crimson text-4xl md:text-7xl lg:text-8xl font-bold mb-6 leading-[1.1]">
+          {pageHeader.heading}
+        </h1>
+        <div className="space-y-4 text-white/80 text-sm md:text-lg font-light max-w-lg leading-relaxed">
+          {formattedParagraphs.slice(0, 3).map((para, i) => (
+            <p key={i}>{para}</p>
           ))}
         </div>
-      </section>
+      </div>
+      <div className="split-hero-right w-full md:w-1/2 h-[40vh] md:h-auto relative">
+        {filteredServices[0]?.videoUrl ? (
+          <video 
+            src={filteredServices[0].videoUrl} 
+            autoPlay loop muted playsInline 
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <img src={filteredServices[0]?.images?.[0]} className="w-full h-full object-cover" alt="" />
+        )}
+      </div>
+    </div>
+    <div className="w-full bg-white">
+      <ServiceDetails service={filteredServices[0] || ({} as Service)} />
+    </div>
+  </div>
+) : (
+  <>
+    <section className="w-full pt-24 md:pt-32 pb-12">
+      <div className="w-full max-w-[1920px] mx-auto px-6 md:px-[8%]">
+        <h1 className="font-crimson text-4xl md:text-[64px] font-bold text-black mb-8 leading-tight">
+          {pageHeader.heading}
+        </h1>
+        <div className="text-gray-500 text-base md:text-xl leading-relaxed max-w-[1000px]">
+          {formattedParagraphs.map((para, index) => (
+            <p key={index} className="mb-6">{para}</p>
+          ))}
+        </div>
+        <div className="mt-8 md:mt-12">
+          <button 
+            className="flex items-center text-gray-400 hover:text-black transition-colors font-medium text-sm group" 
+            onClick={() => window.history.back()}
+          >
+            <span className="mr-2 text-xl transition-transform group-hover:-translate-x-1">←</span> 
+            {outdoorPage.backButtonText}
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section className="w-full px-6 md:px-[8%] pb-24">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {filteredServices.map((service) => (
+          <div 
+            key={service.id} 
+            onClick={() => setSelectedFullscreenService(service)} 
+            className="relative aspect-[4/5] overflow-hidden cursor-pointer group"
+          >
+            <img 
+              src={service.images?.[0]} 
+              alt={service.title} 
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6 md:p-8">
+              <h3 className="font-crimson text-2xl md:text-3xl font-bold text-white">
+                {service.title}
+              </h3>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+        </>
+      )}
 
       <LandingPageThree />
     </div>

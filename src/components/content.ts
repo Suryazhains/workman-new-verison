@@ -106,11 +106,11 @@ export const PORTFOLIO_IMAGES = [
   portfolio2,
   portfolio3,
   portfolio4,
-    portfolio5,
-    portfolio6,
-    portfolio7,
-    portfolio8,
-     portfolio9,
+  portfolio5,
+  portfolio6,
+  portfolio7,
+  portfolio8,
+  portfolio9,
   portfolio10,
   portfolio11,
   portfolio12,
@@ -141,13 +141,11 @@ export const LANDING_CONTENT = {
         'Kiosk',
         'Display Stands',
         'Metal Stands',
-        'Wall Graphics / Inshop Branding'
+        'Wall Graphics / Inshop Branding',
+        'POP' // Moved here as sub-category
       ],
       'LED VIDEO WALL': [
         'LED Video Wall'
-      ],
-      POP: [
-        'POP '
       ],
       'MODULAR SIGNAGE': [
         'Standees',
@@ -183,89 +181,86 @@ export const LANDING_CONTENT = {
 
   servicesSection: {
     heading: "Our Services",
-
-
     tabs: [
       { id: "outdoor", label: "Outdoor" },
       { id: "indoor", label: "Indoor" },
       { id: "led", label: "LED Video Wall" },
-      { id: "pop", label: "POP" },
+      // POP tab removed from top level
       { id: "modular", label: "Modular Signage" },
     ],
 
-contentMap: {
- outdoor: {
-    heading: "Outdoor Services",
-    topDescription:
-      "Elevate your brand presence with premium outdoor advertising and signage solutions built for maximum visibility and long-lasting performance. From hoardings and billboards to ACP signboards and outdoor LED displays, we deliver impactful branding that stands out. Designed with durability, precision installation, and high-quality finishing to ensure your business gets noticed day and night.",
-    description: [
-      "High-impact outdoor branding designed to maximize visibility across prime locations. We specialize in facade signage, backlit signboards, hoardings, unipoles, metal letters, and custom structural branding tailored to your brand identity.",
-      "Every outdoor installation is engineered with premium materials and high-quality fabrication standards to ensure long-lasting performance, weather resistance, and strong visibility in all lighting conditions.",
-      "Our designs are created to withstand harsh sun, rain, and wind while maintaining a premium finish.",
-      "From commercial buildings and retail outlets to highways and large-format advertising spaces, we deliver end-to-end execution including design, manufacturing, and professional installation helping your brand stand out, attract attention, and leave a lasting impression."
-    ],
-    buttonText: "View more",
-  },
+    contentMap: {
+      outdoor: {
+        heading: "Outdoor Services",
+        topDescription:
+          "Elevate your brand presence with premium outdoor advertising and signage solutions built for maximum visibility and long-lasting performance. From hoardings and billboards to ACP signboards and outdoor LED displays, we deliver impactful branding that stands out. Designed with durability, precision installation, and high-quality finishing to ensure your business gets noticed day and night.",
+        description: [
+          "High-impact outdoor branding designed to maximize visibility across prime locations. We specialize in facade signage, backlit signboards, hoardings, unipoles, metal letters, and custom structural branding tailored to your brand identity.",
+          "Every outdoor installation is engineered with premium materials and high-quality fabrication standards to ensure long-lasting performance, weather resistance, and strong visibility in all lighting conditions.",
+          "Our designs are created to withstand harsh sun, rain, and wind while maintaining a premium finish.",
+          "From commercial buildings and retail outlets to highways and large-format advertising spaces, we deliver end-to-end execution including design, manufacturing, and professional installation helping your brand stand out, attract attention, and leave a lasting impression."
+        ],
+        buttonText: "View more",
+      },
 
-  indoor: {
-    heading: "Indoor Services",
-    topDescription:
-      "Transform your interior spaces with high-quality branding, retail displays, and custom-designed indoor signage tailored to your business identity. From reception branding and wall graphics to acrylic boards, nameplates, and showroom displays, we create premium indoor experiences. With precise detailing and professional installation, we ensure every space looks modern, impactful, and brand-aligned.",
-    description: [
-      "Thoughtfully designed indoor branding solutions that enhance visual appeal, optimize space, and improve customer engagement across showrooms, offices, retail stores, and commercial interiors.",
-      "We offer a wide range of indoor signage and branding services including reception logo boards, acrylic and stainless-steel signage, wall graphics, glass frosting, 3D lettering, directional signages, and customized display elements that match your brand aesthetics.",
-      "Every project is executed with precision detailing, premium finishing, and high-quality materials to ensure a clean, modern, and professional look.",
-      "Our goal is to create interior spaces that not only look visually impressive but also improve customer flow, strengthen brand recall, and deliver a better overall experience."
-    ],
-    buttonText: "View more",
-  },
+      indoor: {
+        heading: "Indoor Services",
+        topDescription:
+          "Transform your interior spaces with high-quality branding, retail displays, and custom-designed indoor signage tailored to your business identity. From reception branding and wall graphics to acrylic boards, nameplates, and showroom displays, we create premium indoor experiences. With precise detailing and professional installation, we ensure every space looks modern, impactful, and brand-aligned.",
+        description: [
+          "Thoughtfully designed indoor branding solutions that enhance visual appeal, optimize space, and improve customer engagement across showrooms, offices, retail stores, and commercial interiors.",
+          "We offer a wide range of indoor signage and branding services including reception logo boards, POP (Point of Purchase) displays, wall graphics, 3D lettering, and customized display elements.",
+          "Every project is executed with precision detailing, premium finishing, and high-quality materials to ensure a clean, modern, and professional look.",
+          "Our goal is to create interior spaces that not only look visually impressive but also improve customer flow, strengthen brand recall, and deliver a better overall experience."
+        ],
+        buttonText: "View more",
+      },
 
-  led: {
-    heading: "LED Video Wall Services",
-    topDescription:
-      "Advanced digital display solutions designed for dynamic visual communication and high-definition brand storytelling. From showroom displays and corporate installations to event setups, our LED video walls deliver vibrant clarity and seamless performance. Engineered with expert planning, professional installation, and reliable support to ensure maximum impact and long-term durability.",
-    description: [
-      "High-performance LED video wall solutions built for dynamic visual communication and impactful brand storytelling across both indoor and outdoor environments.",
-      "We provide complete end-to-end LED services including requirement consultation, site inspection, structure planning, professional installation, calibration, content guidance, and long-term technical support to ensure smooth performance.",
-      "Our LED video walls feature high brightness, seamless panel alignment, and crystal-clear resolution for maximum visibility even in bright lighting conditions.",
-      "Ideal for showrooms, retail outlets, corporate spaces, events, and commercial facades, our solutions help brands create attention-grabbing experiences that leave a lasting impression."
-    ],
-    buttonText: "View more",
-  },
+      led: {
+        heading: "LED Video Wall Services",
+        topDescription:
+          "Advanced digital display solutions designed for dynamic visual communication and high-definition brand storytelling. From showroom displays and corporate installations to event setups, our LED video walls deliver vibrant clarity and seamless performance. Engineered with expert planning, professional installation, and reliable support to ensure maximum impact and long-term durability.",
+        description: [
+          "High-performance LED video wall solutions built for dynamic visual communication and impactful brand storytelling across both indoor and outdoor environments.",
+          "We provide complete end-to-end LED services including requirement consultation, site inspection, structure planning, professional installation, calibration, content guidance, and long-term technical support to ensure smooth performance.",
+          "Our LED video walls feature high brightness, seamless panel alignment, and crystal-clear resolution for maximum visibility even in bright lighting conditions.",
+          "Ideal for showrooms, retail outlets, corporate spaces, events, and commercial facades, our solutions help brands create attention-grabbing experiences that leave a lasting impression."
+        ],
+        buttonText: "View more",
+      },
 
-  pop: {
-    heading: "POP Services",
-    topDescription:
-      "Strategic Point of Purchase (POP) branding solutions designed to capture attention and drive customer decisions at the point of sale. From standees, shelf branding, danglers, and kiosks to custom retail displays, we create high-impact visuals that boost conversions. Built with premium materials and sharp finishing to ensure your products stand out in every retail environment",
-    description: [
-      "Strategic Point of Purchase (POP) branding designed to attract attention, highlight products, and influence customer buying decisions directly at the point of sale.",
-      "We design and manufacture a wide range of POP materials including standees, shelf strips, danglers, wobblers, counter displays, kiosks, promotional boards, and customized retail display units tailored to your campaign needs.",
-      "Built with durable materials and premium printing quality, our POP solutions ensure long-lasting performance even in high-traffic retail environments.",
-      "With visually impactful designs and strong finishing, we help improve product visibility, increase engagement, and drive higher in-store conversions."
-    ],
-    buttonText: "View more",
-  },
+      pop: {
+        heading: "POP Services",
+        topDescription:
+          "Strategic Point of Purchase (POP) branding solutions designed to capture attention and drive customer decisions at the point of sale. From standees, shelf branding, danglers, and kiosks to custom retail displays, we create high-impact visuals that boost conversions. Built with premium materials and sharp finishing to ensure your products stand out in every retail environment",
+        description: [
+          "Strategic Point of Purchase (POP) branding designed to attract attention, highlight products, and influence customer buying decisions directly at the point of sale.",
+          "We design and manufacture a wide range of POP materials including standees, shelf strips, danglers, wobblers, counter displays, kiosks, promotional boards, and customized retail display units tailored to your campaign needs.",
+          "Built with durable materials and premium printing quality, our POP solutions ensure long-lasting performance even in high-traffic retail environments.",
+          "With visually impactful designs and strong finishing, we help improve product visibility, increase engagement, and drive higher in-store conversions."
+        ],
+        buttonText: "View more",
+      },
 
-  modular: {
-    heading: "Modular Signage Services",
-    topDescription:
-      "Versatile, reusable, and cost-effective display systems designed for flexible retail, showroom, and exhibition environments. From modular kiosks and portable branding units to customized frames and display structures, we deliver solutions that adapt easily. Engineered for quick setup, premium finishing, and long-term durability to maximize value and brand visibility.",
-    description: [
-      "Flexible and cost-effective modular signage solutions designed for easy updates, quick installation, and reusable branding across multiple locations.",
-      "Ideal for retail stores, malls, exhibitions, events, and corporate environments, our modular systems are built to adapt to changing promotions, product launches, and seasonal branding without the need for complete replacement.",
-      "We provide high-quality modular frames, lightboxes, display panels, and customized structures with premium finishing and durability.",
-      "Combining convenience with strong visual impact, our modular signage ensures your brand stays fresh, professional, and consistently visible."
-    ],
-    buttonText: "View more",
-  },
+      modular: {
+        heading: "Modular Signage Services",
+        topDescription:
+          "Versatile, reusable, and cost-effective display systems designed for flexible retail, showroom, and exhibition environments. From modular kiosks and portable branding units to customized frames and display structures, we deliver solutions that adapt easily. Engineered for quick setup, premium finishing, and long-term durability to maximize value and brand visibility.",
+        description: [
+          "Flexible and cost-effective modular signage solutions designed for easy updates, quick installation, and reusable branding across multiple locations.",
+          "Ideal for retail stores, malls, exhibitions, events, and corporate environments, our modular systems are built to adapt to changing promotions, product launches, and seasonal branding without the need for complete replacement.",
+          "We provide high-quality modular frames, lightboxes, display panels, and customized structures with premium finishing and durability.",
+          "Combining convenience with strong visual impact, our modular signage ensures your brand stays fresh, professional, and consistently visible."
+        ],
+        buttonText: "View more",
+      },
     },
-
   },
 
   portfolio: {
     label: 'Portfolio',
     heading: 'Portfolio',
-   description: 'Showcasing a diverse gallery of our premier signage projects, where expert craftsmanship meets innovative design. Explore how we help leading brands achieve a lasting visual impact through durable, high-quality manufacturing.',
+    description: 'Showcasing a diverse gallery of our premier signage projects, where expert craftsmanship meets innovative design. Explore how we help leading brands achieve a lasting visual impact through durable, high-quality manufacturing.',
     images: [
       portfolio1,
     ],
@@ -287,14 +282,12 @@ contentMap: {
         name: 'Priya Anand',
         company: 'Marketing Manager, Care Retail, Tamil Nadu',
       },
-    {
-  quote:
-    "Workman Advertising handled our Kiosk stand installation with great professionalism and technical clarity. Their team ensured everything was planned properly, executed on time, and coordinated smoothly at the site. The communication throughout the project was transparent, and the final output was sharp, vibrant, and exactly as promised. It has added a premium feel to our store environment.",
-  name: "R. Prakash",
-  company: "Managing Partner, Sri Murugan Electronics, Coimbatore",
-},
-
-      
+      {
+        quote:
+          "Workman Advertising handled our Kiosk stand installation with great professionalism and technical clarity. Their team ensured everything was planned properly, executed on time, and coordinated smoothly at the site. The communication throughout the project was transparent, and the final output was sharp, vibrant, and exactly as promised. It has added a premium feel to our store environment.",
+        name: "R. Prakash",
+        company: "Managing Partner, Sri Murugan Electronics, Coimbatore",
+      },
       {
         quote:
           'They consistently deliver practical designs with strong visual appeal while maintaining cost efficiency. Reliable execution and continued support make them a dependable branding partner.',
@@ -302,7 +295,6 @@ contentMap: {
         company: 'Proprietor, Renesson Displays, Coimbatore',
       },
     ],
-
   },
 
   contactSection: {
@@ -336,35 +328,35 @@ contentMap: {
     copyright: `Copyright 2026 The Work Man. All Rights Reserved`
   },
 
-categoryData: {
-  OUTDOOR: {
-    heading: "Outdoor Services",
-    description: "High-impact outdoor branding designed to maximize visibility across prime locations. We specialize in facade signage, backlit signboards, hoardings, unipoles, metal letters, and custom structural branding tailored to your brand identity. Every outdoor installation is engineered with premium materials and high-quality fabrication standards to ensure long-lasting performance, weather resistance, and strong visibility in all lighting conditions. Our designs are created to withstand harsh sun, rain, and wind while maintaining a premium finish. From commercial buildings and retail outlets to highways and large-format advertising spaces, we deliver end-to-end execution including design, manufacturing, and professional installation helping your brand stand out, attract attention, and leave a lasting impression."
-  },
+  categoryData: {
+    OUTDOOR: {
+      heading: "Outdoor Services",
+      description: "High-impact outdoor branding designed to maximize visibility across prime locations. We specialize in facade signage, backlit signboards, hoardings, unipoles, metal letters, and custom structural branding tailored to your brand identity. Every outdoor installation is engineered with premium materials and high-quality fabrication standards to ensure long-lasting performance, weather resistance, and strong visibility in all lighting conditions. Our designs are created to withstand harsh sun, rain, and wind while maintaining a premium finish. From commercial buildings and retail outlets to highways and large-format advertising spaces, we deliver end-to-end execution including design, manufacturing, and professional installation helping your brand stand out, attract attention, and leave a lasting impression."
+    },
 
-  INDOOR: {
-    heading: "Indoor Services",
-    description: "Thoughtfully designed indoor branding solutions that enhance visual appeal, optimize space, and improve customer engagement across showrooms, offices, retail stores, and commercial interiors. We offer a wide range of indoor signage and branding services including reception logo boards, acrylic and stainless-steel signage, wall graphics, glass frosting, 3D lettering, directional signages, and customized display elements that match your brand aesthetics. Every project is executed with precision detailing, premium finishing, and high-quality materials to ensure a clean, modern, and professional look. Our goal is to create interior spaces that not only look visually impressive but also improve customer flow, strengthen brand recall, and deliver a better overall experience."
-  },
+    INDOOR: {
+      heading: "Indoor Services",
+      description: "Thoughtfully designed indoor branding solutions that enhance visual appeal, optimize space, and improve customer engagement across showrooms, offices, retail stores, and commercial interiors. We offer a wide range of indoor signage and branding services including reception logo boards, acrylic and stainless-steel signage, wall graphics, glass frosting, 3D lettering, directional signages, and customized display elements that match your brand aesthetics. Every project is executed with precision detailing, premium finishing, and high-quality materials to ensure a clean, modern, and professional look. Our goal is to create interior spaces that not only look visually impressive but also improve customer flow, strengthen brand recall, and deliver a better overall experience."
+    },
 
-  'LED VIDEO WALL': {
-    heading: "LED Video Wall Services",
-    description: "High-performance LED video wall solutions built for dynamic visual communication and impactful brand storytelling across both indoor and outdoor environments. We provide complete end-to-end LED services including requirement consultation, site inspection, structure planning, professional installation, calibration, content guidance, and long-term technical support to ensure smooth performance. Our LED video walls feature high brightness, seamless panel alignment, and crystal-clear resolution for maximum visibility even in bright lighting conditions. Ideal for showrooms, retail outlets, corporate spaces, events, and commercial facades, our solutions help brands create attention-grabbing experiences that leave a lasting impression."
-  },
+    'LED VIDEO WALL': {
+      heading: "LED Video Wall Services",
+      description: "High-performance LED video wall solutions built for dynamic visual communication and impactful brand storytelling across both indoor and outdoor environments. We provide complete end-to-end LED services including requirement consultation, site inspection, structure planning, professional installation, calibration, content guidance, and long-term technical support to ensure smooth performance. Our LED video walls feature high brightness, seamless panel alignment, and crystal-clear resolution for maximum visibility even in bright lighting conditions. Ideal for showrooms, retail outlets, corporate spaces, events, and commercial facades, our solutions help brands create attention-grabbing experiences that leave a lasting impression."
+    },
 
-  'POP': {
-    heading: "POP Services",
-    description: "Strategic Point of Purchase (POP) branding designed to attract attention, highlight products, and influence customer buying decisions directly at the point of sale. We design and manufacture a wide range of POP materials including standees, shelf strips, danglers, wobblers, counter displays, kiosks, promotional boards, and customized retail display units tailored to your campaign needs. Built with durable materials and premium printing quality, our POP solutions ensure long-lasting performance even in high-traffic retail environments. With visually impactful designs and strong finishing, we help improve product visibility, increase engagement, and drive higher in-store conversions."
-  },
+    'POP': {
+      heading: "POP Services",
+      description: "Strategic Point of Purchase (POP) branding designed to attract attention, highlight products, and influence customer buying decisions directly at the point of sale. We design and manufacture a wide range of POP materials including standees, shelf strips, danglers, wobblers, counter displays, kiosks, promotional boards, and customized retail display units tailored to your campaign needs. Built with durable materials and premium printing quality, our POP solutions ensure long-lasting performance even in high-traffic retail environments. With visually impactful designs and strong finishing, we help improve product visibility, increase engagement, and drive higher in-store conversions."
+    },
 
-  'MODULAR SIGNAGE': {
-    heading: "Modular Signage Services",
-    description: "Flexible and cost-effective modular signage solutions designed for easy updates, quick installation, and reusable branding across multiple locations. Ideal for retail stores, malls, exhibitions, events, and corporate environments, our modular systems are built to adapt to changing promotions, product launches, and seasonal branding without the need for complete replacement. We provide high-quality modular frames, lightboxes, display panels, and customized structures with premium finishing and durability. Combining convenience with strong visual impact, our modular signage ensures your brand stays fresh, professional, and consistently visible."
-  }
+    'MODULAR SIGNAGE': {
+      heading: "Modular Signage Services",
+      description: "Flexible and cost-effective modular signage solutions designed for easy updates, quick installation, and reusable branding across multiple locations. Ideal for retail stores, malls, exhibitions, events, and corporate environments, our modular systems are built to adapt to changing promotions, product launches, and seasonal branding without the need for complete replacement. We provide high-quality modular frames, lightboxes, display panels, and customized structures with premium finishing and durability. Combining convenience with strong visual impact, our modular signage ensures your brand stays fresh, professional, and consistently visible."
+    }
   },
 
   outdoorPage: {
-    heading: "Signage & Branding Solutions", // Updated to be more generic since it hosts all
+    heading: "Signage & Branding Solutions",
     description:
       "Comprehensive branding and signage solutions designed for high-impact visibility across all environments.",
     backButtonText: "Categories",
@@ -382,14 +374,13 @@ categoryData: {
       { id: 10, title: "Display Stands", images: [display1, display2, display3] },
       { id: 11, title: "Metal Stands", images: [metal1, metal2, metal3] },
       { id: 12, title: "Wall Graphics / Inshop Branding", images: [wall1, wall2, wall3] },
-      { id: 13, title: "LED Video Wall",videoUrl: ledVideo},
+      { id: 13, title: "LED Video Wall", videoUrl: ledVideo },
       { id: 14, title: "Standees", images: [standee1, standee2, standee3] },
       { id: 15, title: "Scrollers", images: [scroller1, scroller2, scroller3] },
       { id: 16, title: "Catalogue Stands", images: [catalogue1, catalogue2, catalogue3] },
       { id: 17, title: "Category Signage", images: [category1, category2, category3] },
       { id: 18, title: "Clip On Frames", images: [clip1, clip2, clip3] },
-      // Added POP with ID 19
-      { id: 19, title: "POP", images: [p1, p2, p3] } 
+      { id: 19, title: "POP", images: [p1, p2, p3] }
     ],
   },
 

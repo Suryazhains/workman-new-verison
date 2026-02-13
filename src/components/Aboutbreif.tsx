@@ -87,7 +87,7 @@ const About: React.FC = () => {
     ];
 
     return (
-        <main className="bg-[#51A147] font-inter text-white">
+        <main className="bg-[#FE4E5D] font-inter text-white">
             <style dangerouslySetInnerHTML={{ __html: `
                 @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
                 .font-crimson { font-family: 'Crimson Pro', serif !important; }
@@ -133,7 +133,7 @@ const About: React.FC = () => {
             </section>
 
             {/* SECTION 3: OUR SPECIALIZATION */}
-       <section className="bg-[#51A147] text-white py-20 px-6 lg:px-20">
+       <section className="bg-[#FE4E5D] text-white py-20 px-6 lg:px-20">
     <div className="max-w-[1440px] mx-auto">
         {/* Changed items-start to items-center to bring text down level with image */}
         <div className="flex flex-col lg:flex-row items-center gap-16">

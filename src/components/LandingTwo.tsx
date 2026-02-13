@@ -36,14 +36,14 @@ const LandingTwo: React.FC = () => {
       {/* PORTFOLIO SECTION */}
       <section
         id="portfolio"
-        className="w-full bg-[#F2FFF0] pt-[90px] pb-[90px] overflow-hidden"
+        className="w-full bg-[#FE4E5D] pt-[70px] pb-[90px] overflow-hidden"
       >
         {/* Heading */}
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-12 mb-10">
-          <h2 className="font-crimson font-bold text-3xl md:text-[56px] text-[#51A147] mb-4">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-2 mb-10">
+          <h2 className="font-crimson font-bold text-3xl md:text-[56px] text-[#FFFFFF] mb-4">
             {portfolio.heading}
           </h2>
-          <p className="text-[#4B5563] max-w-full text-lg leading-relaxed">
+          <p className="text-[#FFFFFF] max-w-full text-lg leading-relaxed">
             {portfolio.description}
           </p>
         </div>
@@ -52,11 +52,11 @@ const LandingTwo: React.FC = () => {
         <div className="relative w-full overflow-hidden">
           {/* LEFT FADE - Matches updated background color */}
           <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-[60px] md:w-[160px]
-            bg-gradient-to-r from-[#F2FFF0] via-[#F2FFF0] to-transparent" />
+            bg-gradient-to-r from-[#FE4E5D] via-[#FE4E5D] to-transparent" />
 
           {/* RIGHT FADE - Matches updated background color */}
           <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-[60px] md:w-[160px]
-            bg-gradient-to-l from-[#F2FFF0] via-[#F2FFF0] to-transparent" />
+            bg-gradient-to-l from-[#FE4E5D] via-[#FE4E5D] to-transparent" />
 
           <div className="flex flex-col gap-[6px]">
             {/* Row 1 – Right to Left */}
@@ -125,10 +125,10 @@ const LandingTwo: React.FC = () => {
       {/* TESTIMONIALS SECTION */}
       <section
         id="testimonials"
-        className="w-full bg-[#F2FFF0] pt-[90px] pb-[90px] px-[24px] md:px-[40px] lg:px-[64px]"
+        className="w-full bg-[#FFFFF] pt-[90px] pb-[90px] px-[24px] md:px-[40px] lg:px-[64px]"
       >
         <div className="max-w-[1440px] mx-auto">
-          <h2 className="font-crimson text-[32px] md:text-[56px] font-bold text-[#51A147] mb-4">
+          <h2 className="font-crimson text-[32px] md:text-[56px] font-bold text-[#FE4E5D] mb-4">
             {testimonials.heading}
           </h2>
           <p className="text-[#535353] text-[16px] md:text-[18px] mb-12 max-w-full leading-relaxed">
@@ -138,7 +138,7 @@ const LandingTwo: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-[6px]">
             {/* LEFT SIDE */}
             <div className="flex flex-col gap-[6px]">
-              <div className="bg-white p-8 md:p-10 border border-[#E5E7EB] flex flex-col justify-between h-full rounded-sm shadow-sm">
+              <div className="bg-white p-8 md:p-10 border border-[#FE4E5D] flex flex-col justify-between h-full rounded-sm shadow-sm">
                 <div>
                   <img src={quotes} alt="quotes" className="w-[20px] h-[20px] block mb-2 object-contain" />
                   <p className="text-[#535353] text-[16px] md:text-[18px] leading-relaxed">
@@ -151,7 +151,7 @@ const LandingTwo: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-white p-8 md:p-10 border border-[#E5E7EB] flex flex-col justify-between h-full rounded-sm shadow-sm">
+              <div className="bg-white p-8 md:p-10 border border-[#FE4E5D] flex flex-col justify-between h-full rounded-sm shadow-sm">
                 <div>
                   <img src={quotes} alt="quotes" className="w-[20px] h-[20px] block mb-2 object-contain" />
                   <p className="text-[#535353] text-[16px] md:text-[18px] leading-relaxed">
@@ -167,7 +167,7 @@ const LandingTwo: React.FC = () => {
 
             {/* RIGHT SIDE */}
             <div className="flex flex-col gap-[6px]">
-              <div className="bg-white p-8 md:p-10 border border-[#E5E7EB] flex flex-col justify-between h-full rounded-sm shadow-sm">
+              <div className="bg-white p-8 md:p-10 border border-[#FE4E5D] flex flex-col justify-between h-full rounded-sm shadow-sm">
                 <div>
                   <img src={quotes} alt="quotes" className="w-[20px] h-[20px] block mb-2 object-contain" />
                   <p className="text-[#535353] text-[16px] md:text-[18px] leading-relaxed">
@@ -181,7 +181,7 @@ const LandingTwo: React.FC = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-[6px]">
-                <div className="bg-white p-6 md:p-8 border border-[#E5E7EB] flex flex-col justify-between rounded-sm shadow-sm">
+                <div className="bg-white p-6 md:p-8 border border-[#FE4E5D] flex flex-col justify-between rounded-sm shadow-sm">
                   <div>
                     <img src={quotes} alt="quotes" className="w-[20px] h-[20px] block mb-2 object-contain" />
                     <p className="text-[#535353] text-[15px] leading-relaxed mb-6">
@@ -194,7 +194,7 @@ const LandingTwo: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="bg-white p-6 md:p-8 border border-[#E5E7EB] flex flex-col justify-between rounded-sm shadow-sm">
+                <div className="bg-white p-6 md:p-8 border border-[#FE4E5D] flex flex-col justify-between rounded-sm shadow-sm">
                   <div>
                     <img src={quotes} alt="quotes" className="w-[20px] h-[20px] block mb-2 object-contain" />
                     <p className="text-[#535353] text-[15px] leading-relaxed mb-6">

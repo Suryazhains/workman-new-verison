@@ -22,7 +22,7 @@ const Team: React.FC = () => {
   const allTeamMembers = [team1, team2, team3, team4, team5, team6, team7, team8, team9];
 
   return (
-    <main className="bg-[#51A147] w-full">
+    <main className="bg-[#FE4E5D] w-full">
       {/* GLOBAL FONT IMPORT & CRIMSON CLASS */}
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');

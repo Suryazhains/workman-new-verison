@@ -22,7 +22,7 @@ const Infrastructure: React.FC = () => {
   };
 
   return (
-    <main className="bg-[#51A147]">
+    <main className="bg-[#FE4E5D]">
       {/* GLOBAL FONT IMPORT & CRIMSON CLASS */}
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
@@ -70,7 +70,7 @@ const Infrastructure: React.FC = () => {
 
               {/* Text Container - Colors adjusted to match the "Our Equipments" card style */}
               <div className={`w-full lg:w-1/2 flex flex-col justify-center px-8 py-12 md:px-16 lg:px-20 ${
-                index % 2 === 0 ? 'bg-[#51A147]' : 'bg-[#51A147]'
+                index % 2 === 0 ? 'bg-[#FE4E5D]' : 'bg-[#FE4E5D]'
               }`}>
                 <div className="max-w-[500px]">
                   <span className="text-white/60 text-sm font-medium mb-2 block font-inter uppercase tracking-widest">

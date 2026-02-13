@@ -1,9 +1,9 @@
-import React from 'react'; // Removed useEffect, useState
+import React from 'react';
 import LandingTwo from './LandingTwo';
 import { LANDING_CONTENT } from './content';
 import { useNavigate } from "react-router-dom";
 
-// New Imports for the Hero Gallery
+// Asset Imports
 import Home_1 from '../assets/home 1.jpg'; 
 import Home_2 from '../assets/home 2.jpg';
 import Home_3 from '../assets/home 3.jpg';
@@ -16,7 +16,7 @@ const LandingPage: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <main className="w-full min-h-screen bg-white overflow-x-hidden selection:bg-green-200 font-inter">
+    <main className="w-full min-h-screen bg-white overflow-x-hidden selection:bg-red-200 font-inter">
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
         
@@ -26,7 +26,7 @@ const LandingPage: React.FC = () => {
           display: flex;
           width: 400%; 
           height: 100%;
-          animation: heroScroll 20s cubic-bezier(0.85, 0, 0.15, 1) infinite;
+          animation: heroScroll 24s cubic-bezier(0.45, 0, 0.55, 1) infinite;
         }
 
         .hero-track img {
@@ -38,107 +38,125 @@ const LandingPage: React.FC = () => {
 
         @keyframes heroScroll {
           0%, 20% { transform: translateX(0); }
-          25%, 45% { transform: translateX(-100vw); }
-          50%, 70% { transform: translateX(-200vw); }
-          75%, 95% { transform: translateX(-300vw); }
+          25%, 45% { transform: translateX(-25%); }
+          50%, 70% { transform: translateX(-50%); }
+          75%, 95% { transform: translateX(-75%); }
           100% { transform: translateX(0); }
         }
 
-        .hero-shade-overlay {
-          position: absolute;
-          inset: 0;
-          z-index: 10;
+        .gradient-overlay {
           background: linear-gradient(
             to right, 
-            rgba(0, 0, 0, 0.85) 0%, 
-            rgba(0, 0, 0, 0.5) 35%, 
-            rgba(0, 0, 0, 0.1) 70%, 
-            transparent 100%
+            #FE4E5D 0%, 
+            #FE4E5D 35%, 
+            rgba(254, 78, 93, 0.9) 45%,
+            rgba(254, 78, 93, 0) 70%
           );
         }
 
-        .hero-shade-overlay::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 30%);
-          pointer-events: none;
+        @media (max-width: 1024px) {
+          .gradient-overlay {
+            background: linear-gradient(
+              to bottom, 
+              #FE4E5D 0%, 
+              #FE4E5D 50%, 
+              transparent 100%
+            );
+          }
         }
       `}} />
 
       {/* --- HERO SECTION --- */}
-      <section id="home" className="relative w-full h-[600px] lg:h-[85vh] overflow-hidden bg-black">
+      <section 
+        id="home" 
+        className="relative w-full h-[85vh] min-h-[650px] overflow-hidden bg-[#FE4E5D]"
+      >
         <div className="absolute inset-0 z-0">
           <div className="hero-track">
             {heroImages.map((img, index) => (
-              <img key={index} src={img} alt={`Hero ${index + 1}`} />
+              <img key={index} src={img} alt="portfolio" />
             ))}
           </div>
         </div>
-        <div className="hero-shade-overlay" />
-        <div className="relative z-20 w-full h-full flex items-center">
-          <div className="w-full max-w-[1440px] mx-auto px-6 md:px-12 lg:px-[90px]">
-            <div className="max-w-[800px]">
-              <h1 className="font-crimson text-[38px] sm:text-[54px] md:text-[70px] lg:text-[82px] font-bold leading-[1.1] tracking-tight text-white mb-6">
+
+        <div className="absolute inset-0 z-10 gradient-overlay" />
+
+        <div className="relative z-20 h-full flex items-center">
+          {/* Moved text left: Changed pl-24 to pl-12 for a cleaner 48px-ish gap */}
+          <div className="w-full px-6 md:px-12 lg:pl-12"> 
+            <div className="max-w-[750px]">
+              <h1 className="font-crimson text-[48px] md:text-[68px] lg:text-[84px] font-bold leading-[1.05] tracking-tight text-white mb-8">
                 {hero.title.join(" ")}
               </h1>
-              <p className="text-white/90 text-base md:text-lg lg:text-[20px] leading-relaxed max-w-[550px] mb-10 font-medium">
+              <p className="text-white/90 text-lg md:text-xl leading-relaxed max-w-[550px] mb-12">
                 {hero.description}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button
-                  onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-                  className="bg-[#51A147] text-white rounded-[6px] w-full sm:w-[180px] h-[52px] font-inter font-bold text-[16px] hover:bg-[#458e3c] transition-all flex items-center justify-center shadow-2xl active:scale-95"
-                >
-                  {hero.cta}
-                </button>
-              </div>
+              <button
+                onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+                className="bg-white text-[#FE4E5D] rounded-[4px] px-12 h-[58px] font-inter font-bold text-[16px] hover:shadow-2xl transition-all active:scale-95"
+              >
+                Contact now
+              </button>
             </div>
           </div>
         </div>
       </section>
 
       {/* --- ABOUT SECTION --- */}
-      <section id="about" className="relative w-full bg-[#F2FFF0] py-20 md:py-28 px-6 md:px-12 lg:px-[90px] overflow-hidden scroll-mt-24">
-        <div className="hidden lg:flex absolute right-0 top-0 h-full w-1/2 z-0 pointer-events-none select-none items-center justify-end p-6">
-          <img src={W_image} alt="Decoration" className="h-[80%] w-auto object-contain" />
+      {/* Fixed: flex-row ensures items sit side-by-side without the gap */}
+    <section 
+        id="about" 
+        className="relative w-full bg-[#FFEBEA] py-16 md:py-24 px-6 md:px-12 lg:px-[50px] overflow-hidden scroll-mt-24"
+      >
+        
+        {/* Background "W" Logo */}
+        <div className="hidden lg:flex absolute right-0 top-0 h-full w-full lg:w-1/2 z-0 pointer-events-none select-none items-center justify-end">
+          <img 
+            src={W_image} 
+            alt="" 
+            className="h-[110%] w-auto object-contain object-right" 
+          />
         </div>
-        <div className="relative z-10 max-w-[1440px] mx-auto">
-          <div className="w-full lg:w-[60%]">
-            <span className="text-[#51A147] font-inter font-bold text-lg md:text-[20px] mb-4 block uppercase tracking-widest">
+
+        <div   className="relative z-10 max-w-[1440px] mx-auto flex flex-col lg:flex-row items-center justify-between">
+          <div
+  id="about-mobile"
+  className="w-full lg:w-[60%] text-left scroll-mt-0"
+>
+
+            <span  className="text-[#FE4E5D] font-inter font-bold text-lg md:text-[20px] leading-none tracking-[-0.04em] mb-4 block uppercase lg:normal-case">
               {about.label}
             </span>
-            <h2 className="font-crimson font-black text-[32px] sm:text-[42px] md:text-[52px] leading-[1.1] text-[#000000] mb-8 max-w-[700px]">
+
+            <h2 className="font-inter font-bold text-[32px] sm:text-[42px] md:text-[48px] leading-[1.1] tracking-[-0.04em] text-[#000000] mb-6 max-w-[650px]">
               {about.heading}
             </h2>
-            <p className="text-[#6B7280] text-lg md:text-[19px] leading-relaxed max-w-[600px] mb-12">
+
+            <p className="text-[#6B7280] text-base md:text-[18px] leading-relaxed max-w-[580px] mb-12">
               {about.description}
             </p>
-            <div className="grid grid-cols-3 gap-8 md:gap-16 mb-16">
+
+            <div className="grid grid-cols-3 lg:flex lg:flex-wrap gap-4 sm:gap-8 lg:gap-16">
               {about.stats.map((stat, index) => (
                 <div key={index} className="flex flex-col">
-                  <div className="flex items-center gap-2">
-                    <p className="text-[30px] md:text-[48px] font-crimson font-black text-[#51A147]">
+                  <div className="flex items-center gap-1 md:gap-2">
+                    <p className="text-[28px] sm:text-[36px] md:text-[44px] font-bold text-[#163B73]">
                       {stat.value}
                     </p>
-                    <span className="text-[#FF7A00] text-lg md:text-2xl font-bold">↗</span>
+                    <span className="text-[#FF7A00] text-sm sm:text-xl md:text-2xl font-bold">↗</span>
                   </div>
-                  <p className="text-[#6B7280] text-xs md:text-sm font-semibold uppercase tracking-wider">
+                  <p className="text-[#6B7280] text-[10px] sm:text-sm md:text-base font-medium">
                     {stat.label}
                   </p>
                 </div>
               ))}
             </div>
-            <button 
-              className="group flex items-center gap-3 bg-white border border-[#51A147] text-[#51A147] px-8 py-3 rounded-[6px] font-inter font-bold text-[16px] hover:bg-[#51A147] hover:text-white transition-all duration-300"
-              onClick={() => navigate("/aboutbrief")}
-            >
-              View More
-              <span className="transform group-hover:translate-x-1 transition-transform">→</span>
-            </button>
           </div>
+
+          <div className="hidden lg:block lg:w-[40%] h-1"></div>
         </div>
       </section>
+      
       <LandingTwo />
     </main>
   );

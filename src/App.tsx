@@ -1,4 +1,3 @@
-
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import LandingPage from './components/Landingpage';
@@ -7,7 +6,8 @@ import Infrastructure from './components/infrastructure';
 import OutdoorServices from './components/outdoor'; 
 import Team from './components/Team';
 import Aboutbreif from './components/Aboutbreif';
-
+// 1. Changed to Capital S
+import ServiceDetails from './components/ServiceDetails'; 
 
 
 function App() {
@@ -16,20 +16,21 @@ function App() {
       <Header />
       
       <main>
-        
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/services" element={<Services />} />
           
-        
           <Route path="/outdoor" element={<OutdoorServices />} />
           <Route path="/indoor" element={<OutdoorServices />} />
           <Route path="/led" element={<OutdoorServices />} />
           <Route path="/modular" element={<OutdoorServices />} />
           <Route path="/pop" element={<OutdoorServices />} />
           <Route path="/infrastructure" element={<Infrastructure />} />
-               <Route path="/aboutbrief" element={<Aboutbreif />} />
+          <Route path="/aboutbrief" element={<Aboutbreif />} />
           <Route path="/team" element={<Team />} />
+          
+          {/* 2. Changed component tag to Capital S */}
+          <Route path="/servicedetails/:serviceId" element={<ServiceDetails />} />
           
         </Routes>
       </main>
