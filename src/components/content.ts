@@ -1,12 +1,12 @@
-import printer1 from "../assets/equiment 1.png";
-import printer2 from "../assets/equiment 2.png";
+// import printer1 from "../assets/equiment 1.png";
+// import printer2 from "../assets/equiment 2.png";
 import printer3 from "../assets/equiment 3.png";
 import printer4 from "../assets/equiment 4.png";
 import printer5 from "../assets/equiment 5.png";
-import printer6 from "../assets/equiment 6.png";
+// import printer6 from "../assets/equiment 6.png";
 import printer7 from "../assets/equiment 7.png";
-import printer8 from "../assets/equiment 8.png";
-import printer9 from "../assets/equiment 9.jpeg";
+// import printer8 from "../assets/equiment 8.png";
+// import printer9 from "../assets/equiment 9.jpeg";
 import printer10 from "../assets/equiment 10.png";
 import printer11 from "../assets/printer11.png";
 import printer12 from "../assets/printer12.png";
