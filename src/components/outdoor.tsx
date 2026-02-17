@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, useLayoutEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Lenis from 'lenis';
 import './outdoor.css';
 import LandingPageThree from './landingthree';
@@ -34,6 +34,7 @@ const ScrollStackItem: React.FC<{ children: React.ReactNode; onClick?: () => voi
 const OutdoorServices: React.FC = () => {
   const { outdoorPage, header, categoryData } = LANDING_CONTENT;
   const { hash, pathname } = useLocation();
+  const navigate = useNavigate();
   const [selectedFullscreenService, setSelectedFullscreenService] = useState<Service | null>(null);
 
   type CategoryKey = 'INDOOR' | 'LED VIDEO WALL' | 'MODULAR SIGNAGE' | 'OUTDOOR' | 'POP';
@@ -50,6 +51,25 @@ const OutdoorServices: React.FC = () => {
   const currentCategoryKey = getCategoryKey();
   const isFullWidthCategory = currentCategoryKey === 'LED VIDEO WALL' || currentCategoryKey === 'POP';
   const pageHeader = categoryData[currentCategoryKey];
+
+  // --- Fixed Navigation Logic ---
+  const handleBack = () => {
+    if (selectedFullscreenService) {
+      setSelectedFullscreenService(null);
+    } else {
+      // Maps CategoryKey to the specific tab ID used in your Services component
+      const tabMap: Record<CategoryKey, string> = {
+        'OUTDOOR': 'outdoor',
+        'INDOOR': 'indoor',
+        'LED VIDEO WALL': 'led',
+        'POP': 'pop',
+        'MODULAR SIGNAGE': 'modular'
+      };
+      const targetTab = tabMap[currentCategoryKey] || 'outdoor';
+      // Navigates back to the services page and anchors to the correct tab
+      navigate(`/services#${targetTab}`);
+    }
+  };
   
   const formattedParagraphs = useMemo(() => {
     const text = pageHeader?.description || "";
@@ -292,6 +312,9 @@ const OutdoorServices: React.FC = () => {
         <div className="flex flex-col w-full">
           <div className="split-hero-container">
             <div className="split-hero-left pt-24 md:pt-32">
+              <button className="flex items-center text-white/80 hover:text-white transition-colors mb-8 group w-fit" onClick={handleBack}>
+                <span className="mr-2 text-xl transition-transform group-hover:-translate-x-1">←</span> Back to Services
+              </button>
               <span className="uppercase tracking-[0.2em] font-bold text-white/60 mb-4 block text-[10px] md:text-xs">
                 Service Overview
               </span>
@@ -328,15 +351,15 @@ const OutdoorServices: React.FC = () => {
         <>
           <section className="w-full pt-24 md:pt-32 pb-12">
             <div className="w-full max-w-[1920px] mx-auto px-6 md:px-[8%]">
+              <button className="flex items-center text-white hover:text-black transition-colors mb-8 group w-fit" onClick={handleBack}>
+                <span className="mr-2 text-xl transition-transform group-hover:-translate-x-1">←</span> Back to Services
+              </button>
               <h1 className="font-imperial text-4xl md:text-[64px] font-bold text-white mb-8 leading-tight">
                 {pageHeader?.heading}
               </h1>
               <div className="text-white text-base md:text-xl leading-relaxed max-w-[1600px]">
                 {formattedParagraphs.map((para, index) => <p key={index} className="mb-6">{para}</p>)}
               </div>
-              <button className="flex items-center text-white hover:text-black transition-colors mt-8 group" onClick={() => window.history.back()}>
-                <span className="mr-2 text-xl transition-transform group-hover:-translate-x-1">←</span> Back
-              </button>
             </div>
           </section>
 
@@ -350,7 +373,6 @@ const OutdoorServices: React.FC = () => {
                         {service.title}
                       </h3>
                       
-                      {/* Integrated Description Points (Sync with Details) */}
                       <div className="space-y-4 mb-8">
                         {service.description_points?.slice(0, 2).map((point, idx) => (
                           <div key={idx} className="flex items-start gap-3">

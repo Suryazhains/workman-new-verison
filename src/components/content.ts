@@ -209,7 +209,7 @@ export const LANDING_CONTENT = {
           "High-impact outdoor branding designed to maximize visibility across prime locations. We specialize in facade signage, backlit signboards, hoardings, unipoles, metal letters, and custom structural branding tailored to your brand identity.",
           "Every outdoor installation is engineered with premium materials and high-quality fabrication standards to ensure long-lasting performance, weather resistance, and strong visibility in all lighting conditions.",
           "Our designs are created to withstand harsh sun, rain, and wind while maintaining a premium finish.",
-          "From commercial buildings and retail outlets to highways and large-format advertising spaces, we deliver end-to-end execution including design, manufacturing, and professional installation helping your brand stand out, attract attention, and leave a lasting impression."
+
         ],
         buttonText: "View more",
       },
@@ -235,7 +235,7 @@ export const LANDING_CONTENT = {
           "High-performance LED video wall solutions built for dynamic visual communication and impactful brand storytelling across both indoor and outdoor environments.",
           "We provide complete end-to-end LED services including requirement consultation, site inspection, structure planning, professional installation, calibration, content guidance, and long-term technical support to ensure smooth performance.",
           "Our LED video walls feature high brightness, seamless panel alignment, and crystal-clear resolution for maximum visibility even in bright lighting conditions.",
-          "Ideal for showrooms, retail outlets, corporate spaces, events, and commercial facades, our solutions help brands create attention-grabbing experiences that leave a lasting impression."
+
         ],
         buttonText: "View more",
       },
@@ -248,7 +248,7 @@ export const LANDING_CONTENT = {
           "Strategic Point of Purchase (POP) branding designed to attract attention, highlight products, and influence customer buying decisions directly at the point of sale.",
           "We design and manufacture a wide range of POP materials including standees, shelf strips, danglers, wobblers, counter displays, kiosks, promotional boards, and customized retail display units tailored to your campaign needs.",
           "Built with durable materials and premium printing quality, our POP solutions ensure long-lasting performance even in high-traffic retail environments.",
-          "With visually impactful designs and strong finishing, we help improve product visibility, increase engagement, and drive higher in-store conversions."
+
         ],
         buttonText: "View more",
       },
@@ -261,7 +261,7 @@ export const LANDING_CONTENT = {
           "Flexible and cost-effective modular signage solutions designed for easy updates, quick installation, and reusable branding across multiple locations.",
           "Ideal for retail stores, malls, exhibitions, events, and corporate environments, our modular systems are built to adapt to changing promotions, product launches, and seasonal branding without the need for complete replacement.",
           "We provide high-quality modular frames, lightboxes, display panels, and customized structures with premium finishing and durability.",
-          "Combining convenience with strong visual impact, our modular signage ensures your brand stays fresh, professional, and consistently visible."
+
         ],
         buttonText: "View more",
       },

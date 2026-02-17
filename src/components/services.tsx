@@ -63,7 +63,6 @@ const Services: React.FC = () => {
   }, [activeTab]); 
 
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     const currentHash = location.hash.replace('#', '').toLowerCase();
     const matchedTab = tabs.find(t => t.id === currentHash);
     
@@ -80,7 +79,7 @@ const Services: React.FC = () => {
       }, 100);
       return () => clearTimeout(timer);
     }
-  }, [location.pathname, location.hash, tabs]);
+  }, [location.hash, tabs]);
 
   const handleViewMore = (id: string) => {
     window.scrollTo(0, 0);
@@ -101,7 +100,7 @@ const Services: React.FC = () => {
         .font-crimson { font-family: 'Crimson Pro', serif !important; }
         .font-imperial { font-family: "ImperialStd-BoldItalic", serif !important; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { scrollbar-width: none; }
+        .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
         
         @keyframes fadeSlide {
           from { opacity: 0; transform: translateY(15px); }
@@ -113,7 +112,6 @@ const Services: React.FC = () => {
         <div className="w-full max-w-[1920px] mx-auto px-5 md:px-10 xl:px-[90px]">
 
           <div className="mb-10 text-left animate-[fadeSlide_0.4s_ease-in-out]">
-            {/* UPDATED FONT */}
             <h2 className="font-imperial text-4xl md:text-[56px] font-bold text-white mb-4 tracking-tight">
               Our Services
             </h2>
@@ -146,7 +144,6 @@ const Services: React.FC = () => {
                     )}
                   </div>
                   <div className="p-6 space-y-4">
-                    {/* UPDATED FONT */}
                     <h3 className="font-imperial text-2xl font-bold text-[#FE4E5D]">{serviceContent?.heading || service.label}</h3>
                     <p className="text-sm text-[#4B5563] line-clamp-4">{serviceContent?.description?.[0]}</p>
                     <button onClick={() => handleViewMore(service.id)} className="w-full py-3 bg-[#FE4E5D] text-white text-sm font-bold rounded-lg">
@@ -159,7 +156,7 @@ const Services: React.FC = () => {
           </div>
 
           {/* ---------------- DESKTOP VIEW ---------------- */}
-          <div className="hidden md:block bg-white rounded-3xl overflow-hidden shadow-2xl border border-white/10">
+          <div className="hidden md:block bg-white rounded-3xl overflow-hidden border border-white/10">
             <div className="relative flex bg-[#F0FDF4] border-b border-gray-100 no-scrollbar">
               <div
                 className="absolute top-0 left-0 h-full bg-white transition-transform duration-300 ease-in-out pointer-events-none"
@@ -172,18 +169,26 @@ const Services: React.FC = () => {
               ))}
             </div>
 
-            <div className="grid grid-cols-1 xl:grid-cols-2 items-stretch">
-              <div className="order-2 xl:order-1 px-10 pb-10 xl:px-[70px] xl:pt-[80px] xl:pb-[80px] flex flex-col justify-between animate-[fadeSlide_0.4s_ease-in-out]">
-                <div className="space-y-6">
-                  {/* UPDATED FONT */}
-                  <h3 className="font-imperial text-3xl md:text-4xl font-bold text-[#FE4E5D]">
+            {/* Container with locked height to prevent layout jumping */}
+            <div className="grid grid-cols-1 xl:grid-cols-2 items-stretch h-[600px] xl:h-[650px]">
+              <div className="order-2 xl:order-1 px-10 pb-10 xl:px-[70px] xl:pt-[80px] xl:pb-[80px] flex flex-col justify-between animate-[fadeSlide_0.4s_ease-in-out] overflow-hidden">
+                
+                <div className="flex flex-col h-full overflow-hidden">
+                  <h3 className="font-imperial text-3xl md:text-4xl font-bold text-[#FE4E5D] mb-6 flex-shrink-0">
                     {activeContent.heading || activeTab}
                   </h3>
-                  {activeContent.description?.map((para: string, index: number) => (
-                    <p key={index} className="text-lg text-[#4B5563] leading-relaxed">{para}</p>
-                  ))}
+                  
+                  {/* Internal scrollable area for long descriptions */}
+                  <div className="flex-1 overflow-y-auto no-scrollbar pr-4">
+                    {activeContent.description?.map((para: string, index: number) => (
+                      <p key={index} className="text-lg text-[#4B5563] leading-relaxed mb-4">
+                        {para}
+                      </p>
+                    ))}
+                  </div>
                 </div>
-                <div className="pt-12">
+
+                <div className="pt-8 flex-shrink-0">
                   <button onClick={() => handleViewMore(activeTab)} className="flex items-center gap-4 px-14 py-4 bg-[#FE4E5D] text-white text-base font-bold rounded-xl hover:bg-[#FE4E5D] transition-all outline-none border-none shadow-lg shadow-green-900/20">
                     {activeContent.buttonText || "View More"}
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -193,7 +198,7 @@ const Services: React.FC = () => {
                 </div>
               </div>
 
-              <div className="w-full h-full min-h-[500px] xl:min-h-[600px] overflow-hidden order-1 xl:order-2 relative bg-black">
+              <div className="w-full h-full overflow-hidden order-1 xl:order-2 relative bg-black">
                 {activeTab === 'led' ? (
                   <video key="led-video" src={ledVideo} autoPlay loop muted playsInline className="w-full h-full object-cover" />
                 ) : (
