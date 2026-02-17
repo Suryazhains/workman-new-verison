@@ -125,9 +125,13 @@ const LandingPageThree: React.FC = () => {
     <main>
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+        @import url('https://db.onlinewebfonts.com/c/59d406a1ae963118d955b267eb04f9f3?family=ImperialStd-BoldItalic');
         
         .font-crimson {
             font-family: 'Crimson Pro', serif !important;
+        }
+        .font-imperial {
+            font-family: "ImperialStd-BoldItalic", serif !important;
         }
       `}} />
 
@@ -136,21 +140,23 @@ const LandingPageThree: React.FC = () => {
         {/* --- CONTACT SECTION --- */}
         <section
           id="contact"
-          className="bg-[#FFEBEA] py-[90px] px-6 lg:px-[120px] font-inter flex-grow transition-all scroll-mt-[180px]"
+          className="bg-[#FE4E5D] py-[90px] px-6 lg:px-[120px] font-inter flex-grow transition-all scroll-mt-[180px]"
         >
           <div className="max-w-full mx-auto">
             
             <div className="mb-12 text-left">
-              <h1 className="font-crimson text-[32px] md:text-[48px] font-bold text-[#FE4E5D] mb-4 leading-tight">
+              {/* UPDATED FONT */}
+              <h1 className="font-imperial text-[32px] md:text-[48px] font-bold text-[#FFEBEA] mb-4 leading-tight">
                 {contactSection.heading}
               </h1>
-              <p className="text-[#6B7280] text-[16px] md:text-[18px] max-w-[1600px] leading-relaxed">
+              <p className="text-[#FFFFFF] text-[16px] md:text-[18px] max-w-[1600px] leading-relaxed">
                 {contactSection.description}
               </p>
             </div>
 
             <div className="bg-white rounded-[24px] p-8 md:p-12 shadow-sm border border-green-100 w-full">
-              <h2 className="font-crimson text-[24px] md:text-[28px] font-bold text-[#FE4E5D] mb-8">
+              {/* UPDATED FONT */}
+              <h2 className="font-imperial text-[24px] md:text-[28px] font-bold text-[#FE4E5D] mb-8">
                 {contactSection.form.title}
               </h2>
 
@@ -218,11 +224,10 @@ const LandingPageThree: React.FC = () => {
           </div>
         </section>
 
-        {/* --- FOOTER SECTION (Updated text colors to white) --- */}
+        {/* --- FOOTER SECTION --- */}
       <footer className="bg-[#FE4E5D] w-full text-white py-12 md:py-20 px-6 lg:px-[80px] xl:px-[120px]">
   <div className="max-w-[1440px] mx-auto">
     
-    {/* Main Container: Adjusted to allow more room for the horizontal list */}
     <div className="flex flex-col lg:flex-row justify-between gap-12 mb-16 text-left items-start">
 
       {/* LEFT: Logo & Branding */}
@@ -245,12 +250,12 @@ const LandingPageThree: React.FC = () => {
       </div>
 
       {/* RIGHT: Links | Services | Contacts | Map */}
-      {/* Changed flex-wrap to lg:flex-nowrap to prevent the map from dropping down */}
       <div className="flex flex-row flex-wrap lg:flex-nowrap justify-between w-full gap-x-8 gap-y-12">
 
         {/* Links */}
         <div className="min-w-[120px]">
-          <h4 className="font-crimson font-medium text-[20px] xl:text-[22px] mb-6 text-white">
+          {/* UPDATED FONT */}
+          <h4 className="font-imperial font-medium text-[20px] xl:text-[22px] mb-6 text-white">
             {footer.linksTitle}
           </h4>
           <ul className="space-y-4 text-[15px]">
@@ -268,7 +273,8 @@ const LandingPageThree: React.FC = () => {
 
         {/* Services */}
         <div className="min-w-[120px]">
-          <h4 className="font-crimson font-medium text-[20px] xl:text-[22px] mb-6 text-white">
+          {/* UPDATED FONT */}
+          <h4 className="font-imperial font-medium text-[20px] xl:text-[22px] mb-6 text-white">
             {footer.productTitle}
           </h4>
           <ul className="space-y-4 text-[15px]">
@@ -286,7 +292,8 @@ const LandingPageThree: React.FC = () => {
 
         {/* Contacts */}
         <div className="space-y-6 min-w-[200px] xl:min-w-[240px]">
-          <h4 className="font-crimson font-medium text-[20px] xl:text-[22px] mb-6 text-white">
+          {/* UPDATED FONT */}
+          <h4 className="font-imperial font-medium text-[20px] xl:text-[22px] mb-6 text-white">
             {footer.contactsTitle}
           </h4>
           <div className="space-y-5 text-[15px]">
@@ -311,7 +318,7 @@ const LandingPageThree: React.FC = () => {
           </div>
         </div>
 
-        {/* MAP: Removed strict max-width and added shrink-0 to maintain size */}
+        {/* MAP */}
         <div className="w-full lg:w-[250px] xl:w-[300px] shrink-0">
           <iframe
             title="Location"

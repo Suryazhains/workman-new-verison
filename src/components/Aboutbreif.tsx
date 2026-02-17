@@ -39,16 +39,13 @@ const BRANDS = [
 ];
 
 const About: React.FC = () => {
-    // FIX: Removed unused 'openSpecialization' and 'setOpenSpecialization' state
-    
-    // FIX: Added proper type <number | null> to activeIndex state
-    const [activeIndex, setActiveIndex] = useState<number | null>(0);
+    // UPDATED: Set to null so no item is open by default
+    const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
 
-    // FIX: Added type 'number' to index parameter
     const toggleAccordion = (index: number) => {
         setActiveIndex(activeIndex === index ? null : index);
     };
@@ -90,7 +87,11 @@ const About: React.FC = () => {
         <main className="bg-[#FE4E5D] font-inter text-white">
             <style dangerouslySetInnerHTML={{ __html: `
                 @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
+                @import url('https://db.onlinewebfonts.com/c/59d406a1ae963118d955b267eb04f9f3?family=ImperialStd-BoldItalic');
+
                 .font-crimson { font-family: 'Crimson Pro', serif !important; }
+                .font-imperial { font-family: "ImperialStd-BoldItalic", serif !important; }
+
                 @keyframes marquee {
                     0% { transform: translateX(0); }
                     100% { transform: translateX(-50%); }
@@ -104,7 +105,7 @@ const About: React.FC = () => {
 
             {/* SECTION 1: ABOUT US BRIEF */}
             <section className="max-w-[1440px] mx-auto px-6 lg:px-20 pt-16 md:pt-24 pb-16">
-                <h1 className="font-crimson text-[48px] md:text-[72px] font-bold mb-6">About Us</h1>
+                <h1 className="font-imperial text-[48px] md:text-[72px] font-bold mb-6">About Us</h1>
                 <p className="text-white/90 text-lg md:text-xl max-w-[850px] leading-relaxed mb-16">
                     Workman Advertising is a Chennai-based branding and signage solutions company delivering high-quality indoor, outdoor, and digital display services.
                 </p>
@@ -133,92 +134,87 @@ const About: React.FC = () => {
             </section>
 
             {/* SECTION 3: OUR SPECIALIZATION */}
-       <section className="bg-[#FE4E5D] text-white py-20 px-6 lg:px-20">
-    <div className="max-w-[1440px] mx-auto">
-        {/* Changed items-start to items-center to bring text down level with image */}
-        <div className="flex flex-col lg:flex-row items-center gap-16">
-            
-            {/* Left Side: Title and Image */}
-            <div className="lg:w-1/2 w-full">
-                <h2 className="font-crimson text-[42px] md:text-[56px] font-bold mb-8 leading-tight border-t border-white/30 pt-4 inline-block">
-                    Our Specialization
-                </h2>
-                <div className="rounded-xl overflow-hidden shadow-2xl">
-                    <img 
-                        src={main2} 
-                        alt="Specialization" 
-                        className="w-full h-auto object-cover" 
-                    />
-                </div>
-            </div>
-
-            {/* Right Side: Accordion */}
-            {/* Removed mt-10 and used lg:mt-0 to keep it centered with the image */}
-            <div className="lg:w-1/2 w-full space-y-6">
-                {specializationData.map((item, index) => (
-                    <div key={index} className="border-b border-white/20 pb-6">
-                        <div 
-                            className="flex items-start gap-6 cursor-pointer" 
-                            onClick={() => toggleAccordion(index)}
-                        >
-                            {/* The + / - Icon */}
-                            <span className="text-white text-3xl font-light w-8 shrink-0">
-                                {activeIndex === index ? '−' : '+'}
-                            </span>
-                            
-                            <div className="flex-1">
-                                <h3 className="text-2xl md:text-3xl font-bold font-crimson mb-2">
-                                    {item.title}
-                                </h3>
-                                
-                                {/* Animated Container */}
-                                <div 
-                                    className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                                        activeIndex === index ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
-                                    }`}
-                                >
-                                    <p className="text-lg opacity-90 mb-4">{item.shortDesc}</p>
-                                    {item.highlight && (
-                                        <p className="font-bold mb-2 italic text-white/80">{item.highlight}</p>
-                                    )}
-                                    <ul className="space-y-2 pb-4">
-                                        {item.fullContent.map((point, i) => (
-                                            <li key={i} className="flex items-center gap-3">
-                                                <span className="w-1.5 h-1.5 rounded-full bg-white shrink-0" />
-                                                <span>{point}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
+            <section className="bg-[#FE4E5D] text-white py-20 px-6 lg:px-20">
+                <div className="max-w-[1440px] mx-auto">
+                    <div className="flex flex-col lg:flex-row items-center gap-16">
+                        
+                        {/* Left Side: Title and Image */}
+                        <div className="lg:w-1/2 w-full">
+                            <h2 className="font-imperial text-[42px] md:text-[56px] font-bold mb-8 leading-tight border-t border-white/30 pt-4 inline-block">
+                                Our Specialization
+                            </h2>
+                            <div className="rounded-xl overflow-hidden shadow-2xl">
+                                <img 
+                                    src={main2} 
+                                    alt="Specialization" 
+                                    className="w-full h-auto object-cover" 
+                                />
                             </div>
                         </div>
+
+                        {/* Right Side: Accordion */}
+                        <div className="lg:w-1/2 w-full space-y-6">
+                            {specializationData.map((item, index) => (
+                                <div key={index} className="border-b border-white/20 pb-6">
+                                    <div 
+                                        className="flex items-start gap-6 cursor-pointer" 
+                                        onClick={() => toggleAccordion(index)}
+                                    >
+                                        <span className="text-white text-3xl font-light w-8 shrink-0">
+                                            {activeIndex === index ? '−' : '+'}
+                                        </span>
+                                        
+                                        <div className="flex-1">
+                                            <h3 className="text-2xl md:text-3xl font-bold font-imperial mb-2">
+                                                {item.title}
+                                            </h3>
+                                            
+                                            <div 
+                                                className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                                                    activeIndex === index ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
+                                                }`}
+                                            >
+                                                <p className="text-lg opacity-90 mb-4">{item.shortDesc}</p>
+                                                {item.highlight && (
+                                                    <p className="font-bold mb-2 text-white/80">{item.highlight}</p>
+                                                )}
+                                                <ul className="space-y-2 pb-4">
+                                                    {item.fullContent.map((point, i) => (
+                                                        <li key={i} className="flex items-center gap-3">
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-white shrink-0" />
+                                                            <span>{point}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                ))}
-            </div>
-        </div>
-    </div>
-</section>
+                </div>
+            </section>
 
             {/* SECTION 4: CLIENT BRANDS */}
-         <section className="bg-white py-12 md:py-20">
-    <div className="max-w-[1440px] mx-auto px-6 lg:px-20 text-center">
-        {/* Changed gap for mobile and used grid logic for 2-per-row */}
-        <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-8 md:gap-x-16 md:gap-y-12">
-            {BRANDS.map((logo, i) => (
-                <div 
-                    key={i} 
-                    className="flex items-center justify-center w-[calc(50%-1rem)] md:w-auto"
-                >
-                    <img 
-                        src={logo} 
-                        alt={`Brand ${i + 1}`} 
-                        className="w-[100px] sm:w-[120px] md:w-[160px] h-[50px] md:h-[75px] object-contain" 
-                    />
+            <section className="bg-white py-12 md:py-20">
+                <div className="max-w-[1440px] mx-auto px-6 lg:px-20 text-center">
+                    <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-8 md:gap-x-16 md:gap-y-12">
+                        {BRANDS.map((logo, i) => (
+                            <div 
+                                key={i} 
+                                className="flex items-center justify-center w-[calc(50%-1rem)] md:w-auto"
+                            >
+                                <img 
+                                    src={logo} 
+                                    alt={`Brand ${i + 1}`} 
+                                    className="w-[100px] sm:w-[120px] md:w-[160px] h-[50px] md:h-[75px] object-contain" 
+                                />
+                            </div>
+                        ))}
+                    </div>
                 </div>
-            ))}
-        </div>
-    </div>
-</section>
+            </section>
 
             <LandingPageThree />
         </main>

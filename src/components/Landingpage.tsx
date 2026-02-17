@@ -19,8 +19,10 @@ const LandingPage: React.FC = () => {
     <main className="w-full min-h-screen bg-white overflow-x-hidden selection:bg-red-200 font-inter">
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+        @import url('https://db.onlinewebfonts.com/c/59d406a1ae963118d955b267eb04f9f3?family=ImperialStd-BoldItalic');
         
         .font-crimson { font-family: 'Crimson Pro', serif !important; }
+        .font-imperial { font-family: "ImperialStd-BoldItalic", serif !important; }
 
         .hero-track {
           display: flex;
@@ -84,7 +86,8 @@ const LandingPage: React.FC = () => {
         <div className="relative z-20 h-full flex items-center">
           <div className="w-full px-6 md:px-12 lg:pl-12"> 
             <div className="max-w-[750px]">
-              <h1 className="font-crimson text-[48px] md:text-[68px] lg:text-[84px] font-bold leading-[1.05] tracking-tight text-white mb-8">
+              {/* UPDATED FONT HERE */}
+              <h1 className="font-imperial text-[48px] md:text-[68px] lg:text-[84px] font-bold leading-[1.05] tracking-tight text-white mb-8">
                 {hero.title.join(" ")}
               </h1>
               <p className="text-white/90 text-lg md:text-xl leading-relaxed max-w-[550px] mb-12">
@@ -119,7 +122,8 @@ const LandingPage: React.FC = () => {
         <div className="relative z-10 max-w-[1440px] mx-auto flex flex-col lg:flex-row items-center justify-between">
           <div id="about-mobile" className="w-full lg:w-[60%] text-left scroll-mt-0">
 
-            <span className="text-[#FE4E5D] font-inter font-bold text-lg md:text-[20px] leading-none tracking-[-0.04em] mb-4 block uppercase lg:normal-case">
+            {/* UPDATED FONT HERE */}
+            <span className="text-[#FE4E5D] font-imperial font-bold text-lg md:text-[20px] leading-none tracking-[-0.04em] mb-4 block uppercase lg:normal-case">
               {about.label}
             </span>
 

@@ -11,11 +11,17 @@ interface ServiceProps {
 }
 
 const ServiceDetails: React.FC<ServiceProps> = ({ service }) => {
-  // State for Lightbox
   const [viewerIndex, setViewerIndex] = useState<number | null>(null);
 
-  const openViewer = (index: number) => setViewerIndex(index);
-  const closeViewer = () => setViewerIndex(null);
+  const openViewer = (index: number) => {
+    setViewerIndex(index);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeViewer = () => {
+    setViewerIndex(null);
+    document.body.style.overflow = 'unset';
+  };
 
   const showNext = useCallback((e?: React.MouseEvent) => {
     e?.stopPropagation();
@@ -31,7 +37,6 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service }) => {
     }
   }, [service.images]);
 
-  // Handle Keyboard Arrows
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (viewerIndex === null) return;
@@ -50,138 +55,140 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service }) => {
   return (
     <div className="w-full bg-white font-inter">
       <style dangerouslySetInnerHTML={{ __html: `
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+        @import url('https://db.onlinewebfonts.com/c/59d406a1ae963118d955b267eb04f9f3?family=ImperialStd-BoldItalic');
+
+        .font-crimson { font-family: 'Crimson Pro', serif !important; }
+        .font-imperial { font-family: "ImperialStd-BoldItalic", serif !important; }
+
         .lightbox-overlay {
           position: fixed;
           inset: 0;
-          background: rgba(0, 0, 0, 0.98);
+          background: rgba(255, 255, 255, 0.98);
           z-index: 10002;
           display: flex;
           align-items: center;
           justify-content: center;
-          backdrop-filter: blur(10px);
+          backdrop-filter: blur(15px);
         }
         .lightbox-img {
-          max-width: 85vw;
-          max-height: 80vh;
+          max-width: 90vw;
+          max-height: 85vh;
           object-fit: contain;
           user-select: none;
-          box-shadow: 0 0 50px rgba(0,0,0,0.8);
         }
         .nav-btn {
           position: absolute;
           top: 50%;
           transform: translateY(-50%);
-          background: rgba(255,255,255,0.05);
-          color: white;
-          width: 60px;
-          height: 60px;
-          border-radius: 50%;
+          color: #1a1a1a;
+          width: 50px;
+          height: 50px;
           display: flex;
           align-items: center;
           justify-content: center;
           cursor: pointer;
           font-size: 2.5rem;
-          transition: all 0.3s;
-          border: 1px solid rgba(255,255,255,0.1);
+          transition: all 0.2s ease;
         }
-        .nav-btn:hover { background: rgba(255,255,255,0.2); scale: 1.1; }
+        .nav-btn:hover { opacity: 0.4; }
         
-        .close-btn-left {
+        .close-btn {
           position: absolute;
           top: 30px;
-          left: 40px;
-          color: #ffffff;
-          font-size: 4rem;
+          right: 40px;
+          color: #000;
+          font-size: 3rem;
+          font-weight: 200;
           cursor: pointer;
-          line-height: 0.5;
           z-index: 10003;
-          transition: opacity 0.3s;
+          line-height: 1;
         }
-        .close-btn-left:hover { opacity: 0.7; }
 
         .counter {
           position: absolute;
-          bottom: 40px;
-          color: rgba(255,255,255,0.5);
-          font-size: 0.8rem;
-          letter-spacing: 3px;
-          font-weight: 500;
+          bottom: 30px;
+          color: #999;
+          font-size: 0.7rem;
+          letter-spacing: 4px;
+          font-weight: 400;
         }
       `}} />
 
-      {/* --- IMAGE VIEWER MODAL --- */}
+      {/* --- MINIMAL LIGHTBOX --- */}
       {viewerIndex !== null && service.images && (
         <div className="lightbox-overlay" onClick={closeViewer}>
-          {/* Close button moved to Left side and forced White */}
-          <div className="close-btn-left" onClick={closeViewer}>&times;</div>
-          
-          <div className="nav-btn left-[40px]" onClick={showPrev}>&#8249;</div>
+          <div className="close-btn" onClick={closeViewer}>&times;</div>
+          <div className="nav-btn left-[20px] md:left-[40px]" onClick={showPrev}>&#8249;</div>
           
           <img 
             src={service.images[viewerIndex]} 
             className="lightbox-img" 
-            alt="Full View" 
+            alt="Full view" 
             onClick={(e) => e.stopPropagation()} 
           />
           
-          <div className="nav-btn right-[40px]" onClick={showNext}>&#8250;</div>
+          <div className="nav-btn right-[20px] md:right-[40px]" onClick={showNext}>&#8250;</div>
           
-          <div className="counter uppercase">
-             Image {viewerIndex + 1} of {service.images.length}
+          <div className="counter uppercase text-center">
+            {viewerIndex + 1} &mdash; {service.images.length}
           </div>
         </div>
       )}
 
-      {/* Title Section */}
-      <div className="py-20 px-[8%] border-b border-gray-100">
-        <h1 className="font-crimson text-5xl md:text-7xl font-bold text-black mb-4">
+      {/* Header Section */}
+      <div className="pt-28 pb-16 px-[8%]">
+        {/* UPDATED FONT HERE */}
+        <h1 className="font-imperial text-4xl md:text-5xl lg:text-6xl font-semibold text-black tracking-tight mb-8">
           {service.title} Project Gallery
         </h1>
-        <div className="w-20 h-1 bg-[#FE4E5D]" />
-        <p className="mt-6 text-gray-500 text-lg md:text-xl max-w-2xl leading-relaxed">
-          Explore our recent installations and high-quality craftsmanship for {service.title}.
+        
+        <p className="text-gray-500 text-lg md:text-xl w-full max-w-5xl leading-relaxed font-light">
+          Explore our recent installations and high-quality craftsmanship for {service.title}. 
+          We specialize in delivering bespoke solutions tailored to the unique requirements of every environment.
         </p>
       </div>
 
-      {/* Image Gallery */}
-      <div className="px-[8%] py-24 bg-gray-50">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+      {/* Image Gallery: Clean white background */}
+      <div className="px-[8%] pb-32 bg-white">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
           {service.images?.map((img, idx) => (
             <div 
               key={idx} 
-              className="overflow-hidden rounded-sm shadow-lg bg-white cursor-pointer group"
+              className="group cursor-pointer"
               onClick={() => openViewer(idx)}
             >
-              <div className="relative overflow-hidden">
+              <div className="overflow-hidden bg-gray-50 aspect-[3/2]">
                 <img 
                   src={img} 
                   alt={`${service.title} ${idx}`} 
-                  className="w-full h-[450px] md:h-[600px] object-cover group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
                 />
-                {/* Removed "View Image" text overlay, kept a subtle hover dim */}
-                <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
+              <div className="mt-4 h-[1px] w-0 group-hover:w-full bg-black transition-all duration-500 opacity-20" />
             </div>
           ))}
 
           {/* Video Section */}
           {service.videoUrl && (
-            <div className="col-span-1 md:col-span-2 mt-4">
-              <video 
-                src={service.videoUrl} 
-                controls 
-                autoPlay 
-                loop 
-                muted 
-                className="w-full rounded-sm shadow-xl" 
-              />
+            <div className="col-span-1 md:col-span-2 mt-8">
+              <div className="aspect-video w-full overflow-hidden">
+                <video 
+                  src={service.videoUrl} 
+                  controls 
+                  autoPlay 
+                  loop 
+                  muted 
+                  className="w-full h-full object-cover" 
+                />
+              </div>
             </div>
           )}
         </div>
       </div>
 
       {!isLedVideoWall && (
-        <div className="w-full">
+        <div className="w-full border-t border-gray-100">
           <LandingPageThree />
         </div>
       )}

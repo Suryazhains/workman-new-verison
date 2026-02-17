@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useLayoutEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import Lenis from 'lenis';
 import './outdoor.css';
 import LandingPageThree from './landingthree';
 import ServiceDetails from "./ServiceDetails"; // Matches exact file casing
-
 import { LANDING_CONTENT } from './content';
 
 interface Service {
@@ -14,12 +14,28 @@ interface Service {
   description_points?: string[];
 }
 
+// --- Scroll Stack Sub-Components ---
+const ScrollStackItem: React.FC<{ children: React.ReactNode; onClick?: () => void }> = ({ children, onClick }) => (
+  <div 
+    className="scroll-stack-card bg-white rounded-[40px] overflow-hidden mb-[10vh] sticky top-[15vh]" 
+    onClick={onClick}
+    style={{ 
+        cursor: 'pointer', 
+        height: '70vh', 
+        width: '100%', 
+        transformOrigin: 'top center',
+        boxShadow: 'none' 
+    }}
+  >
+    {children}
+  </div>
+);
+
 const OutdoorServices: React.FC = () => {
   const { outdoorPage, header, categoryData } = LANDING_CONTENT;
   const { hash, pathname } = useLocation();
   const [selectedFullscreenService, setSelectedFullscreenService] = useState<Service | null>(null);
 
-  // Explicit type for category indexing
   type CategoryKey = 'INDOOR' | 'LED VIDEO WALL' | 'MODULAR SIGNAGE' | 'OUTDOOR' | 'POP';
 
   const getCategoryKey = (): CategoryKey => {
@@ -63,15 +79,57 @@ const OutdoorServices: React.FC = () => {
     return () => window.removeEventListener('keydown', handleEsc);
   }, []);
 
+  useLayoutEffect(() => {
+    if (isFullWidthCategory || selectedFullscreenService) return;
+
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+
+    const raf = (time: number) => {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    };
+    requestAnimationFrame(raf);
+
+    const handleScroll = () => {
+      const cards = document.querySelectorAll('.scroll-stack-card');
+      cards.forEach((card) => {
+        const rect = card.getBoundingClientRect();
+        const cardTop = rect.top;
+        
+        if (cardTop < 200 && cardTop > -500) {
+          const progress = Math.max(0, (200 - cardTop) / 600);
+          const scale = 1 - progress * 0.05;
+          const opacity = 1 - progress * 0.2;
+          (card as HTMLElement).style.transform = `scale(${scale})`;
+          (card as HTMLElement).style.opacity = `${opacity}`;
+        } else {
+          (card as HTMLElement).style.transform = `scale(1)`;
+          (card as HTMLElement).style.opacity = `1`;
+        }
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      lenis.destroy();
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isFullWidthCategory, selectedFullscreenService]);
+
   return (
-    <div className="flex flex-col w-full bg-white">
+    <div className="flex flex-col w-full bg-[#FE4E5D]">
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://db.onlinewebfonts.com/c/59d406a1ae963118d955b267eb04f9f3?family=ImperialStd-BoldItalic');
         
         .font-crimson { font-family: 'Crimson Pro', serif !important; }
         .font-inter { font-family: 'Inter', sans-serif !important; }
+        .font-imperial { font-family: "ImperialStd-BoldItalic", serif !important; }
 
-        /* Split Layout for LED/POP */
         .split-hero-container {
             display: flex;
             width: 100%;
@@ -85,10 +143,10 @@ const OutdoorServices: React.FC = () => {
             height: 100%;
             background: #FE4E5D;
             color: white;
-            padding: 6% 8%;
+            padding: 8% 8%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             position: relative;
         }
 
@@ -105,7 +163,6 @@ const OutdoorServices: React.FC = () => {
             object-fit: cover;
         }
 
-        /* Fullscreen Overlay Styles */
         .fs-split-overlay {
           position: fixed;
           inset: 0;
@@ -132,94 +189,58 @@ const OutdoorServices: React.FC = () => {
           height: 100%;
           background: #FE4E5D;
           color: white;
-          padding: 8% 6%;
+          padding: 8% 8%;
           display: flex;
           flex-direction: column;
-          justify-content: center;
+          justify-content: flex-start;
         }
 
         .fs-right-media {
           width: 50%;
           height: 100%;
           position: relative;
-          overflow: hidden;
           background: #000;
         }
 
-        .fs-track-inner {
-          display: flex;
-          width: fit-content;
-          height: 100%;
-          animation: horizontalScroll 16s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-        }
-
-        .fs-track-inner img, .fs-track-inner video { 
+        .fs-static-media-container img, .fs-static-media-container video { 
           height: 100vh; 
-          width: 50vw; 
+          width: 100%; 
           object-fit: cover; 
-          flex-shrink: 0; 
         }
 
-        @keyframes horizontalScroll {
-          0%, 20% { transform: translateX(0); }
-          25%, 45% { transform: translateX(-50vw); }
-          50%, 70% { transform: translateX(-100vw); }
-          75%, 95% { transform: translateX(-150vw); }
-          100% { transform: translateX(0); }
-        }
-
-        /* Responsive Close Button */
         .fs-close { 
             position: fixed !important; 
             top: 20px; 
             right: 20px; 
-            left: auto;
             color: #ffffff !important; 
             font-size: 2.5rem; 
-            font-family: Arial, sans-serif;
             cursor: pointer; 
-            line-height: 1;
             z-index: 10001; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3); 
-            transition: transform 0.3s ease, opacity 0.3s ease;
         }
 
-        @media (min-width: 1024px) {
-            .fs-close {
-                top: 30px;
-                left: 40px;
-                right: auto;
-                font-size: 3.5rem;
-            }
+        .btn-view-details {
+          margin-top: 24px;
+          padding: 14px 32px;
+          background: #FE4E5D;
+          color: white;
+          border-radius: 100px;
+          font-weight: 600;
+          font-size: 14px;
+          width: fit-content;
+          transition: all 0.3s ease;
+          border: 1px solid #FE4E5D;
+        }
+
+        .btn-view-details:hover {
+          transform: translateY(-2px);
+          background: #e43d4b;
+          box-shadow: 0 4px 12px rgba(254, 78, 93, 0.2);
         }
 
         @media (max-width: 1024px) { 
-          .outdoor-grid { grid-template-columns: repeat(2, 1fr); } 
           .split-hero-container, .fs-top-horizontal-row { flex-direction: column; height: auto; }
           .split-hero-left, .split-hero-right, .fs-left-content, .fs-right-media { width: 100%; height: auto; min-height: 40vh; }
-          .fs-track-inner img, .fs-track-inner video { width: 100vw; height: 50vh; }
-          
-          @keyframes horizontalScroll {
-            0%, 20% { transform: translateX(0); }
-            25%, 45% { transform: translateX(-100vw); }
-            50%, 70% { transform: translateX(-200vw); }
-            75%, 95% { transform: translateX(-300vw); }
-            100% { transform: translateX(0); }
-          }
         }
-
-        @media (max-width: 640px) {
-            .outdoor-grid { grid-template-columns: 1fr; }
-            .fs-close { top: 15px; right: 15px; font-size: 2.2rem; width: 44px; height: 44px; }
-            /* Hide the main nav/header on mobile for full-width categories to prevent overlap */
-            .mobile-hide-header { display: none !important; }
-        }
-
         body:has(.fs-split-overlay) { overflow: hidden; }
       `}} />
 
@@ -227,49 +248,39 @@ const OutdoorServices: React.FC = () => {
       {selectedFullscreenService && (
         <div className="fs-split-overlay">
           <div className="fs-close" onClick={() => setSelectedFullscreenService(null)}>&times;</div>
-          
           <div className="fs-top-horizontal-row">
-            <div className="fs-left-content">
-              <span className="uppercase tracking-[0.2em] font-bold text-white/70 mb-4 block text-[10px] md:text-xs">
+            <div className="fs-left-content pt-24 md:pt-32">
+              <span className="uppercase tracking-[0.2em] font-bold text-white/60 mb-4 block text-[10px] md:text-xs">
                 Service Details
               </span>
-              <h2 className="font-crimson text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-[1.1]">
+              <h2 className="font-imperial text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-[1.1]">
                 {selectedFullscreenService.title}
               </h2>
               <div className="space-y-6 max-w-md">
-                <div className="flex items-start gap-4">
-                  <span className="bg-white text-[#FE4E5D] w-6 h-6 rounded-full flex items-center justify-center shrink-0 font-bold text-[10px] mt-1">1</span>
-                  <p className="text-base md:text-xl font-light text-white/90 leading-relaxed">
-                    Precision engineering designed for high-impact visibility and performance.
-                  </p>
-                </div>
-                <div className="flex items-start gap-4">
-                  <span className="bg-white text-[#FE4E5D] w-6 h-6 rounded-full flex items-center justify-center shrink-0 font-bold text-[10px] mt-1">2</span>
-                  <p className="text-base md:text-xl font-light text-white/90 leading-relaxed">
-                    Seamlessly integrated solutions crafted with premium materials.
-                  </p>
-                </div>
+                {selectedFullscreenService.description_points?.map((point, index) => (
+                  <div key={index} className="flex items-start gap-4">
+                    <span className="bg-white text-[#FE4E5D] w-6 h-6 rounded-full flex items-center justify-center shrink-0 font-bold text-[10px] mt-1">
+                      {index + 1}
+                    </span>
+                    <p className="text-base md:text-xl font-light text-white/90 leading-relaxed">
+                      {point}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
             
             <div className="fs-right-media">
-              <div className="fs-track-inner">
+              <div className="fs-static-media-container">
                 {selectedFullscreenService.videoUrl ? (
-                  <video 
-                    src={selectedFullscreenService.videoUrl} 
-                    autoPlay loop muted playsInline 
-                    className="w-full h-full object-cover"
-                  />
+                  <video src={selectedFullscreenService.videoUrl} autoPlay loop muted playsInline className="w-full h-full object-cover" />
                 ) : (
-                  <>
-                    {selectedFullscreenService.images?.map((img, idx) => (
-                      <img key={idx} src={img} alt="" />
-                    ))}
-                  </>
+                  <img src={selectedFullscreenService.images?.[0]} alt="" />
                 )}
               </div>
             </div>
           </div>
+          
           <div className="w-full bg-white">
             <ServiceDetails service={selectedFullscreenService} />
           </div>
@@ -280,27 +291,30 @@ const OutdoorServices: React.FC = () => {
       {isFullWidthCategory ? (
         <div className="flex flex-col w-full">
           <div className="split-hero-container">
-            <div className="split-hero-left py-12 md:py-0">
-              <span className="uppercase tracking-widest font-bold text-white/60 mb-3 block text-[10px] md:text-xs">
-                Service Details
+            <div className="split-hero-left pt-24 md:pt-32">
+              <span className="uppercase tracking-[0.2em] font-bold text-white/60 mb-4 block text-[10px] md:text-xs">
+                Service Overview
               </span>
-              {/* Reduced size for LED Video Wall text specifically */}
-              <h1 className={`font-crimson font-bold mb-6 leading-[1.1] ${currentCategoryKey === 'LED VIDEO WALL' ? 'text-3xl md:text-5xl lg:text-6xl' : 'text-4xl md:text-7xl lg:text-8xl'}`}>
+              <h1 className={`font-imperial font-bold mb-6 leading-[1.1] ${currentCategoryKey === 'LED VIDEO WALL' ? 'text-3xl md:text-5xl lg:text-6xl' : 'text-4xl md:text-7xl lg:text-8xl'}`}>
                 {pageHeader?.heading}
               </h1>
-              <div className="space-y-4 text-white/80 text-sm md:text-lg font-light max-w-lg leading-relaxed">
-                {formattedParagraphs.slice(0, 3).map((para, i) => (
-                  <p key={i}>{para}</p>
+              <div className="space-y-4 mb-8">
+                {filteredServices[0]?.description_points?.slice(0, 2).map((point, index) => (
+                  <div key={index} className="flex items-start gap-4">
+                    <span className="bg-white text-[#FE4E5D] w-5 h-5 rounded-full flex items-center justify-center shrink-0 font-bold text-[9px] mt-1">
+                      {index + 1}
+                    </span>
+                    <p className="text-white/90 text-sm md:text-base font-light leading-relaxed">{point}</p>
+                  </div>
                 ))}
+              </div>
+              <div className="space-y-4 text-white/80 text-sm md:text-lg font-light max-w-lg leading-relaxed">
+                {formattedParagraphs.slice(0, 3).map((para, i) => <p key={i}>{para}</p>)}
               </div>
             </div>
             <div className="split-hero-right min-h-[40vh]">
               {filteredServices[0]?.videoUrl ? (
-                <video 
-                  src={filteredServices[0].videoUrl} 
-                  autoPlay loop muted playsInline 
-                  className="split-video-bg"
-                />
+                <video src={filteredServices[0].videoUrl} autoPlay loop muted playsInline className="split-video-bg" />
               ) : (
                 <img src={filteredServices[0]?.images?.[0]} className="split-video-bg" alt="" />
               )}
@@ -314,51 +328,60 @@ const OutdoorServices: React.FC = () => {
         <>
           <section className="w-full pt-24 md:pt-32 pb-12">
             <div className="w-full max-w-[1920px] mx-auto px-6 md:px-[8%]">
-              <h1 className="font-crimson text-4xl md:text-[64px] font-bold text-black mb-8 leading-tight">
+              <h1 className="font-imperial text-4xl md:text-[64px] font-bold text-white mb-8 leading-tight">
                 {pageHeader?.heading}
               </h1>
-              <div className="text-gray-500 text-base md:text-xl leading-relaxed max-w-[1000px]">
-                {formattedParagraphs.map((para, index) => (
-                  <p key={index} className="mb-6">{para}</p>
-                ))}
+              <div className="text-white text-base md:text-xl leading-relaxed max-w-[1600px]">
+                {formattedParagraphs.map((para, index) => <p key={index} className="mb-6">{para}</p>)}
               </div>
-              <div className="mt-8 md:mt-12">
-                <button 
-                  className="flex items-center text-gray-400 hover:text-black transition-colors font-medium text-sm group" 
-                  onClick={() => window.history.back()}
-                >
-                  <span className="mr-2 text-xl transition-transform group-hover:-translate-x-1">←</span> 
-                  {outdoorPage.backButtonText}
-                </button>
-              </div>
+              <button className="flex items-center text-white hover:text-black transition-colors mt-8 group" onClick={() => window.history.back()}>
+                <span className="mr-2 text-xl transition-transform group-hover:-translate-x-1">←</span> Back
+              </button>
             </div>
           </section>
 
-          <section className="w-full px-6 md:px-[8%] pb-24">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <section className="w-full px-6 md:px-[8%] pb-[20vh] relative">
+            <div className="flex flex-col gap-0">
               {filteredServices.map((service) => (
-                <div 
-                  key={service.id} 
-                  onClick={() => setSelectedFullscreenService(service)} 
-                  className="relative aspect-[4/5] overflow-hidden cursor-pointer group"
-                >
-                  <img 
-                    src={service.images?.[0]} 
-                    alt={service.title} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6 md:p-8">
-                    <h3 className="font-crimson text-2xl md:text-3xl font-bold text-white">
-                      {service.title}
-                    </h3>
+                <ScrollStackItem key={service.id} onClick={() => setSelectedFullscreenService(service)}>
+                  <div className="flex flex-col md:flex-row h-full">
+                    <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-white text-left">
+                      <h3 className="font-imperial text-3xl md:text-6xl font-bold text-black mb-6 leading-tight">
+                        {service.title}
+                      </h3>
+                      
+                      {/* Integrated Description Points (Sync with Details) */}
+                      <div className="space-y-4 mb-8">
+                        {service.description_points?.slice(0, 2).map((point, idx) => (
+                          <div key={idx} className="flex items-start gap-3">
+                            <span className="bg-[#FE4E5D] text-white w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold mt-1">
+                              {idx + 1}
+                            </span>
+                            <p className="text-gray-600 text-sm md:text-base font-light line-clamp-2">
+                              {point}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+
+                      <button className="btn-view-details">
+                        View Project Details
+                      </button>
+                    </div>
+                    <div className="w-full md:w-1/2 overflow-hidden bg-black">
+                      <img 
+                        src={service.images?.[0]} 
+                        alt={service.title} 
+                        className="w-full h-full object-cover transition-transform duration-1000 hover:scale-110" 
+                      />
+                    </div>
                   </div>
-                </div>
+                </ScrollStackItem>
               ))}
             </div>
           </section>
         </>
       )}
-
       <LandingPageThree />
     </div>
   );
