@@ -332,12 +332,15 @@ testimonials: {
       },
       buttonText: "Submit"
     },
-    info: {
-      title: "Contact Link",
-      phone: "+91 98403 27575",
-      email: "workmansign@hotmail.com",
-      quote: "Our range of services is designed to cover all your branding and signage needs, no matter the scale."
-    }
+ info: {
+  title: "Contact Link",
+  phone1: "+91 98403 27575",
+  phone2: "044 4238 5222",
+  phone3: "97908 09675",
+  email: "workmansign@hotmail.com",
+  quote: "Our range of services is designed to cover all your branding and signage needs, no matter the scale."
+},
+
   },
 
   footer: {

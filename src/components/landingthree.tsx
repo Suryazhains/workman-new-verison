@@ -15,6 +15,17 @@ const LandingPageThree: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
+  // Updated Contact Info
+  const contactInfo = {
+    title: "Contact Link",
+
+    phone1: "+91 98403 27575",
+    phone2: "044 4238 5222",
+    phone3: "97908 09675",
+    email: "workmansign@hotmail.com",
+    quote: "Our range of services is designed to cover all your branding and signage needs, no matter the scale."
+  };
+
   useEffect(() => {
     if (!location.hash) return;
 
@@ -145,7 +156,6 @@ const LandingPageThree: React.FC = () => {
           <div className="max-w-full mx-auto">
             
             <div className="mb-12 text-left">
-              {/* UPDATED FONT */}
               <h1 className="font-imperial text-[32px] md:text-[48px] font-bold text-[#FFEBEA] mb-4 leading-tight">
                 {contactSection.heading}
               </h1>
@@ -155,7 +165,6 @@ const LandingPageThree: React.FC = () => {
             </div>
 
             <div className="bg-white rounded-[24px] p-8 md:p-12 shadow-sm border border-green-100 w-full">
-              {/* UPDATED FONT */}
               <h2 className="font-imperial text-[24px] md:text-[28px] font-bold text-[#FE4E5D] mb-8">
                 {contactSection.form.title}
               </h2>
@@ -225,121 +234,137 @@ const LandingPageThree: React.FC = () => {
         </section>
 
         {/* --- FOOTER SECTION --- */}
-      <footer className="bg-[#FE4E5D] w-full text-white py-12 md:py-20 px-6 lg:px-[80px] xl:px-[120px]">
-  <div className="max-w-[1440px] mx-auto">
-    
-    <div className="flex flex-col lg:flex-row justify-between gap-12 mb-16 text-left items-start">
+        <footer className="bg-[#FE4E5D] w-full text-white py-12 md:py-20 px-6 lg:px-[80px] xl:px-[120px]">
+          <div className="max-w-[1440px] mx-auto">
+            
+            <div className="flex flex-col lg:flex-row justify-between gap-12 mb-16 text-left items-start">
 
-      {/* LEFT: Logo & Branding */}
-      <div className="max-w-[300px] xl:max-w-[390px] space-y-6 shrink-0">
-        <img
-          src={circlelogo}
-          alt="Logo"
-          className="w-34 h-auto cursor-pointer"
-          onClick={() => handleNavigation('/')}
-        />
-        <p className="text-[14px] leading-relaxed font-normal text-white opacity-100">
-          {footer.description}
-        </p>
-        <button 
-          onClick={() => handleNavigation('/#contact')}
-          className="bg-white text-[#FE4E5D] px-8 py-3 rounded-[6px] font-bold text-[15px] hover:bg-gray-100 transition"
-        >
-          Contact now
-        </button>
-      </div>
+              {/* LEFT: Logo & Branding */}
+              <div className="max-w-[300px] xl:max-w-[390px] space-y-6 shrink-0">
+                <img
+                  src={circlelogo}
+                  alt="Logo"
+                  className="w-34 h-auto cursor-pointer"
+                  onClick={() => handleNavigation('/')}
+                />
+                <p className="text-[14px] leading-relaxed font-normal text-white opacity-100">
+                  {contactInfo.quote}
+                </p>
+                <div className="text-[13px] text-white/90 leading-relaxed italic">
+                  {contactInfo.address}
+                </div>
+                <button 
+                  onClick={() => handleNavigation('/#contact')}
+                  className="bg-white text-[#FE4E5D] px-8 py-3 rounded-[6px] font-bold text-[15px] hover:bg-gray-100 transition"
+                >
+                  Contact now
+                </button>
+              </div>
 
-      {/* RIGHT: Links | Services | Contacts | Map */}
-      <div className="flex flex-row flex-wrap lg:flex-nowrap justify-between w-full gap-x-8 gap-y-12">
+              {/* RIGHT: Links | Services | Contacts | Map */}
+              <div className="flex flex-row flex-wrap lg:flex-nowrap justify-between w-full gap-x-8 gap-y-12">
 
-        {/* Links */}
-        <div className="min-w-[120px]">
-          {/* UPDATED FONT */}
-          <h4 className="font-imperial font-medium text-[20px] xl:text-[22px] mb-6 text-white">
-            {footer.linksTitle}
-          </h4>
-          <ul className="space-y-4 text-[15px]">
-            {header.navLinks.map((link, idx) => (
-              <li
-                key={idx}
-                onClick={() => handleNavigation(getRoutePath(link.name))}
-                className="text-white hover:text-green-100 cursor-pointer transition opacity-100"
-              >
-                {link.name}
-              </li>
-            ))}
-          </ul>
-        </div>
+                {/* Links */}
+                <div className="min-w-[120px]">
+                  <h4 className="font-imperial font-medium text-[20px] xl:text-[22px] mb-6 text-white">
+                    {footer.linksTitle}
+                  </h4>
+                  <ul className="space-y-4 text-[15px]">
+                    {header.navLinks.map((link, idx) => (
+                      <li
+                        key={idx}
+                        onClick={() => handleNavigation(getRoutePath(link.name))}
+                        className="text-white hover:text-green-100 cursor-pointer transition opacity-100"
+                      >
+                        {link.name}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
-        {/* Services */}
-        <div className="min-w-[120px]">
-          {/* UPDATED FONT */}
-          <h4 className="font-imperial font-medium text-[20px] xl:text-[22px] mb-6 text-white">
-            {footer.productTitle}
-          </h4>
-          <ul className="space-y-4 text-[15px]">
-            {footer.products.map((product, idx) => (
-              <li
-                key={idx}
-                onClick={() => handleNavigation(getCategoryPath(product))}
-                className="text-white hover:text-green-100 cursor-pointer transition opacity-100"
-              >
-                {product}
-              </li>
-            ))}
-          </ul>
-        </div>
+                {/* Services */}
+                <div className="min-w-[120px]">
+                  <h4 className="font-imperial font-medium text-[20px] xl:text-[22px] mb-6 text-white">
+                    {footer.productTitle}
+                  </h4>
+                  <ul className="space-y-4 text-[15px]">
+                    {footer.products.map((product, idx) => (
+                      <li
+                        key={idx}
+                        onClick={() => handleNavigation(getCategoryPath(product))}
+                        className="text-white hover:text-green-100 cursor-pointer transition opacity-100"
+                      >
+                        {product}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
-        {/* Contacts */}
-        <div className="space-y-6 min-w-[200px] xl:min-w-[240px]">
-          {/* UPDATED FONT */}
-          <h4 className="font-imperial font-medium text-[20px] xl:text-[22px] mb-6 text-white">
-            {footer.contactsTitle}
-          </h4>
-          <div className="space-y-5 text-[15px]">
-            <div className="flex items-center gap-4">
-              <img src={emailIcon} alt="Email" className="w-5 h-5 invert brightness-0" />
-              <a
-                href={`mailto:${footer.email}`}
-                className="text-white hover:text-green-100 transition break-all opacity-100"
-              >
-                {footer.email}
-              </a>
+                {/* Contacts */}
+                <div className="space-y-6 min-w-[200px] xl:min-w-[240px]">
+                  <h4 className="font-imperial font-medium text-[20px] xl:text-[22px] mb-6 text-white">
+                    {contactInfo.title}
+                  </h4>
+                  <div className="space-y-5 text-[15px]">
+                    <div className="flex items-start gap-4">
+                      <img src={emailIcon} alt="Email" className="w-5 h-5 invert brightness-0 mt-1" />
+                      <a
+                        href={`mailto:${contactInfo.email}`}
+                        className="text-white hover:text-green-100 transition break-all opacity-100"
+                      >
+                        {contactInfo.email}
+                      </a>
+                    </div>
+                    
+                    {/* Phone 1 */}
+                    <div className="flex items-center gap-4">
+                      <img src={phoneIcon} alt="Phone" className="w-5 h-5 invert brightness-0" />
+                      <a href={`tel:${contactInfo.phone1.replace(/\s/g, '')}`} className="text-white hover:text-green-100 transition opacity-100">
+                        {contactInfo.phone1}
+                      </a>
+                    </div>
+
+                    {/* Phone 2 */}
+                    <div className="flex items-center gap-4">
+                      <img src={phoneIcon} alt="Phone" className="w-5 h-5 invert brightness-0" />
+                      <a href={`tel:${contactInfo.phone2.replace(/\s/g, '')}`} className="text-white hover:text-green-100 transition opacity-100">
+                        {contactInfo.phone2}
+                      </a>
+                    </div>
+
+                    {/* Phone 3 */}
+                    <div className="flex items-center gap-4">
+                      <img src={phoneIcon} alt="Phone" className="w-5 h-5 invert brightness-0" />
+                      <a href={`tel:${contactInfo.phone3.replace(/\s/g, '')}`} className="text-white hover:text-green-100 transition opacity-100">
+                        {contactInfo.phone3}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                {/* MAP */}
+     <div className="w-full lg:w-[250px] xl:w-[300px] shrink-0">
+  <iframe
+    title="The Workman Advertising Location"
+    src="https://www.google.com/maps?output=embed&q=The+Workman+Advertising+Maduravoyal+Chennai"
+    className="w-full h-[220px] rounded-lg border border-white/20 bg-green-50/10"
+    loading="lazy"
+    referrerPolicy="no-referrer-when-downgrade"
+  />
+</div>
+
+
+              </div>
             </div>
-            <div className="flex items-center gap-4">
-              <img src={phoneIcon} alt="Phone" className="w-5 h-5 invert brightness-0" />
-              <a
-                href={`tel:${footer.phone.replace(/\s/g, '')}`}
-                className="text-white hover:text-green-100 transition opacity-100"
-              >
-                {footer.phone}
-              </a>
+
+            <div className="pt-8 border-t border-white/20 text-center">
+              <p className="text-[13px] tracking-wide text-white opacity-100">
+                {footer.copyright}
+              </p>
             </div>
+
           </div>
-        </div>
-
-        {/* MAP */}
-        <div className="w-full lg:w-[250px] xl:w-[300px] shrink-0">
-          <iframe
-            title="Location"
-            src="https://www.google.com/maps?q=Chennai,Tamil%20Nadu,India&z=13&output=embed"
-            className="w-full h-[180px] rounded-lg border border-white/20 bg-green-50/10"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
-        </div>
-
-      </div>
-    </div>
-
-    <div className="pt-8 border-t border-white/20 text-center">
-      <p className="text-[13px] tracking-wide text-white opacity-100">
-        {footer.copyright}
-      </p>
-    </div>
-
-  </div>
-</footer>
+        </footer>
 
       </div>
     </main>
