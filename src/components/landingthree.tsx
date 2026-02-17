@@ -251,7 +251,7 @@ const LandingPageThree: React.FC = () => {
                   {contactInfo.quote}
                 </p>
                 <div className="text-[13px] text-white/90 leading-relaxed italic">
-                  {contactInfo.address}
+                  {/* {contactInfo.address} */}
                 </div>
                 <button 
                   onClick={() => handleNavigation('/#contact')}
