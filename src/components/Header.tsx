@@ -112,7 +112,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="w-full bg-[#FE4E5D] sticky top-0 z-50 border-none outline-none">
+    <header className="w-full bg-[#FFC107] sticky top-0 z-50 border-none outline-none">
       <style>
         {`
           *:focus {
@@ -259,7 +259,7 @@ const Header: React.FC = () => {
               e.preventDefault();
               handleNavigation('/#contact');
             }}
-            className="hidden md:flex items-center justify-center bg-white text-[#FE4E5D] rounded-[6px]
+            className="hidden md:flex items-center justify-center bg-white text-[#FFC107] rounded-[6px]
                        w-[150px] h-[45px] lg:w-[170px] lg:h-[50px]
                        font-inter font-bold text-[15px] lg:text-[16px]
                        hover:bg-gray-100 transition-all shadow-sm"

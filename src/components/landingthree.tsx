@@ -151,12 +151,12 @@ const LandingPageThree: React.FC = () => {
         {/* --- CONTACT SECTION --- */}
         <section
           id="contact"
-          className="bg-[#FE4E5D] py-[90px] px-6 lg:px-[120px] font-inter flex-grow transition-all scroll-mt-[180px]"
+          className="bg-[#FFC107] py-[90px] px-6 lg:px-[120px] font-inter flex-grow transition-all scroll-mt-[180px]"
         >
           <div className="max-w-full mx-auto">
             
             <div className="mb-12 text-left">
-              <h1 className="font-imperial text-[32px] md:text-[48px] font-bold text-[#FFEBEA] mb-4 leading-tight">
+              <h1 className="font-imperial text-[32px] md:text-[48px] font-bold text-[#FFFFFF] mb-4 leading-tight">
                 {contactSection.heading}
               </h1>
               <p className="text-[#FFFFFF] text-[16px] md:text-[18px] max-w-[1600px] leading-relaxed">
@@ -165,7 +165,7 @@ const LandingPageThree: React.FC = () => {
             </div>
 
             <div className="bg-white rounded-[24px] p-8 md:p-12 shadow-sm border border-green-100 w-full">
-              <h2 className="font-imperial text-[24px] md:text-[28px] font-bold text-[#FE4E5D] mb-8">
+              <h2 className="font-imperial text-[24px] md:text-[28px] font-bold text-[#FFC107] mb-8">
                 {contactSection.form.title}
               </h2>
 
@@ -223,7 +223,7 @@ const LandingPageThree: React.FC = () => {
                     type="submit"
                     disabled={isSubmitting}
                     className={`w-full text-white py-3.5 rounded-lg font-bold text-[16px] md:text-[18px] transition-all 
-                      ${isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#FE4E5D] hover:bg-[#FE4E5D] hover:shadow-lg'}`}
+                      ${isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#FFC107] hover:bg-[#FFC107] hover:shadow-lg'}`}
                   >
                     {isSubmitting ? 'Sending...' : contactSection.form.buttonText}
                   </button>
@@ -234,7 +234,7 @@ const LandingPageThree: React.FC = () => {
         </section>
 
         {/* --- FOOTER SECTION --- */}
-        <footer className="bg-[#FE4E5D] w-full text-white py-12 md:py-20 px-6 lg:px-[80px] xl:px-[120px]">
+        <footer className="bg-[#FFC107] w-full text-white py-12 md:py-20 px-6 lg:px-[80px] xl:px-[120px]">
           <div className="max-w-[1440px] mx-auto">
             
             <div className="flex flex-col lg:flex-row justify-between gap-12 mb-16 text-left items-start">
@@ -255,7 +255,7 @@ const LandingPageThree: React.FC = () => {
                 </div>
                 <button 
                   onClick={() => handleNavigation('/#contact')}
-                  className="bg-white text-[#FE4E5D] px-8 py-3 rounded-[6px] font-bold text-[15px] hover:bg-gray-100 transition"
+                  className="bg-white text-[#FFC107] px-8 py-3 rounded-[6px] font-bold text-[15px] hover:bg-gray-100 transition"
                 >
                   Contact now
                 </button>

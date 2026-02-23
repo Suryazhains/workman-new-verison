@@ -84,7 +84,7 @@ const About: React.FC = () => {
     ];
 
     return (
-        <main className="bg-[#FE4E5D] font-inter text-white">
+        <main className="bg-[#FFC107] font-inter text-white">
             <style dangerouslySetInnerHTML={{ __html: `
                 @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
                 @import url('https://db.onlinewebfonts.com/c/59d406a1ae963118d955b267eb04f9f3?family=ImperialStd-BoldItalic');
@@ -134,7 +134,7 @@ const About: React.FC = () => {
             </section>
 
             {/* SECTION 3: OUR SPECIALIZATION */}
-            <section className="bg-[#FE4E5D] text-white py-20 px-6 lg:px-20">
+            <section className="bg-[#FFC107] text-white py-20 px-6 lg:px-20">
                 <div className="max-w-[1440px] mx-auto">
                     <div className="flex flex-col lg:flex-row items-center gap-16">
                         

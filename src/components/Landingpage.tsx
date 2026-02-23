@@ -78,7 +78,7 @@ const LandingPage: React.FC = () => {
               </p>
               <button
                 onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-                className="bg-[#FE4E5D] text-white rounded-[4px] px-12 h-[58px] font-inter font-bold text-[16px] hover:shadow-2xl transition-all active:scale-95 hover:bg-[#ff5f6d]"
+                className="bg-[#FFC107] text-white rounded-[4px] px-12 h-[58px] font-inter font-bold text-[16px] hover:shadow-2xl transition-all active:scale-95 hover:bg-[#ff5f6d]"
               >
                 Contact now
               </button>
@@ -90,7 +90,7 @@ const LandingPage: React.FC = () => {
       {/* --- ABOUT SECTION --- */}
       <section 
         id="about" 
-        className="relative w-full bg-[#FFEBEA] py-16 md:py-24 px-6 md:px-12 lg:px-[50px] overflow-hidden scroll-mt-24"
+        className="relative w-full bg-[#FFF7DD] py-16 md:py-24 px-6 md:px-12 lg:px-[50px] overflow-hidden scroll-mt-24"
       >
         {/* Background "W" Logo */}
         <div className="hidden lg:flex absolute right-0 top-0 h-full w-full lg:w-1/2 z-0 pointer-events-none select-none items-center justify-end">
@@ -103,15 +103,15 @@ const LandingPage: React.FC = () => {
 
         <div className="relative z-10 max-w-[1440px] mx-auto flex flex-col lg:flex-row items-center justify-between">
           <div id="about-mobile" className="w-full lg:w-[60%] text-left scroll-mt-0">
-            <span className="text-[#FE4E5D] font-imperial font-bold text-lg md:text-[20px] leading-none tracking-[-0.04em] mb-4 block uppercase lg:normal-case">
+            <span className="text-[#FFFFF] font-imperial font-bold text-lg md:text-[20px] leading-none tracking-[-0.04em] mb-4 block uppercase lg:normal-case">
               {about.label}
             </span>
 
-            <h2 className="font-inter font-bold text-[32px] sm:text-[42px] md:text-[48px] leading-[1.1] tracking-[-0.04em] text-[#000000] mb-6 max-w-[650px]">
+            <h2 className="font-inter font-bold text-[32px] sm:text-[42px] md:text-[48px] leading-[1.1] tracking-[-0.04em] text-[#FFFFF] mb-6 max-w-[650px]">
               {about.heading}
             </h2>
 
-            <p className="text-[#6B7280] text-base md:text-[18px] leading-relaxed max-w-[580px] mb-12">
+            <p className="text-[#FFFFF] text-base md:text-[18px] leading-relaxed max-w-[580px] mb-12">
               {about.description}
             </p>
 
@@ -119,7 +119,7 @@ const LandingPage: React.FC = () => {
               {about.stats.map((stat, index) => (
                 <div key={index} className="flex flex-col">
                   <div className="flex items-center gap-1 md:gap-2">
-                    <p className="text-[28px] sm:text-[36px] md:text-[44px] font-bold text-[#163B73]">
+                    <p className="text-[28px] sm:text-[36px] md:text-[44px] font-bold text-[#FFFFF]">
                       {stat.value}
                     </p>
                     <span className="text-[#FF7A00] text-sm sm:text-xl md:text-2xl font-bold">↗</span>

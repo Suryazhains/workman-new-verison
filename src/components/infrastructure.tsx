@@ -35,7 +35,7 @@ const Infrastructure: React.FC = () => {
   };
 
   return (
-    <main className="bg-[#FE4E5D] w-full min-h-screen">
+    <main className="bg-[#FFC107] w-full min-h-screen">
       {/* GLOBAL FONT IMPORT & CRIMSON CLASS */}
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');

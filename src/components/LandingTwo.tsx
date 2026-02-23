@@ -68,7 +68,7 @@ const LandingTwo: React.FC = () => {
       {/* PORTFOLIO SECTION */}
       <section
         id="portfolio"
-        className="w-full bg-[#FE4E5D] pt-[70px] pb-[90px] overflow-hidden"
+        className="w-full bg-[#FFC107] pt-[70px] pb-[90px] overflow-hidden"
       >
         <div className="max-w-[1440px] mx-auto px-6 lg:px-2 mb-10">
           {/* UPDATED FONT HERE */}
@@ -82,10 +82,10 @@ const LandingTwo: React.FC = () => {
 
         <div className="relative w-full overflow-hidden">
           <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-[60px] md:w-[160px]
-            bg-gradient-to-r from-[#FE4E5D] via-[#FE4E5D] to-transparent" />
+            bg-gradient-to-r from-[#FFC107] via-[#FFC107] to-transparent" />
 
           <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-[60px] md:w-[160px]
-            bg-gradient-to-l from-[#FE4E5D] via-[#FE4E5D] to-transparent" />
+            bg-gradient-to-l from-[#FFC107] via-[#FFC107] to-transparent" />
 
           <div className="flex flex-col gap-[6px]">
             <div
@@ -149,10 +149,10 @@ const LandingTwo: React.FC = () => {
       </section>
 
       {/* TESTIMONIALS SECTION */}
-      <section id="testimonials" className="w-full bg-[#FFFFFF] pt-[60px] md:pt-[90px] pb-[60px] md:pb-[90px] overflow-hidden">
+      <section id="testimonials" className="w-full bg-[] pt-[60px] md:pt-[90px] pb-[60px] md:pb-[90px] overflow-hidden">
         <div className="max-w-[1440px] mx-auto px-4">
           {/* UPDATED FONT HERE */}
-          <h2 className="font-imperial text-[32px] md:text-[56px] font-bold text-[#FE4E5D] mb-4 text-center">
+          <h2 className="font-imperial text-[32px] md:text-[56px] font-bold text-[#FFFFF] mb-4 text-center">
             {testimonials.heading}
           </h2>
           <p className="text-[#535353] text-center text-sm md:text-lg mb-8 md:mb-12 max-w-[1200px] mx-auto leading-relaxed px-2">
@@ -182,7 +182,7 @@ const LandingTwo: React.FC = () => {
                   const isRight = index === (currentIndex + 1) % allTestimonials.length;
 
                   let positionClass = "opacity-0 scale-50 pointer-events-none absolute";
-                  if (isActive) positionClass = "opacity-100 scale-100 z-30 relative shadow-2xl border-[#FE4E5D]";
+                  if (isActive) positionClass = "opacity-100 scale-100 z-30 relative shadow-2xl border-[#FE4E5]";
                   if (isLeft) positionClass = "opacity-30 -translate-x-[70%] lg:-translate-x-[100%] scale-90 z-10 absolute blur-[1.5px] hidden md:flex";
                   if (isRight) positionClass = "opacity-30 translate-x-[70%] lg:translate-x-[100%] scale-90 z-10 absolute blur-[1.5px] hidden md:flex";
 
@@ -202,12 +202,12 @@ const LandingTwo: React.FC = () => {
                       </div>
 
                       <div className="mt-6 pt-6 border-t border-gray-50 flex items-center gap-3 md:gap-4 flex-shrink-0">
-                        <div className="w-10 h-10 md:w-14 md:h-14 rounded-full bg-[#FE4E5D] flex items-center justify-center text-white font-bold text-base md:text-xl shadow-lg flex-shrink-0">
+                        <div className="w-10 h-10 md:w-14 md:h-14 rounded-full bg-[#FFC107] flex items-center justify-center text-white font-bold text-base md:text-xl shadow-lg flex-shrink-0">
                           {item.name.charAt(0)}
                         </div>
                         <div className="overflow-hidden text-ellipsis">
                           <p className="font-bold text-[#1A1A1A] text-base md:text-lg truncate">{item.name}</p>
-                          <p className="text-[#FE4E5D] text-[10px] md:text-sm font-medium uppercase truncate">{item.company}</p>
+                          <p className="text-[#FFFFF] text-[10px] md:text-sm font-medium uppercase truncate">{item.company}</p>
                         </div>
                       </div>
                     </div>

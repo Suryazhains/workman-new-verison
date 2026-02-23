@@ -141,7 +141,7 @@ const OutdoorServices: React.FC = () => {
   }, [isFullWidthCategory, selectedFullscreenService]);
 
   return (
-    <div className="flex flex-col w-full bg-[#FE4E5D]">
+    <div className="flex flex-col w-full bg-[#FFC107]">
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
         @import url('https://db.onlinewebfonts.com/c/59d406a1ae963118d955b267eb04f9f3?family=ImperialStd-BoldItalic');
