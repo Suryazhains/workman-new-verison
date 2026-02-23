@@ -4,7 +4,7 @@ import printer3 from "../assets/equiment 3.png";
 import printer4 from "../assets/equiment 4.png";
 import printer5 from "../assets/equiment 5.png";
 // import printer6 from "../assets/equiment 6.png";
-import printer7 from "../assets/equiment 7.png";
+// import printer7 from "../assets/equiment 7.png";
 // import printer8 from "../assets/equiment 8.png";
 // import printer9 from "../assets/equiment 9.jpeg";
 import printer10 from "../assets/equiment 10.png";
@@ -13,11 +13,13 @@ import printer12 from "../assets/printer12.png";
 import printer13 from "../assets/printer13.png";
 import printer14 from "../assets/printer14.png";
 import printer15 from "../assets/printer15.png";
-import printer16 from "../assets/printer16.png";
-import printer17 from "../assets/printer14.png";
+// import printer16 from "../assets/printer16.png";
+import printer17 from "../assets/printer23.png";
 import printer18 from "../assets/printer18.png";
 import printer19 from "../assets/printer19.png";
 import printer20 from "../assets/printer20.png";
+import printer21 from "../assets/printer21.png";
+import printer22 from "../assets/printer22.png";
 import portfolio1 from "../assets/portfolio 1.png";
 import portfolio2 from "../assets/portfolio 2.png";
 import portfolio3 from "../assets/portfolio 3.png";
@@ -34,6 +36,7 @@ import portfolio12 from "../assets/outdoor 33.png";
 import pylon1 from "../assets/outdoor 1.png";
 import pylon2 from "../assets/outdoor 2.png";
 import pylon3 from "../assets/outdoor 3.png";
+import pylon4 from "../assets/pylol1.png";
 import blink1 from "../assets/outdoor 4.png";
 import blink2 from "../assets/outdoor 5.png";
 import blink3 from "../assets/outdoor 6.png";
@@ -391,7 +394,7 @@ testimonials: {
    { 
       id: 1, 
       title: "Pylon Signage", 
-      images: [pylon1, pylon2, pylon3],
+      images: [pylon1, pylon2, pylon3,pylon4],
       description_points: [
         "High-visibility freestanding signage designed to attract attention from long distances and heavy traffic zones.",
         "Strong structural fabrication with weather-resistant materials to ensure long-lasting outdoor performance.",
@@ -634,14 +637,14 @@ testimonials: {
     },
     isImageLeft: true
   },
-  {
-    id: 7,
-    title: "CO₂ Laser Cutting & Engraving Machine",
-    model: "GT 1325",
-    description: "The GT 1325 CO₂ Laser Cutting and Engraving Machine is a large-format, high-performance system designed for cutting and engraving non-metal materials. It supports materials such as acrylic, wood, MDF, leather, rubber, stone, and glass. With a spacious working area, powerful laser options, and water-cooling protection, this machine is widely used in signage, crafts, interior décor, and industrial fabrication applications.",
-    imageUrl: printer7,
-    isImageLeft: false
-  },
+  // {
+  //   id: 7,
+  //   title: "CO₂ Laser Cutting & Engraving Machine",
+  //   model: "GT 1325",
+  //   description: "The GT 1325 CO₂ Laser Cutting and Engraving Machine is a large-format, high-performance system designed for cutting and engraving non-metal materials. It supports materials such as acrylic, wood, MDF, leather, rubber, stone, and glass. With a spacious working area, powerful laser options, and water-cooling protection, this machine is widely used in signage, crafts, interior décor, and industrial fabrication applications.",
+  //   imageUrl: printer7,
+  //   isImageLeft: false
+  // },
             {
   id: 12,
   title: "CNC Router Machine",
@@ -660,14 +663,14 @@ testimonials: {
   imageUrl: printer13,
   isImageLeft: true
 },
-{
-  id: 14,
-  title: "Channel Letter Bending Machine",
-  model: "LB Series",
-  description: "The Channel Letter Bending Machine is a precision solution designed for accurate bending and shaping of metal strips used in channel letter signage. It is suitable for materials such as aluminum, stainless steel, and galvanized steel, enabling the creation of 3D letters and logo signage with high precision. Equipped with advanced control systems and automated feeding, the LB Series ensures smooth bending, consistent shapes, and efficient production. This machine is ideal for signage manufacturers, advertising companies, and fabrication workshops looking to produce professional-quality channel letters with speed and accuracy.",
-  imageUrl: printer14,
-  isImageLeft: true
-},
+ {
+   id: 14,
+   title: "Channel Letter Bending Machine",
+   model: "LB Series",
+   description: "The Channel Letter Bending Machine is a precision solution designed for accurate bending and shaping of metal strips used in channel letter signage. It is suitable for materials such as aluminum, stainless steel, and galvanized steel, enabling the creation of 3D letters and logo signage with high precision. Equipped with advanced control systems and automated feeding, the LB Series ensures smooth bending, consistent shapes, and efficient production. This machine is ideal for signage manufacturers, advertising companies, and fabrication workshops looking to produce professional-quality channel letters with speed and accuracy.",
+   imageUrl: printer14,
+   isImageLeft: true
+ },
 {
   id: 15,
   title: "Metal Bending Machine",
@@ -676,14 +679,14 @@ testimonials: {
   imageUrl: printer15,
   isImageLeft: true
 },
-{
-  id: 16,
-  title: "CNC Metal Engraving Machine",
-  model: "CME Series",
-  description: "The CNC Metal Engraving Machine is a high-precision solution designed for detailed engraving, marking, and carving on various metal surfaces. It is suitable for materials such as stainless steel, aluminum, brass, copper, and mild steel, delivering sharp detailing and consistent results. Built with a rigid structure and advanced motion control system, the CME Series ensures smooth operation, high accuracy, and reliable performance. This machine is ideal for industrial engraving, nameplate production, mold making, jewelry engraving, and fabrication workshops requiring precise and efficient metal processing.",
-  imageUrl: printer16,
-  isImageLeft: true
-},
+// {
+//   id: 16,
+//   title: "CNC Metal Engraving Machine",
+//   model: "CME Series",
+//   description: "The CNC Metal Engraving Machine is a high-precision solution designed for detailed engraving, marking, and carving on various metal surfaces. It is suitable for materials such as stainless steel, aluminum, brass, copper, and mild steel, delivering sharp detailing and consistent results. Built with a rigid structure and advanced motion control system, the CME Series ensures smooth operation, high accuracy, and reliable performance. This machine is ideal for industrial engraving, nameplate production, mold making, jewelry engraving, and fabrication workshops requiring precise and efficient metal processing.",
+//   imageUrl: printer16,
+//   isImageLeft: true
+// },
 {
   id: 17,
   title: "Metal Punching Machine",
@@ -718,10 +721,23 @@ testimonials: {
   description: "The Wood Cutting Machine is a high-precision solution designed for accurate and efficient cutting of various wood materials and panels. It is suitable for materials such as plywood, MDF, particle board, hardwood, and softwood, delivering smooth edges and consistent cutting performance. Built with a robust structure and advanced cutting mechanism, the WC Series ensures stable operation, high productivity, and reliable results. This machine is ideal for furniture manufacturing, carpentry workshops, interior décor production, and woodworking industries requiring precise and efficient cutting operations.",
   imageUrl: printer20,
   isImageLeft: true
+},
+{
+  id: 21,
+  title: "Edge Banding Machine",
+  model: "EB Pro Series",
+  description: "The Edge Banding Machine (EB Pro Series) is an advanced woodworking solution engineered for high-speed and precise edge finishing of panels and boards. It supports materials such as MDF, plywood, particle board, and solid wood, and is compatible with PVC, ABS, veneer, and melamine edge tapes. Equipped with automatic feeding, pre-milling, gluing, trimming, scraping, and polishing units, the EB Pro Series ensures seamless edge application, superior finish quality, and consistent performance. Designed for heavy-duty industrial use, it is ideal for furniture manufacturing, modular kitchen production, cabinetry units, and large-scale woodworking facilities seeking efficiency and precision.",
+  imageUrl: printer21,
+  isImageLeft: false
+},
+{
+  id: 21,
+  title: "Hot Press Machine",
+  model: "HP Series",
+  description: "The Hot Press Machine (HP Series) is a high-performance solution designed for laminating, bonding, and pressing wood panels with precision and uniform heat distribution. It is suitable for materials such as plywood, MDF, particle board, veneer, laminates, and decorative sheets. Equipped with a robust hydraulic system and advanced temperature control, the HP Series ensures strong bonding, smooth surface finishing, and consistent pressure across the panel. Built for durability and efficiency, this machine is ideal for furniture manufacturing, plywood industries, door production, laminate pressing, and woodworking facilities requiring reliable and high-quality pressing operations.",
+  imageUrl: printer22,
+  isImageLeft: false
 }
-
-
-
   //  ,   {
   //       id: 1,
   //       title: "Auto Hot / Cold Laminator",

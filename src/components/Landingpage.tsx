@@ -1,7 +1,6 @@
 import React from 'react';
 import LandingTwo from './LandingTwo';
 import { LANDING_CONTENT } from './content';
-// import { useNavigate } from "react-router-dom"; // This was causing the error if unused
 
 // Asset Imports
 import Home_1 from '../assets/home 1.jpg'; 
@@ -13,7 +12,6 @@ import W_image from '../assets/w.png';
 const LandingPage: React.FC = () => {
   const { hero, about } = LANDING_CONTENT;
   const heroImages = [Home_1, Home_2, Home_3, Home_4];
-  // const navigate = useNavigate(); // REMOVED to fix TS6133
 
   return (
     <main className="w-full min-h-screen bg-white overflow-x-hidden selection:bg-red-200 font-inter">
@@ -36,6 +34,7 @@ const LandingPage: React.FC = () => {
           height: 100%;
           object-fit: cover;
           flex-shrink: 0;
+          filter: brightness(0.85); /* Slightly darkened for text readability */
         }
 
         @keyframes heroScroll {
@@ -46,32 +45,16 @@ const LandingPage: React.FC = () => {
           100% { transform: translateX(0); }
         }
 
-        .gradient-overlay {
-          background: linear-gradient(
-            to right, 
-            #FE4E5D 0%, 
-            #FE4E5D 35%, 
-            rgba(254, 78, 93, 0.9) 45%,
-            rgba(254, 78, 93, 0) 70%
-          );
-        }
-
-        @media (max-width: 1024px) {
-          .gradient-overlay {
-            background: linear-gradient(
-              to bottom, 
-              #FE4E5D 0%, 
-              #FE4E5D 50%, 
-              transparent 100%
-            );
-          }
+        /* Clean shadow for text readability over dynamic images */
+        .text-readable-shadow {
+          text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
       `}} />
 
       {/* --- HERO SECTION --- */}
       <section 
         id="home" 
-        className="relative w-full h-[85vh] min-h-[650px] overflow-hidden bg-[#FE4E5D]"
+        className="relative w-full h-[85vh] min-h-[650px] overflow-hidden bg-black"
       >
         <div className="absolute inset-0 z-0">
           <div className="hero-track">
@@ -81,21 +64,21 @@ const LandingPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="absolute inset-0 z-10 gradient-overlay" />
+        {/* Subtle Vignette for extra clarity on the left side */}
+        <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/40 to-transparent pointer-events-none" />
 
         <div className="relative z-20 h-full flex items-center">
           <div className="w-full px-6 md:px-12 lg:pl-12"> 
-            <div className="max-w-[750px]">
-              {/* UPDATED FONT HERE */}
-              <h1 className="font-imperial text-[48px] md:text-[68px] lg:text-[84px] font-bold leading-[1.05] tracking-tight text-white mb-8">
+            <div className="max-w-[700px]">
+              <h1 className="font-imperial text-[48px] md:text-[68px] lg:text-[84px] font-bold leading-[1.05] tracking-tight text-white mb-8 text-readable-shadow">
                 {hero.title.join(" ")}
               </h1>
-              <p className="text-white/90 text-lg md:text-xl leading-relaxed max-w-[550px] mb-12">
+              <p className="text-white text-lg md:text-xl leading-relaxed max-w-[550px] mb-12 text-readable-shadow font-medium">
                 {hero.description}
               </p>
               <button
                 onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-                className="bg-white text-[#FE4E5D] rounded-[4px] px-12 h-[58px] font-inter font-bold text-[16px] hover:shadow-2xl transition-all active:scale-95"
+                className="bg-[#FE4E5D] text-white rounded-[4px] px-12 h-[58px] font-inter font-bold text-[16px] hover:shadow-2xl transition-all active:scale-95 hover:bg-[#ff5f6d]"
               >
                 Contact now
               </button>
@@ -105,11 +88,10 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* --- ABOUT SECTION --- */}
-    <section 
+      <section 
         id="about" 
         className="relative w-full bg-[#FFEBEA] py-16 md:py-24 px-6 md:px-12 lg:px-[50px] overflow-hidden scroll-mt-24"
       >
-        
         {/* Background "W" Logo */}
         <div className="hidden lg:flex absolute right-0 top-0 h-full w-full lg:w-1/2 z-0 pointer-events-none select-none items-center justify-end">
           <img 
@@ -121,8 +103,6 @@ const LandingPage: React.FC = () => {
 
         <div className="relative z-10 max-w-[1440px] mx-auto flex flex-col lg:flex-row items-center justify-between">
           <div id="about-mobile" className="w-full lg:w-[60%] text-left scroll-mt-0">
-
-            {/* UPDATED FONT HERE */}
             <span className="text-[#FE4E5D] font-imperial font-bold text-lg md:text-[20px] leading-none tracking-[-0.04em] mb-4 block uppercase lg:normal-case">
               {about.label}
             </span>
@@ -151,7 +131,6 @@ const LandingPage: React.FC = () => {
               ))}
             </div>
           </div>
-
           <div className="hidden lg:block lg:w-[40%] h-1"></div>
         </div>
       </section>

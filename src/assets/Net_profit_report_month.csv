@@ -1,0 +1,8 @@
+companyId,invoiceNumber,customerName,date,items,Total Sales,Total Cost (COGS),Gross Profit,status
+"ZH-001","INV-1771484492334","Dr. Kavita Desai","2026-02-19T07:01:32.917Z","LetrozoME (90)","900000","540000","360000","Paid"
+"ZH-001","INV-1771484337962","Ms. Revathi Chandran","2026-02-19T06:58:58.609Z","Progesterone Soft Gel 200mg (Pack of 10) (2)","504","304","200","Paid"
+"ZH-001","INV-1771483548001","Ms. Revathi Chandran","2026-02-19T06:45:48.657Z","LetrozoME (1)","10000","6000","4000","Partial paid"
+"ZH-001","INV-1771422236661","Ms. Revathi Chandran","2026-02-18T13:43:57.894Z","Human Chorionic Gonadotropin (HCG) 5000IU (19), Follicle Stimulating Hormone (FSH) 75IU Injection (75)","75378.4","53388.4","21990","Partial paid"
+"ZH-001","INV-1771422170942","Dr. Anand Krishnamurthy","2026-02-18T13:42:52.198Z","Letrozole 2.5mg Tablets (Strip of 10) (15), Human Chorionic Gonadotropin (HCG) 5000IU (100)","54434.9","32159.9","22275","Partially Returned"
+"ZH-001","INV-1771421647049","Ms. Sneha Iyer","2026-02-18T13:34:08.961Z","Oestradiol Valerate 2mg Tablets (Strip of 28) (30), Sperm Wash Media 10ml (20), Progesterone Soft Gel 200mg (Pack of 10) (50)","46820","31120","15700","Paid"
+"ZH-001","INV-1771417556693","Surya Surya","2026-02-18T12:25:57.395Z","Biscuit (1)","0","0","0","Returned"

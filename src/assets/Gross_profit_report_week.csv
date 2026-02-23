@@ -1,0 +1,5 @@
+companyId,invoiceNumber,customerName,gst,date,dueDate,paidOn,items,subtotal,totalTax,totalAmount,outstandingAmount,grossProfit,status
+"ZH-001","INV-1771422236661","Ms. Revathi Chandran","N/A","2026-02-18T13:43:57.894Z","2/24/2026","null","Human Chorionic Gonadotropin (HCG) 5000IU (19), Follicle Stimulating Hormone (FSH) 75IU Injection (75)","63880","11498.4","75378.4","55378.4","75378.4","Partial paid"
+"ZH-001","INV-1771422170942","Dr. Anand Krishnamurthy","N/A","2026-02-18T13:42:52.198Z","N/A","2026-02-18T13:51:09.411Z","Letrozole 2.5mg Tablets (Strip of 10) (15), Human Chorionic Gonadotropin (HCG) 5000IU (100)","54925","9711","54434.9","0","54434.9","Partially Returned"
+"ZH-001","INV-1771421647049","Ms. Sneha Iyer","33CAKRN8557D1Z6","2026-02-18T13:34:08.961Z","2/24/2026","null","Oestradiol Valerate 2mg Tablets (Strip of 28) (30), Sperm Wash Media 10ml (20), Progesterone Soft Gel 200mg (Pack of 10) (50)","41000","5820","46820","18829","46820","Partial paid"
+"ZH-001","INV-1771417556693","Surya Surya","N/A","2026-02-18T12:25:57.395Z","N/A","2026-02-18T12:25:57.741Z","Biscuit (1)","39","7.02","0","0","0","Returned"

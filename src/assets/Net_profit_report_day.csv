@@ -1,0 +1,2 @@
+companyId,invoiceNumber,customerName,date,items,Total Sales,Total Cost (COGS),Gross Profit,status
+"ZH-001","INV-1771483548001","Ms. Revathi Chandran","2026-02-19T06:45:48.657Z","LetrozoME (1)","10000","6000","4000","Partial paid"
