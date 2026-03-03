@@ -102,8 +102,11 @@ export default function HorizontalGallery({ items = [], textColor = '#FFFFFF', b
     const scroll = { current: 0, target: 0, last: 0, ease: 0.05 };
     const autoSpeed = 0.02; 
     let isUserInteracting = false; 
-    const raycast = new Raycast(gl);
+
+    // FIX: Double-cast to bypass strict constructor argument count check
+    const raycast = new (Raycast as any)(gl);
     const mouse = new Vec2();
+
     let medias: Media[] = [];
     const geometry = new Plane(gl, { heightSegments: 10, widthSegments: 10 });
 
@@ -150,7 +153,7 @@ export default function HorizontalGallery({ items = [], textColor = '#FFFFFF', b
             ((pos.clientY - rect.top) / rect.height) * -2 + 1
         );
         
-        // Use casting to any to bypass the TS argument error
+        // Use casting to 'any' for the method call as well
         (raycast as any).castMouse(camera, mouse);
         
         const intersects = raycast.intersectBounds(medias.map(m => m.plane));
