@@ -15,12 +15,14 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service }) => {
   const [viewerIndex, setViewerIndex] = useState<number | null>(null);
   const openTimeRef = useRef<number>(0);
 
+  const images = service?.images || [];
+
   const galleryItems = useMemo(() => {
-    return service.images?.map((img) => ({
+    return images.map((img) => ({
       image: img,
       text: service.title
-    })) || [];
-  }, [service.images, service.title]);
+    }));
+  }, [images, service.title]);
 
   const openViewer = (index: number) => {
     openTimeRef.current = Date.now();
@@ -28,29 +30,24 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service }) => {
     document.body.style.overflow = 'hidden';
   };
 
-  const closeViewer = useCallback((e?: React.MouseEvent | React.KeyboardEvent) => {
+  const closeViewer = useCallback(() => {
+    // Prevent accidental close immediately after opening
     if (Date.now() - openTimeRef.current < 300) return;
-    if (e) {
-      e.stopPropagation();
-      if ('nativeEvent' in e) e.nativeEvent.stopImmediatePropagation();
-    }
     setViewerIndex(null);
-    document.body.style.overflow = 'unset';
+    document.body.style.overflow = '';
   }, []);
 
   const showNext = useCallback((e?: React.MouseEvent) => {
-    e?.stopPropagation();
-    if (service.images) {
-      setViewerIndex((prev) => (prev !== null ? (prev + 1) % service.images!.length : 0));
-    }
-  }, [service.images]);
+    e?.stopPropagation(); // CRITICAL: Prevent closing the lightbox
+    if (images.length === 0) return;
+    setViewerIndex((prev) => (prev !== null ? (prev + 1) % images.length : 0));
+  }, [images.length]);
 
   const showPrev = useCallback((e?: React.MouseEvent) => {
-    e?.stopPropagation();
-    if (service.images) {
-      setViewerIndex((prev) => (prev !== null ? (prev - 1 + service.images!.length) % service.images!.length : 0));
-    }
-  }, [service.images]);
+    e?.stopPropagation(); // CRITICAL: Prevent closing the lightbox
+    if (images.length === 0) return;
+    setViewerIndex((prev) => (prev !== null ? (prev - 1 + images.length) % images.length : 0));
+  }, [images.length]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -62,7 +59,6 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service }) => {
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'unset';
     };
   }, [viewerIndex, showNext, showPrev, closeViewer]);
 
@@ -73,116 +69,109 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service }) => {
   return (
     <div className="w-full bg-white font-inter">
       <style dangerouslySetInnerHTML={{ __html: `
-        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-        @import url('https://db.onlinewebfonts.com/c/59d406a1ae963118d955b267eb04f9f3?family=ImperialStd-BoldItalic');
-        
-        .font-imperial { font-family: "ImperialStd-BoldItalic", serif !important; }
-        
         .lightbox-overlay { 
           position: fixed; 
           inset: 0; 
-          background: rgba(0, 0, 0, 0.96); 
+          background: rgba(0, 0, 0, 0.98); 
           z-index: 99999; 
           display: flex; 
           align-items: center; 
           justify-content: center; 
-          backdrop-filter: blur(20px); 
+          backdrop-filter: blur(15px); 
           user-select: none;
         }
 
-        /* PERFECT SQUARE FRAME */
         .image-frame {
           width: 90vw;
-          max-width: 600px; /* Limits size on desktop */
-          aspect-ratio: 1 / 1; /* FORCES SQUARE SHAPE */
+          max-width: 650px;
+          aspect-ratio: 1 / 1;
           position: relative;
-          overflow: hidden;
-          border-radius: 12px;
-          background: #111;
           display: flex;
           align-items: center;
           justify-content: center;
-          box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+          background: #000;
+          border-radius: 8px;
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
         .lightbox-img { 
           width: 100%; 
           height: 100%; 
-          object-fit: cover; /* Fills the square completely */
-          pointer-events: auto;
-          transition: opacity 0.3s ease;
+          object-fit: cover;
+          border-radius: 8px;
         }
 
         .nav-btn {
           position: absolute;
           top: 50%;
           transform: translateY(-50%);
-          background: rgba(255, 255, 255, 0.1);
+          background: rgba(255, 255, 255, 0.15);
           color: white;
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          width: 50px;
-          height: 50px;
+          border: none;
+          width: 60px;
+          height: 60px;
           border-radius: 50%;
           cursor: pointer;
           display: flex;
           align-items: center;
           justify-content: center;
-          transition: all 0.3s ease;
+          font-size: 1.5rem;
+          transition: background 0.2s;
           z-index: 100001;
         }
         .nav-btn:hover { background: rgba(255, 255, 255, 0.3); }
-        .prev-btn { left: 20px; }
-        .next-btn { right: 20px; }
+        .prev-btn { left: 30px; }
+        .next-btn { right: 30px; }
         
         .close-btn-new { 
           position: absolute; 
-          top: 20px; 
-          right: 20px; 
-          color: rgba(255, 255, 255, 0.6); 
-          font-size: 2.5rem; 
+          top: 30px; 
+          right: 30px; 
+          color: white; 
+          font-size: 3rem; 
           cursor: pointer; 
           z-index: 100002;
-          padding: 10px;
           line-height: 1;
         }
 
         .image-counter {
           position: absolute;
-          bottom: -40px;
+          bottom: -50px;
           left: 50%;
           transform: translateX(-50%);
           color: white;
-          font-size: 0.8rem;
-          opacity: 0.6;
+          font-family: sans-serif;
+          font-size: 1rem;
+          letter-spacing: 1px;
         }
         
         @media (max-width: 768px) {
+          .nav-btn { width: 45px; height: 45px; }
+          .prev-btn { left: 15px; }
+          .next-btn { right: 15px; }
           .image-frame { width: 85vw; }
-          .nav-btn { width: 40px; height: 40px; }
-          .prev-btn { left: 10px; }
-          .next-btn { right: 10px; }
         }
       `}} />
 
-      {viewerIndex !== null && service.images && (
-        <div className="lightbox-overlay" onClick={() => closeViewer()}>
-          <div className="close-btn-new" onClick={() => closeViewer()}>&times;</div>
+      {/* Lightbox Overlay */}
+      {viewerIndex !== null && images.length > 0 && (
+        <div className="lightbox-overlay" onClick={closeViewer}>
+          <div className="close-btn-new" onClick={closeViewer}>&times;</div>
           
-          <button className="nav-btn prev-btn" onClick={(e) => showPrev(e)}>&#8592;</button>
+          <button className="nav-btn prev-btn" onClick={showPrev}>&#8592;</button>
           
           <div className="image-frame" onClick={(e) => e.stopPropagation()}>
             <img 
-              key={viewerIndex}
-              src={service.images[viewerIndex]} 
+              src={images[viewerIndex]} 
               className="lightbox-img" 
-              alt="Project" 
+              alt={`Project Gallery ${viewerIndex + 1}`} 
             />
             <div className="image-counter">
-              {viewerIndex + 1} / {service.images.length}
+              {viewerIndex + 1} / {images.length}
             </div>
           </div>
           
-          <button className="nav-btn next-btn" onClick={(e) => showNext(e)}>&#8594;</button>
+          <button className="nav-btn next-btn" onClick={showNext}>&#8594;</button>
         </div>
       )}
 

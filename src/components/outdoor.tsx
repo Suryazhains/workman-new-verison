@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo, useLayoutEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Lenis from 'lenis';
+
 import './outdoor.css';
 import LandingPageThree from './landingthree';
 import ServiceDetails from "./ServiceDetails"; // Matches exact file casing
@@ -89,54 +89,36 @@ const OutdoorServices: React.FC = () => {
     );
   }, [currentCategoryKey, header.servicesData, outdoorPage.services]);
 
-  useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setSelectedFullscreenService(null);
-    };
-    window.addEventListener('keydown', handleEsc);
-    return () => window.removeEventListener('keydown', handleEsc);
-  }, []);
+useEffect(() => {
+  if (isFullWidthCategory || selectedFullscreenService) return;
 
-  useLayoutEffect(() => {
-    if (isFullWidthCategory || selectedFullscreenService) return;
+  const handleScroll = () => {
+    const cards = document.querySelectorAll('.scroll-stack-card');
 
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
+    cards.forEach((card) => {
+      const rect = card.getBoundingClientRect();
+      const cardTop = rect.top;
+
+      if (cardTop < 200 && cardTop > -500) {
+        const progress = Math.max(0, (200 - cardTop) / 600);
+        const scale = 1 - progress * 0.05;
+        const opacity = 1 - progress * 0.2;
+
+        (card as HTMLElement).style.transform = `scale(${scale})`;
+        (card as HTMLElement).style.opacity = `${opacity}`;
+      } else {
+        (card as HTMLElement).style.transform = `scale(1)`;
+        (card as HTMLElement).style.opacity = `1`;
+      }
     });
+  };
 
-    const raf = (time: number) => {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    };
-    requestAnimationFrame(raf);
+  window.addEventListener("scroll", handleScroll);
 
-    const handleScroll = () => {
-      const cards = document.querySelectorAll('.scroll-stack-card');
-      cards.forEach((card) => {
-        const rect = card.getBoundingClientRect();
-        const cardTop = rect.top;
-        
-        if (cardTop < 200 && cardTop > -500) {
-          const progress = Math.max(0, (200 - cardTop) / 600);
-          const scale = 1 - progress * 0.05;
-          const opacity = 1 - progress * 0.2;
-          (card as HTMLElement).style.transform = `scale(${scale})`;
-          (card as HTMLElement).style.opacity = `${opacity}`;
-        } else {
-          (card as HTMLElement).style.transform = `scale(1)`;
-          (card as HTMLElement).style.opacity = `1`;
-        }
-      });
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      lenis.destroy();
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [isFullWidthCategory, selectedFullscreenService]);
+  return () => {
+    window.removeEventListener("scroll", handleScroll);
+  };
+}, [isFullWidthCategory, selectedFullscreenService]);
 
   return (
     <div className="flex flex-col w-full bg-[#BBB791]">
@@ -260,7 +242,7 @@ const OutdoorServices: React.FC = () => {
           .split-hero-container, .fs-top-horizontal-row { flex-direction: column; height: auto; }
           .split-hero-left, .split-hero-right, .fs-left-content, .fs-right-media { width: 100%; height: auto; min-height: 40vh; }
         }
-        body:has(.fs-split-overlay) { overflow: hidden; }
+    
       `}} />
 
       {/* --- FULLSCREEN OVERLAY --- */}

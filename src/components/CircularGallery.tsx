@@ -94,16 +94,21 @@ export default function HorizontalGallery({ items = [], textColor = '#FFFFFF', b
   useEffect(() => {
     if (!containerRef.current || items.length === 0) return;
     const container = containerRef.current;
-    const renderer = new Renderer({ alpha: true, antialias: true });
+    
+    // CLEANUP: Ensure container is empty before appending new canvas
+    container.innerHTML = '';
+
+    const renderer = new Renderer({ alpha: true, antialias: true, dpr: Math.min(window.devicePixelRatio, 2) });
     const gl = renderer.gl;
     container.appendChild(gl.canvas);
-    const camera = new Camera(gl); camera.position.z = 20;
+
+    const camera = new Camera(gl); 
+    camera.position.z = 20;
     const scene = new Transform();
     const scroll = { current: 0, target: 0, last: 0, ease: 0.05 };
     const autoSpeed = 0.02; 
     let isUserInteracting = false; 
 
-    // FIX: Double-cast to bypass strict constructor argument count check
     const raycast = new (Raycast as any)(gl);
     const mouse = new Vec2();
 
@@ -111,18 +116,34 @@ export default function HorizontalGallery({ items = [], textColor = '#FFFFFF', b
     const geometry = new Plane(gl, { heightSegments: 10, widthSegments: 10 });
 
     const onResize = () => {
-      renderer.setSize(container.clientWidth, container.clientHeight);
-      camera.perspective({ aspect: gl.canvas.width / gl.canvas.height });
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+      if (width === 0 || height === 0) return;
+
+      renderer.setSize(width, height);
+      camera.perspective({ aspect: width / height });
       const fov = (camera.fov * Math.PI) / 180;
       const h = 2 * Math.tan(fov / 2) * camera.position.z;
       const viewport = { width: h * camera.aspect, height: h };
-      const screen = { width: container.clientWidth, height: container.clientHeight };
+      const screen = { width, height };
       medias.forEach(m => m.onResize(viewport, screen));
     };
 
-    medias = items.map((data: any, index: number) => new Media({ geometry, gl, image: data.image, index, length: items.length, scene, screen: { width: container.clientWidth, height: container.clientHeight }, text: data.text, viewport: { width: 1, height: 1 }, textColor, borderRadius, font: 'bold 40px Inter, sans-serif' }));
+    medias = items.map((data: any, index: number) => new Media({ 
+      geometry, gl, image: data.image, index, 
+      length: items.length, scene, 
+      screen: { width: container.clientWidth, height: container.clientHeight }, 
+      text: data.text, viewport: { width: 1, height: 1 }, 
+      textColor, borderRadius, font: 'bold 40px Inter, sans-serif' 
+    }));
 
+    // Initial resize call
     onResize();
+
+    // Use ResizeObserver for more reliable dimension tracking
+    const resizeObserver = new ResizeObserver(() => onResize());
+    resizeObserver.observe(container);
+
     window.addEventListener('resize', onResize);
     const onWheel = (e: any) => { scroll.target += e.deltaY * 0.01; };
     window.addEventListener('wheel', onWheel, { passive: true });
@@ -152,10 +173,7 @@ export default function HorizontalGallery({ items = [], textColor = '#FFFFFF', b
             ((pos.clientX - rect.left) / rect.width) * 2 - 1,
             ((pos.clientY - rect.top) / rect.height) * -2 + 1
         );
-        
-        // Use casting to 'any' for the method call as well
         (raycast as any).castMouse(camera, mouse);
-        
         const intersects = raycast.intersectBounds(medias.map(m => m.plane));
         if (intersects.length > 0 && onItemClick) onItemClick((intersects[0] as any).index);
       }
@@ -184,10 +202,14 @@ export default function HorizontalGallery({ items = [], textColor = '#FFFFFF', b
 
     return () => {
       cancelAnimationFrame(appRef.current);
+      resizeObserver.disconnect();
       window.removeEventListener('resize', onResize);
       window.removeEventListener('wheel', onWheel);
       window.removeEventListener('mousedown', onDown); window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp);
       window.removeEventListener('touchstart', onDown); window.removeEventListener('touchmove', onMove); window.removeEventListener('touchend', onUp);
+      
+      // Explicitly lose context to free up GPU memory
+      gl.getExtension('WEBGL_lose_context')?.loseContext();
       if (gl.canvas.parentNode) container.removeChild(gl.canvas);
     };
   }, [items, onItemClick, textColor, borderRadius]);
