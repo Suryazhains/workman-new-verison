@@ -75,7 +75,6 @@ class Media {
     this.program.uniforms.uTime.value += 0.02;
     this.program.uniforms.uSpeed.value = Math.abs(scroll.current - scroll.last);
     
-    // INFINITE WRAPPING
     if (direction === 'right' && x + this.plane.scale.x / 2 < -H * 2.0) this.extra -= this.widthTotal;
     if (direction === 'left' && x - this.plane.scale.x / 2 > H * 2.0) this.extra += this.widthTotal;
   }
@@ -104,9 +103,8 @@ export default function HorizontalGallery({ items = [], textColor = '#FFFFFF', b
     const camera = new Camera(gl); camera.position.z = 20;
     const scene = new Transform();
     
-    // SCROLL SETTINGS
     const scroll = { current: 0, target: 0, last: 0, ease: 0.05 };
-    const autoSpeed = 0.02; // Change this to make it faster or slower
+    const autoSpeed = 0.02; 
     let isUserInteracting = false; 
     
     const raycast = new Raycast(gl);
@@ -137,7 +135,7 @@ export default function HorizontalGallery({ items = [], textColor = '#FFFFFF', b
     
     const onDown = (e: any) => { 
       isDown = true; 
-      isUserInteracting = true; // Pause auto-scroll
+      isUserInteracting = true; 
       const pos = e.touches ? e.touches[0] : e; 
       startX = pos.clientX; 
       startY = pos.clientY; 
@@ -156,16 +154,22 @@ export default function HorizontalGallery({ items = [], textColor = '#FFFFFF', b
       const pos = e.changedTouches ? e.changedTouches[0] : e;
       const dist = Math.sqrt(Math.pow(pos.clientX - startX, 2) + Math.pow(pos.clientY - startY, 2));
       
-      // Check for Click
       if (Date.now() - lastMoveTime < 200 && dist < 15) {
-        mouse.set((pos.clientX / container.clientWidth) * 2 - 1, (pos.clientY / container.clientHeight) * -2 + 1);
-        raycast.castMouse(camera, mouse);
+        // Corrected NDC calculation
+        const rect = container.getBoundingClientRect();
+        mouse.set(
+            ((pos.clientX - rect.left) / rect.width) * 2 - 1,
+            ((pos.clientY - rect.top) / rect.height) * -2 + 1
+        );
+        
+        // FIXED LINE: Using fromCamera instead of castMouse
+        raycast.fromCamera(camera, mouse);
+        
         const intersects = raycast.intersectBounds(medias.map(m => m.plane));
         if (intersects.length > 0 && onItemClick) onItemClick((intersects[0] as any).index);
       }
       
       isDown = false;
-      // Resume auto-scroll after a short delay
       setTimeout(() => { isUserInteracting = false; }, 1000); 
     };
 
@@ -173,11 +177,7 @@ export default function HorizontalGallery({ items = [], textColor = '#FFFFFF', b
     window.addEventListener('touchstart', onDown, { passive: false }); window.addEventListener('touchmove', onMove, { passive: false }); window.addEventListener('touchend', onUp);
 
     const update = () => {
-      // AUTO SCROLL LOGIC
-      if (!isUserInteracting) {
-        scroll.target += autoSpeed;
-      }
-
+      if (!isUserInteracting) { scroll.target += autoSpeed; }
       scroll.current = lerp(scroll.current, scroll.target, scroll.ease);
       const dir = scroll.current > scroll.last ? 'right' : 'left';
       
@@ -202,7 +202,7 @@ export default function HorizontalGallery({ items = [], textColor = '#FFFFFF', b
       window.removeEventListener('touchstart', onDown); window.removeEventListener('touchmove', onMove); window.removeEventListener('touchend', onUp);
       if (gl.canvas.parentNode) container.removeChild(gl.canvas);
     };
-  }, [items, onItemClick]);
+  }, [items, onItemClick, textColor, borderRadius]);
 
   return <div ref={containerRef} className="w-full h-full cursor-grab active:cursor-grabbing overflow-hidden" />;
 }
