@@ -68,7 +68,7 @@ const LandingTwo: React.FC = () => {
       {/* PORTFOLIO SECTION */}
       <section
         id="portfolio"
-        className="w-full bg-[#FFC107] pt-[70px] pb-[90px] overflow-hidden"
+        className="w-full bg-[#BBB791] pt-[70px] pb-[90px] overflow-hidden"
       >
         <div className="max-w-[1440px] mx-auto px-6 lg:px-2 mb-10">
           {/* UPDATED FONT HERE */}
@@ -164,13 +164,13 @@ const LandingTwo: React.FC = () => {
               
               <button 
                 onClick={prevSlide} 
-                className="hidden md:flex absolute left-4 z-50 w-14 h-14 items-center justify-center rounded-full bg-white shadow-xl text-[#FE4E5D] text-2xl font-bold border border-gray-100 active:scale-95"
+                className="hidden md:flex absolute left-4 z-50 w-14 h-14 items-center justify-center rounded-full bg-white shadow-xl text-[#BBB791] text-2xl font-bold border border-gray-100 active:scale-95"
               >
                 ←
               </button>
               <button 
                 onClick={nextSlide} 
-                className="hidden md:flex absolute right-4 z-50 w-14 h-14 items-center justify-center rounded-full bg-white shadow-xl text-[#FE4E5D] text-2xl font-bold border border-gray-100 active:scale-95"
+                className="hidden md:flex absolute right-4 z-50 w-14 h-14 items-center justify-center rounded-full bg-white shadow-xl text-[#BBB791] text-2xl font-bold border border-gray-100 active:scale-95"
               >
                 →
               </button>
@@ -201,8 +201,8 @@ const LandingTwo: React.FC = () => {
                         </p>
                       </div>
 
-                      <div className="mt-6 pt-6 border-t border-gray-50 flex items-center gap-3 md:gap-4 flex-shrink-0">
-                        <div className="w-10 h-10 md:w-14 md:h-14 rounded-full bg-[#FFC107] flex items-center justify-center text-white font-bold text-base md:text-xl shadow-lg flex-shrink-0">
+                      <div className="mt-6 pt-6 border-t border-[#BBB791] flex items-center gap-3 md:gap-4 flex-shrink-0">
+                        <div className="w-10 h-10 md:w-14 md:h-14 rounded-full bg-[#BBB791] flex items-center justify-center text-white font-bold text-base md:text-xl shadow-lg flex-shrink-0">
                           {item.name.charAt(0)}
                         </div>
                         <div className="overflow-hidden text-ellipsis">
@@ -220,7 +220,7 @@ const LandingTwo: React.FC = () => {
             <div className="flex md:hidden items-center justify-between w-[90%] mt-8 gap-4">
                 <button 
                   onClick={prevSlide} 
-                  className="w-12 h-12 flex items-center justify-center rounded-full bg-white shadow-lg text-[#FE4E5D] text-xl font-bold border border-gray-100 active:scale-90"
+                  className="w-12 h-12 flex items-center justify-center rounded-full bg-white shadow-lg text-[#BBB791] text-xl font-bold border border-gray-100 active:scale-90"
                 >
                   ←
                 </button>
@@ -230,14 +230,14 @@ const LandingTwo: React.FC = () => {
                     <button
                       key={i}
                       onClick={() => setCurrentIndex(i)}
-                      className={`transition-all duration-300 h-1.5 rounded-full ${currentIndex === i ? 'bg-[#FE4E5D] w-8' : 'bg-gray-200 w-1.5'}`}
+                      className={`transition-all duration-300 h-1.5 rounded-full ${currentIndex === i ? 'bg-[#BBB791] w-8' : 'bg-gray-200 w-1.5'}`}
                     />
                   ))}
                 </div>
 
                 <button 
                   onClick={nextSlide} 
-                  className="w-12 h-12 flex items-center justify-center rounded-full bg-white shadow-lg text-[#FE4E5D] text-xl font-bold border border-gray-100 active:scale-90"
+                  className="w-12 h-12 flex items-center justify-center rounded-full bg-white shadow-lg text-[#BBB791] text-xl font-bold border border-gray-100 active:scale-90"
                 >
                   →
                 </button>
@@ -249,7 +249,7 @@ const LandingTwo: React.FC = () => {
                 <button
                   key={i}
                   onClick={() => setCurrentIndex(i)}
-                  className={`transition-all duration-300 h-2.5 rounded-full ${currentIndex === i ? 'bg-[#FE4E5D] w-12' : 'bg-gray-200 w-2.5'}`}
+                  className={`transition-all duration-300 h-2.5 rounded-full ${currentIndex === i ? 'bg-[#BBB791] w-12' : 'bg-gray-200 w-2.5'}`}
                 />
               ))}
             </div>

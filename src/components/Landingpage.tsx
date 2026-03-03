@@ -3,11 +3,11 @@ import LandingTwo from './LandingTwo';
 import { LANDING_CONTENT } from './content';
 
 // Asset Imports
-import Home_1 from '../assets/home 1.jpg'; 
+import Home_1 from '../assets/home 4.png'; 
 import Home_2 from '../assets/home 2.jpg';
 import Home_3 from '../assets/home 3.jpg';
-import Home_4 from '../assets/home 4.png';
-import W_image from '../assets/w.png';
+import Home_4 from '../assets/home 1.jpg';
+import AboutVideo from '../assets/0225.mp4'; 
 
 const LandingPage: React.FC = () => {
   const { hero, about } = LANDING_CONTENT;
@@ -30,11 +30,11 @@ const LandingPage: React.FC = () => {
         }
 
         .hero-track img {
-          width: 100vw;
+          width: 25%; /* Logic: 100% of the parent (400%) / 4 images = 25% each */
           height: 100%;
           object-fit: cover;
           flex-shrink: 0;
-          filter: brightness(0.85); /* Slightly darkened for text readability */
+          filter: brightness(0.85);
         }
 
         @keyframes heroScroll {
@@ -45,7 +45,6 @@ const LandingPage: React.FC = () => {
           100% { transform: translateX(0); }
         }
 
-        /* Clean shadow for text readability over dynamic images */
         .text-readable-shadow {
           text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
@@ -64,7 +63,6 @@ const LandingPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Subtle Vignette for extra clarity on the left side */}
         <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/40 to-transparent pointer-events-none" />
 
         <div className="relative z-20 h-full flex items-center">
@@ -78,7 +76,7 @@ const LandingPage: React.FC = () => {
               </p>
               <button
                 onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-                className="bg-[#FFC107] text-white rounded-[4px] px-12 h-[58px] font-inter font-bold text-[16px] hover:shadow-2xl transition-all active:scale-95 hover:bg-[#ff5f6d]"
+                className="bg-[#BBB791] text-white rounded-[4px] px-12 h-[58px] font-inter font-bold text-[16px] hover:shadow-2xl transition-all active:scale-95 hover:bg-[#ff5f6d]"
               >
                 Contact now
               </button>
@@ -88,30 +86,23 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* --- ABOUT SECTION --- */}
+      {/* Added overflow-hidden here to contain the video bleed */}
       <section 
         id="about" 
-        className="relative w-full bg-[#FFF7DD] py-16 md:py-24 px-6 md:px-12 lg:px-[50px] overflow-hidden scroll-mt-24"
+        className="relative w-full bg-[#FFFDE8] py-16 md:py-24 px-6 md:px-12 lg:px-[50px] scroll-mt-24 overflow-hidden"
       >
-        {/* Background "W" Logo */}
-        <div className="hidden lg:flex absolute right-0 top-0 h-full w-full lg:w-1/2 z-0 pointer-events-none select-none items-center justify-end">
-          <img 
-            src={W_image} 
-            alt="" 
-            className="h-[110%] w-auto object-contain object-right" 
-          />
-        </div>
-
-        <div className="relative z-10 max-w-[1440px] mx-auto flex flex-col lg:flex-row items-center justify-between">
-          <div id="about-mobile" className="w-full lg:w-[60%] text-left scroll-mt-0">
-            <span className="text-[#FFFFF] font-imperial font-bold text-lg md:text-[20px] leading-none tracking-[-0.04em] mb-4 block uppercase lg:normal-case">
+        <div className="max-w-[1440px] mx-auto flex flex-col lg:flex-row items-center justify-between">
+          
+          <div className="w-full lg:w-[60%] text-left z-10">
+            <span className="text-black font-imperial font-bold text-lg md:text-[20px] leading-none tracking-[-0.04em] mb-4 block uppercase lg:normal-case">
               {about.label}
             </span>
 
-            <h2 className="font-inter font-bold text-[32px] sm:text-[42px] md:text-[48px] leading-[1.1] tracking-[-0.04em] text-[#FFFFF] mb-6 max-w-[650px]">
+            <h2 className="font-inter font-bold text-[32px] sm:text-[42px] md:text-[48px] leading-[1.1] tracking-[-0.04em] text-black mb-6 max-w-[650px]">
               {about.heading}
             </h2>
 
-            <p className="text-[#FFFFF] text-base md:text-[18px] leading-relaxed max-w-[580px] mb-12">
+            <p className="text-gray-800 text-base md:text-[18px] leading-relaxed max-w-[580px] mb-12">
               {about.description}
             </p>
 
@@ -119,7 +110,7 @@ const LandingPage: React.FC = () => {
               {about.stats.map((stat, index) => (
                 <div key={index} className="flex flex-col">
                   <div className="flex items-center gap-1 md:gap-2">
-                    <p className="text-[28px] sm:text-[36px] md:text-[44px] font-bold text-[#FFFFF]">
+                    <p className="text-[28px] sm:text-[36px] md:text-[44px] font-bold text-black">
                       {stat.value}
                     </p>
                     <span className="text-[#FF7A00] text-sm sm:text-xl md:text-2xl font-bold">↗</span>
@@ -131,6 +122,18 @@ const LandingPage: React.FC = () => {
               ))}
             </div>
           </div>
+
+          <div className="w-full lg:absolute lg:right-0 lg:top-0 lg:h-full lg:w-1/2 mt-12 lg:mt-0 flex items-center justify-end z-0">
+            <video 
+              src={AboutVideo}
+              autoPlay 
+              loop 
+              muted 
+              playsInline
+              className="w-full h-auto lg:h-[110%] lg:w-auto object-cover lg:object-contain object-right"
+            />
+          </div>
+
           <div className="hidden lg:block lg:w-[40%] h-1"></div>
         </div>
       </section>

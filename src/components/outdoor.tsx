@@ -57,7 +57,6 @@ const OutdoorServices: React.FC = () => {
     if (selectedFullscreenService) {
       setSelectedFullscreenService(null);
     } else {
-      // Maps CategoryKey to the specific tab ID used in your Services component
       const tabMap: Record<CategoryKey, string> = {
         'OUTDOOR': 'outdoor',
         'INDOOR': 'indoor',
@@ -66,7 +65,6 @@ const OutdoorServices: React.FC = () => {
         'MODULAR SIGNAGE': 'modular'
       };
       const targetTab = tabMap[currentCategoryKey] || 'outdoor';
-      // Navigates back to the services page and anchors to the correct tab
       navigate(`/services#${targetTab}`);
     }
   };
@@ -141,7 +139,7 @@ const OutdoorServices: React.FC = () => {
   }, [isFullWidthCategory, selectedFullscreenService]);
 
   return (
-    <div className="flex flex-col w-full bg-[#FFC107]">
+    <div className="flex flex-col w-full bg-[#BBB791]">
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
         @import url('https://db.onlinewebfonts.com/c/59d406a1ae963118d955b267eb04f9f3?family=ImperialStd-BoldItalic');
@@ -161,7 +159,7 @@ const OutdoorServices: React.FC = () => {
         .split-hero-left {
             width: 50%;
             height: 100%;
-            background: #FE4E5D;
+            background: #BBB791;
             color: white;
             padding: 8% 8%;
             display: flex;
@@ -207,7 +205,7 @@ const OutdoorServices: React.FC = () => {
         .fs-left-content {
           width: 50%;
           height: 100%;
-          background: #FE4E5D;
+          background: #BBB791;
           color: white;
           padding: 8% 8%;
           display: flex;
@@ -241,20 +239,21 @@ const OutdoorServices: React.FC = () => {
         .btn-view-details {
           margin-top: 24px;
           padding: 14px 32px;
-          background: #FE4E5D;
+          background: #BBB791;
           color: white;
           border-radius: 100px;
           font-weight: 600;
           font-size: 14px;
           width: fit-content;
           transition: all 0.3s ease;
-          border: 1px solid #FE4E5D;
+          border: 1px solid white;
         }
 
         .btn-view-details:hover {
           transform: translateY(-2px);
-          background: #e43d4b;
-          box-shadow: 0 4px 12px rgba(254, 78, 93, 0.2);
+          background: white;
+          color: #BBB791;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         @media (max-width: 1024px) { 
@@ -279,7 +278,8 @@ const OutdoorServices: React.FC = () => {
               <div className="space-y-6 max-w-md">
                 {selectedFullscreenService.description_points?.map((point, index) => (
                   <div key={index} className="flex items-start gap-4">
-                    <span className="bg-white text-[#FE4E5D] w-6 h-6 rounded-full flex items-center justify-center shrink-0 font-bold text-[10px] mt-1">
+                    {/* UPDATED POINT COLOR */}
+                    <span className="bg-white text-[#BBB791] w-6 h-6 rounded-full flex items-center justify-center shrink-0 font-bold text-[10px] mt-1">
                       {index + 1}
                     </span>
                     <p className="text-base md:text-xl font-light text-white/90 leading-relaxed">
@@ -324,7 +324,8 @@ const OutdoorServices: React.FC = () => {
               <div className="space-y-4 mb-8">
                 {filteredServices[0]?.description_points?.slice(0, 2).map((point, index) => (
                   <div key={index} className="flex items-start gap-4">
-                    <span className="bg-white text-[#FE4E5D] w-5 h-5 rounded-full flex items-center justify-center shrink-0 font-bold text-[9px] mt-1">
+                    {/* UPDATED HERO POINT COLOR */}
+                    <span className="bg-white text-[#BBB791] w-5 h-5 rounded-full flex items-center justify-center shrink-0 font-bold text-[9px] mt-1">
                       {index + 1}
                     </span>
                     <p className="text-white/90 text-sm md:text-base font-light leading-relaxed">{point}</p>
@@ -376,7 +377,8 @@ const OutdoorServices: React.FC = () => {
                       <div className="space-y-4 mb-8">
                         {service.description_points?.slice(0, 2).map((point, idx) => (
                           <div key={idx} className="flex items-start gap-3">
-                            <span className="bg-[#FE4E5D] text-white w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold mt-1">
+                            {/* UPDATED CARD POINT COLOR */}
+                            <span className="bg-[#BBB791] text-white w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold mt-1">
                               {idx + 1}
                             </span>
                             <p className="text-gray-600 text-sm md:text-base font-light line-clamp-2">

@@ -108,7 +108,7 @@ const Services: React.FC = () => {
         }
       `}} />
 
-      <section id="services" className="w-full pt-[90px] pb-[90px] bg-[#FFC107] font-inter">
+      <section id="services" className="w-full pt-[90px] pb-[90px] bg-[#BBB791] font-inter">
         <div className="w-full max-w-[1920px] mx-auto px-5 md:px-10 xl:px-[90px]">
 
           <div className="mb-10 text-left animate-[fadeSlide_0.4s_ease-in-out]">
@@ -144,9 +144,9 @@ const Services: React.FC = () => {
                     )}
                   </div>
                   <div className="p-6 space-y-4">
-                    <h3 className="font-imperial text-2xl font-bold text-[#FE4E5D]">{serviceContent?.heading || service.label}</h3>
+                    <h3 className="font-imperial text-2xl font-bold text-[#BBB791]">{serviceContent?.heading || service.label}</h3>
                     <p className="text-sm text-[#4B5563] line-clamp-4">{serviceContent?.description?.[0]}</p>
-                    <button onClick={() => handleViewMore(service.id)} className="w-full py-3 bg-[#FE4E5D] text-white text-sm font-bold rounded-lg">
+                    <button onClick={() => handleViewMore(service.id)} className="w-full py-3 bg-[#BBB791] hover:bg-[#a39f7a] transition-colors text-white text-sm font-bold rounded-lg">
                       View more
                     </button>
                   </div>
@@ -163,22 +163,24 @@ const Services: React.FC = () => {
                 style={{ width: `${100 / tabs.length}%`, transform: `translateX(${activeIndex * 100}%)` }}
               />
               {tabs.map(tab => (
-                <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`relative z-10 flex-1 py-6 px-2 text-lg font-semibold transition-all outline-none border-none ${activeTab === tab.id ? 'text-[#FFC107]' : 'text-[#FFC107] hover:text-[#FFC107]'}`}>
+                <button 
+                  key={tab.id} 
+                  onClick={() => setActiveTab(tab.id)} 
+                  className={`relative z-10 flex-1 py-6 px-2 text-lg font-semibold transition-all outline-none border-none ${activeTab === tab.id ? 'text-[#BBB791]' : 'text-[#BBB791]/60 hover:text-[#BBB791]'}`}
+                >
                   {tab.label}
                 </button>
               ))}
             </div>
 
-            {/* Container with locked height to prevent layout jumping */}
             <div className="grid grid-cols-1 xl:grid-cols-2 items-stretch h-[600px] xl:h-[650px]">
               <div className="order-2 xl:order-1 px-10 pb-10 xl:px-[70px] xl:pt-[80px] xl:pb-[80px] flex flex-col justify-between animate-[fadeSlide_0.4s_ease-in-out] overflow-hidden">
                 
                 <div className="flex flex-col h-full overflow-hidden">
-                  <h3 className="font-imperial text-3xl md:text-4xl font-bold text-[#FFC107] mb-6 flex-shrink-0">
+                  <h3 className="font-imperial text-3xl md:text-4xl font-bold text-[#BBB791] mb-6 flex-shrink-0">
                     {activeContent.heading || activeTab}
                   </h3>
                   
-                  {/* Internal scrollable area for long descriptions */}
                   <div className="flex-1 overflow-y-auto no-scrollbar pr-4">
                     {activeContent.description?.map((para: string, index: number) => (
                       <p key={index} className="text-lg text-[#4B5563] leading-relaxed mb-4">
@@ -189,7 +191,7 @@ const Services: React.FC = () => {
                 </div>
 
                 <div className="pt-8 flex-shrink-0">
-                  <button onClick={() => handleViewMore(activeTab)} className="flex items-center gap-4 px-14 py-4 bg-[#FFC107] text-white text-base font-bold rounded-xl hover:bg-[#FE4E5D] transition-all outline-none border-none shadow-lg shadow-green-900/20">
+                  <button onClick={() => handleViewMore(activeTab)} className="flex items-center gap-4 px-14 py-4 bg-[#BBB791] text-white text-base font-bold rounded-xl hover:bg-[#a39f7a] transition-all outline-none border-none shadow-lg shadow-[#BBB791]/20">
                     {activeContent.buttonText || "View More"}
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12h14M12 5l7 7-7 7" />
@@ -218,7 +220,7 @@ const Services: React.FC = () => {
                       {(MEDIA_MAP[activeTab] || []).map((_, i) => (
                         <div 
                           key={i} 
-                          className={`h-2 rounded-full transition-all duration-500 ${currentIdx === i ? 'bg-[#FE4E5D] w-8' : 'bg-white/60 w-2'}`} 
+                          className={`h-2 rounded-full transition-all duration-500 ${currentIdx === i ? 'bg-[#BBB791] w-8' : 'bg-white/60 w-2'}`} 
                         />
                       ))}
                     </div>

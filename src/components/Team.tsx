@@ -18,19 +18,21 @@ const Team: React.FC = () => {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
 
+  // Lightbox State
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   const allTeamMembers = [team1, team2, team3, team4, team5, team6, team7, team8, team9];
-  // Triple the array to ensure the infinite scroll has enough "track" to move
+  // Triple the array for a seamless infinite loop
   const duplicatedMembers = [...allTeamMembers, ...allTeamMembers, ...allTeamMembers];
 
-  // 🟢 Mouse Drag Logic
+  // 🟢 Drag Logic
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDown(true);
     if (!scrollRef.current) return;
-    // Calculate start position relative to the container
     setStartX(e.pageX - scrollRef.current.offsetLeft);
     setScrollLeft(scrollRef.current.scrollLeft);
   };
@@ -39,15 +41,13 @@ const Team: React.FC = () => {
     if (!isDown || !scrollRef.current) return;
     e.preventDefault();
     const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 2; // Increase multiplier for faster drag
+    const walk = (x - startX) * 2; 
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
 
-  const handleMouseUpOrLeave = () => {
-    setIsDown(false);
-  };
+  const handleMouseUpOrLeave = () => setIsDown(false);
 
-  // 📱 Touch Drag Logic
+  // 📱 Touch Logic
   const handleTouchStart = (e: React.TouchEvent) => {
     if (!scrollRef.current) return;
     setIsDown(true);
@@ -62,8 +62,33 @@ const Team: React.FC = () => {
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
 
+  // 🖼️ Lightbox Navigation
+  const openLightbox = (idx: number) => setSelectedIndex(idx % allTeamMembers.length);
+  const closeLightbox = () => setSelectedIndex(null);
+  
+  const nextImage = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setSelectedIndex((prev) => (prev !== null ? (prev + 1) % allTeamMembers.length : null));
+  };
+  
+  const prevImage = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setSelectedIndex((prev) => (prev !== null ? (prev - 1 + allTeamMembers.length) % allTeamMembers.length : null));
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (selectedIndex === null) return;
+      if (e.key === "ArrowRight") nextImage();
+      if (e.key === "ArrowLeft") prevImage();
+      if (e.key === "Escape") closeLightbox();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedIndex]);
+
   return (
-    <main className="bg-[#f4f4f4] w-full overflow-hidden">
+    <main className="bg-[#BBB791] w-full overflow-hidden">
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
         @import url('https://db.onlinewebfonts.com/c/59d406a1ae963118d955b267eb04f9f3?family=ImperialStd-BoldItalic');
@@ -80,64 +105,31 @@ const Team: React.FC = () => {
           animation: infiniteScroll 60s linear infinite;
         }
 
-        /* Stops the auto-animation when the user interacts or hovers */
-        .fisheye-container:active .animate-infinite,
-        .fisheye-container:hover .animate-infinite {
+        .expert-container:active .animate-infinite,
+        .expert-container:hover .animate-infinite {
           animation-play-state: paused;
-        }
-
-        .fisheye-section {
-          position: relative;
-          background: #fff; 
-          overflow: hidden;
-          padding: 10px 0; /* Tightened padding */
-        }
-
-        /* Top Curve */
-        .fisheye-section::before {
-          content: "";
-          position: absolute;
-          top: -150px;
-          left: -10%;
-          width: 120%;
-          height: 250px;
-          background: #f4f4f4;
-          border-radius: 0 0 50% 50%;
-          z-index: 20;
-          pointer-events: none;
-        }
-
-        /* Bottom Curve */
-        .fisheye-section::after {
-          content: "";
-          position: absolute;
-          bottom: -150px;
-          left: -10%;
-          width: 120%;
-          height: 250px;
-          background: #f4f4f4;
-          border-radius: 50% 50% 0 0;
-          z-index: 20;
-          pointer-events: none;
         }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .lightbox-blur {
+          backdrop-filter: blur(12px);
+        }
       `}} />
 
-      {/* Header Area - Reduced Bottom Padding */}
-      <div className="pt-10 pb-4 text-center bg-[#f4f4f4]">
-        {/* UPDATED FONT HERE */}
-        <h2 className="font-imperial text-[50px] md:text-[72px] font-bold text-black mb-4">
+      {/* Header Area */}
+      <div className="pt-20 pb-10 text-center bg-[#BBB791]">
+        <h2 className="font-imperial text-[50px] md:text-[72px] font-bold text-white mb-4">
           Meet our experts
         </h2>
-        <p className="text-gray-600 max-w-2xl mx-auto px-6 text-lg md:text-xl opacity-90 leading-relaxed">
-          Teamwork begins by building trust. And the only way to do that is to overcome our need for invulnerability.
+        <p className="text-white max-w-2xl mx-auto px-6 text-lg md:text-xl opacity-90 leading-relaxed font-inter font-light">
+          A balanced perspective in every frame. Discover the team that makes it happen.
         </p>
       </div>
 
-      {/* Curved Expert Section */}
-      <section className="fisheye-section w-full fisheye-container">
+      {/* Grid Track Section - 2:2 Ratio Visuals */}
+      <section className="expert-section w-full expert-container py-12 relative">
         <div
           ref={scrollRef}
           className="relative z-10 overflow-x-auto no-scrollbar cursor-grab active:cursor-grabbing select-none"
@@ -149,16 +141,20 @@ const Team: React.FC = () => {
           onTouchMove={handleTouchMove}
           onTouchEnd={handleMouseUpOrLeave}
         >
-          <div className="flex w-max animate-infinite gap-1 md:gap-2 px-0">
+          <div className="flex w-max animate-infinite gap-6 md:gap-10 px-4">
             {duplicatedMembers.map((member, index) => (
               <div
                 key={index}
-                className="w-[280px] h-[400px] md:w-[480px] md:h-[650px] flex-shrink-0 overflow-hidden"
+                onClick={() => openLightbox(index)}
+                /* Changed to 300px (mobile) and 500px (desktop) 
+                   to emphasize the 2:2 square scale 
+                */
+                className="w-[300px] h-[300px] md:w-[500px] md:h-[500px] aspect-square flex-shrink-0 overflow-hidden rounded-[12px] bg-black/10 transition-all duration-500 hover:rounded-[16px] hover:shadow-2xl cursor-pointer"
               >
                 <img
                   src={member}
-                  alt={`Expert ${index}`}
-                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                  alt={`Expert Member ${index}`}
+                  className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-110 pointer-events-none"
                   draggable="false"
                 />
               </div>
@@ -167,8 +163,50 @@ const Team: React.FC = () => {
         </div>
       </section>
 
+      {/* LIGHTBOX MODAL */}
+      {selectedIndex !== null && (
+        <div 
+          className="fixed inset-0 z-[999] bg-black/95 flex items-center justify-center lightbox-blur"
+          onClick={closeLightbox}
+        >
+          {/* Close Icon */}
+          <button 
+            className="absolute top-6 right-6 text-white/70 hover:text-white text-5xl transition-colors z-[1001]"
+            onClick={closeLightbox}
+          >
+            &times;
+          </button>
+
+          {/* Left Arrow */}
+          <button 
+            className="absolute left-6 md:left-12 text-white/50 hover:text-white text-6xl md:text-8xl transition-all"
+            onClick={prevImage}
+          >
+            &#8249;
+          </button>
+
+          {/* Centered Image Container */}
+          <div className="w-[85vw] h-[80vh] flex items-center justify-center p-4">
+            <img 
+              src={allTeamMembers[selectedIndex]} 
+              alt="Expert Full View" 
+              className="max-w-full max-h-full object-contain rounded-xl shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
+
+          {/* Right Arrow */}
+          <button 
+            className="absolute right-6 md:right-12 text-white/50 hover:text-white text-6xl md:text-8xl transition-all"
+            onClick={nextImage}
+          >
+            &#8250;
+          </button>
+        </div>
+      )}
+
       {/* Bottom Spacer */}
-      <div className="bg-[#f4f4f4] h-16 w-full" />
+      <div className="bg-[#BBB791] h-20 w-full" />
 
       <LandingPageThree />
     </main>
