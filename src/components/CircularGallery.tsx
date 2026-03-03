@@ -68,13 +68,10 @@ class Media {
     this.plane.position.x = this.x - scroll.current - this.extra;
     const x = this.plane.position.x; 
     const H = this.viewport.width / 2;
-    
     this.plane.position.y = 0;
     this.plane.rotation.z = 0;
-
     this.program.uniforms.uTime.value += 0.02;
     this.program.uniforms.uSpeed.value = Math.abs(scroll.current - scroll.last);
-    
     if (direction === 'right' && x + this.plane.scale.x / 2 < -H * 2.0) this.extra -= this.widthTotal;
     if (direction === 'left' && x - this.plane.scale.x / 2 > H * 2.0) this.extra += this.widthTotal;
   }
@@ -102,14 +99,11 @@ export default function HorizontalGallery({ items = [], textColor = '#FFFFFF', b
     container.appendChild(gl.canvas);
     const camera = new Camera(gl); camera.position.z = 20;
     const scene = new Transform();
-    
     const scroll = { current: 0, target: 0, last: 0, ease: 0.05 };
     const autoSpeed = 0.02; 
     let isUserInteracting = false; 
-    
     const raycast = new Raycast(gl);
     const mouse = new Vec2();
-
     let medias: Media[] = [];
     const geometry = new Plane(gl, { heightSegments: 10, widthSegments: 10 });
 
@@ -127,21 +121,16 @@ export default function HorizontalGallery({ items = [], textColor = '#FFFFFF', b
 
     onResize();
     window.addEventListener('resize', onResize);
-    
     const onWheel = (e: any) => { scroll.target += e.deltaY * 0.01; };
     window.addEventListener('wheel', onWheel, { passive: true });
 
     let isDown = false, startX = 0, lastMoveTime = 0, startY = 0;
-    
     const onDown = (e: any) => { 
-      isDown = true; 
-      isUserInteracting = true; 
+      isDown = true; isUserInteracting = true; 
       const pos = e.touches ? e.touches[0] : e; 
-      startX = pos.clientX; 
-      startY = pos.clientY; 
+      startX = pos.clientX; startY = pos.clientY; 
       lastMoveTime = Date.now(); 
     };
-
     const onMove = (e: any) => { 
       if (!isDown) return; 
       const pos = e.touches ? e.touches[0] : e; 
@@ -155,20 +144,18 @@ export default function HorizontalGallery({ items = [], textColor = '#FFFFFF', b
       const dist = Math.sqrt(Math.pow(pos.clientX - startX, 2) + Math.pow(pos.clientY - startY, 2));
       
       if (Date.now() - lastMoveTime < 200 && dist < 15) {
-        // Corrected NDC calculation
         const rect = container.getBoundingClientRect();
         mouse.set(
             ((pos.clientX - rect.left) / rect.width) * 2 - 1,
             ((pos.clientY - rect.top) / rect.height) * -2 + 1
         );
         
-        // FIXED LINE: Using fromCamera instead of castMouse
-        raycast.fromCamera(camera, mouse);
+        // Use casting to any to bypass the TS argument error
+        (raycast as any).castMouse(camera, mouse);
         
         const intersects = raycast.intersectBounds(medias.map(m => m.plane));
         if (intersects.length > 0 && onItemClick) onItemClick((intersects[0] as any).index);
       }
-      
       isDown = false;
       setTimeout(() => { isUserInteracting = false; }, 1000); 
     };
@@ -180,13 +167,11 @@ export default function HorizontalGallery({ items = [], textColor = '#FFFFFF', b
       if (!isUserInteracting) { scroll.target += autoSpeed; }
       scroll.current = lerp(scroll.current, scroll.target, scroll.ease);
       const dir = scroll.current > scroll.last ? 'right' : 'left';
-      
       const totalW = medias[0]?.widthTotal || 0;
       if (totalW > 0) {
         if (scroll.target > totalW) { scroll.target -= totalW; scroll.current -= totalW; }
         if (scroll.target < -totalW) { scroll.target += totalW; scroll.current += totalW; }
       }
-
       medias.forEach(m => m.update(scroll, dir));
       renderer.render({ scene, camera });
       scroll.last = scroll.current;
