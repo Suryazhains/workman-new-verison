@@ -1,4 +1,4 @@
-// import React, { useEffect } from 'react'; // ✅ FIXED: Removed the // comments here!
+import { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import LandingPage from './components/Landingpage';
@@ -23,8 +23,8 @@ const ScrollHandler = () => {
 
   useEffect(() => {
     // Force the browser to stop remembering scroll positions automatically
-    if ('scrollRestoration' in history) {
-      history.scrollRestoration = 'manual';
+    if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
     }
 
     if (location.hash) {
@@ -33,7 +33,7 @@ const ScrollHandler = () => {
       const forceScroll = () => {
         const element = document.getElementById(id);
         if (element) {
-          // ✅ RESTORED THE MATH FIX: This prevents the sticky header from cutting off the title
+          // MATH FIX: Prevents the sticky header from cutting off the title
           const headerOffset = window.innerWidth < 1024 ? 100 : 150; 
           const elementPosition = element.getBoundingClientRect().top + window.scrollY;
           
@@ -50,7 +50,7 @@ const ScrollHandler = () => {
       setTimeout(forceScroll, 1000);
       
     } else {
-      // If navigating to a normal page without a hash, start at the top
+      // Normal page navigation - slight delay to let React render before scrolling
       setTimeout(() => {
         window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
       }, 50);
@@ -63,7 +63,6 @@ const ScrollHandler = () => {
 function App() {
   return (
     <div className="w-full min-h-screen bg-white">
-      {/* Global Scroll Handler */}
       <ScrollHandler /> 
       
       <Header />
