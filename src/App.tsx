@@ -1,4 +1,4 @@
-// import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'; // ✅ FIXED: Removed the // comments here!
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import LandingPage from './components/Landingpage';
@@ -22,14 +22,25 @@ const ScrollHandler = () => {
   const location = useLocation();
 
   useEffect(() => {
+    // Force the browser to stop remembering scroll positions automatically
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
     if (location.hash) {
       const id = location.hash.replace('#', '');
       
       const forceScroll = () => {
         const element = document.getElementById(id);
         if (element) {
-          // Native browser scrolling - ignores math errors!
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // ✅ RESTORED THE MATH FIX: This prevents the sticky header from cutting off the title
+          const headerOffset = window.innerWidth < 1024 ? 100 : 150; 
+          const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+          
+          window.scrollTo({
+            top: elementPosition - headerOffset,
+            behavior: 'smooth',
+          });
         }
       };
 
@@ -40,9 +51,11 @@ const ScrollHandler = () => {
       
     } else {
       // If navigating to a normal page without a hash, start at the top
-      window.scrollTo({ top: 0, behavior: 'instant' });
+      setTimeout(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      }, 50);
     }
-  }, [location]);
+  }, [location.pathname, location.hash]);
 
   return null;
 };
