@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Camera, Mesh, Plane, Program, Renderer, Texture, Transform, Raycast, Vec2 } from 'ogl';
 
 type GL = Renderer['gl'];
@@ -87,9 +87,9 @@ class Media {
   }
 }
 
-export default function CircularGallery({ items = [], textColor = '#FFFFFF', borderRadius = 0.02, bend = 3, onItemClick }: any) {
+export default function CircularGallery({ items = [], textColor = '#FFFFFF', borderRadius = 0.02, onItemClick }: any) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const rafId = useRef<number>();
+  const rafId = useRef<number>(0);
 
   useEffect(() => {
     if (!containerRef.current || items.length === 0) return;
