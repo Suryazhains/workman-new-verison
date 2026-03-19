@@ -1,5 +1,5 @@
+import React, { useEffect, useRef } from 'react';
 import { Camera, Mesh, Plane, Program, Renderer, Texture, Transform, Raycast, Vec2 } from 'ogl';
-import { useEffect, useRef } from 'react';
 
 type GL = Renderer['gl'];
 
@@ -87,16 +87,15 @@ class Media {
   }
 }
 
-export default function HorizontalGallery({ items = [], textColor = '#FFFFFF', borderRadius = 0.02, onItemClick }: any) {
+export default function CircularGallery({ items = [], textColor = '#FFFFFF', borderRadius = 0.02, bend = 3, onItemClick }: any) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const appRef = useRef<any>(null);
+  const rafId = useRef<number>();
 
   useEffect(() => {
     if (!containerRef.current || items.length === 0) return;
-    const container = containerRef.current;
     
-    // CLEANUP: Ensure container is empty before appending new canvas
-    container.innerHTML = '';
+    const container = containerRef.current;
+    container.innerHTML = ''; // Clear previous canvas
 
     const renderer = new Renderer({ alpha: true, antialias: true, dpr: Math.min(window.devicePixelRatio, 2) });
     const gl = renderer.gl;
@@ -111,7 +110,6 @@ export default function HorizontalGallery({ items = [], textColor = '#FFFFFF', b
 
     const raycast = new (Raycast as any)(gl);
     const mouse = new Vec2();
-
     let medias: Media[] = [];
     const geometry = new Plane(gl, { heightSegments: 10, widthSegments: 10 });
 
@@ -125,8 +123,7 @@ export default function HorizontalGallery({ items = [], textColor = '#FFFFFF', b
       const fov = (camera.fov * Math.PI) / 180;
       const h = 2 * Math.tan(fov / 2) * camera.position.z;
       const viewport = { width: h * camera.aspect, height: h };
-      const screen = { width, height };
-      medias.forEach(m => m.onResize(viewport, screen));
+      medias.forEach(m => m.onResize(viewport, { width, height }));
     };
 
     medias = items.map((data: any, index: number) => new Media({ 
@@ -137,14 +134,10 @@ export default function HorizontalGallery({ items = [], textColor = '#FFFFFF', b
       textColor, borderRadius, font: 'bold 40px Inter, sans-serif' 
     }));
 
-    // Initial resize call
     onResize();
-
-    // Use ResizeObserver for more reliable dimension tracking
-    const resizeObserver = new ResizeObserver(() => onResize());
+    const resizeObserver = new ResizeObserver(onResize);
     resizeObserver.observe(container);
 
-    window.addEventListener('resize', onResize);
     const onWheel = (e: any) => { scroll.target += e.deltaY * 0.01; };
     window.addEventListener('wheel', onWheel, { passive: true });
 
@@ -161,7 +154,6 @@ export default function HorizontalGallery({ items = [], textColor = '#FFFFFF', b
       scroll.target += (startX - pos.clientX) * 0.05; 
       startX = pos.clientX; 
     };
-
     const onUp = (e: any) => {
       if (!isDown) return;
       const pos = e.changedTouches ? e.changedTouches[0] : e;
@@ -169,10 +161,7 @@ export default function HorizontalGallery({ items = [], textColor = '#FFFFFF', b
       
       if (Date.now() - lastMoveTime < 200 && dist < 15) {
         const rect = container.getBoundingClientRect();
-        mouse.set(
-            ((pos.clientX - rect.left) / rect.width) * 2 - 1,
-            ((pos.clientY - rect.top) / rect.height) * -2 + 1
-        );
+        mouse.set(((pos.clientX - rect.left) / rect.width) * 2 - 1, ((pos.clientY - rect.top) / rect.height) * -2 + 1);
         (raycast as any).castMouse(camera, mouse);
         const intersects = raycast.intersectBounds(medias.map(m => m.plane));
         if (intersects.length > 0 && onItemClick) onItemClick((intersects[0] as any).index);
@@ -182,37 +171,32 @@ export default function HorizontalGallery({ items = [], textColor = '#FFFFFF', b
     };
 
     window.addEventListener('mousedown', onDown); window.addEventListener('mousemove', onMove); window.addEventListener('mouseup', onUp);
-    window.addEventListener('touchstart', onDown, { passive: false }); window.addEventListener('touchmove', onMove, { passive: false }); window.addEventListener('touchend', onUp);
+    window.addEventListener('touchstart', onDown); window.addEventListener('touchmove', onMove); window.addEventListener('touchend', onUp);
 
     const update = () => {
       if (!isUserInteracting) { scroll.target += autoSpeed; }
       scroll.current = lerp(scroll.current, scroll.target, scroll.ease);
       const dir = scroll.current > scroll.last ? 'right' : 'left';
-      const totalW = medias[0]?.widthTotal || 0;
-      if (totalW > 0) {
-        if (scroll.target > totalW) { scroll.target -= totalW; scroll.current -= totalW; }
-        if (scroll.target < -totalW) { scroll.target += totalW; scroll.current += totalW; }
-      }
+      
       medias.forEach(m => m.update(scroll, dir));
       renderer.render({ scene, camera });
       scroll.last = scroll.current;
-      appRef.current = requestAnimationFrame(update);
+      rafId.current = requestAnimationFrame(update);
     };
-    update();
+    rafId.current = requestAnimationFrame(update);
 
     return () => {
-      cancelAnimationFrame(appRef.current);
+      if (rafId.current) cancelAnimationFrame(rafId.current);
       resizeObserver.disconnect();
-      window.removeEventListener('resize', onResize);
       window.removeEventListener('wheel', onWheel);
       window.removeEventListener('mousedown', onDown); window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp);
       window.removeEventListener('touchstart', onDown); window.removeEventListener('touchmove', onMove); window.removeEventListener('touchend', onUp);
       
-      // Explicitly lose context to free up GPU memory
+      // Critical cleanup to prevent context loss
       gl.getExtension('WEBGL_lose_context')?.loseContext();
       if (gl.canvas.parentNode) container.removeChild(gl.canvas);
     };
-  }, [items, onItemClick, textColor, borderRadius]);
+  }, [items, textColor, borderRadius]); 
 
   return <div ref={containerRef} className="w-full h-full cursor-grab active:cursor-grabbing overflow-hidden" />;
 }

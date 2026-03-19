@@ -40,15 +40,18 @@ import pylon4 from "../assets/outdoor 2.png";
 import blink1 from "../assets/outdoor 4.png";
 import blink2 from "../assets/outdoor 5.png";
 import blink3 from "../assets/outdoor 6.png";
+import blink4 from "../assets/outdoorsblink4.jpeg";
 import uni1 from "../assets/outdoor 7.png";
 import uni2 from "../assets/outdoor 8.png";
 import uni3 from "../assets/outdoor 9.png";
 import Hs1 from "../assets/outdoor 10.png";
 import Hs2 from "../assets/outdoor 11.png";
 import Hs3 from "../assets/outdoor 12.png";
+import Hs4 from "../assets/outdoorHoarding4.png"
 import M1 from "../assets/outdoor 13.png";
 import M2 from "../assets/outdoor 14.png";
-import M3 from "../assets/outdoor 15.png";
+import M3 from "../assets/outdoorsletter4.jpeg";
+import M4 from "../assets/outdoor 15.png";
 // Retail Interiors
 import retail1 from "../assets/outdoor 16.png";
 import retail2 from "../assets/outdoor 17.png";
@@ -106,9 +109,11 @@ import clip1 from "../assets/outdoor 49.png";
 import clip2 from "../assets/outdoor 50.png";
 import clip3 from "../assets/outdoor 51.png";
 // Facade / Signages
-import facade1 from "../assets/outdoor 52.png";
-import facade2 from "../assets/outdoor 53.png";
-import facade3 from "../assets/outdoor 54.png";
+import facade1 from "../assets/home 3.jpg";
+import facade2 from "../assets/home 2.jpg";
+import facade3 from "../assets/home 4.png";
+import facade4 from "../assets/home 1.jpg";
+
 import p1 from "../assets/p1.jpg";
 import p2 from "../assets/p2.jpg";
 import p3 from "../assets/p3.png";
@@ -404,7 +409,7 @@ testimonials: {
     { 
       id: 2, 
       title: "Backlit Signages", 
-      images: [blink1, blink2, blink3],
+      images: [blink1, blink2, blink3,blink4],
       description_points: [
         "Illuminated signage solutions designed to deliver clear visibility and strong brand impact both day and night.",
         "Built using premium acrylic, flex, and LED lighting systems for uniform brightness and sharp display quality.",
@@ -424,7 +429,7 @@ testimonials: {
     { 
       id: 4, 
       title: "Hoardings & Structures", 
-      images: [Hs1, Hs2, Hs3],
+      images: [Hs1, Hs2, Hs3,Hs4],
       description_points: [
         "High-impact outdoor advertising solutions designed to capture attention across busy roads, commercial zones, and prime locations.",
         "Fabricated with strong structural support and premium materials to ensure stability, safety, and long-term durability.",
@@ -434,7 +439,7 @@ testimonials: {
     { 
       id: 5, 
       title: "Metal Letters", 
-      images: [M1, M2, M3],
+      images: [M2, M4, M1,M3],
       description_points: [
         "Premium 3D metal lettering designed to create a bold, elegant, and professional brand identity.",
         "Made using high-quality stainless steel, brass, or aluminium with durable finishing for long-lasting performance.",
@@ -444,7 +449,7 @@ testimonials: {
     { 
       id: 6, 
       title: "Facade / Signages", 
-      images: [facade1, facade2, facade3],
+      images: [facade2, facade1, facade3,facade4],
       description_points: [
         "Complete building-front branding solutions designed to enhance visibility and create a strong first impression.",
         "Customized facade signages crafted with premium materials, precision fabrication, and durable outdoor finishing.",

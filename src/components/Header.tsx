@@ -147,7 +147,7 @@ const Header: React.FC = () => {
             <img 
               src={logoImg} 
               alt="WORKMAN LOGO" 
-              className="w-[140px] md:w-[180px] h-auto object-contain border-none outline-none"
+              className="w-[180px] md:w-[240px] h-auto object-contain border-none outline-none"
             />
           </Link>
         </div>

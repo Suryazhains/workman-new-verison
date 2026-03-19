@@ -4,14 +4,20 @@ import { LANDING_CONTENT } from './content';
 
 // Asset Imports
 import Home_1 from '../assets/home 4.png'; 
-import Home_2 from '../assets/home 2.jpg';
+import Home_2 from '../assets/home 2.png';
 import Home_3 from '../assets/home 3.jpg';
 import Home_4 from '../assets/home 1.jpg';
+import Home_5 from '../assets/home 5.png';
+
+// Home 6 is not imported as requested.
+import Home_7 from '../assets/home 7.png';
 import AboutVideo from '../assets/0225.mp4'; 
 
 const LandingPage: React.FC = () => {
   const { hero, about } = LANDING_CONTENT;
-  const heroImages = [Home_1, Home_2, Home_3, Home_4];
+  
+  // The array contains exactly 6 unique images.
+  const heroImages = [Home_1, Home_2, Home_3, Home_4, Home_5, Home_7];
 
   return (
     <main className="w-full min-h-screen bg-white overflow-x-hidden selection:bg-red-200 font-inter">
@@ -24,24 +30,45 @@ const LandingPage: React.FC = () => {
 
         .hero-track {
           display: flex;
-          width: 400%; 
+          /* CHANGE 1: Changed width from 700% to 600% to match the 6 images. */
+          width: 600%; 
           height: 100%;
-          animation: heroScroll 24s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+          /* Optional CHANGE 2: lowered duration slightly from 42s to 36s (still 6 seconds per image) */
+          animation: heroScroll 36s cubic-bezier(0.45, 0, 0.55, 1) infinite;
         }
 
         .hero-track img {
-          width: 25%; /* Logic: 100% of the parent (400%) / 4 images = 25% each */
+          /* CHANGE 3: Changed base width from calc(100%/7) to calc(100%/6). */
+          width: calc(100% / 6); 
           height: 100%;
           object-fit: cover;
           flex-shrink: 0;
           filter: brightness(0.85);
         }
 
+        /* CHANGE 4: Overhauled Keyframes logic for 6 images (approx 16.66% per cycle).
+          This ensures a smooth, continuous loop.
+        */
         @keyframes heroScroll {
-          0%, 20% { transform: translateX(0); }
-          25%, 45% { transform: translateX(-25%); }
-          50%, 70% { transform: translateX(-50%); }
-          75%, 95% { transform: translateX(-75%); }
+          /* Step 1 */
+          0%, 14% { transform: translateX(0); }
+          
+          /* Step 2 (Transition to Image 2) */
+          16.66%, 30.66% { transform: translateX(calc(-100% / 6 * 1)); }
+          
+          /* Step 3 (Transition to Image 3) */
+          33.32%, 47.32% { transform: translateX(calc(-100% / 6 * 2)); }
+          
+          /* Step 4 (Transition to Image 4) */
+          49.98%, 63.98% { transform: translateX(calc(-100% / 6 * 3)); }
+          
+          /* Step 5 (Transition to Image 5) */
+          66.64%, 80.64% { transform: translateX(calc(-100% / 6 * 4)); }
+          
+          /* Step 6 (Transition to Image 6 - e.g., Home_7) */
+          83.30%, 97.30% { transform: translateX(calc(-100% / 6 * 5)); }
+          
+          /* Immediate Loop back to Step 1 */
           100% { transform: translateX(0); }
         }
 
@@ -58,7 +85,7 @@ const LandingPage: React.FC = () => {
         <div className="absolute inset-0 z-0">
           <div className="hero-track">
             {heroImages.map((img, index) => (
-              <img key={index} src={img} alt="portfolio" />
+              <img key={index} src={img} alt={`portfolio-${index}`} />
             ))}
           </div>
         </div>
@@ -86,7 +113,6 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* --- ABOUT SECTION --- */}
-      {/* Added overflow-hidden here to contain the video bleed */}
       <section 
         id="about" 
         className="relative w-full bg-[#FFFDE8] py-16 md:py-24 px-6 md:px-12 lg:px-[50px] scroll-mt-24 overflow-hidden"

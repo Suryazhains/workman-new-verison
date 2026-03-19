@@ -17,34 +17,34 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service }) => {
 
   const images = service?.images || [];
 
+  // Strictly memoize to prevent the gallery from constantly remounting
   const galleryItems = useMemo(() => {
     return images.map((img) => ({
       image: img,
-      text: service.title
+      text: service?.title || ''
     }));
-  }, [images, service.title]);
+  }, [images, service?.title]);
 
-  const openViewer = (index: number) => {
+  const openViewer = useCallback((index: number) => {
     openTimeRef.current = Date.now();
     setViewerIndex(index);
     document.body.style.overflow = 'hidden';
-  };
+  }, []);
 
   const closeViewer = useCallback(() => {
-    // Prevent accidental close immediately after opening
     if (Date.now() - openTimeRef.current < 300) return;
     setViewerIndex(null);
     document.body.style.overflow = '';
   }, []);
 
   const showNext = useCallback((e?: React.MouseEvent) => {
-    e?.stopPropagation(); // CRITICAL: Prevent closing the lightbox
+    e?.stopPropagation(); 
     if (images.length === 0) return;
     setViewerIndex((prev) => (prev !== null ? (prev + 1) % images.length : 0));
   }, [images.length]);
 
   const showPrev = useCallback((e?: React.MouseEvent) => {
-    e?.stopPropagation(); // CRITICAL: Prevent closing the lightbox
+    e?.stopPropagation(); 
     if (images.length === 0) return;
     setViewerIndex((prev) => (prev !== null ? (prev - 1 + images.length) % images.length : 0));
   }, [images.length]);
@@ -54,13 +54,19 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service }) => {
       if (viewerIndex === null) return;
       if (e.key === 'ArrowRight') showNext();
       if (e.key === 'ArrowLeft') showPrev();
-      if (e.key === 'Escape') closeViewer();
+      if (e.key === 'Escape' || e.key === 'Esc') closeViewer();
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [viewerIndex, showNext, showPrev, closeViewer]);
+
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
 
   if (!service) return null;
 
@@ -83,22 +89,20 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service }) => {
 
         .image-frame {
           width: 90vw;
-          max-width: 650px;
-          aspect-ratio: 1 / 1;
+          max-width: 1200px;
+          aspect-ratio: 16 / 9;
           position: relative;
           display: flex;
           align-items: center;
           justify-content: center;
-          background: #000;
           border-radius: 8px;
-          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+          overflow: hidden; 
         }
 
         .lightbox-img { 
           width: 100%; 
           height: 100%; 
-          object-fit: cover;
-          border-radius: 8px;
+          object-fit: cover; 
         }
 
         .nav-btn {
@@ -136,20 +140,21 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service }) => {
 
         .image-counter {
           position: absolute;
-          bottom: -50px;
+          bottom: -40px;
           left: 50%;
           transform: translateX(-50%);
           color: white;
           font-family: sans-serif;
           font-size: 1rem;
           letter-spacing: 1px;
+          z-index: 100002;
         }
         
         @media (max-width: 768px) {
           .nav-btn { width: 45px; height: 45px; }
-          .prev-btn { left: 15px; }
-          .next-btn { right: 15px; }
-          .image-frame { width: 85vw; }
+          .prev-btn { left: 10px; }
+          .next-btn { right: 10px; }
+          .image-frame { width: 95vw; aspect-ratio: 4 / 3; }
         }
       `}} />
 
@@ -166,7 +171,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service }) => {
               className="lightbox-img" 
               alt={`Project Gallery ${viewerIndex + 1}`} 
             />
-            <div className="image-counter">
+            <div className="image-counter" onClick={(e) => e.stopPropagation()}>
               {viewerIndex + 1} / {images.length}
             </div>
           </div>
@@ -197,7 +202,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service }) => {
               bend={3} 
               textColor="#FFFFFF" 
               borderRadius={0.03} 
-              onItemClick={(index: number) => openViewer(index)}
+              onItemClick={openViewer}
             />
           ) : (
             <div className="flex items-center justify-center h-full text-white/50">

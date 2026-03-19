@@ -82,10 +82,10 @@ const LandingTwo: React.FC = () => {
 
         <div className="relative w-full overflow-hidden">
           <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-[60px] md:w-[160px]
-            bg-gradient-to-r from-[#FFC107] via-[#FFC107] to-transparent" />
+            bg-gradient-to-r from-[#BBB791] via-[#BBB791] to-transparent" />
 
           <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-[60px] md:w-[160px]
-            bg-gradient-to-l from-[#FFC107] via-[#FFC107] to-transparent" />
+            bg-gradient-to-l from-[#BBB791] via-[#BBB791] to-transparent" />
 
           <div className="flex flex-col gap-[6px]">
             <div

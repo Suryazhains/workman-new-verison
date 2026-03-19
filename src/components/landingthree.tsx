@@ -244,7 +244,7 @@ const LandingPageThree: React.FC = () => {
                 <img
                   src={circlelogo}
                   alt="Logo"
-                  className="w-34 h-auto cursor-pointer"
+                  className="w-45 h-auto cursor-pointer"
                   onClick={() => handleNavigation('/')}
                 />
                 <p className="text-[14px] leading-relaxed font-normal text-white opacity-100">
