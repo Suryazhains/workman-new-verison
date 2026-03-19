@@ -13,7 +13,7 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // THE ULTIMATE FIX: Native Browser Scrolling
+  // 🔥 THE FIX: Custom Math to prevent the Sticky Header from cutting off titles
   const handleNavigation = (path: string | null) => {
     if (!path) return;
 
@@ -30,8 +30,17 @@ const Header: React.FC = () => {
       if (hashPart) {
         const element = document.getElementById(hashPart);
         if (element) {
-          // Use native browser scroll - no more buggy math!
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // Determine offset based on your header's exact height (80px mobile, 110px desktop) + 20px extra breathing room
+          const headerOffset = window.innerWidth < 1024 ? 100 : 130; 
+          
+          // Calculate exact position minus the header offset
+          const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+          
+          window.scrollTo({
+            top: elementPosition - headerOffset,
+            behavior: 'smooth'
+          });
+          
           navigate(path); // Update URL bar
         }
       } else {
@@ -39,7 +48,8 @@ const Header: React.FC = () => {
         navigate(targetRoute);
       }
     } else {
-      // SCENARIO 2: NAVIGATING FROM ANOTHER PAGE (e.g., Services -> Home)
+      // SCENARIO 2: NAVIGATING FROM ANOTHER PAGE
+      // Your App.tsx ScrollHandler will catch this and handle the math for the new page
       navigate(path);
     }
   };
