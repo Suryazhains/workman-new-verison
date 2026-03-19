@@ -356,7 +356,7 @@ testimonials: {
     linksTitle: "Links",
     productTitle: "Product",
     contactsTitle: "Contacts",
-    products: ["Outdoor", "Indoor", "LED Video Wall", "POP", "Modular"],
+    products: ["Outdoor", "Indoor", "LED Video Wall", "Modular"],
     email: "workmansign@hotmail.com",
     phone: "+91 98403 27575",
     copyright: `Copyright 2026 The Work Man. All Rights Reserved`

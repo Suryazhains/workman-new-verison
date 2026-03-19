@@ -108,7 +108,7 @@ const LandingPageThree: React.FC = () => {
     const cat = category.toUpperCase();
     if (cat.includes('INDOOR')) return '/indoor';
     if (cat.includes('LED')) return '/led';
-    if (cat.includes('POP')) return '/pop';
+
     if (cat.includes('MODULAR')) return '/modular';
     return '/outdoor';
   };
