@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import LandingTwo from './LandingTwo';
 import { LANDING_CONTENT } from './content';
 
@@ -13,9 +14,49 @@ import Home_5 from '../assets/home 5.png';
 import Home_7 from '../assets/home 7.png';
 import AboutVideo from '../assets/0225.mp4'; 
 
+// --- THE REAL SCROLL HANDLER (WITH LAYOUT SHIFT PROTECTION) ---
+const useScrollToHash = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace("#", "");
+      
+      const executeScroll = () => {
+        const element = document.getElementById(id);
+        if (element) {
+          const offset = window.innerWidth < 1024 ? 70 : 120;
+          const y = element.getBoundingClientRect().top + window.scrollY - offset;
+
+          window.scrollTo({
+            top: y,
+            behavior: "smooth",
+          });
+        }
+      };
+
+      // 1. Try to scroll almost immediately for fast connections
+      setTimeout(executeScroll, 50);
+
+      // 2. SAFETY NET: Check again after 400ms. If the video loaded and pushed the content down, this catches it!
+      setTimeout(executeScroll, 400);
+
+      // 3. FINAL LOCK: Catch-all for slower internet connections after all images are done painting (1 second later)
+      setTimeout(executeScroll, 1000);
+
+    } else {
+      // If there's no hash, scroll to top safely
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [location]);
+};
+
 const LandingPage: React.FC = () => {
   const { hero, about } = LANDING_CONTENT;
   
+  // Trigger the scroll handler
+  useScrollToHash();
+
   // The array contains exactly 6 unique images.
   const heroImages = [Home_1, Home_2, Home_3, Home_4, Home_5, Home_7];
 
@@ -30,15 +71,12 @@ const LandingPage: React.FC = () => {
 
         .hero-track {
           display: flex;
-          /* CHANGE 1: Changed width from 700% to 600% to match the 6 images. */
           width: 600%; 
           height: 100%;
-          /* Optional CHANGE 2: lowered duration slightly from 42s to 36s (still 6 seconds per image) */
           animation: heroScroll 36s cubic-bezier(0.45, 0, 0.55, 1) infinite;
         }
 
         .hero-track img {
-          /* CHANGE 3: Changed base width from calc(100%/7) to calc(100%/6). */
           width: calc(100% / 6); 
           height: 100%;
           object-fit: cover;
@@ -46,29 +84,13 @@ const LandingPage: React.FC = () => {
           filter: brightness(0.85);
         }
 
-        /* CHANGE 4: Overhauled Keyframes logic for 6 images (approx 16.66% per cycle).
-          This ensures a smooth, continuous loop.
-        */
         @keyframes heroScroll {
-          /* Step 1 */
           0%, 14% { transform: translateX(0); }
-          
-          /* Step 2 (Transition to Image 2) */
           16.66%, 30.66% { transform: translateX(calc(-100% / 6 * 1)); }
-          
-          /* Step 3 (Transition to Image 3) */
           33.32%, 47.32% { transform: translateX(calc(-100% / 6 * 2)); }
-          
-          /* Step 4 (Transition to Image 4) */
           49.98%, 63.98% { transform: translateX(calc(-100% / 6 * 3)); }
-          
-          /* Step 5 (Transition to Image 5) */
           66.64%, 80.64% { transform: translateX(calc(-100% / 6 * 4)); }
-          
-          /* Step 6 (Transition to Image 6 - e.g., Home_7) */
           83.30%, 97.30% { transform: translateX(calc(-100% / 6 * 5)); }
-          
-          /* Immediate Loop back to Step 1 */
           100% { transform: translateX(0); }
         }
 
@@ -80,7 +102,7 @@ const LandingPage: React.FC = () => {
       {/* --- HERO SECTION --- */}
       <section 
         id="home" 
-        className="relative w-full h-[85vh] min-h-[650px] overflow-hidden bg-black"
+        className="relative w-full h-[85vh] min-h-[650px] overflow-hidden bg-black scroll-mt-[120px]"
       >
         <div className="absolute inset-0 z-0">
           <div className="hero-track">
@@ -102,7 +124,14 @@ const LandingPage: React.FC = () => {
                 {hero.description}
               </p>
               <button
-                onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+                onClick={() => {
+                  const el = document.getElementById("contact");
+                  if (el) {
+                    const offset = window.innerWidth < 1024 ? 70 : 120;
+                    const position = el.getBoundingClientRect().top + window.scrollY - offset;
+                    window.scrollTo({ top: position, behavior: 'smooth' });
+                  }
+                }}
                 className="bg-[#BBB791] text-white rounded-[4px] px-12 h-[58px] font-inter font-bold text-[16px] hover:shadow-2xl transition-all active:scale-95 hover:bg-[#ff5f6d]"
               >
                 Contact now

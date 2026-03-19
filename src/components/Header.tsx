@@ -13,41 +13,34 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // THE ULTIMATE FIX: Native Browser Scrolling
   const handleNavigation = (path: string | null) => {
     if (!path) return;
 
+    // Close any open mobile menus
     setIsMenuOpen(false);
     setActiveDropdown(null);
     setMobileSubMenu(null);
 
-    const [route, hash] = path.split('#');
+    const [routePart, hashPart] = path.split('#');
+    const targetRoute = routePart || '/'; 
 
-    const scrollToTarget = (targetId: string) => {
-      const element = document.getElementById(targetId);
-      if (element) {
-        const offset = window.innerWidth < 1024 ? 70 : 120; 
-        const elementPosition = element.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
+    if (location.pathname === targetRoute) {
+      // SCENARIO 1: WE ARE ALREADY ON THE RIGHT PAGE (Same-Page Scrolling)
+      if (hashPart) {
+        const element = document.getElementById(hashPart);
+        if (element) {
+          // Use native browser scroll - no more buggy math!
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          navigate(path); // Update URL bar
+        }
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        navigate(targetRoute);
       }
-    };
-
-    if (location.pathname === route && hash) {
-      scrollToTarget(hash);
-    } 
-    else if (hash) {
-      navigate(route);
-      setTimeout(() => {
-        scrollToTarget(hash);
-      }, 400);
-    } 
-    else {
-      navigate(route);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      // SCENARIO 2: NAVIGATING FROM ANOTHER PAGE (e.g., Services -> Home)
+      navigate(path);
     }
   };
 
@@ -125,20 +118,11 @@ const Header: React.FC = () => {
           html {
             scroll-behavior: smooth;
           }
-          section[id] {
-            scroll-margin-top: 90px;
-          }
-          @media (min-width: 1024px) {
-            section[id] {
-              scroll-margin-top: 120px;
-            }
-          }
         `}
       </style>
 
       <div className="w-full h-[80px] lg:h-[110px] flex items-center justify-between px-4 lg:px-12 relative border-none outline-none">
         
-        {/* Logo */}
         <div className="flex items-center">
           <Link to="/" className="outline-none focus:outline-none border-none" onClick={(e) => {
             e.preventDefault();
@@ -152,7 +136,6 @@ const Header: React.FC = () => {
           </Link>
         </div>
 
-        {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center space-x-[48px] h-full outline-none">
           {navLinks.map((link) => {
             const path = getRoutePath(link.name);
@@ -175,7 +158,6 @@ const Header: React.FC = () => {
                   {link.name}
                 </Link>
 
-                {/* Services Dropdown (Desktop) */}
                 {link.name === 'Our services' && activeDropdown === 'Our services' && (
                   <div className="absolute top-[110px] left-1/2 -translate-x-1/2 w-[1000px] bg-white shadow-2xl rounded-xl p-8 grid grid-cols-5 gap-6 border border-gray-100 z-[60] outline-none">
                     {Object.entries(servicesData).map(([category, items]) => {
@@ -219,7 +201,6 @@ const Header: React.FC = () => {
                   </div>
                 )}
 
-                {/* Infrastructure Dropdown (Desktop) */}
                 {link.name === 'Infrastructure' && activeDropdown === 'Infrastructure' && (
                   <div className="absolute top-[110px] left-0 w-[220px] bg-white shadow-2xl rounded-lg p-4 border border-gray-100 z-[60] outline-none">
                     <ul className="space-y-3">
@@ -251,7 +232,6 @@ const Header: React.FC = () => {
           })}
         </nav>
 
-        {/* Contact Button */}
         <div className="flex items-center space-x-4">
           <Link 
             to="/#contact"
@@ -282,7 +262,6 @@ const Header: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="lg:hidden bg-white w-full border-t border-gray-100 absolute left-0 top-[80px] shadow-lg z-50 overflow-y-auto max-h-[calc(100vh-80px)]">
           <nav className="flex flex-col p-6 space-y-4">
@@ -294,7 +273,6 @@ const Header: React.FC = () => {
               return (
                 <div key={link.name} className="flex flex-col">
                   <div className="flex items-center justify-between">
-                    {/* The Text navigates to the page */}
                     <Link
                       to={path || '#'}
                       className="text-[18px] font-bold text-[#163B73] py-2 flex-grow"
@@ -306,7 +284,6 @@ const Header: React.FC = () => {
                       {link.name}
                     </Link>
                     
-                    {/* The Arrow only toggles the dropdown */}
                     {isDropdown && (
                       <div 
                         onClick={(e) => {
@@ -322,7 +299,6 @@ const Header: React.FC = () => {
                     )}
                   </div>
 
-                  {/* Submenu for Our Services */}
                   {link.name === 'Our services' && isOpen && (
                     <div className="flex flex-col ml-4 mt-2 space-y-4 border-l-2 border-gray-100 pl-4 animate-in slide-in-from-top-2 duration-300">
                       {Object.entries(servicesData).map(([category, items]) => (
@@ -349,7 +325,6 @@ const Header: React.FC = () => {
                     </div>
                   )}
 
-                  {/* Submenu for Infrastructure */}
                   {link.name === 'Infrastructure' && isOpen && (
                     <div className="flex flex-col ml-4 mt-2 space-y-3 border-l-2 border-gray-100 pl-4 animate-in slide-in-from-top-2 duration-300">
                       {(infrastructureData as string[]).map((item) => (
@@ -367,7 +342,6 @@ const Header: React.FC = () => {
               );
             })}
             
-            {/* Mobile Contact Button */}
             <Link 
               to="/#contact"
               onClick={(e) => {

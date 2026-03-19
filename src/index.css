@@ -1,19 +1,19 @@
 @import "tailwindcss";
 
 /* Full height layout */
-/* Update your existing block to include overflow-x-hidden */
 html,
 body,
 #root {
-  height: 100%;
-  max-width: 100vw; /* Keep it strictly to the viewport width */
-  overflow-x: hidden; /* Prevent horizontal scroll */
+  min-height: 100vh; /* ✅ Changed from height: 100% */
+  max-width: 100vw; 
+  overflow-x: hidden; 
   position: relative;
 }
 
 /* 🔥 FIX FOR CUT TEXT UNDER FIXED HEADER */
 html {
   scroll-padding-top: 40px; /* mobile */
+  scroll-behavior: smooth; /* Add this to enable native smooth scrolling */
 }
 
 @media (min-width: 768px) {
@@ -28,6 +28,7 @@ html {
   }
 }
 
+/* ... keep the rest of your CSS exactly the same ... */
 @layer base {
   body {
     margin: 0;

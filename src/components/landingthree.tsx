@@ -18,7 +18,6 @@ const LandingPageThree: React.FC = () => {
   // Updated Contact Info
   const contactInfo = {
     title: "Contact Link",
-
     phone1: "+91 98403 27575",
     phone2: "044 4238 5222",
     phone3: "97908 09675",
@@ -26,65 +25,77 @@ const LandingPageThree: React.FC = () => {
     quote: "Our range of services is designed to cover all your branding and signage needs, no matter the scale."
   };
 
+  // SCROLL FIX: Reliably scrolls when the page loads with a #hash in the URL
   useEffect(() => {
     if (!location.hash) return;
 
     const id = location.hash.replace('#', '');
 
-    const scroll = () => {
+    const scrollToHash = () => {
       const el = document.getElementById(id);
-      if (!el) return;
-
-      const headerOffset = 160; 
-      const elementPosition = el.getBoundingClientRect().top + window.scrollY;
-      const offsetPosition = elementPosition - headerOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth',
-      });
+      if (el) {
+        const headerOffset = window.innerWidth < 1024 ? 70 : 120; 
+        const elementPosition = el.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({
+          top: elementPosition - headerOffset,
+          behavior: 'smooth',
+        });
+      }
     };
 
-    const timer = setTimeout(scroll, 300);
+    // Try immediately, and also after a short delay to account for page rendering
+    scrollToHash();
+    const timer = setTimeout(scrollToHash, 500);
     return () => clearTimeout(timer);
   }, [location]);
 
+  // BULLETPROOF NAVIGATION LOGIC (Synced with Header.tsx for consistency)
   const handleNavigation = (path: string | null) => {
     if (!path) return;
 
-    const [route, hash] = path.split('#');
-    const HEADER_OFFSET = window.innerWidth < 1024 ? 70 : 160;
+    const [routePart, hashPart] = path.split('#');
+    const targetRoute = routePart || '/'; 
 
-    const scrollToHash = (id: string) => {
-      const element = document.getElementById(id);
-      if (!element) return;
-
-      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-      const offsetPosition = elementPosition - HEADER_OFFSET;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth',
-      });
+    const scrollToTarget = (targetId: string) => {
+      const element = document.getElementById(targetId);
+      if (element) {
+        const offset = window.innerWidth < 1024 ? 70 : 120;
+        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+        
+        window.scrollTo({
+          top: elementPosition - offset,
+          behavior: 'smooth'
+        });
+      }
     };
 
-    if (location.pathname === route && hash) {
-      scrollToHash(hash);
-    } else if (hash) {
-      navigate(route);
-      setTimeout(() => {
-        scrollToHash(hash);
-      }, 400); 
+    if (hashPart) {
+      if (location.pathname === targetRoute) {
+        // Already on the correct page, just smooth scroll to the section
+        scrollToTarget(hashPart);
+      } else {
+        // Different page! Navigate and then wait a moment for render before scrolling
+        navigate(path);
+        setTimeout(() => {
+          scrollToTarget(hashPart);
+        }, 400);
+      }
     } else {
-      navigate(route);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Standard page navigation (no hash involved)
+      if (location.pathname !== targetRoute) {
+        navigate(targetRoute);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     }
   };
 
+  // EXACT PATHS FOR YOUR APP
   const getRoutePath = (name: string) => {
     switch (name) {
-      case 'Home': return '/'; 
-      case 'About us': return '/#about'; 
+      case 'Home': return '/';
+      case 'About us': return '/aboutbrief'; 
       case 'Our services': return '/services';
       case 'Infrastructure': return '/infrastructure'; 
       case 'Testimonials': return '/#testimonials';
@@ -97,8 +108,8 @@ const LandingPageThree: React.FC = () => {
     const cat = category.toUpperCase();
     if (cat.includes('INDOOR')) return '/indoor';
     if (cat.includes('LED')) return '/led';
+    if (cat.includes('POP')) return '/pop';
     if (cat.includes('MODULAR')) return '/modular';
-    if (cat.includes('POP')) return '/pop'; 
     return '/outdoor';
   };
 
@@ -165,7 +176,7 @@ const LandingPageThree: React.FC = () => {
             </div>
 
             <div className="bg-white rounded-[24px] p-8 md:p-12 shadow-sm border border-green-100 w-full">
-              <h2 className="font-imperial text-[24px] md:text-[28px] font-bold text-[#FFFFF] mb-8">
+              <h2 className="font-imperial text-[24px] md:text-[28px] font-bold text-[#BBB791] mb-8">
                 {contactSection.form.title}
               </h2>
 
@@ -213,7 +224,7 @@ const LandingPageThree: React.FC = () => {
 
                 <div className="md:col-span-2 mt-4">
                   {submitted && (
-                    <div className="flex items-center gap-2 text-[#FE4E5D]-600 font-semibold text-sm mb-4 animate-bounce">
+                    <div className="flex items-center gap-2 text-[#51A147] font-semibold text-sm mb-4 animate-bounce">
                       <CheckCircle size={18} />
                       <span>Message submitted successfully!</span>
                     </div>
@@ -223,7 +234,7 @@ const LandingPageThree: React.FC = () => {
                     type="submit"
                     disabled={isSubmitting}
                     className={`w-full text-white py-3.5 rounded-lg font-bold text-[16px] md:text-[18px] transition-all 
-                      ${isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#BBB791] hover:bg-[#BBB791] hover:shadow-lg'}`}
+                      ${isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#BBB791] hover:brightness-95 hover:shadow-lg'}`}
                   >
                     {isSubmitting ? 'Sending...' : contactSection.form.buttonText}
                   </button>
@@ -250,9 +261,6 @@ const LandingPageThree: React.FC = () => {
                 <p className="text-[14px] leading-relaxed font-normal text-white opacity-100">
                   {contactInfo.quote}
                 </p>
-                <div className="text-[13px] text-white/90 leading-relaxed italic">
-                  {/* {contactInfo.address} */}
-                </div>
                 <button 
                   onClick={() => handleNavigation('/#contact')}
                   className="bg-white text-[#000000] px-8 py-3 rounded-[6px] font-bold text-[15px] hover:bg-gray-100 transition"
@@ -342,17 +350,16 @@ const LandingPageThree: React.FC = () => {
                   </div>
                 </div>
 
-                {/* MAP */}
-     <div className="w-full lg:w-[250px] xl:w-[300px] shrink-0">
-  <iframe
-    title="The Workman Advertising Location"
-    src="https://www.google.com/maps?output=embed&q=The+Workman+Advertising+Maduravoyal+Chennai"
-    className="w-full h-[220px] rounded-lg border border-white/20 bg-green-50/10"
-    loading="lazy"
-    referrerPolicy="no-referrer-when-downgrade"
-  />
-</div>
-
+                {/* MAP - VALID HTTPS GOOGLE MAPS EMBED */}
+                <div className="w-full lg:w-[250px] xl:w-[300px] shrink-0">
+                  <iframe
+                    title="The Workman Advertising Location"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.0315560647895!2d80.17415177454848!3d13.097205112117565!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5264000305f883%3A0xcda6fba652dc97da!2sChennai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1710856030123!5m2!1sen!2sin"
+                    className="w-full h-[220px] rounded-lg border border-white/20 bg-green-50/10"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                </div>
 
               </div>
             </div>
