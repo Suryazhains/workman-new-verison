@@ -68,7 +68,7 @@ const LandingTwo: React.FC = () => {
       {/* PORTFOLIO SECTION */}
       <section
         id="portfolio"
-        className="w-full bg-[#BBB791] pt-[70px] pb-[90px] overflow-hidden"
+        className="w-full bg-[#BBB791] pt-[70px] pb-[90px] overflow-hidden scroll-mt-[100px] lg:scroll-mt-[130px]"
       >
         <div className="max-w-[1440px] mx-auto px-6 lg:px-2 mb-10">
           {/* UPDATED FONT HERE */}
@@ -149,10 +149,10 @@ const LandingTwo: React.FC = () => {
       </section>
 
       {/* TESTIMONIALS SECTION */}
-      <section id="testimonials" className="w-full bg-[] pt-[60px] md:pt-[90px] pb-[60px] md:pb-[90px] overflow-hidden">
+      <section id="testimonials" className="w-full bg-[#F9FAFB] pt-[60px] md:pt-[90px] pb-[60px] md:pb-[90px] overflow-hidden scroll-mt-[100px] lg:scroll-mt-[130px]">
         <div className="max-w-[1440px] mx-auto px-4">
           {/* UPDATED FONT HERE */}
-          <h2 className="font-imperial text-[32px] md:text-[56px] font-bold text-[#FFFFF] mb-4 text-center">
+          <h2 className="font-imperial text-[32px] md:text-[56px] font-bold text-[#BBB791] mb-4 text-center">
             {testimonials.heading}
           </h2>
           <p className="text-[#535353] text-center text-sm md:text-lg mb-8 md:mb-12 max-w-[1200px] mx-auto leading-relaxed px-2">
@@ -162,15 +162,16 @@ const LandingTwo: React.FC = () => {
           <div className="relative flex flex-col items-center justify-center">
             <div className="relative w-full flex items-center justify-center min-h-[400px] md:min-h-[450px]">
               
+              {/* 🔥 FIX: Changed z-50 to z-40 so it goes UNDER the header */}
               <button 
                 onClick={prevSlide} 
-                className="hidden md:flex absolute left-4 z-50 w-14 h-14 items-center justify-center rounded-full bg-white shadow-xl text-[#BBB791] text-2xl font-bold border border-gray-100 active:scale-95"
+                className="hidden md:flex absolute left-4 z-40 w-14 h-14 items-center justify-center rounded-full bg-white shadow-xl text-[#BBB791] text-2xl font-bold border border-gray-100 active:scale-95"
               >
                 ←
               </button>
               <button 
                 onClick={nextSlide} 
-                className="hidden md:flex absolute right-4 z-50 w-14 h-14 items-center justify-center rounded-full bg-white shadow-xl text-[#BBB791] text-2xl font-bold border border-gray-100 active:scale-95"
+                className="hidden md:flex absolute right-4 z-40 w-14 h-14 items-center justify-center rounded-full bg-white shadow-xl text-[#BBB791] text-2xl font-bold border border-gray-100 active:scale-95"
               >
                 →
               </button>
@@ -182,7 +183,7 @@ const LandingTwo: React.FC = () => {
                   const isRight = index === (currentIndex + 1) % allTestimonials.length;
 
                   let positionClass = "opacity-0 scale-50 pointer-events-none absolute";
-                  if (isActive) positionClass = "opacity-100 scale-100 z-30 relative shadow-2xl border-[#FE4E5]";
+                  if (isActive) positionClass = "opacity-100 scale-100 z-30 relative shadow-2xl border-[#FE4E5D]";
                   if (isLeft) positionClass = "opacity-30 -translate-x-[70%] lg:-translate-x-[100%] scale-90 z-10 absolute blur-[1.5px] hidden md:flex";
                   if (isRight) positionClass = "opacity-30 translate-x-[70%] lg:translate-x-[100%] scale-90 z-10 absolute blur-[1.5px] hidden md:flex";
 
@@ -207,7 +208,7 @@ const LandingTwo: React.FC = () => {
                         </div>
                         <div className="overflow-hidden text-ellipsis">
                           <p className="font-bold text-[#1A1A1A] text-base md:text-lg truncate">{item.name}</p>
-                          <p className="text-[#FFFFF] text-[10px] md:text-sm font-medium uppercase truncate">{item.company}</p>
+                          <p className="text-[#888888] text-[10px] md:text-sm font-medium uppercase truncate">{item.company}</p>
                         </div>
                       </div>
                     </div>

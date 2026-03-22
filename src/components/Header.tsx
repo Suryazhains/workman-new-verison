@@ -13,7 +13,7 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // 🔥 THE FIX: Custom Math to prevent the Sticky Header from cutting off titles
+  // 🔥 THE FIX: Prevent browser default hash jumping & apply accurate offsets
   const handleNavigation = (path: string | null) => {
     if (!path) return;
 
@@ -30,8 +30,11 @@ const Header: React.FC = () => {
       if (hashPart) {
         const element = document.getElementById(hashPart);
         if (element) {
-          // Determine offset based on your header's exact height (80px mobile, 110px desktop) + 20px extra breathing room
-          const headerOffset = window.innerWidth < 1024 ? 100 : 130; 
+          // Update URL bar silently without triggering a native browser snap-jump
+          window.history.pushState(null, '', path);
+          
+          // Determine offset based on your header's exact height + 20px extra breathing room
+          const headerOffset = window.innerWidth < 1024 ? 90 : 100; 
           
           // Calculate exact position minus the header offset
           const elementPosition = element.getBoundingClientRect().top + window.scrollY;
@@ -40,12 +43,10 @@ const Header: React.FC = () => {
             top: elementPosition - headerOffset,
             behavior: 'smooth'
           });
-          
-          navigate(path); // Update URL bar
         }
       } else {
+        window.history.pushState(null, '', targetRoute);
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        navigate(targetRoute);
       }
     } else {
       // SCENARIO 2: NAVIGATING FROM ANOTHER PAGE
@@ -127,6 +128,13 @@ const Header: React.FC = () => {
           }
           html {
             scroll-behavior: smooth;
+            /* Native browser safeguard to prevent headers from cutting off content */
+            scroll-padding-top: 130px; 
+          }
+          @media (max-width: 1024px) {
+            html {
+              scroll-padding-top: 100px;
+            }
           }
         `}
       </style>

@@ -29,31 +29,41 @@ const ScrollHandler = () => {
 
     if (location.hash) {
       const id = location.hash.replace('#', '');
-      
-      const forceScroll = () => {
+      let attempts = 0;
+
+      // 🔥 THE FIX: A polling function that waits for React to finish rendering the DOM
+      const tryScroll = () => {
         const element = document.getElementById(id);
+        
         if (element) {
-          // MATH FIX: Prevents the sticky header from cutting off the title
-          const headerOffset = window.innerWidth < 1024 ? 100 : 150; 
-          const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+          // MATCH THE HEADER: 110px desktop height + 20px extra breathing room = 130px
+          const headerOffset = window.innerWidth < 1024 ? 100 : 130; 
+          
+          // Absolute math: calculates exact distance from the very top of the document
+          const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
           
           window.scrollTo({
             top: elementPosition - headerOffset,
             behavior: 'smooth',
           });
+        } else {
+          // If the element is null (React is still loading the page), try again!
+          attempts++;
+          if (attempts < 20) { // Will retry every 50ms for a total of 1 second
+            setTimeout(tryScroll, 50);
+          }
         }
       };
 
-      // Staggered checking to beat layout shifts when videos/images load
-      setTimeout(forceScroll, 50);
-      setTimeout(forceScroll, 400);
-      setTimeout(forceScroll, 1000);
+      // Start the checking process immediately
+      tryScroll();
       
+      // Safety net: One final check after 1.2 seconds in case heavy images push the layout down
+      setTimeout(tryScroll, 1200); 
+
     } else {
-      // Normal page navigation - slight delay to let React render before scrolling
-      setTimeout(() => {
-        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-      }, 50);
+      // Normal page navigation - instantly jump to top (using 'instant' prevents weird upward scrolling)
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     }
   }, [location.pathname, location.hash]);
 
