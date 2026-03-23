@@ -1,3 +1,4 @@
+import AboutVideo from '../assets/0225.mp4'; 
 import React, { useEffect, useState } from 'react';
 import LandingPageThree from './landingthree';
 
@@ -112,7 +113,15 @@ const About: React.FC = () => {
 
                 <div className="flex flex-col lg:flex-row gap-16 items-start">
                     <div className="w-full lg:w-1/2">
-                        <img src={main1} alt="Infrastructure" className="rounded-2xl shadow-2xl w-full object-cover h-[500px]" />
+                        {/* Here is the integrated AboutVideo replacing the first image */}
+                        <video 
+                            src={AboutVideo} 
+                            autoPlay 
+                            loop 
+                            muted 
+                            playsInline 
+                            className="rounded-2xl shadow-2xl w-full object-cover h-[500px]"
+                        />
                     </div>
                     <div className="w-full lg:w-1/2 space-y-8 text-white/80 leading-relaxed text-lg pt-4 text-justify">
                         <p>Workman Advertising, Chennai, India is a leading provider of complete branding and signage solutions, delivering high-quality visual communication for businesses across multiple industries.</p>

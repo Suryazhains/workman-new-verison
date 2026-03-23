@@ -33,17 +33,18 @@ import portfolio9 from "../assets/row1.png";
 import portfolio10 from "../assets/outdoor 51.png";
 import portfolio11 from "../assets/outdoor 31.png";
 import portfolio12 from "../assets/outdoor 33.png";
-import pylon1 from "../assets/pylol1.png";
-import pylon2 from "../assets/outdoor 1.png";
-import pylon3 from "../assets/outdoor 3.png";
-import pylon4 from "../assets/outdoor 2.png";
+import pylon1 from "../assets/pylolfinal4.png";
+import pylon2 from "../assets/pylolfinal1.png";
+import pylon3 from "../assets/pylolfinal2.png";
+import pylon4 from "../assets/pylolfinal3.png";
 import blink1 from "../assets/outdoor 4.png";
 import blink2 from "../assets/outdoor 5.png";
 import blink3 from "../assets/outdoor 6.png";
 import blink4 from "../assets/outdoorsblink4.jpeg";
-import uni1 from "../assets/outdoor 7.png";
-import uni2 from "../assets/outdoor 8.png";
-import uni3 from "../assets/outdoor 9.png";
+import uni1 from "../assets/outdoor 1.png";
+import uni2 from "../assets/outdoor 3.png";
+import uni3 from "../assets/outdoor 2.png";
+import uni4 from "../assets/pylol1.png";
 import Hs1 from "../assets/outdoor 10.png";
 import Hs2 from "../assets/outdoor 11.png";
 import Hs3 from "../assets/outdoor 12.png";
@@ -419,7 +420,7 @@ testimonials: {
     { 
       id: 3, 
       title: "Unipole", 
-      images: [uni1, uni2, uni3],
+      images: [uni1, uni2, uni3,uni4],
       description_points: [
         "Large-format outdoor advertising structures designed for maximum visibility in high-traffic and highway locations.",
         "Built with strong steel fabrication and durable finishing to withstand harsh weather conditions and long-term outdoor exposure.",
