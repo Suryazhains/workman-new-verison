@@ -2,7 +2,7 @@ import AboutVideo from '../assets/0225.mp4';
 import React, { useEffect, useState } from 'react';
 import LandingPageThree from './landingthree';
 
-import main1 from "../assets/main 1.jpg";
+// import main1 from "../assets/main 1.jpg";
 import main2 from "../assets/main 2.jpg";
 // PORTFOLIO IMAGES
 import portfolio3 from "../assets/portfolio 3.png";
