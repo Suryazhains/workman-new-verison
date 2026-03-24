@@ -54,14 +54,14 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service }) => {
     setViewerIndex((prev) => (prev !== null ? (prev - 1 + images.length) % images.length : 0));
   }, [images.length]);
 
-  // Swipe Gesture Handlers for Mobile
+  // Swipe Gesture Handlers for Mobile (FIXED: Added [0] to access the first touch point)
   const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches.clientX;
-    touchEndX.current = e.touches.clientX; // Reset end position
+    touchStartX.current = e.touches[0].clientX;
+    touchEndX.current = e.touches[0].clientX; // Reset end position
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    touchEndX.current = e.touches.clientX;
+    touchEndX.current = e.touches[0].clientX;
   };
 
   const handleTouchEnd = () => {
