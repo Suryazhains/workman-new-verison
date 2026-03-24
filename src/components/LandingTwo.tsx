@@ -66,13 +66,13 @@ const LandingTwo: React.FC = () => {
       `}} />
 
       {/* PORTFOLIO SECTION */}
+      {/* Changed px to rem for seamless fluid scaling */}
       <section
         id="portfolio"
-        className="w-full bg-[#BBB791] pt-[70px] pb-[90px] overflow-hidden scroll-mt-[100px] lg:scroll-mt-[130px]"
+        className="w-full bg-[#BBB791] pt-[4.5rem] pb-[5.5rem] overflow-hidden scroll-mt-[6rem] lg:scroll-mt-[8rem]"
       >
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-2 mb-10">
-          {/* UPDATED FONT HERE */}
-          <h2 className="font-imperial font-bold text-3xl md:text-[56px] text-[#FFFFFF] mb-4">
+        <div className="max-w-[90rem] px-6 md:px-12 lg:pl-12 mb-10">
+          <h2 className="font-imperial font-bold text-3xl md:text-[3.5rem] text-[#FFFFFF] mb-4">
             {portfolio.heading}
           </h2>
           <p className="text-[#FFFFFF] max-w-full text-lg leading-relaxed">
@@ -81,10 +81,10 @@ const LandingTwo: React.FC = () => {
         </div>
 
         <div className="relative w-full overflow-hidden">
-          <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-[60px] md:w-[160px]
+          <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-[3.75rem] md:w-[10rem]
             bg-gradient-to-r from-[#BBB791] via-[#BBB791] to-transparent" />
 
-          <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-[60px] md:w-[160px]
+          <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-[3.75rem] md:w-[10rem]
             bg-gradient-to-l from-[#BBB791] via-[#BBB791] to-transparent" />
 
           <div className="flex flex-col gap-[6px]">
@@ -95,7 +95,8 @@ const LandingTwo: React.FC = () => {
               {row1Images.map((src, i) => (
                 <div
                   key={`row1-${i}`}
-                  className="w-[200px] h-[120px] md:w-[435px] md:h-[232px] flex-shrink-0"
+                  /* 🔥 PIXEL FIX: Swapped hard px for rem widths. They will now grow! */
+                  className="w-[12.5rem] h-[7.5rem] md:w-[27rem] md:h-[14.5rem] flex-shrink-0"
                 >
                   <img
                     src={src}
@@ -114,7 +115,8 @@ const LandingTwo: React.FC = () => {
               {row2Images.map((src, i) => (
                 <div
                   key={`row2-${i}`}
-                  className="w-[200px] h-[120px] md:w-[435px] md:h-[232px] flex-shrink-0"
+                  /* 🔥 PIXEL FIX */
+                  className="w-[12.5rem] h-[7.5rem] md:w-[27rem] md:h-[14.5rem] flex-shrink-0"
                 >
                   <img
                     src={src}
@@ -133,7 +135,8 @@ const LandingTwo: React.FC = () => {
               {row3Images.map((src, i) => (
                 <div
                   key={`row3-${i}`}
-                  className="w-[200px] h-[120px] md:w-[435px] md:h-[232px] flex-shrink-0"
+                  /* 🔥 PIXEL FIX */
+                  className="w-[12.5rem] h-[7.5rem] md:w-[27rem] md:h-[14.5rem] flex-shrink-0"
                 >
                   <img
                     src={src}
@@ -149,20 +152,19 @@ const LandingTwo: React.FC = () => {
       </section>
 
       {/* TESTIMONIALS SECTION */}
-      <section id="testimonials" className="w-full bg-[#F9FAFB] pt-[60px] md:pt-[90px] pb-[60px] md:pb-[90px] overflow-hidden scroll-mt-[100px] lg:scroll-mt-[130px]">
-        <div className="max-w-[1440px] mx-auto px-4">
-          {/* UPDATED FONT HERE */}
-          <h2 className="font-imperial text-[32px] md:text-[56px] font-bold text-[#BBB791] mb-4 text-center">
+      {/* Changed px to rem for seamless fluid scaling */}
+      <section id="testimonials" className="w-full bg-[#F9FAFB] pt-[3.75rem] md:pt-[5.5rem] pb-[3.75rem] md:pb-[5.5rem] overflow-hidden scroll-mt-[6rem] lg:scroll-mt-[8rem]">
+        <div className="max-w-[90rem] mx-auto px-4">
+          <h2 className="font-imperial text-[2rem] md:text-[3.5rem] font-bold text-[#BBB791] mb-4 text-center">
             {testimonials.heading}
           </h2>
-          <p className="text-[#535353] text-center text-sm md:text-lg mb-8 md:mb-12 max-w-[1200px] mx-auto leading-relaxed px-2">
+          <p className="text-[#535353] text-center text-sm md:text-lg mb-8 md:mb-12 max-w-[75rem] mx-auto leading-relaxed px-2">
             {testimonials.description}
           </p>
 
           <div className="relative flex flex-col items-center justify-center">
-            <div className="relative w-full flex items-center justify-center min-h-[400px] md:min-h-[450px]">
+            <div className="relative w-full flex items-center justify-center min-h-[25rem] md:min-h-[28rem]">
               
-              {/* 🔥 FIX: Changed z-50 to z-40 so it goes UNDER the header */}
               <button 
                 onClick={prevSlide} 
                 className="hidden md:flex absolute left-4 z-40 w-14 h-14 items-center justify-center rounded-full bg-white shadow-xl text-[#BBB791] text-2xl font-bold border border-gray-100 active:scale-95"
@@ -192,12 +194,12 @@ const LandingTwo: React.FC = () => {
                       key={index}
                       className={`transition-all duration-700 ease-in-out transform 
                         bg-white p-8 md:p-12 border rounded-xl 
-                        w-[90%] md:w-full max-w-[650px] 
-                        text-left h-[350px] md:h-[400px] 
+                        w-[90%] md:w-full max-w-[40.6rem] 
+                        text-left h-[21.8rem] md:h-[25rem] 
                         flex flex-col justify-between ${positionClass}`}
                     >
                       <div className="overflow-y-auto testimonial-scroll pr-2">
-                        <p className="font-crimson text-[#333333] text-[18px] md:text-[24px] leading-relaxed pt-0">
+                        <p className="font-crimson text-[#333333] text-[1.125rem] md:text-[1.5rem] leading-relaxed pt-0">
                           {item.quote}
                         </p>
                       </div>
@@ -208,7 +210,7 @@ const LandingTwo: React.FC = () => {
                         </div>
                         <div className="overflow-hidden text-ellipsis">
                           <p className="font-bold text-[#1A1A1A] text-base md:text-lg truncate">{item.name}</p>
-                          <p className="text-[#888888] text-[10px] md:text-sm font-medium uppercase truncate">{item.company}</p>
+                          <p className="text-[#888888] text-[0.625rem] md:text-sm font-medium uppercase truncate">{item.company}</p>
                         </div>
                       </div>
                     </div>

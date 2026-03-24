@@ -13,11 +13,9 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // 🔥 THE FIX: Prevent browser default hash jumping & apply accurate offsets
   const handleNavigation = (path: string | null) => {
     if (!path) return;
 
-    // Close any open mobile menus
     setIsMenuOpen(false);
     setActiveDropdown(null);
     setMobileSubMenu(null);
@@ -26,17 +24,13 @@ const Header: React.FC = () => {
     const targetRoute = routePart || '/'; 
 
     if (location.pathname === targetRoute) {
-      // SCENARIO 1: WE ARE ALREADY ON THE RIGHT PAGE (Same-Page Scrolling)
       if (hashPart) {
         const element = document.getElementById(hashPart);
         if (element) {
-          // Update URL bar silently without triggering a native browser snap-jump
           window.history.pushState(null, '', path);
           
-          // Determine offset based on your header's exact height + 20px extra breathing room
-          const headerOffset = window.innerWidth < 1024 ? 90 : 100; 
+          const headerOffset = window.innerWidth >= 2400 ? 200 : (window.innerWidth < 1024 ? 90 : 100); 
           
-          // Calculate exact position minus the header offset
           const elementPosition = element.getBoundingClientRect().top + window.scrollY;
           
           window.scrollTo({
@@ -49,8 +43,6 @@ const Header: React.FC = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     } else {
-      // SCENARIO 2: NAVIGATING FROM ANOTHER PAGE
-      // Your App.tsx ScrollHandler will catch this and handle the math for the new page
       navigate(path);
     }
   };
@@ -128,7 +120,6 @@ const Header: React.FC = () => {
           }
           html {
             scroll-behavior: smooth;
-            /* Native browser safeguard to prevent headers from cutting off content */
             scroll-padding-top: 130px; 
           }
           @media (max-width: 1024px) {
@@ -136,11 +127,16 @@ const Header: React.FC = () => {
               scroll-padding-top: 100px;
             }
           }
+          @media (min-width: 2400px) {
+            html {
+              scroll-padding-top: 200px; 
+            }
+          }
         `}
       </style>
-
-      <div className="w-full h-[80px] lg:h-[110px] flex items-center justify-between px-4 lg:px-12 relative border-none outline-none">
-        
+      
+      <div className="w-full h-[80px] lg:h-[110px] [@media(min-width:2400px)]:h-[180px] flex items-center justify-between px-6 md:px-12 lg:px-12 [@media(min-width:2400px)]:px-[8rem] relative border-none outline-none transition-all duration-300">
+    
         <div className="flex items-center">
           <Link to="/" className="outline-none focus:outline-none border-none" onClick={(e) => {
             e.preventDefault();
@@ -149,12 +145,12 @@ const Header: React.FC = () => {
             <img 
               src={logoImg} 
               alt="WORKMAN LOGO" 
-              className="w-[180px] md:w-[240px] h-auto object-contain border-none outline-none"
+              className="w-[180px] md:w-[240px] [@media(min-width:2400px)]:w-[480px] h-auto object-contain border-none outline-none transition-all duration-300"
             />
           </Link>
         </div>
 
-        <nav className="hidden lg:flex items-center space-x-[48px] h-full outline-none">
+        <nav className="hidden lg:flex items-center space-x-[48px] [@media(min-width:2400px)]:space-x-[120px] h-full outline-none transition-all duration-300">
           {navLinks.map((link) => {
             const path = getRoutePath(link.name);
 
@@ -171,13 +167,13 @@ const Header: React.FC = () => {
                     e.preventDefault();
                     handleNavigation(path);
                   }}
-                  className="text-[15px] font-semibold text-white hover:text-white transition-colors py-2 outline-none"
+                  className="text-[15px] [@media(min-width:2400px)]:text-[32px] font-semibold text-white hover:text-white transition-all py-2 outline-none"
                 >
                   {link.name}
                 </Link>
 
                 {link.name === 'Our services' && activeDropdown === 'Our services' && (
-                  <div className="absolute top-[110px] left-1/2 -translate-x-1/2 w-[1000px] bg-white shadow-2xl rounded-xl p-8 grid grid-cols-5 gap-6 border border-gray-100 z-[60] outline-none">
+                  <div className="absolute top-[110px] [@media(min-width:2400px)]:top-[180px] left-1/2 -translate-x-1/2 w-[1000px] [@media(min-width:2400px)]:w-[2000px] bg-white shadow-2xl rounded-xl p-8 [@media(min-width:2400px)]:p-16 grid grid-cols-5 gap-6 [@media(min-width:2400px)]:gap-14 border border-gray-100 z-[60] outline-none transition-all duration-300">
                     {Object.entries(servicesData).map(([category, items]) => {
                       const baseRoute = getCategoryPath(category);
                       const categoryTarget = `${baseRoute}#${getServiceSlug(category)}`;
@@ -190,11 +186,11 @@ const Header: React.FC = () => {
                               e.preventDefault();
                               handleNavigation(categoryTarget);
                             }}
-                            className="text-[11px] font-bold text-gray-400 uppercase mb-4 tracking-wider hover:text-[#163B73] transition-colors block"
+                            className="text-[11px] [@media(min-width:2400px)]:text-[24px] font-bold text-gray-400 uppercase mb-4 [@media(min-width:2400px)]:mb-8 tracking-wider hover:text-[#163B73] transition-colors block"
                           >
                             {category}
                           </Link>
-                          <ul className="space-y-3">
+                          <ul className="space-y-3 [@media(min-width:2400px)]:space-y-6">
                             {(items as string[]).map((item) => {
                               const itemTarget = `${baseRoute}#${getServiceSlug(item)}`;
                               return (
@@ -205,7 +201,7 @@ const Header: React.FC = () => {
                                       e.preventDefault();
                                       handleNavigation(itemTarget);
                                     }}
-                                    className="text-[13px] text-gray-600 hover:text-[#163B73] transition-colors block"
+                                    className="text-[13px] [@media(min-width:2400px)]:text-[26px] text-gray-600 hover:text-[#163B73] transition-colors block"
                                   >
                                     {item}
                                   </Link>
@@ -220,8 +216,8 @@ const Header: React.FC = () => {
                 )}
 
                 {link.name === 'Infrastructure' && activeDropdown === 'Infrastructure' && (
-                  <div className="absolute top-[110px] left-0 w-[220px] bg-white shadow-2xl rounded-lg p-4 border border-gray-100 z-[60] outline-none">
-                    <ul className="space-y-3">
+                  <div className="absolute top-[110px] [@media(min-width:2400px)]:top-[180px] left-0 w-[220px] [@media(min-width:2400px)]:w-[440px] bg-white shadow-2xl rounded-lg p-4 [@media(min-width:2400px)]:p-12 border border-gray-100 z-[60] outline-none transition-all duration-300">
+                    <ul className="space-y-3 [@media(min-width:2400px)]:space-y-6">
                       {(infrastructureData as string[]).map((item) => {
                         const infraTarget = item.toLowerCase() === 'team' 
                           ? '/team' 
@@ -235,7 +231,7 @@ const Header: React.FC = () => {
                                 e.preventDefault();
                                 handleNavigation(infraTarget);
                               }}
-                              className="text-[14px] text-gray-600 hover:text-[#163B73] transition-colors block"
+                              className="text-[14px] [@media(min-width:2400px)]:text-[28px] text-gray-600 hover:text-[#163B73] transition-colors block"
                             >
                               {item}
                             </Link>
@@ -257,10 +253,7 @@ const Header: React.FC = () => {
               e.preventDefault();
               handleNavigation('/#contact');
             }}
-            className="hidden md:flex items-center justify-center bg-white text-[#BBB791] rounded-[6px]
-                       w-[150px] h-[45px] lg:w-[170px] lg:h-[50px]
-                       font-inter font-bold text-[15px] lg:text-[16px]
-                       hover:bg-gray-100 transition-all shadow-sm"
+            className="hidden md:flex items-center justify-center bg-white text-[#BBB791] rounded-[6px] [@media(min-width:2400px)]:rounded-[12px] w-[150px] h-[45px] lg:w-[170px] lg:h-[50px] [@media(min-width:2400px)]:w-[340px] [@media(min-width:2400px)]:h-[90px] font-inter font-bold text-[15px] lg:text-[16px] [@media(min-width:2400px)]:text-[32px] hover:bg-gray-100 transition-all duration-300 shadow-sm"
           >
             {contactBtn}
           </Link>

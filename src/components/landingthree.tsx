@@ -43,13 +43,12 @@ const LandingPageThree: React.FC = () => {
       }
     };
 
-    // Try immediately, and also after a short delay to account for page rendering
     scrollToHash();
     const timer = setTimeout(scrollToHash, 500);
     return () => clearTimeout(timer);
   }, [location]);
 
-  // BULLETPROOF NAVIGATION LOGIC (Synced with Header.tsx for consistency)
+  // BULLETPROOF NAVIGATION LOGIC 
   const handleNavigation = (path: string | null) => {
     if (!path) return;
 
@@ -71,17 +70,14 @@ const LandingPageThree: React.FC = () => {
 
     if (hashPart) {
       if (location.pathname === targetRoute) {
-        // Already on the correct page, just smooth scroll to the section
         scrollToTarget(hashPart);
       } else {
-        // Different page! Navigate and then wait a moment for render before scrolling
         navigate(path);
         setTimeout(() => {
           scrollToTarget(hashPart);
         }, 400);
       }
     } else {
-      // Standard page navigation (no hash involved)
       if (location.pathname !== targetRoute) {
         navigate(targetRoute);
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -91,7 +87,6 @@ const LandingPageThree: React.FC = () => {
     }
   };
 
-  // EXACT PATHS FOR YOUR APP
   const getRoutePath = (name: string) => {
     switch (name) {
       case 'Home': return '/';
@@ -108,7 +103,6 @@ const LandingPageThree: React.FC = () => {
     const cat = category.toUpperCase();
     if (cat.includes('INDOOR')) return '/indoor';
     if (cat.includes('LED')) return '/led';
-
     if (cat.includes('MODULAR')) return '/modular';
     return '/outdoor';
   };
@@ -162,29 +156,29 @@ const LandingPageThree: React.FC = () => {
         {/* --- CONTACT SECTION --- */}
         <section
           id="contact"
-          className="bg-[#BBB791] py-[90px] px-6 lg:px-[120px] font-inter flex-grow transition-all scroll-mt-[180px]"
+          className="bg-[#BBB791] pt-[4.5rem] pb-[5.5rem] px-6 lg:px-[7.5rem] font-inter flex-grow transition-all scroll-mt-[11.25rem]"
         >
-          <div className="max-w-full mx-auto">
+          {/* 🔥 WIDER CONTAINER: max-w-[105rem] for normal desktops, max-w-[130rem] for ultra-wides */}
+          <div className="max-w-[105rem] 2xl:max-w-[130rem] mx-auto w-full">
             
             <div className="mb-12 text-left">
-              <h1 className="font-imperial text-[32px] md:text-[48px] font-bold text-[#FFFFFF] mb-4 leading-tight">
+              <h1 className="font-imperial text-[2rem] md:text-[3rem] font-bold text-[#FFFFFF] mb-4 leading-tight">
                 {contactSection.heading}
               </h1>
-              <p className="text-[#FFFFFF] text-[16px] md:text-[18px] max-w-[1600px] leading-relaxed">
+              <p className="text-[#FFFFFF] text-[1rem] md:text-[1.125rem] max-w-full leading-relaxed">
                 {contactSection.description}
               </p>
             </div>
 
-            <div className="bg-white rounded-[24px] p-8 md:p-12 shadow-sm border border-green-100 w-full">
-              <h2 className="font-imperial text-[24px] md:text-[28px] font-bold text-[#BBB791] mb-8">
+            <div className="bg-white rounded-[1.5rem] p-8 md:p-12 shadow-sm border border-green-100 w-full">
+              <h2 className="font-imperial text-[1.5rem] md:text-[1.75rem] font-bold text-[#BBB791] mb-8">
                 {contactSection.form.title}
               </h2>
 
               <form className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6" onSubmit={handleSubmit}>
-                
                 <div className="space-y-6">
                   <div className="space-y-2 text-left">
-                    <label className="text-[14px] font-medium text-[#5A7184]">
+                    <label className="text-[0.875rem] font-medium text-[#5A7184]">
                       {contactSection.form.fields.name}
                     </label>
                     <input
@@ -192,12 +186,12 @@ const LandingPageThree: React.FC = () => {
                       name="name"
                       placeholder="Your Name"
                       required
-                      className="w-full bg-[#F9FAFB] border border-gray-100 rounded-lg h-[54px] px-5 focus:outline-none focus:ring-1 focus:ring-[#51A147] text-[#374151] placeholder:text-gray-300"
+                      className="w-full bg-[#F9FAFB] border border-gray-100 rounded-lg h-[3.375rem] px-5 focus:outline-none focus:ring-1 focus:ring-[#51A147] text-[#374151] placeholder:text-gray-300"
                     />
                   </div>
 
                   <div className="space-y-2 text-left">
-                    <label className="text-[14px] font-medium text-[#5A7184]">
+                    <label className="text-[0.875rem] font-medium text-[#5A7184]">
                       {contactSection.form.fields.phone}
                     </label>
                     <input
@@ -205,20 +199,20 @@ const LandingPageThree: React.FC = () => {
                       name="phone"
                       placeholder="Your Number"
                       required
-                      className="w-full bg-[#F9FAFB] border border-gray-100 rounded-lg h-[54px] px-5 focus:outline-none focus:ring-1 focus:ring-[#51A147] text-[#374151] placeholder:text-gray-300"
+                      className="w-full bg-[#F9FAFB] border border-gray-100 rounded-lg h-[3.375rem] px-5 focus:outline-none focus:ring-1 focus:ring-[#51A147] text-[#374151] placeholder:text-gray-300"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2 text-left flex flex-col h-full">
-                  <label className="text-[14px] font-medium text-[#6B7280]">
+                  <label className="text-[0.875rem] font-medium text-[#6B7280]">
                     {contactSection.form.fields.message}
                   </label>
                   <textarea
                     name="message"
                     placeholder="Tell us about your project"
                     required
-                    className="w-full bg-[#F9FAFB] border border-gray-100 rounded-lg flex-grow min-h-[140px] p-5 focus:outline-none focus:ring-1 focus:ring-[#51A147] resize-none text-[#374151] placeholder:text-gray-300"
+                    className="w-full bg-[#F9FAFB] border border-gray-100 rounded-lg flex-grow min-h-[8.75rem] p-5 focus:outline-none focus:ring-1 focus:ring-[#51A147] resize-none text-[#374151] placeholder:text-gray-300"
                   ></textarea>
                 </div>
 
@@ -233,7 +227,7 @@ const LandingPageThree: React.FC = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`w-full text-white py-3.5 rounded-lg font-bold text-[16px] md:text-[18px] transition-all 
+                    className={`w-full text-white py-[0.875rem] rounded-lg font-bold text-[1rem] md:text-[1.125rem] transition-all 
                       ${isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#BBB791] hover:brightness-95 hover:shadow-lg'}`}
                   >
                     {isSubmitting ? 'Sending...' : contactSection.form.buttonText}
@@ -245,39 +239,40 @@ const LandingPageThree: React.FC = () => {
         </section>
 
         {/* --- FOOTER SECTION --- */}
-        <footer className="bg-[#BBB791] w-full text-white py-12 md:py-20 px-6 lg:px-[80px] xl:px-[120px]">
-          <div className="max-w-[1440px] mx-auto">
+        <footer className="bg-[#BBB791] w-full text-white py-[3rem] md:py-[5rem] px-6 lg:px-[5rem] xl:px-[7.5rem]">
+          {/* 🔥 WIDER CONTAINER */}
+          <div className="max-w-[105rem] 2xl:max-w-[130rem] mx-auto w-full">
             
-            <div className="flex flex-col lg:flex-row justify-between gap-12 mb-16 text-left items-start">
+            <div className="flex flex-col xl:flex-row gap-12 lg:gap-16 xl:gap-20 mb-16 text-left items-start">
 
               {/* LEFT: Logo & Branding */}
-              <div className="max-w-[300px] xl:max-w-[390px] space-y-6 shrink-0">
+              <div className="w-full xl:w-[25%] space-y-6 shrink-0">
                 <img
                   src={circlelogo}
                   alt="Logo"
-                  className="w-45 h-auto cursor-pointer"
+                  className="w-[11.25rem] h-auto cursor-pointer"
                   onClick={() => handleNavigation('/')}
                 />
-                <p className="text-[14px] leading-relaxed font-normal text-white opacity-100">
+                <p className="text-[0.875rem] leading-relaxed font-normal text-white opacity-100 pr-4">
                   {contactInfo.quote}
                 </p>
                 <button 
                   onClick={() => handleNavigation('/#contact')}
-                  className="bg-white text-[#000000] px-8 py-3 rounded-[6px] font-bold text-[15px] hover:bg-gray-100 transition"
+                  className="bg-white text-[#000000] px-8 py-3 rounded-[0.375rem] font-bold text-[0.9375rem] hover:bg-gray-100 transition"
                 >
                   Contact now
                 </button>
               </div>
 
-              {/* RIGHT: Links | Services | Contacts | Map */}
-              <div className="flex flex-row flex-wrap lg:flex-nowrap justify-between w-full gap-x-8 gap-y-12">
+              {/* RIGHT: Grid Layout */}
+              <div className="w-full xl:w-[75%] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6 xl:gap-10">
 
                 {/* Links */}
-                <div className="min-w-[120px]">
-                  <h4 className="font-imperial font-medium text-[20px] xl:text-[22px] mb-6 text-white">
+                <div className="w-full">
+                  <h4 className="font-imperial font-medium text-[1.25rem] xl:text-[1.375rem] mb-6 text-white">
                     {footer.linksTitle}
                   </h4>
-                  <ul className="space-y-4 text-[15px]">
+                  <ul className="space-y-4 text-[0.9375rem]">
                     {header.navLinks.map((link, idx) => (
                       <li
                         key={idx}
@@ -291,11 +286,11 @@ const LandingPageThree: React.FC = () => {
                 </div>
 
                 {/* Services */}
-                <div className="min-w-[120px]">
-                  <h4 className="font-imperial font-medium text-[20px] xl:text-[22px] mb-6 text-white">
+                <div className="w-full">
+                  <h4 className="font-imperial font-medium text-[1.25rem] xl:text-[1.375rem] mb-6 text-white">
                     {footer.productTitle}
                   </h4>
-                  <ul className="space-y-4 text-[15px]">
+                  <ul className="space-y-4 text-[0.9375rem]">
                     {footer.products.map((product, idx) => (
                       <li
                         key={idx}
@@ -309,13 +304,13 @@ const LandingPageThree: React.FC = () => {
                 </div>
 
                 {/* Contacts */}
-                <div className="space-y-6 min-w-[200px] xl:min-w-[240px]">
-                  <h4 className="font-imperial font-medium text-[20px] xl:text-[22px] mb-6 text-white">
+                <div className="w-full space-y-6">
+                  <h4 className="font-imperial font-medium text-[1.25rem] xl:text-[1.375rem] mb-6 text-white">
                     {contactInfo.title}
                   </h4>
-                  <div className="space-y-5 text-[15px]">
+                  <div className="space-y-5 text-[0.9375rem]">
                     <div className="flex items-start gap-4">
-                      <img src={emailIcon} alt="Email" className="w-5 h-5 invert brightness-0 mt-1" />
+                      <img src={emailIcon} alt="Email" className="w-[1.25rem] h-[1.25rem] invert brightness-0 mt-1 shrink-0" />
                       <a
                         href={`mailto:${contactInfo.email}`}
                         className="text-white hover:text-green-100 transition break-all opacity-100"
@@ -324,25 +319,22 @@ const LandingPageThree: React.FC = () => {
                       </a>
                     </div>
                     
-                    {/* Phone 1 */}
                     <div className="flex items-center gap-4">
-                      <img src={phoneIcon} alt="Phone" className="w-5 h-5 invert brightness-0" />
+                      <img src={phoneIcon} alt="Phone" className="w-[1.25rem] h-[1.25rem] invert brightness-0 shrink-0" />
                       <a href={`tel:${contactInfo.phone1.replace(/\s/g, '')}`} className="text-white hover:text-green-100 transition opacity-100">
                         {contactInfo.phone1}
                       </a>
                     </div>
 
-                    {/* Phone 2 */}
                     <div className="flex items-center gap-4">
-                      <img src={phoneIcon} alt="Phone" className="w-5 h-5 invert brightness-0" />
+                      <img src={phoneIcon} alt="Phone" className="w-[1.25rem] h-[1.25rem] invert brightness-0 shrink-0" />
                       <a href={`tel:${contactInfo.phone2.replace(/\s/g, '')}`} className="text-white hover:text-green-100 transition opacity-100">
                         {contactInfo.phone2}
                       </a>
                     </div>
 
-                    {/* Phone 3 */}
                     <div className="flex items-center gap-4">
-                      <img src={phoneIcon} alt="Phone" className="w-5 h-5 invert brightness-0" />
+                      <img src={phoneIcon} alt="Phone" className="w-[1.25rem] h-[1.25rem] invert brightness-0 shrink-0" />
                       <a href={`tel:${contactInfo.phone3.replace(/\s/g, '')}`} className="text-white hover:text-green-100 transition opacity-100">
                         {contactInfo.phone3}
                       </a>
@@ -350,12 +342,13 @@ const LandingPageThree: React.FC = () => {
                   </div>
                 </div>
 
-                {/* MAP - VALID HTTPS GOOGLE MAPS EMBED */}
-                <div className="w-full lg:w-[250px] xl:w-[300px] shrink-0">
+                {/* MAP */}
+                <div className="w-full">
+                  {/* 🔥 SQUARE ON NORMAL DESKTOP: xl:aspect-square makes it square. 2xl resets it to a taller rectangle */}
                   <iframe
                     title="The Workman Advertising Location"
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.0315560647895!2d80.17415177454848!3d13.097205112117565!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5264000305f883%3A0xcda6fba652dc97da!2sChennai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1710856030123!5m2!1sen!2sin"
-                    className="w-full h-[220px] rounded-lg border border-white/20 bg-green-50/10"
+                    className="w-full h-[15rem] xl:h-auto xl:aspect-square 2xl:aspect-auto 2xl:h-[18rem] rounded-lg border border-white/20 bg-green-50/10 object-cover"
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                   />
@@ -365,7 +358,7 @@ const LandingPageThree: React.FC = () => {
             </div>
 
             <div className="pt-8 border-t border-white/20 text-center">
-              <p className="text-[13px] tracking-wide text-white opacity-100">
+              <p className="text-[0.8125rem] tracking-wide text-white opacity-100">
                 {footer.copyright}
               </p>
             </div>

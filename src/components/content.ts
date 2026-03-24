@@ -67,6 +67,7 @@ import exhibit3 from "../assets/outdoor 21.png";
 import kiosk1 from "../assets/outdoor 22.png";
 import kiosk2 from "../assets/outdoor 23.png";
 import kiosk3 from "../assets/outdoor 24.png";
+import kiosk4 from "../assets/outdoorkisok1.png";
 
 // Display Stands
 import display1 from "../assets/outdoor 25.png";
@@ -111,9 +112,20 @@ import clip2 from "../assets/outdoor 50.png";
 import clip3 from "../assets/outdoor 51.png";
 // Facade / Signages
 import facade1 from "../assets/home 3.jpg";
-import facade2 from "../assets/home 2.jpg";
-import facade3 from "../assets/home 4.png";
-import facade4 from "../assets/home 1.jpg";
+import facade2 from "../assets/facade1.png";
+import facade3 from "../assets/facade2.png";
+import facade4 from "../assets/facade3.png";
+import facade5 from "../assets/home 2.png";
+import facade6 from "../assets/home 1.jpg";
+import facade7 from "../assets/facadeDaikin.png";
+import facade8 from "../assets/facade8.png";
+import facade9 from "../assets/facade9.png";
+import facade10 from "../assets/facade10.png";
+import facade11 from "../assets/facade11.png";
+import facade12 from "../assets/facade12.png";
+import facade13 from "../assets/facade13.png";
+import facade14 from "../assets/facade14.png";
+
 
 import p1 from "../assets/p1.jpg";
 import p2 from "../assets/p2.jpg";
@@ -397,7 +409,18 @@ testimonials: {
     backButtonText: "Categories",
 
     services: [
+        { 
+      id: 6, 
+      title: "Facade / Signages", 
+      images: [facade7, facade1,facade5, facade3,facade6,facade4,facade2,facade12,facade11,facade10,facade9,facade8,facade13,facade14],
+      description_points: [
+        "Complete building-front branding solutions designed to enhance visibility and create a strong first impression.",
+        "Customized facade signages crafted with premium materials, precision fabrication, and durable outdoor finishing.",
+        "Ideal for showrooms, retail outlets, and commercial buildings, delivering maximum brand presence day and night."
+      ] 
+    },
    { 
+    
       id: 1, 
       title: "Pylon Signage", 
       images: [pylon1, pylon2, pylon3,pylon4],
@@ -447,16 +470,7 @@ testimonials: {
         "Ideal for showrooms, corporate offices, and facade branding, offering a modern look with strong visual impact."
       ] 
     },
-    { 
-      id: 6, 
-      title: "Facade / Signages", 
-      images: [facade2, facade1, facade3,facade4],
-      description_points: [
-        "Complete building-front branding solutions designed to enhance visibility and create a strong first impression.",
-        "Customized facade signages crafted with premium materials, precision fabrication, and durable outdoor finishing.",
-        "Ideal for showrooms, retail outlets, and commercial buildings, delivering maximum brand presence day and night."
-      ] 
-    },
+  
     { 
       id: 7, 
       title: "Retail Interiors", 
@@ -480,7 +494,7 @@ testimonials: {
     { 
       id: 9, 
       title: "Kiosk", 
-      images: [kiosk1, kiosk2, kiosk3],
+      images: [kiosk1, kiosk2, kiosk3,kiosk4],
       description_points: [
         "Compact and attractive kiosk branding solutions designed for promotions, product displays, and customer engagement.",
         "Custom-built structures with premium materials, strong durability, and clean finishing for a professional appearance.",

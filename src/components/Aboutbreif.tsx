@@ -40,7 +40,6 @@ const BRANDS = [
 ];
 
 const About: React.FC = () => {
-    // UPDATED: Set to null so no item is open by default
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
     useEffect(() => {
@@ -105,25 +104,24 @@ const About: React.FC = () => {
             `}} />
 
             {/* SECTION 1: ABOUT US BRIEF */}
-            <section className="max-w-[1440px] mx-auto px-6 lg:px-20 pt-16 md:pt-24 pb-16">
-                <h1 className="font-imperial text-[48px] md:text-[72px] font-bold mb-6">About Us</h1>
-                <p className="text-white/90 text-lg md:text-xl max-w-[850px] leading-relaxed mb-16">
+            <section className="max-w-[1440px] [@media(min-width:2400px)]:max-w-[130rem] mx-auto px-6 lg:px-20 [@media(min-width:2400px)]:px-[8rem] pt-16 md:pt-24 [@media(min-width:2400px)]:pt-32 pb-16">
+                <h1 className="font-imperial text-[48px] md:text-[72px] [@media(min-width:2400px)]:text-[120px] font-bold mb-6 [@media(min-width:2400px)]:mb-10">About Us</h1>
+                <p className="text-white/90 text-lg md:text-xl [@media(min-width:2400px)]:text-[32px] max-w-[850px] [@media(min-width:2400px)]:max-w-[1400px] leading-relaxed mb-16 [@media(min-width:2400px)]:mb-24">
                     Workman Advertising is a Chennai-based branding and signage solutions company delivering high-quality indoor, outdoor, and digital display services.
                 </p>
 
-                <div className="flex flex-col lg:flex-row gap-16 items-start">
+                <div className="flex flex-col lg:flex-row gap-16 [@media(min-width:2400px)]:gap-32 items-start">
                     <div className="w-full lg:w-1/2">
-                        {/* Here is the integrated AboutVideo replacing the first image */}
                         <video 
                             src={AboutVideo} 
                             autoPlay 
                             loop 
                             muted 
                             playsInline 
-                            className="rounded-2xl shadow-2xl w-full object-cover h-[500px]"
+                            className="rounded-2xl shadow-2xl w-full object-cover h-[500px] [@media(min-width:2400px)]:h-[800px]"
                         />
                     </div>
-                    <div className="w-full lg:w-1/2 space-y-8 text-white/80 leading-relaxed text-lg pt-4 text-justify">
+                    <div className="w-full lg:w-1/2 space-y-8 [@media(min-width:2400px)]:space-y-16 text-white/80 leading-relaxed text-lg [@media(min-width:2400px)]:text-[30px] [@media(min-width:2400px)]:leading-[1.8] pt-4 text-justify">
                         <p>Workman Advertising, Chennai, India is a leading provider of complete branding and signage solutions, delivering high-quality visual communication for businesses across multiple industries.</p>
                         <p>Our core strength lies in delivering customized signage and advertising solutions for corporate, retail, showroom, and commercial environments. We specialize in indoor and outdoor signage, facade branding, LED video walls, POP displays, and modular signage.</p>
                         <p>With a reputation built on trust, craftsmanship, and customer satisfaction, we continue to be a preferred signage partner for brands looking for long-lasting and high-impact advertising solutions.</p>
@@ -132,10 +130,10 @@ const About: React.FC = () => {
             </section>
 
             {/* SECTION 2: PORTFOLIO MARQUEE */}
-            <section className="py-12 overflow-hidden">
+            <section className="py-12 [@media(min-width:2400px)]:py-24 overflow-hidden">
                 <div className="animate-marquee flex">
                     {[...PORTFOLIO_SCROLL, ...PORTFOLIO_SCROLL].map((img, i) => (
-                        <div key={i} className="w-[300px] h-[180px] md:w-[480px] md:h-[280px] px-3 flex-shrink-0">
+                        <div key={i} className="w-[300px] h-[180px] md:w-[480px] md:h-[280px] [@media(min-width:2400px)]:w-[800px] [@media(min-width:2400px)]:h-[480px] px-3 flex-shrink-0">
                             <img src={img} alt="Work" className="w-full h-full object-cover rounded-xl shadow-lg" />
                         </div>
                     ))}
@@ -143,13 +141,12 @@ const About: React.FC = () => {
             </section>
 
             {/* SECTION 3: OUR SPECIALIZATION */}
-            <section className="bg-[#BBB791] text-white py-20 px-6 lg:px-20">
-                <div className="max-w-[1440px] mx-auto">
-                    <div className="flex flex-col lg:flex-row items-center gap-16">
+            <section className="bg-[#BBB791] text-white py-20 [@media(min-width:2400px)]:py-32 px-6 lg:px-20 [@media(min-width:2400px)]:px-[8rem]">
+                <div className="max-w-[1440px] [@media(min-width:2400px)]:max-w-[130rem] mx-auto">
+                    <div className="flex flex-col lg:flex-row items-center gap-16 [@media(min-width:2400px)]:gap-32">
                         
-                        {/* Left Side: Title and Image */}
                         <div className="lg:w-1/2 w-full">
-                            <h2 className="font-imperial text-[42px] md:text-[56px] font-bold mb-8 leading-tight border-t border-white/30 pt-4 inline-block">
+                            <h2 className="font-imperial text-[42px] md:text-[56px] [@media(min-width:2400px)]:text-[96px] font-bold mb-8 [@media(min-width:2400px)]:mb-16 leading-tight border-t border-white/30 pt-4 inline-block">
                                 Our Specialization
                             </h2>
                             <div className="rounded-xl overflow-hidden shadow-2xl">
@@ -161,37 +158,36 @@ const About: React.FC = () => {
                             </div>
                         </div>
 
-                        {/* Right Side: Accordion */}
-                        <div className="lg:w-1/2 w-full space-y-6">
+                        <div className="lg:w-1/2 w-full space-y-6 [@media(min-width:2400px)]:space-y-12">
                             {specializationData.map((item, index) => (
-                                <div key={index} className="border-b border-white/20 pb-6">
+                                <div key={index} className="border-b border-white/20 pb-6 [@media(min-width:2400px)]:pb-10">
                                     <div 
-                                        className="flex items-start gap-6 cursor-pointer" 
+                                        className="flex items-start gap-6 [@media(min-width:2400px)]:gap-10 cursor-pointer" 
                                         onClick={() => toggleAccordion(index)}
                                     >
-                                        <span className="text-white text-3xl font-light w-8 shrink-0">
+                                        <span className="text-white text-3xl [@media(min-width:2400px)]:text-6xl font-light w-8 [@media(min-width:2400px)]:w-12 shrink-0 pt-1">
                                             {activeIndex === index ? '−' : '+'}
                                         </span>
                                         
                                         <div className="flex-1">
-                                            <h3 className="text-2xl md:text-3xl font-bold font-imperial mb-2">
+                                            <h3 className="text-2xl md:text-3xl [@media(min-width:2400px)]:text-5xl font-bold font-imperial mb-2 [@media(min-width:2400px)]:mb-6">
                                                 {item.title}
                                             </h3>
                                             
                                             <div 
                                                 className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                                                    activeIndex === index ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
+                                                    activeIndex === index ? 'max-h-[500px] [@media(min-width:2400px)]:max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
                                                 }`}
                                             >
-                                                <p className="text-lg opacity-90 mb-4">{item.shortDesc}</p>
+                                                <p className="text-lg [@media(min-width:2400px)]:text-3xl opacity-90 mb-4 [@media(min-width:2400px)]:mb-8 leading-relaxed">{item.shortDesc}</p>
                                                 {item.highlight && (
-                                                    <p className="font-bold mb-2 text-white/80">{item.highlight}</p>
+                                                    <p className="font-bold mb-2 [@media(min-width:2400px)]:mb-6 text-white/80 [@media(min-width:2400px)]:text-3xl">{item.highlight}</p>
                                                 )}
-                                                <ul className="space-y-2 pb-4">
+                                                <ul className="space-y-2 [@media(min-width:2400px)]:space-y-6 pb-4">
                                                     {item.fullContent.map((point, i) => (
-                                                        <li key={i} className="flex items-center gap-3">
-                                                            <span className="w-1.5 h-1.5 rounded-full bg-white shrink-0" />
-                                                            <span>{point}</span>
+                                                        <li key={i} className="flex items-center gap-3 [@media(min-width:2400px)]:gap-6 text-base [@media(min-width:2400px)]:text-2xl">
+                                                            <span className="w-1.5 h-1.5 [@media(min-width:2400px)]:w-3 [@media(min-width:2400px)]:h-3 rounded-full bg-white shrink-0" />
+                                                            <span className="opacity-90">{point}</span>
                                                         </li>
                                                     ))}
                                                 </ul>
@@ -206,9 +202,9 @@ const About: React.FC = () => {
             </section>
 
             {/* SECTION 4: CLIENT BRANDS */}
-            <section className="bg-white py-12 md:py-20">
-                <div className="max-w-[1440px] mx-auto px-6 lg:px-20 text-center">
-                    <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-8 md:gap-x-16 md:gap-y-12">
+            <section className="bg-white py-12 md:py-20 [@media(min-width:2400px)]:py-32">
+                <div className="max-w-[1440px] [@media(min-width:2400px)]:max-w-[130rem] mx-auto px-6 lg:px-20 [@media(min-width:2400px)]:px-[8rem] text-center">
+                    <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-8 md:gap-x-16 md:gap-y-12 [@media(min-width:2400px)]:gap-x-24 [@media(min-width:2400px)]:gap-y-20">
                         {BRANDS.map((logo, i) => (
                             <div 
                                 key={i} 
@@ -217,7 +213,7 @@ const About: React.FC = () => {
                                 <img 
                                     src={logo} 
                                     alt={`Brand ${i + 1}`} 
-                                    className="w-[100px] sm:w-[120px] md:w-[160px] h-[50px] md:h-[75px] object-contain" 
+                                    className="w-[100px] sm:w-[120px] md:w-[160px] [@media(min-width:2400px)]:w-[320px] h-[50px] md:h-[75px] [@media(min-width:2400px)]:h-[150px] object-contain" 
                                 />
                             </div>
                         ))}

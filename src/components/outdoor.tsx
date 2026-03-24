@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import './outdoor.css';
 import LandingPageThree from './landingthree';
-import ServiceDetails from "./ServiceDetails"; // Matches exact file casing
+import ServiceDetails from "./ServiceDetails";
 import { LANDING_CONTENT } from './content';
 
 interface Service {
@@ -52,7 +52,6 @@ const OutdoorServices: React.FC = () => {
   const isFullWidthCategory = currentCategoryKey === 'LED VIDEO WALL' || currentCategoryKey === 'POP';
   const pageHeader = categoryData[currentCategoryKey];
 
-  // --- Fixed Navigation Logic ---
   const handleBack = () => {
     if (selectedFullscreenService) {
       setSelectedFullscreenService(null);
@@ -69,14 +68,11 @@ const OutdoorServices: React.FC = () => {
     }
   };
   
+  // FIX: Removed the 40-word arbitrary split. 
+  // Now it splits by actual newlines if they exist, or just renders full horizontal width.
   const formattedParagraphs = useMemo(() => {
     const text = pageHeader?.description || "";
-    const words = text.split(/\s+/);
-    const paragraphs = [];
-    for (let i = 0; i < words.length; i += 40) {
-      paragraphs.push(words.slice(i, i + 40).join(' '));
-    }
-    return paragraphs;
+    return text.split('\n').filter(p => p.trim() !== '');
   }, [pageHeader?.description]);
 
   const filteredServices = useMemo(() => {
@@ -89,36 +85,32 @@ const OutdoorServices: React.FC = () => {
     );
   }, [currentCategoryKey, header.servicesData, outdoorPage.services]);
 
-useEffect(() => {
-  if (isFullWidthCategory || selectedFullscreenService) return;
+  useEffect(() => {
+    if (isFullWidthCategory || selectedFullscreenService) return;
 
-  const handleScroll = () => {
-    const cards = document.querySelectorAll('.scroll-stack-card');
+    const handleScroll = () => {
+      const cards = document.querySelectorAll('.scroll-stack-card');
+      cards.forEach((card) => {
+        const rect = card.getBoundingClientRect();
+        const cardTop = rect.top;
 
-    cards.forEach((card) => {
-      const rect = card.getBoundingClientRect();
-      const cardTop = rect.top;
+        if (cardTop < 200 && cardTop > -500) {
+          const progress = Math.max(0, (200 - cardTop) / 600);
+          const scale = 1 - progress * 0.05;
+          const opacity = 1 - progress * 0.2;
 
-      if (cardTop < 200 && cardTop > -500) {
-        const progress = Math.max(0, (200 - cardTop) / 600);
-        const scale = 1 - progress * 0.05;
-        const opacity = 1 - progress * 0.2;
+          (card as HTMLElement).style.transform = `scale(${scale})`;
+          (card as HTMLElement).style.opacity = `${opacity}`;
+        } else {
+          (card as HTMLElement).style.transform = `scale(1)`;
+          (card as HTMLElement).style.opacity = `1`;
+        }
+      });
+    };
 
-        (card as HTMLElement).style.transform = `scale(${scale})`;
-        (card as HTMLElement).style.opacity = `${opacity}`;
-      } else {
-        (card as HTMLElement).style.transform = `scale(1)`;
-        (card as HTMLElement).style.opacity = `1`;
-      }
-    });
-  };
-
-  window.addEventListener("scroll", handleScroll);
-
-  return () => {
-    window.removeEventListener("scroll", handleScroll);
-  };
-}, [isFullWidthCategory, selectedFullscreenService]);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isFullWidthCategory, selectedFullscreenService]);
 
   return (
     <div className="flex flex-col w-full bg-[#BBB791]">
@@ -130,6 +122,23 @@ useEffect(() => {
         .font-inter { font-family: 'Inter', sans-serif !important; }
         .font-imperial { font-family: "ImperialStd-BoldItalic", serif !important; }
 
+        /* ============== ALWAYS FULL HORIZONTAL WIDTH TEXT ============== */
+        .description-text p {
+          max-width: 100% !important;
+          width: 100% !important;
+        }
+
+        /* 32-inch ultra wide screen scroll stack scaling */
+        @media (min-width: 2560px) {
+          .scroll-stack-card {
+            height: 75vh !important;
+            border-radius: 60px !important;
+            margin-bottom: 15vh !important;
+          }
+          .split-hero-left, .fs-left-content { padding: 10% 10% !important; }
+        }
+
+        /* Base Styles */
         .split-hero-container {
             display: flex;
             width: 100%;
@@ -202,7 +211,8 @@ useEffect(() => {
           background: #000;
         }
 
-        .fs-static-media-container img, .fs-static-media-container video { 
+        .fs-static-media-container img, 
+        .fs-static-media-container video { 
           height: 100vh; 
           width: 100%; 
           object-fit: cover; 
@@ -239,32 +249,37 @@ useEffect(() => {
         }
 
         @media (max-width: 1024px) { 
-          .split-hero-container, .fs-top-horizontal-row { flex-direction: column; height: auto; }
-          .split-hero-left, .split-hero-right, .fs-left-content, .fs-right-media { width: 100%; height: auto; min-height: 40vh; }
+          .split-hero-container, .fs-top-horizontal-row { 
+            flex-direction: column; 
+            height: auto; 
+          }
+          .split-hero-left, .split-hero-right, .fs-left-content, .fs-right-media { 
+            width: 100%; 
+            height: auto; 
+            min-height: 40vh; 
+          }
         }
-    
       `}} />
 
-      {/* --- FULLSCREEN OVERLAY --- */}
+      {/* FULLSCREEN OVERLAY */}
       {selectedFullscreenService && (
         <div className="fs-split-overlay">
           <div className="fs-close" onClick={() => setSelectedFullscreenService(null)}>&times;</div>
           <div className="fs-top-horizontal-row">
-            <div className="fs-left-content pt-24 md:pt-32">
-              <span className="uppercase tracking-[0.2em] font-bold text-white/60 mb-4 block text-[10px] md:text-xs">
+            <div className="fs-left-content pt-24 md:pt-32 min-[2560px]:pt-48">
+              <span className="uppercase tracking-[0.2em] font-bold text-white/60 mb-4 block text-[10px] md:text-xs min-[2560px]:text-xl">
                 Service Details
               </span>
-              <h2 className="font-imperial text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-[1.1]">
+              <h2 className="font-imperial text-4xl md:text-6xl lg:text-7xl min-[2560px]:text-[100px] min-[3840px]:text-[130px] font-bold mb-8 leading-[1.1]">
                 {selectedFullscreenService.title}
               </h2>
-              <div className="space-y-6 max-w-md">
+              <div className="space-y-6 max-w-md min-[2560px]:max-w-3xl min-[3840px]:max-w-5xl">
                 {selectedFullscreenService.description_points?.map((point, index) => (
-                  <div key={index} className="flex items-start gap-4">
-                    {/* UPDATED POINT COLOR */}
-                    <span className="bg-white text-[#BBB791] w-6 h-6 rounded-full flex items-center justify-center shrink-0 font-bold text-[10px] mt-1">
+                  <div key={index} className="flex items-start gap-4 min-[2560px]:gap-8">
+                    <span className="bg-white text-[#BBB791] w-6 h-6 min-[2560px]:w-10 min-[2560px]:h-10 rounded-full flex items-center justify-center shrink-0 font-bold text-[10px] min-[2560px]:text-xl mt-1 min-[2560px]:mt-2">
                       {index + 1}
                     </span>
-                    <p className="text-base md:text-xl font-light text-white/90 leading-relaxed">
+                    <p className="text-base md:text-xl min-[2560px]:text-3xl min-[3840px]:text-4xl font-light text-white/90 leading-relaxed min-[2560px]:leading-loose">
                       {point}
                     </p>
                   </div>
@@ -289,33 +304,32 @@ useEffect(() => {
         </div>
       )}
 
-      {/* --- MAIN PAGE LAYOUT --- */}
+      {/* MAIN PAGE LAYOUT */}
       {isFullWidthCategory ? (
         <div className="flex flex-col w-full">
           <div className="split-hero-container">
-            <div className="split-hero-left pt-24 md:pt-32">
-              <button className="flex items-center text-white/80 hover:text-white transition-colors mb-8 group w-fit" onClick={handleBack}>
-                <span className="mr-2 text-xl transition-transform group-hover:-translate-x-1">←</span> Back to Services
+            <div className="split-hero-left pt-24 md:pt-32 min-[2560px]:pt-48">
+              <button className="flex items-center text-white/80 hover:text-white transition-colors mb-8 group w-fit min-[2560px]:text-2xl" onClick={handleBack}>
+                <span className="mr-2 text-xl min-[2560px]:text-3xl transition-transform group-hover:-translate-x-1">←</span> Back to Services
               </button>
-              <span className="uppercase tracking-[0.2em] font-bold text-white/60 mb-4 block text-[10px] md:text-xs">
+              <span className="uppercase tracking-[0.2em] font-bold text-white/60 mb-4 block text-[10px] md:text-xs min-[2560px]:text-xl">
                 Service Overview
               </span>
-              <h1 className={`font-imperial font-bold mb-6 leading-[1.1] ${currentCategoryKey === 'LED VIDEO WALL' ? 'text-3xl md:text-5xl lg:text-6xl' : 'text-4xl md:text-7xl lg:text-8xl'}`}>
+              <h1 className={`font-imperial font-bold mb-6 leading-[1.1] min-[2560px]:mb-12 ${currentCategoryKey === 'LED VIDEO WALL' ? 'text-3xl md:text-5xl lg:text-6xl min-[2560px]:text-[90px] min-[3840px]:text-[120px]' : 'text-4xl md:text-7xl lg:text-8xl min-[2560px]:text-[110px] min-[3840px]:text-[150px]'}`}>
                 {pageHeader?.heading}
               </h1>
-              <div className="space-y-4 mb-8">
+              <div className="space-y-4 mb-8 min-[2560px]:mb-16">
                 {filteredServices[0]?.description_points?.slice(0, 2).map((point, index) => (
-                  <div key={index} className="flex items-start gap-4">
-                    {/* UPDATED HERO POINT COLOR */}
-                    <span className="bg-white text-[#BBB791] w-5 h-5 rounded-full flex items-center justify-center shrink-0 font-bold text-[9px] mt-1">
+                  <div key={index} className="flex items-start gap-4 min-[2560px]:gap-8">
+                    <span className="bg-white text-[#BBB791] w-5 h-5 min-[2560px]:w-10 min-[2560px]:h-10 rounded-full flex items-center justify-center shrink-0 font-bold text-[9px] min-[2560px]:text-lg mt-1 min-[2560px]:mt-2">
                       {index + 1}
                     </span>
-                    <p className="text-white/90 text-sm md:text-base font-light leading-relaxed">{point}</p>
+                    <p className="text-white/90 text-sm md:text-base min-[2560px]:text-3xl min-[3840px]:text-4xl font-light leading-relaxed min-[2560px]:leading-loose">{point}</p>
                   </div>
                 ))}
               </div>
-              <div className="space-y-4 text-white/80 text-sm md:text-lg font-light max-w-lg leading-relaxed">
-                {formattedParagraphs.slice(0, 3).map((para, i) => <p key={i}>{para}</p>)}
+              <div className="space-y-4 text-white/80 text-sm md:text-lg min-[2560px]:text-3xl min-[3840px]:text-4xl font-light leading-relaxed min-[2560px]:leading-loose description-text w-full">
+                {formattedParagraphs.map((para, i) => <p key={i} className="w-full">{para}</p>)}
               </div>
             </div>
             <div className="split-hero-right min-h-[40vh]">
@@ -332,45 +346,50 @@ useEffect(() => {
         </div>
       ) : (
         <>
-          <section className="w-full pt-24 md:pt-32 pb-12">
-            <div className="w-full max-w-[1920px] mx-auto px-6 md:px-[8%]">
-              <button className="flex items-center text-white hover:text-black transition-colors mb-8 group w-fit" onClick={handleBack}>
-                <span className="mr-2 text-xl transition-transform group-hover:-translate-x-1">←</span> Back to Services
+          {/* THE FIXED HORIZONTAL TEXT SECTION */}
+          <section className="w-full pt-24 md:pt-32 min-[2560px]:pt-[180px] min-[3840px]:pt-[250px] pb-12 min-[2560px]:pb-24">
+            <div className="w-full mx-auto px-6 md:px-[8%] min-[2560px]:px-[10%]">
+              <button className="flex items-center text-white hover:text-black transition-colors mb-8 group w-fit min-[2560px]:text-2xl" onClick={handleBack}>
+                <span className="mr-2 text-xl min-[2560px]:text-3xl transition-transform group-hover:-translate-x-1">←</span> Back to Services
               </button>
-              <h1 className="font-imperial text-4xl md:text-[64px] font-bold text-white mb-8 leading-tight">
+              <h1 className="font-imperial text-4xl md:text-[64px] min-[2560px]:text-[100px] min-[3840px]:text-[130px] font-bold text-white mb-8 min-[2560px]:mb-12 leading-tight w-full">
                 {pageHeader?.heading}
               </h1>
-              <div className="text-white text-base md:text-xl leading-relaxed max-w-[1600px]">
-                {formattedParagraphs.map((para, index) => <p key={index} className="mb-6">{para}</p>)}
+              {/* Text will now span 100% full width naturally without forced wrapping */}
+              <div className="text-white w-full description-text">
+                {formattedParagraphs.map((para, index) => (
+                  <p key={index} className="mb-6 min-[2560px]:mb-10 text-base md:text-xl min-[2560px]:text-3xl min-[3840px]:text-4xl leading-relaxed min-[2560px]:leading-loose w-full">
+                    {para}
+                  </p>
+                ))}
               </div>
             </div>
           </section>
 
-          <section className="w-full px-6 md:px-[8%] pb-[20vh] relative">
+          <section className="w-full px-6 md:px-[8%] min-[2560px]:px-[10%] pb-[20vh] relative">
             <div className="flex flex-col gap-0">
               {filteredServices.map((service) => (
                 <ScrollStackItem key={service.id} onClick={() => setSelectedFullscreenService(service)}>
                   <div className="flex flex-col md:flex-row h-full">
-                    <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-white text-left">
-                      <h3 className="font-imperial text-3xl md:text-6xl font-bold text-black mb-6 leading-tight">
+                    <div className="w-full md:w-1/2 p-8 md:p-12 min-[2560px]:p-20 flex flex-col justify-center bg-white text-left">
+                      <h3 className="font-imperial service-card-title text-3xl md:text-6xl min-[2560px]:text-[90px] min-[3840px]:text-[120px] font-bold text-black mb-6 min-[2560px]:mb-12 leading-tight">
                         {service.title}
                       </h3>
                       
-                      <div className="space-y-4 mb-8">
+                      <div className="space-y-4 mb-8 min-[2560px]:mb-16">
                         {service.description_points?.slice(0, 2).map((point, idx) => (
-                          <div key={idx} className="flex items-start gap-3">
-                            {/* UPDATED CARD POINT COLOR */}
-                            <span className="bg-[#BBB791] text-white w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold mt-1">
+                          <div key={idx} className="flex items-start gap-3 min-[2560px]:gap-6">
+                            <span className="bg-[#BBB791] text-white w-5 h-5 min-[2560px]:w-10 min-[2560px]:h-10 rounded-full flex items-center justify-center shrink-0 text-[10px] min-[2560px]:text-lg font-bold mt-1 min-[2560px]:mt-2">
                               {idx + 1}
                             </span>
-                            <p className="text-gray-600 text-sm md:text-base font-light line-clamp-2">
+                            <p className="text-gray-600 text-sm md:text-base min-[2560px]:text-3xl min-[3840px]:text-4xl font-light line-clamp-2 min-[2560px]:leading-relaxed">
                               {point}
                             </p>
                           </div>
                         ))}
                       </div>
 
-                      <button className="btn-view-details">
+                      <button className="btn-view-details min-[2560px]:px-12 min-[2560px]:py-6 min-[2560px]:text-2xl min-[2560px]:rounded-[2rem]">
                         View Project Details
                       </button>
                     </div>

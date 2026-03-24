@@ -26,10 +26,9 @@ const Team: React.FC = () => {
   }, []);
 
   const allTeamMembers = [team1, team2, team3, team4, team5, team6, team7, team8, team9];
-  // Triple the array for a seamless infinite loop
   const duplicatedMembers = [...allTeamMembers, ...allTeamMembers, ...allTeamMembers];
 
-  // 🟢 Drag Logic
+  // Drag Logic
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDown(true);
     if (!scrollRef.current) return;
@@ -41,13 +40,13 @@ const Team: React.FC = () => {
     if (!isDown || !scrollRef.current) return;
     e.preventDefault();
     const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 2; 
+    const walk = (x - startX) * 2;
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
 
   const handleMouseUpOrLeave = () => setIsDown(false);
 
-  // 📱 Touch Logic
+  // Touch Logic
   const handleTouchStart = (e: React.TouchEvent) => {
     if (!scrollRef.current) return;
     setIsDown(true);
@@ -62,7 +61,7 @@ const Team: React.FC = () => {
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
 
-  // 🖼️ Lightbox Navigation
+  // Lightbox Navigation
   const openLightbox = (idx: number) => setSelectedIndex(idx % allTeamMembers.length);
   const closeLightbox = () => setSelectedIndex(null);
   
@@ -116,10 +115,41 @@ const Team: React.FC = () => {
         .lightbox-blur {
           backdrop-filter: blur(12px);
         }
+
+        /* ============== 32-INCH DESKTOP SUPPORT ONLY ============== */
+        @media (min-width: 1440px) and (max-width: 1919px) {
+          .team-card {
+            width: 520px !important;
+            height: 520px !important;
+            border-radius: 20px !important;
+          }
+
+          .team-scroll-container {
+            padding-left: 40px;
+            padding-right: 40px;
+          }
+
+          .team-header h2 {
+            font-size: clamp(68px, 5.5vw, 92px) !important;
+          }
+
+          .lightbox-image-container {
+            width: 92vw !important;
+            height: 88vh !important;
+          }
+        }
+
+        /* Normal large desktop (1920px+) - unchanged */
+        @media (min-width: 1920px) {
+          .team-card {
+            width: 500px;
+            height: 500px;
+          }
+        }
       `}} />
 
       {/* Header Area */}
-      <div className="pt-20 pb-10 text-center bg-[#BBB791]">
+      <div className="pt-20 pb-10 text-center bg-[#BBB791] team-header">
         <h2 className="font-imperial text-[50px] md:text-[72px] font-bold text-white mb-4">
           Meet our experts
         </h2>
@@ -128,11 +158,11 @@ const Team: React.FC = () => {
         </p>
       </div>
 
-      {/* Grid Track Section - 2:2 Ratio Visuals */}
+      {/* Grid Track Section */}
       <section className="expert-section w-full expert-container py-12 relative">
         <div
           ref={scrollRef}
-          className="relative z-10 overflow-x-auto no-scrollbar cursor-grab active:cursor-grabbing select-none"
+          className="relative z-10 overflow-x-auto no-scrollbar cursor-grab active:cursor-grabbing select-none team-scroll-container"
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUpOrLeave}
           onMouseLeave={handleMouseUpOrLeave}
@@ -141,15 +171,12 @@ const Team: React.FC = () => {
           onTouchMove={handleTouchMove}
           onTouchEnd={handleMouseUpOrLeave}
         >
-          <div className="flex w-max animate-infinite gap-6 md:gap-10 px-4">
+          <div className="flex w-max animate-infinite gap-8 md:gap-12 px-4">
             {duplicatedMembers.map((member, index) => (
               <div
                 key={index}
                 onClick={() => openLightbox(index)}
-                /* Changed to 300px (mobile) and 500px (desktop) 
-                   to emphasize the 2:2 square scale 
-                */
-                className="w-[300px] h-[300px] md:w-[500px] md:h-[500px] aspect-square flex-shrink-0 overflow-hidden rounded-[12px] bg-black/10 transition-all duration-500 hover:rounded-[16px] hover:shadow-2xl cursor-pointer"
+                className="team-card w-[300px] h-[300px] md:w-[500px] md:h-[500px] flex-shrink-0 overflow-hidden rounded-[12px] bg-black/10 transition-all duration-500 hover:rounded-[20px] hover:shadow-2xl cursor-pointer"
               >
                 <img
                   src={member}
@@ -185,8 +212,8 @@ const Team: React.FC = () => {
             &#8249;
           </button>
 
-          {/* Centered Image Container */}
-          <div className="w-[85vw] h-[80vh] flex items-center justify-center p-4">
+          {/* Centered Image */}
+          <div className="lightbox-image-container w-[85vw] h-[80vh] flex items-center justify-center p-4">
             <img 
               src={allTeamMembers[selectedIndex]} 
               alt="Expert Full View" 

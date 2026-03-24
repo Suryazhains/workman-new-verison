@@ -1,8 +1,23 @@
 @import "tailwindcss";
 
-/* 1. BASIC RESETS ONLY */
+/* 1. THE PURE SCALING ENGINE */
+/* This makes 1rem grow fluidly based on the screen width. 
+   EVERYTHING (text, containers, images) will scale up proportionally 
+   without changing their positions. */
+:root {
+  /* Math breakdown:
+    - On laptops (up to ~1440px), font-size stays at 16px.
+    - Above 1440px, it uses 1.11vw. (At 2560px 32-inch screen, 1rem = ~28px).
+    - It stops growing at 36px so it never gets absurdly huge on massive TVs.
+  */
+  font-size: clamp(16px, 1.11vw, 36px); 
+}
+
+/* 2. BASIC RESETS ONLY */
 html {
   scroll-behavior: smooth; 
+  /* Using rem here means the scroll offset grows perfectly as the header grows! */
+  scroll-padding-top: 8rem;
 }
 
 body {
@@ -13,9 +28,10 @@ body {
   font-family: 'Inter', sans-serif;
   color: #111827;
   overflow-x: hidden; /* Put this back here, it's safer now */
+  width: 100%;
 }
 
-/* 2. CUSTOM FONTS */
+/* 3. CUSTOM FONTS */
 @font-face {
     font-family: "Britanica-Black";
     src: url("https://db.onlinewebfonts.com/t/38c9851a552c219fba7878035cef1a1c.eot");
@@ -24,4 +40,83 @@ body {
     url("https://db.onlinewebfonts.com/t/38c9851a552c219fba7878035cef1a1c.woff") format("woff"),
     url("https://db.onlinewebfonts.com/t/38c9851a552c219fba7878035cef1a1c.ttf") format("truetype"),
     url("https://db.onlinewebfonts.com/t/38c9851a552c219fba7878035cef1a1c.svg#Britanica-Black") format("svg");
+}
+
+/* 4. FLUID MEDIA BEHAVIOR */
+/* Ensures images and videos naturally stretch with their growing containers */
+/* 4. FLUID MEDIA BEHAVIOR */
+/* Ensures images and videos naturally stretch with their growing containers */
+img, video {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover; /* Helps maintain aspect ratio safely globally */
+}
+
+/* 5. FLEXBOX GAP FIX FOR CARDS */
+/* Forces the image to stretch and fill the flex container without breaking aspect ratio */
+.scroll-stack-card img {
+  height: 100% !important; /* Overrides the 'height: auto' above */
+  width: 100%;
+  display: block;
+}
+/* 1. Fix for the Team Experts Section */
+.expert-container img {
+  height: 100% !important;
+  width: 100% !important;
+  object-fit: cover !important;
+  display: block;
+}
+
+/* 2. Fix for the Service Details Lightbox */
+.image-frame img, 
+.lightbox-img {
+  height: 100% !important;
+  width: 100% !important;
+  object-fit: cover !important; /* Change to 'contain' if you don't want cropping in lightbox */
+  display: block;
+}
+
+/* 3. Fix for the Service Video Section */
+.aspect-video video {
+  height: 100% !important;
+  width: 100% !important;
+  object-fit: cover !important;
+}
+/* 1. Desktop Services Slider Fix */
+/* This ensures the slider container and images occupy the full height of the grid */
+#services .grid .order-1 img, 
+#services .grid .order-2 img {
+  height: 100% !important;
+  width: 100% !important;
+  object-fit: cover !important;
+  display: block;
+}
+
+/* 2. Mobile Services Card Fix */
+/* Prevents gaps in the rounded mobile cards */
+#services .md\:hidden .rounded-3xl img {
+  height: 100% !important;
+  width: 100% !important;
+  object-fit: cover !important;
+  display: block;
+}
+
+/* 3. Global fix for the slide container itself */
+#services .flex.h-full {
+  height: 100% !important;
+}
+/* Specifically targets the video inside the Desktop Services grid */
+#services .grid .order-1 video,
+#services .grid .order-2 video {
+  height: 100% !important; /* Forces video to match text column height */
+  width: 100% !important;
+  object-fit: cover !important; /* Ensures the video fills the frame without gaps */
+  display: block;
+}
+
+/* Also apply to mobile view video containers just in case */
+#services .md\:hidden video {
+  height: 100% !important;
+  width: 100% !important;
+  object-fit: cover !important;
 }

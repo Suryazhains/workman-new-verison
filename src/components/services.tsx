@@ -108,14 +108,15 @@ const Services: React.FC = () => {
         }
       `}} />
 
-      <section id="services" className="w-full pt-[90px] pb-[90px] bg-[#BBB791] font-inter">
-        <div className="w-full max-w-[1920px] mx-auto px-5 md:px-10 xl:px-[90px]">
+      <section id="services" className="w-full pt-[90px] xl:pt-[110px] min-[1920px]:pt-[clamp(110px,8vw,250px)] pb-[90px] xl:pb-[110px] min-[1920px]:pb-[clamp(110px,8vw,250px)] bg-[#BBB791] font-inter">
+        
+        <div className="w-full max-w-[1920px] min-[1920px]:max-w-[90vw] mx-auto px-5 md:px-10 xl:px-[90px] min-[1920px]:px-[clamp(90px,5vw,200px)]">
 
-          <div className="mb-10 text-left animate-[fadeSlide_0.4s_ease-in-out]">
-            <h2 className="font-imperial text-4xl md:text-[56px] font-bold text-white mb-4 tracking-tight">
+          <div className="mb-10 xl:mb-14 min-[1920px]:mb-[clamp(3.5rem,5vw,6rem)] text-left animate-[fadeSlide_0.4s_ease-in-out]">
+            <h2 className="font-imperial text-4xl md:text-[56px] xl:text-[64px] min-[1920px]:text-[clamp(64px,5vw,140px)] font-bold text-white mb-4 min-[1920px]:mb-[clamp(1rem,2vw,2rem)] tracking-tight">
               Our Services
             </h2>
-            <p className="text-base sm:text-lg text-white/90 w-full leading-relaxed max-w-[1600px]">
+            <p className="text-base sm:text-lg xl:text-xl min-[1920px]:text-[clamp(20px,2vw,44px)] text-white/90 w-full leading-relaxed min-[1920px]:leading-loose max-w-[1600px] min-[1920px]:max-w-[80vw]">
               {activeContent.topDescription || "Explore our range of premium signage and display solutions designed to elevate your brand presence."}
             </p>
           </div>
@@ -156,7 +157,8 @@ const Services: React.FC = () => {
           </div>
 
           {/* ---------------- DESKTOP VIEW ---------------- */}
-          <div className="hidden md:block bg-white rounded-3xl overflow-hidden border border-white/10">
+          <div className="hidden md:block bg-white rounded-3xl min-[1920px]:rounded-[clamp(1.5rem,3vw,5rem)] overflow-hidden border border-white/10">
+            
             <div className="relative flex bg-[#F0FDF4] border-b border-gray-100 no-scrollbar">
               <div
                 className="absolute top-0 left-0 h-full bg-white transition-transform duration-300 ease-in-out pointer-events-none"
@@ -166,41 +168,46 @@ const Services: React.FC = () => {
                 <button 
                   key={tab.id} 
                   onClick={() => setActiveTab(tab.id)} 
-                  className={`relative z-10 flex-1 py-6 px-2 text-lg font-semibold transition-all outline-none border-none ${activeTab === tab.id ? 'text-[#BBB791]' : 'text-[#BBB791]/60 hover:text-[#BBB791]'}`}
+                  className={`relative z-10 flex-1 py-6 xl:py-8 min-[1920px]:py-[clamp(2rem,4vw,5rem)] px-2 text-lg xl:text-xl min-[1920px]:text-[clamp(20px,1.8vw,48px)] font-semibold transition-all outline-none border-none ${activeTab === tab.id ? 'text-[#BBB791]' : 'text-[#BBB791]/60 hover:text-[#BBB791]'}`}
                 >
                   {tab.label}
                 </button>
               ))}
             </div>
 
-            <div className="grid grid-cols-1 xl:grid-cols-2 items-stretch h-[600px] xl:h-[650px]">
-              <div className="order-2 xl:order-1 px-10 pb-10 xl:px-[70px] xl:pt-[80px] xl:pb-[80px] flex flex-col justify-between animate-[fadeSlide_0.4s_ease-in-out] overflow-hidden">
+            {/* FIX: Removed the massive 50vw clamp. It now stops growing natively. */}
+            <div className="grid grid-cols-1 xl:grid-cols-2 items-stretch min-h-[600px] xl:min-h-[650px] min-[1920px]:min-h-[750px] h-auto">
+              
+              {/* Left Side: Text Area */}
+              <div className="order-2 xl:order-1 px-10 pb-10 xl:px-[70px] xl:pt-[80px] xl:pb-[80px] min-[1920px]:px-[clamp(70px,6vw,160px)] min-[1920px]:pt-[clamp(80px,4vw,120px)] min-[1920px]:pb-[clamp(80px,4vw,120px)] flex flex-col justify-start animate-[fadeSlide_0.4s_ease-in-out] overflow-hidden">
                 
-                <div className="flex flex-col h-full overflow-hidden">
-                  <h3 className="font-imperial text-3xl md:text-4xl font-bold text-[#BBB791] mb-6 flex-shrink-0">
+                <div className="flex flex-col overflow-hidden">
+                  <h3 className="font-imperial text-3xl md:text-4xl xl:text-5xl min-[1920px]:text-[clamp(48px,4vw,110px)] font-bold text-[#BBB791] mb-6 min-[1920px]:mb-[clamp(1.5rem,3vw,3rem)] flex-shrink-0">
                     {activeContent.heading || activeTab}
                   </h3>
                   
-                  <div className="flex-1 overflow-y-auto no-scrollbar pr-4">
+                  <div className="overflow-y-auto no-scrollbar pr-4">
                     {activeContent.description?.map((para: string, index: number) => (
-                      <p key={index} className="text-lg text-[#4B5563] leading-relaxed mb-4">
+                      <p key={index} className="text-lg xl:text-xl min-[1920px]:text-[clamp(20px,1.5vw,44px)] text-[#4B5563] leading-relaxed min-[1920px]:leading-[1.7] mb-4 min-[1920px]:mb-[clamp(1rem,2vw,2.5rem)]">
                         {para}
                       </p>
                     ))}
                   </div>
                 </div>
 
-                <div className="pt-8 flex-shrink-0">
-                  <button onClick={() => handleViewMore(activeTab)} className="flex items-center gap-4 px-14 py-4 bg-[#BBB791] text-white text-base font-bold rounded-xl hover:bg-[#a39f7a] transition-all outline-none border-none shadow-lg shadow-[#BBB791]/20">
+                {/* mt-auto ensures the button snaps directly below the text without giant gaps */}
+                <div className="pt-8 min-[1920px]:pt-[clamp(2rem,4vw,4rem)] flex-shrink-0 mt-auto">
+                  <button onClick={() => handleViewMore(activeTab)} className="flex items-center gap-4 min-[1920px]:gap-[clamp(1rem,2vw,2rem)] px-14 py-4 xl:px-16 xl:py-5 min-[1920px]:px-[clamp(4rem,8vw,8rem)] min-[1920px]:py-[clamp(1.25rem,2.5vw,2.5rem)] bg-[#BBB791] text-white text-base xl:text-lg min-[1920px]:text-[clamp(18px,1.5vw,36px)] font-bold rounded-xl min-[1920px]:rounded-[clamp(1rem,2vw,2rem)] hover:bg-[#a39f7a] transition-all outline-none border-none shadow-lg shadow-[#BBB791]/20 w-fit">
                     {activeContent.buttonText || "View More"}
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 min-[1920px]:w-[clamp(1.25rem,2vw,3.5rem)] min-[1920px]:h-[clamp(1.25rem,2vw,3.5rem)]">
                       <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
                   </button>
                 </div>
               </div>
 
-              <div className="w-full h-full overflow-hidden order-1 xl:order-2 relative bg-black">
+              {/* Right Side: Media Area */}
+              <div className="w-full h-full min-h-[400px] overflow-hidden order-1 xl:order-2 relative bg-black">
                 {activeTab === 'led' ? (
                   <video key="led-video" src={ledVideo} autoPlay loop muted playsInline className="w-full h-full object-cover" />
                 ) : (
@@ -216,11 +223,11 @@ const Services: React.FC = () => {
                       ))}
                     </div>
                     
-                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+                    <div className="absolute bottom-6 min-[1920px]:bottom-[clamp(1.5rem,4vw,6rem)] left-1/2 -translate-x-1/2 flex gap-2 min-[1920px]:gap-[clamp(0.5rem,1.5vw,1.5rem)]">
                       {(MEDIA_MAP[activeTab] || []).map((_, i) => (
                         <div 
                           key={i} 
-                          className={`h-2 rounded-full transition-all duration-500 ${currentIdx === i ? 'bg-[#BBB791] w-8' : 'bg-white/60 w-2'}`} 
+                          className={`rounded-full transition-all duration-500 h-2 min-[1920px]:h-[clamp(0.5rem,1vw,1.5rem)] ${currentIdx === i ? 'bg-[#BBB791] w-8 min-[1920px]:w-[clamp(2rem,6vw,9rem)]' : 'bg-white/60 w-2 min-[1920px]:w-[clamp(0.5rem,1.5vw,2rem)]'}`} 
                         />
                       ))}
                     </div>

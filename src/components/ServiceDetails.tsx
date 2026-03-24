@@ -14,6 +14,10 @@ interface ServiceProps {
 const ServiceDetails: React.FC<ServiceProps> = ({ service }) => {
   const [viewerIndex, setViewerIndex] = useState<number | null>(null);
   const openTimeRef = useRef<number>(0);
+  
+  // Refs to track swipe gestures on mobile
+  const touchStartX = useRef<number>(0);
+  const touchEndX = useRef<number>(0);
 
   const images = service?.images || [];
 
@@ -37,17 +41,36 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service }) => {
     document.body.style.overflow = '';
   }, []);
 
-  const showNext = useCallback((e?: React.MouseEvent) => {
-    e?.stopPropagation(); 
+  // Infinite Loop Logic (Like Google Drive)
+  const showNext = useCallback((e?: React.MouseEvent | React.TouchEvent) => {
+    e?.stopPropagation();
     if (images.length === 0) return;
     setViewerIndex((prev) => (prev !== null ? (prev + 1) % images.length : 0));
   }, [images.length]);
 
-  const showPrev = useCallback((e?: React.MouseEvent) => {
-    e?.stopPropagation(); 
+  const showPrev = useCallback((e?: React.MouseEvent | React.TouchEvent) => {
+    e?.stopPropagation();
     if (images.length === 0) return;
     setViewerIndex((prev) => (prev !== null ? (prev - 1 + images.length) % images.length : 0));
   }, [images.length]);
+
+  // Swipe Gesture Handlers for Mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches.clientX;
+    touchEndX.current = e.touches.clientX; // Reset end position
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches.clientX;
+  };
+
+  const handleTouchEnd = () => {
+    const swipeDistance = touchStartX.current - touchEndX.current;
+    // Swipe left (next image)
+    if (swipeDistance > 50) showNext();
+    // Swipe right (previous image)
+    else if (swipeDistance < -50) showPrev();
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -103,6 +126,9 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service }) => {
           width: 100%; 
           height: 100%; 
           object-fit: cover; 
+          /* Prevents user from selecting the image and breaking clicks */
+          user-select: none;
+          -webkit-user-drag: none;
         }
 
         .nav-btn {
@@ -151,9 +177,8 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service }) => {
         }
         
         @media (max-width: 768px) {
-          .nav-btn { width: 45px; height: 45px; }
-          .prev-btn { left: 10px; }
-          .next-btn { right: 10px; }
+          /* Hide the arrows entirely on mobile view */
+          .nav-btn { display: none !important; }
           .image-frame { width: 95vw; aspect-ratio: 4 / 3; }
         }
       `}} />
@@ -165,11 +190,18 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service }) => {
           
           <button className="nav-btn prev-btn" onClick={showPrev}>&#8592;</button>
           
-          <div className="image-frame" onClick={(e) => e.stopPropagation()}>
+          <div 
+            className="image-frame" 
+            onClick={(e) => e.stopPropagation()}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             <img 
               src={images[viewerIndex]} 
               className="lightbox-img" 
               alt={`Project Gallery ${viewerIndex + 1}`} 
+              draggable={false} /* Stops the image drag crash */
             />
             <div className="image-counter" onClick={(e) => e.stopPropagation()}>
               {viewerIndex + 1} / {images.length}
