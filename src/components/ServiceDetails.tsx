@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useCallback, useRef, useMemo } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import LandingPageThree from './landingthree';
-import CircularGallery from './CircularGallery';
 import { LANDING_CONTENT } from './content';
 
 interface ServiceProps {
@@ -31,12 +30,19 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
   const [activeService, setActiveService] = useState<any>(propService);
   const [isLoading, setIsLoading] = useState(!propService);
 
+  // Lightbox State
   const [viewerIndex, setViewerIndex] = useState<number | null>(null);
   const openTimeRef = useRef<number>(0);
   
-  // Refs to track swipe gestures on mobile
+  // Refs to track swipe gestures on mobile for Lightbox
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
+
+  // Scroll Container State (For Horizontal Track)
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isDown, setIsDown] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
   // Fetch the data from content.ts if we routed here via URL
   useEffect(() => {
@@ -53,21 +59,15 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
   }, [serviceId, propService]);
 
   const images = activeService?.images || [];
+  const duplicatedImages = [...images, ...images, ...images];
 
-  // Strictly memoize to prevent the gallery from constantly remounting
-  const galleryItems = useMemo(() => {
-    return images.map((img: string) => ({
-      image: img,
-      text: activeService?.title || ''
-    }));
-  }, [images, activeService?.title]);
-
+  // --- Lightbox Handlers ---
   const openViewer = useCallback((index: number) => {
     if (typeof index !== 'number') return;
     openTimeRef.current = Date.now();
-    setViewerIndex(index);
+    setViewerIndex(index % images.length); // Modulo ensures correct image from duplicated track
     document.body.style.overflow = 'hidden';
-  }, []);
+  }, [images.length]);
 
   const closeViewer = useCallback(() => {
     if (Date.now() - openTimeRef.current < 300) return;
@@ -75,7 +75,6 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
     document.body.style.overflow = '';
   }, []);
 
-  // Safe Infinite Loop Logic without the buggy animation lock
   const showNext = useCallback(() => {
     setViewerIndex((prev) => {
       if (prev === null || images.length === 0) return 0;
@@ -90,22 +89,51 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
     });
   }, [images.length]);
 
-  // Swipe Gesture Handlers for Mobile
-  const handleTouchStart = (e: React.TouchEvent) => {
+  // --- Horizontal Drag Scroll Logic ---
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDown(true);
+    if (!scrollRef.current) return;
+    setStartX(e.pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDown || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    scrollRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleMouseUpOrLeave = () => setIsDown(false);
+
+  const handleTouchStartScroll = (e: React.TouchEvent) => {
+    if (!scrollRef.current) return;
+    setIsDown(true);
+    setStartX(e.touches[0].pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
+  };
+
+  const handleTouchMoveScroll = (e: React.TouchEvent) => {
+    if (!isDown || !scrollRef.current) return;
+    const x = e.touches[0].pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    scrollRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  // --- Lightbox Swipe Gesture Handlers for Mobile ---
+  const handleTouchStartLightbox = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
     touchEndX.current = e.touches[0].clientX; 
   };
 
-  const handleTouchMove = (e: React.TouchEvent) => {
+  const handleTouchMoveLightbox = (e: React.TouchEvent) => {
     touchEndX.current = e.touches[0].clientX;
   };
 
-  const handleTouchEnd = () => {
+  const handleTouchEndLightbox = () => {
     const swipeDistance = touchStartX.current - touchEndX.current;
-    
-    // Ignore tiny movements to prevent accidental triggers
     if (Math.abs(swipeDistance) < 50) return; 
-
     if (swipeDistance > 50) showNext();
     else if (swipeDistance < -50) showPrev();
   };
@@ -124,9 +152,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
   }, [viewerIndex, showNext, showPrev, closeViewer]);
 
   useEffect(() => {
-    return () => {
-      document.body.style.overflow = '';
-    };
+    return () => { document.body.style.overflow = ''; };
   }, []);
 
   if (isLoading) return <div className="min-h-screen bg-[#BBB791]"></div>;
@@ -144,7 +170,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
   const isLedVideoWall = activeService.title.toLowerCase().includes('led video wall') || activeService.id === 13;
 
   return (
-    <div className="w-full bg-[#BBB791] font-inter">
+    <div className="w-full bg-[#BBB791] font-inter overflow-hidden">
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
         @import url('https://db.onlinewebfonts.com/c/59d406a1ae963118d955b267eb04f9f3?family=ImperialStd-BoldItalic');
@@ -152,6 +178,25 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
         .font-crimson { font-family: 'Crimson Pro', serif !important; }
         .font-imperial { font-family: "ImperialStd-BoldItalic", serif !important; }
 
+        /* Animation & Scroll Bar for Horizontal Gallery */
+        @keyframes infiniteScroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-33.33%); }
+        }
+
+        .animate-infinite {
+          animation: infiniteScroll 60s linear infinite;
+        }
+
+        .expert-container:active .animate-infinite,
+        .expert-container:hover .animate-infinite {
+          animation-play-state: paused;
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Lightbox Styles */
         .lightbox-overlay { 
           position: fixed; 
           inset: 0; 
@@ -175,14 +220,16 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
           border-radius: 8px;
           overflow: hidden; 
           z-index: 100000;
+          background-color: black;
         }
 
         .lightbox-img { 
           width: 100%; 
           height: 100%; 
-          object-fit: contain; 
+          object-fit: cover; 
           user-select: none;
           -webkit-user-drag: none;
+          transition: transform 0.3s ease;
         }
 
         .nav-btn {
@@ -230,6 +277,15 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
           letter-spacing: 1px;
           z-index: 100002;
         }
+
+        /* Responsive Fixes - HORIZONTAL RECTANGLES TO MATCH SCREENSHOT */
+        @media (min-width: 1440px) and (max-width: 1919px) {
+          .team-card { width: 650px !important; height: 450px !important; border-radius: 20px !important; }
+          .team-scroll-container { padding-left: 40px; padding-right: 40px; }
+        }
+        @media (min-width: 1920px) {
+          .team-card { width: 800px; height: 550px; }
+        }
         
         @media (max-width: 768px) {
           .nav-btn { display: none !important; }
@@ -263,9 +319,9 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
           <div 
             className="image-frame" 
             onClick={(e) => e.stopPropagation()}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
+            onTouchStart={handleTouchStartLightbox}
+            onTouchMove={handleTouchMoveLightbox}
+            onTouchEnd={handleTouchEndLightbox}
           >
             <img 
               key={viewerIndex} 
@@ -364,7 +420,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
       </div>
 
       {/* Dynamic Gallery Header Section */}
-      {!isLedVideoWall && galleryItems.length > 0 && (
+      {!isLedVideoWall && images.length > 0 && (
         <div className="pt-24 pb-8 px-8 lg:px-16 xl:px-[120px] [@media(min-width:2400px)]:px-[10rem] text-left bg-[#BBB791]">
           <h2 className="font-imperial text-4xl md:text-5xl lg:text-6xl font-semibold text-white tracking-tight mb-4">
             {activeService.title} Project Gallery
@@ -375,23 +431,38 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
         </div>
       )}
 
-      {/* Circular Gallery Section */}
-      {!isLedVideoWall && (
-        <div className="w-full h-[600px] md:h-[800px] bg-[#BBB791] relative overflow-hidden">
-          {galleryItems.length > 0 ? (
-            <CircularGallery 
-              items={galleryItems} 
-              bend={3} 
-              textColor="#FFFFFF" 
-              borderRadius={0.03} 
-              onItemClick={openViewer}
-            />
-          ) : (
-            <div className="flex items-center justify-center h-full text-white/50 text-xl font-light">
-              Gallery currently unavailable for this service.
+      {/* SCROLLING GALLERY TRACK */}
+      {!isLedVideoWall && images.length > 0 && (
+        <section className="expert-section w-full expert-container py-12 relative">
+          <div
+            ref={scrollRef}
+            className="relative z-10 overflow-x-auto no-scrollbar cursor-grab active:cursor-grabbing select-none team-scroll-container"
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUpOrLeave}
+            onMouseLeave={handleMouseUpOrLeave}
+            onMouseMove={handleMouseMove}
+            onTouchStart={handleTouchStartScroll}
+            onTouchMove={handleTouchMoveScroll}
+            onTouchEnd={handleMouseUpOrLeave}
+          >
+            <div className="flex w-max animate-infinite gap-8 md:gap-12 px-4">
+              {duplicatedImages.map((img, index) => (
+                <div
+                  key={index}
+                  onClick={() => openViewer(index)}
+                  className="team-card w-[350px] h-[250px] md:w-[550px] md:h-[400px] flex-shrink-0 overflow-hidden rounded-[12px] bg-black/10 transition-all duration-500 hover:rounded-[20px] hover:shadow-2xl cursor-pointer"
+                >
+                  <img
+                    src={img}
+                    alt={`${activeService.title} Image ${index}`}
+                    className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-110 pointer-events-none"
+                    draggable="false"
+                  />
+                </div>
+              ))}
             </div>
-          )}
-        </div>
+          </div>
+        </section>
       )}
 
       {/* Optional Bottom Video Section */}
