@@ -199,10 +199,6 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
           transition: background 0.2s;
           z-index: 100005;
           pointer-events: auto;
-          /* FIX: These properties stop the browser from pausing fast clicks */
-          user-select: none;
-          -webkit-user-select: none;
-          touch-action: manipulation; 
         }
         .nav-btn:hover { background: rgba(255, 255, 255, 0.3); }
         .prev-btn { left: 30px; }
@@ -249,11 +245,6 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
               e.stopPropagation(); 
               showPrev(); 
             }}
-            onDoubleClick={(e) => { 
-              e.preventDefault(); 
-              e.stopPropagation(); 
-              showPrev(); 
-            }}
           >
             &#8592;
           </button>
@@ -279,11 +270,6 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
           <button 
             className="nav-btn next-btn" 
             onClick={(e) => { 
-              e.preventDefault(); 
-              e.stopPropagation(); 
-              showNext(); 
-            }}
-            onDoubleClick={(e) => { 
               e.preventDefault(); 
               e.stopPropagation(); 
               showNext(); 
