@@ -75,7 +75,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
     document.body.style.overflow = '';
   }, []);
 
-  // Safe Infinite Loop Logic
+  // Safe Infinite Loop Logic without the buggy animation lock
   const showNext = useCallback(() => {
     setViewerIndex((prev) => {
       if (prev === null || images.length === 0) return 0;
@@ -102,6 +102,10 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
 
   const handleTouchEnd = () => {
     const swipeDistance = touchStartX.current - touchEndX.current;
+    
+    // Ignore tiny movements to prevent accidental triggers
+    if (Math.abs(swipeDistance) < 50) return; 
+
     if (swipeDistance > 50) showNext();
     else if (swipeDistance < -50) showPrev();
   };
@@ -235,7 +239,14 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
 
       {/* Lightbox Overlay */}
       {viewerIndex !== null && images.length > 0 && (
-        <div className="lightbox-overlay" onClick={closeViewer}>
+        <div 
+          className="lightbox-overlay" 
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              closeViewer();
+            }
+          }}
+        >
           <div className="close-btn-new" onClick={closeViewer}>&times;</div>
           
           <button 
@@ -257,6 +268,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
             onTouchEnd={handleTouchEnd}
           >
             <img 
+              key={viewerIndex} 
               src={images[viewerIndex]} 
               className="lightbox-img" 
               alt={`Project Gallery ${viewerIndex + 1}`} 
@@ -280,7 +292,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
         </div>
       )}
 
-      {/* SPLIT HERO SECTION WITH ADJUSTED FONT & ALIGNMENT */}
+      {/* SPLIT HERO SECTION */}
       <div className="w-full flex flex-col lg:flex-row min-h-[70vh] lg:min-h-screen bg-[#BBB791]">
         
         {/* Left Side: Text Details */}

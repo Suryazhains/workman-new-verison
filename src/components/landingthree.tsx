@@ -195,10 +195,17 @@ const LandingPageThree: React.FC = () => {
                       {contactSection.form.fields.phone}
                     </label>
                     <input
-                      type="text"
+                      type="tel"
                       name="phone"
                       placeholder="Your Number"
                       required
+                      maxLength={10}
+                      minLength={10}
+                      pattern="[0-9]{10}"
+                      title="Please enter a valid 10-digit phone number"
+                      onInput={(e) => {
+                        e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '');
+                      }}
                       className="w-full bg-[#F9FAFB] border border-gray-100 rounded-lg h-[3.375rem] px-5 focus:outline-none focus:ring-1 focus:ring-[#51A147] text-[#374151] placeholder:text-gray-300"
                     />
                   </div>
@@ -258,7 +265,7 @@ const LandingPageThree: React.FC = () => {
                 </p>
                 <button 
                   onClick={() => handleNavigation('/#contact')}
-                  className="bg-white text-[#000000] px-8 py-3 rounded-[0.375rem] font-bold text-[0.9375rem] hover:bg-gray-100 transition"
+                  className="bg-white text-[#BBB791] px-8 py-3 rounded-[0.375rem] font-bold text-[0.9375rem] hover:bg-gray-100 transition"
                 >
                   Contact now
                 </button>
@@ -347,7 +354,7 @@ const LandingPageThree: React.FC = () => {
                   {/* 🔥 SQUARE ON NORMAL DESKTOP: xl:aspect-square makes it square. 2xl resets it to a taller rectangle */}
                   <iframe
                     title="The Workman Advertising Location"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.0315560647895!2d80.17415177454848!3d13.097205112117565!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5264000305f883%3A0xcda6fba652dc97da!2sChennai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1710856030123!5m2!1sen!2sin"
+                    src="https://maps.google.com/maps?q=The+Workman+Advertising,+Maduravoyal,+Chennai,+Tamil+Nadu&t=&z=15&ie=UTF8&iwloc=&output=embed"
                     className="w-full h-[15rem] xl:h-auto xl:aspect-square 2xl:aspect-auto 2xl:h-[18rem] rounded-lg border border-white/20 bg-green-50/10 object-cover"
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
