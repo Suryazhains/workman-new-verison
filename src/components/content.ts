@@ -49,6 +49,7 @@ import Hs1 from "../assets/outdoor 10.png";
 import Hs2 from "../assets/outdoor 11.png";
 import Hs3 from "../assets/outdoor 12.png";
 import Hs4 from "../assets/outdoorHoarding4.png"
+import Hs5 from "../assets/facadeNewOne.png"
 import M1 from "../assets/outdoor 13.png";
 import M2 from "../assets/outdoor 14.png";
 import M3 from "../assets/outdoorsletter4.jpeg";
@@ -453,7 +454,7 @@ testimonials: {
     { 
       id: 4, 
       title: "Hoardings & Structures", 
-      images: [Hs1, Hs2, Hs3,Hs4],
+      images: [Hs5,Hs1, Hs2, Hs3,Hs4],
       description_points: [
         "High-impact outdoor advertising solutions designed to capture attention across busy roads, commercial zones, and prime locations.",
         "Fabricated with strong structural support and premium materials to ensure stability, safety, and long-term durability.",

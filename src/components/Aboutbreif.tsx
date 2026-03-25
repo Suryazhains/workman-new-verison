@@ -84,7 +84,7 @@ const About: React.FC = () => {
     ];
 
     return (
-        <main className="bg-[#BBB791] font-inter text-white">
+        <main className="bg-[#BBB791] font-inter text-white w-full overflow-hidden">
             <style dangerouslySetInnerHTML={{ __html: `
                 @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
                 @import url('https://db.onlinewebfonts.com/c/59d406a1ae963118d955b267eb04f9f3?family=ImperialStd-BoldItalic');
@@ -104,24 +104,30 @@ const About: React.FC = () => {
             `}} />
 
             {/* SECTION 1: ABOUT US BRIEF */}
-            <section className="max-w-[1440px] [@media(min-width:2400px)]:max-w-[130rem] mx-auto px-6 lg:px-20 [@media(min-width:2400px)]:px-[8rem] pt-16 md:pt-24 [@media(min-width:2400px)]:pt-32 pb-16">
+            {/* CHANGED: Removed max-w-[1440px] so it stretches completely across ALL desktop sizes */}
+            <section className="w-full max-w-full mx-auto px-6 lg:px-12 xl:px-20 [@media(min-width:2400px)]:px-[8rem] pt-16 md:pt-24 [@media(min-width:2400px)]:pt-32 pb-16">
                 <h1 className="font-imperial text-[48px] md:text-[72px] [@media(min-width:2400px)]:text-[120px] font-bold mb-6 [@media(min-width:2400px)]:mb-10">About Us</h1>
-                <p className="text-white/90 text-lg md:text-xl [@media(min-width:2400px)]:text-[32px] max-w-[850px] [@media(min-width:2400px)]:max-w-[1400px] leading-relaxed mb-16 [@media(min-width:2400px)]:mb-24">
+                
+                {/* CHANGED: Text max-width removed to allow full stretch on all desktops */}
+                <p className="text-white/90 text-lg md:text-xl [@media(min-width:2400px)]:text-[32px] w-full max-w-full leading-relaxed mb-12 md:mb-16 [@media(min-width:2400px)]:mb-24">
                     Workman Advertising is a Chennai-based branding and signage solutions company delivering high-quality indoor, outdoor, and digital display services.
                 </p>
 
-                <div className="flex flex-col lg:flex-row gap-16 [@media(min-width:2400px)]:gap-32 items-start">
-                    <div className="w-full lg:w-1/2">
+                {/* CHANGED: items-stretch applied to standard lg: breakpoints too */}
+                <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 [@media(min-width:2400px)]:gap-24 items-stretch">
+                    <div className="w-full lg:w-1/2 flex flex-col">
+                        {/* CHANGED: Removed static h-[500px]. Added h-full, aspect-video, and flex-grow to stretch properly on any desktop */}
                         <video 
                             src={AboutVideo} 
                             autoPlay 
                             loop 
                             muted 
                             playsInline 
-                            className="rounded-2xl shadow-2xl w-full object-cover h-[500px] [@media(min-width:2400px)]:h-[800px]"
+                            className="rounded-2xl shadow-2xl w-full h-full min-h-[350px] lg:min-h-full object-cover flex-grow aspect-video"
                         />
                     </div>
-                    <div className="w-full lg:w-1/2 space-y-8 [@media(min-width:2400px)]:space-y-16 text-white/80 leading-relaxed text-lg [@media(min-width:2400px)]:text-[30px] [@media(min-width:2400px)]:leading-[1.8] pt-4 text-justify">
+                    
+                    <div className="w-full lg:w-1/2 flex flex-col justify-center space-y-8 [@media(min-width:2400px)]:space-y-16 text-white/80 leading-relaxed text-lg [@media(min-width:2400px)]:text-[36px] [@media(min-width:2400px)]:leading-[1.8] pt-4 lg:pt-0 text-justify">
                         <p>Workman Advertising, Chennai, India is a leading provider of complete branding and signage solutions, delivering high-quality visual communication for businesses across multiple industries.</p>
                         <p>Our core strength lies in delivering customized signage and advertising solutions for corporate, retail, showroom, and commercial environments. We specialize in indoor and outdoor signage, facade branding, LED video walls, POP displays, and modular signage.</p>
                         <p>With a reputation built on trust, craftsmanship, and customer satisfaction, we continue to be a preferred signage partner for brands looking for long-lasting and high-impact advertising solutions.</p>
@@ -133,7 +139,7 @@ const About: React.FC = () => {
             <section className="py-12 [@media(min-width:2400px)]:py-24 overflow-hidden">
                 <div className="animate-marquee flex">
                     {[...PORTFOLIO_SCROLL, ...PORTFOLIO_SCROLL].map((img, i) => (
-                        <div key={i} className="w-[300px] h-[180px] md:w-[480px] md:h-[280px] [@media(min-width:2400px)]:w-[800px] [@media(min-width:2400px)]:h-[480px] px-3 flex-shrink-0">
+                        <div key={i} className="w-[300px] h-[180px] md:w-[480px] md:h-[280px] xl:w-[600px] xl:h-[350px] [@media(min-width:2400px)]:w-[800px] [@media(min-width:2400px)]:h-[480px] px-3 flex-shrink-0">
                             <img src={img} alt="Work" className="w-full h-full object-cover rounded-xl shadow-lg" />
                         </div>
                     ))}
@@ -141,9 +147,10 @@ const About: React.FC = () => {
             </section>
 
             {/* SECTION 3: OUR SPECIALIZATION */}
-            <section className="bg-[#BBB791] text-white py-20 [@media(min-width:2400px)]:py-32 px-6 lg:px-20 [@media(min-width:2400px)]:px-[8rem]">
-                <div className="max-w-[1440px] [@media(min-width:2400px)]:max-w-[130rem] mx-auto">
-                    <div className="flex flex-col lg:flex-row items-center gap-16 [@media(min-width:2400px)]:gap-32">
+            <section className="bg-[#BBB791] text-white py-20 [@media(min-width:2400px)]:py-32 px-6 lg:px-12 xl:px-20 [@media(min-width:2400px)]:px-[8rem]">
+                {/* CHANGED: max-w-full to stretch across all desktops */}
+                <div className="w-full max-w-full mx-auto">
+                    <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 [@media(min-width:2400px)]:gap-32">
                         
                         <div className="lg:w-1/2 w-full">
                             <h2 className="font-imperial text-[42px] md:text-[56px] [@media(min-width:2400px)]:text-[96px] font-bold mb-8 [@media(min-width:2400px)]:mb-16 leading-tight border-t border-white/30 pt-4 inline-block">
@@ -203,7 +210,8 @@ const About: React.FC = () => {
 
             {/* SECTION 4: CLIENT BRANDS */}
             <section className="bg-white py-12 md:py-20 [@media(min-width:2400px)]:py-32">
-                <div className="max-w-[1440px] [@media(min-width:2400px)]:max-w-[130rem] mx-auto px-6 lg:px-20 [@media(min-width:2400px)]:px-[8rem] text-center">
+                {/* CHANGED: max-w-full to stretch across all desktops */}
+                <div className="w-full max-w-full mx-auto px-6 lg:px-12 xl:px-20 [@media(min-width:2400px)]:px-[8rem] text-center">
                     <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-8 md:gap-x-16 md:gap-y-12 [@media(min-width:2400px)]:gap-x-24 [@media(min-width:2400px)]:gap-y-20">
                         {BRANDS.map((logo, i) => (
                             <div 

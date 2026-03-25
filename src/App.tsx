@@ -9,6 +9,7 @@ import Team from './components/Team';
 import Aboutbreif from './components/Aboutbreif';
 import ServiceDetails from './components/ServiceDetails'; 
 import '../src/components/global-layout.css'; // Add this at the top!
+
 interface Service {
   id: string | number;
   title: string;
@@ -92,6 +93,7 @@ function App() {
           <Route path="/aboutbrief" element={<Aboutbreif />} />
           <Route path="/team" element={<Team />} />
           
+          {/* Kept exactly as requested */}
           <Route 
             path="/servicedetails/:serviceId" 
             element={<ServiceDetails service={null as unknown as Service} />} 

@@ -66,7 +66,6 @@ const LandingTwo: React.FC = () => {
       `}} />
 
       {/* PORTFOLIO SECTION */}
-      {/* Changed px to rem for seamless fluid scaling */}
       <section
         id="portfolio"
         className="w-full bg-[#BBB791] pt-[4.5rem] pb-[5.5rem] overflow-hidden scroll-mt-[6rem] lg:scroll-mt-[8rem]"
@@ -88,60 +87,60 @@ const LandingTwo: React.FC = () => {
             bg-gradient-to-l from-[#BBB791] via-[#BBB791] to-transparent" />
 
           <div className="flex flex-col gap-[6px]">
+            {/* ROW 1 */}
             <div
-              className="flex gap-[6px] w-max"
+              className="flex flex-nowrap gap-[6px] w-max"
               style={{ animation: 'marqueeLeft 40s linear infinite' }}
             >
               {row1Images.map((src, i) => (
                 <div
                   key={`row1-${i}`}
-                  /* 🔥 PIXEL FIX: Swapped hard px for rem widths. They will now grow! */
-                  className="w-[12.5rem] h-[7.5rem] md:w-[27rem] md:h-[14.5rem] flex-shrink-0"
+                  className="relative overflow-hidden w-[12.5rem] h-[7.5rem] md:w-[27rem] md:h-[14.5rem] shrink-0 rounded-sm"
                 >
                   <img
                     src={src}
                     alt="Portfolio"
-                    className="w-full h-full object-cover rounded-sm"
+                    className="absolute inset-0 w-full h-full object-cover"
                     draggable={false}
                   />
                 </div>
               ))}
             </div>
 
+            {/* ROW 2 */}
             <div
-              className="flex gap-[6px] w-max"
+              className="flex flex-nowrap gap-[6px] w-max"
               style={{ animation: 'marqueeRight 35s linear infinite' }}
             >
               {row2Images.map((src, i) => (
                 <div
                   key={`row2-${i}`}
-                  /* 🔥 PIXEL FIX */
-                  className="w-[12.5rem] h-[7.5rem] md:w-[27rem] md:h-[14.5rem] flex-shrink-0"
+                  className="relative overflow-hidden w-[12.5rem] h-[7.5rem] md:w-[27rem] md:h-[14.5rem] shrink-0 rounded-sm"
                 >
                   <img
                     src={src}
                     alt="Portfolio"
-                    className="w-full h-full object-cover rounded-sm"
+                    className="absolute inset-0 w-full h-full object-cover"
                     draggable={false}
                   />
                 </div>
               ))}
             </div>
 
+            {/* ROW 3 */}
             <div
-              className="flex gap-[6px] w-max"
+              className="flex flex-nowrap gap-[6px] w-max"
               style={{ animation: 'marqueeLeft 45s linear infinite' }}
             >
               {row3Images.map((src, i) => (
                 <div
                   key={`row3-${i}`}
-                  /* 🔥 PIXEL FIX */
-                  className="w-[12.5rem] h-[7.5rem] md:w-[27rem] md:h-[14.5rem] flex-shrink-0"
+                  className="relative overflow-hidden w-[12.5rem] h-[7.5rem] md:w-[27rem] md:h-[14.5rem] shrink-0 rounded-sm"
                 >
                   <img
                     src={src}
                     alt="Portfolio"
-                    className="w-full h-full object-cover rounded-sm"
+                    className="absolute inset-0 w-full h-full object-cover"
                     draggable={false}
                   />
                 </div>
@@ -152,7 +151,6 @@ const LandingTwo: React.FC = () => {
       </section>
 
       {/* TESTIMONIALS SECTION */}
-      {/* Changed px to rem for seamless fluid scaling */}
       <section id="testimonials" className="w-full bg-[#F9FAFB] pt-[3.75rem] md:pt-[5.5rem] pb-[3.75rem] md:pb-[5.5rem] overflow-hidden scroll-mt-[6rem] lg:scroll-mt-[8rem]">
         <div className="max-w-[90rem] mx-auto px-4">
           <h2 className="font-imperial text-[2rem] md:text-[3.5rem] font-bold text-[#BBB791] mb-4 text-center">

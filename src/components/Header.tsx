@@ -175,8 +175,8 @@ const Header: React.FC = () => {
                 {link.name === 'Our services' && activeDropdown === 'Our services' && (
                   <div className="absolute top-[110px] [@media(min-width:2400px)]:top-[180px] left-1/2 -translate-x-1/2 w-[1000px] [@media(min-width:2400px)]:w-[2000px] bg-white shadow-2xl rounded-xl p-8 [@media(min-width:2400px)]:p-16 grid grid-cols-5 gap-6 [@media(min-width:2400px)]:gap-14 border border-gray-100 z-[60] outline-none transition-all duration-300">
                     {Object.entries(servicesData).map(([category, items]) => {
-                      const baseRoute = getCategoryPath(category);
-                      const categoryTarget = `${baseRoute}#${getServiceSlug(category)}`;
+                      // Click on the Category Header still goes to the main category page
+                      const categoryTarget = getCategoryPath(category);
 
                       return (
                         <div key={category} className="outline-none">
@@ -192,7 +192,9 @@ const Header: React.FC = () => {
                           </Link>
                           <ul className="space-y-3 [@media(min-width:2400px)]:space-y-6">
                             {(items as string[]).map((item) => {
-                              const itemTarget = `${baseRoute}#${getServiceSlug(item)}`;
+                              // 🔥 CHANGED: Route specifically to ServiceDetails
+                              const itemTarget = `/servicedetails/${getServiceSlug(item)}`;
+                              
                               return (
                                 <li key={item}>
                                   <Link 
@@ -219,9 +221,10 @@ const Header: React.FC = () => {
                   <div className="absolute top-[110px] [@media(min-width:2400px)]:top-[180px] left-0 w-[220px] [@media(min-width:2400px)]:w-[440px] bg-white shadow-2xl rounded-lg p-4 [@media(min-width:2400px)]:p-12 border border-gray-100 z-[60] outline-none transition-all duration-300">
                     <ul className="space-y-3 [@media(min-width:2400px)]:space-y-6">
                       {(infrastructureData as string[]).map((item) => {
+                        // 🔥 CHANGED: Route specifically to ServiceDetails if not Team
                         const infraTarget = item.toLowerCase() === 'team' 
                           ? '/team' 
-                          : `/infrastructure#${getServiceSlug(item)}`;
+                          : `/servicedetails/${getServiceSlug(item)}`;
 
                         return (
                           <li key={item}>
@@ -315,7 +318,7 @@ const Header: React.FC = () => {
                       {Object.entries(servicesData).map(([category, items]) => (
                         <div key={category} className="flex flex-col">
                           <button 
-                             onClick={() => handleNavigation(`${getCategoryPath(category)}#${getServiceSlug(category)}`)}
+                             onClick={() => handleNavigation(getCategoryPath(category))}
                              className="text-left text-[12px] font-black text-gray-400 uppercase tracking-widest mb-2"
                           >
                             {category}
@@ -324,7 +327,8 @@ const Header: React.FC = () => {
                             {(items as string[]).map((item) => (
                               <button
                                 key={item}
-                                onClick={() => handleNavigation(`${getCategoryPath(category)}#${getServiceSlug(item)}`)}
+                                // 🔥 CHANGED: Mobile dropdown route specifically to ServiceDetails
+                                onClick={() => handleNavigation(`/servicedetails/${getServiceSlug(item)}`)}
                                 className="text-left text-[15px] text-gray-600 hover:text-[#163B73]"
                               >
                                 {item}
@@ -341,7 +345,8 @@ const Header: React.FC = () => {
                       {(infrastructureData as string[]).map((item) => (
                         <button
                           key={item}
-                          onClick={() => handleNavigation(item.toLowerCase() === 'team' ? '/team' : `/infrastructure#${getServiceSlug(item)}`)}
+                          // 🔥 CHANGED: Mobile dropdown route specifically to ServiceDetails if not Team
+                          onClick={() => handleNavigation(item.toLowerCase() === 'team' ? '/team' : `/servicedetails/${getServiceSlug(item)}`)}
                           className="text-left text-[15px] text-gray-600 hover:text-[#163B73]"
                         >
                           {item}
