@@ -65,7 +65,6 @@ const Infrastructure: React.FC = () => {
       >
         {/* Page Heading - 90px Side Padding */}
         <div className="w-full mx-auto mb-10 px-6 lg:px-[90px]">
-          {/* UPDATED FONT HERE */}
           <h2 className="font-imperial text-[40px] md:text-[56px] lg:text-[72px] font-bold text-white mb-4 leading-tight">
             {infrastructurePage.heading}
           </h2>
@@ -86,13 +85,14 @@ const Infrastructure: React.FC = () => {
             >
               {/* Image Container - Reduced padding to minimize gaps */}
               <div 
-                className="w-full lg:w-1/2 flex items-center justify-center cursor-pointer p-4 md:p-8"
+                className="w-full lg:w-1/2 flex items-center justify-center cursor-pointer p-4 md:p-8 bg-transparent"
                 onClick={() => setSelectedImage(item.imageUrl)}
               >
                 <img
                   src={item.imageUrl}
                   alt={item.title}
-                  className="w-full h-full max-h-[500px] object-contain block"
+                  /* Added mix-blend-multiply to remove the white/grey background from the image file itself */
+                  className="w-full h-full max-h-[500px] object-contain block "
                 />
               </div>
 
@@ -103,7 +103,6 @@ const Infrastructure: React.FC = () => {
                     {item.model}
                   </span>
 
-                  {/* UPDATED FONT HERE */}
                   <h3 className="font-imperial text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
                     {item.title}
                   </h3>
@@ -145,7 +144,8 @@ const Infrastructure: React.FC = () => {
             <img 
               src={selectedImage} 
               alt="Preview" 
-              className="max-w-full max-h-full object-contain"
+              /* Apply mix-blend-multiply here as well so the preview doesn't have the ugly box either */
+              className="max-w-full max-h-full object-contain mix-blend-multiply"
             />
           </div>
           
