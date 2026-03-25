@@ -192,7 +192,7 @@ const Header: React.FC = () => {
                           </Link>
                           <ul className="space-y-3 [@media(min-width:2400px)]:space-y-6">
                             {(items as string[]).map((item) => {
-                              // 🔥 CHANGED: Route specifically to ServiceDetails
+                              // Route specifically to ServiceDetails
                               const itemTarget = `/servicedetails/${getServiceSlug(item)}`;
                               
                               return (
@@ -221,10 +221,13 @@ const Header: React.FC = () => {
                   <div className="absolute top-[110px] [@media(min-width:2400px)]:top-[180px] left-0 w-[220px] [@media(min-width:2400px)]:w-[440px] bg-white shadow-2xl rounded-lg p-4 [@media(min-width:2400px)]:p-12 border border-gray-100 z-[60] outline-none transition-all duration-300">
                     <ul className="space-y-3 [@media(min-width:2400px)]:space-y-6">
                       {(infrastructureData as string[]).map((item) => {
-                        // 🔥 CHANGED: Route specifically to ServiceDetails if not Team
-                        const infraTarget = item.toLowerCase() === 'team' 
+                        // Route specifically to ServiceDetails if not Team or Equipments
+                        const lowerItem = item.toLowerCase();
+                        const infraTarget = lowerItem === 'team' 
                           ? '/team' 
-                          : `/servicedetails/${getServiceSlug(item)}`;
+                          : lowerItem === 'equipments' || lowerItem === 'equipment'
+                            ? '/infrastructure'
+                            : `/servicedetails/${getServiceSlug(item)}`;
 
                         return (
                           <li key={item}>
@@ -327,7 +330,6 @@ const Header: React.FC = () => {
                             {(items as string[]).map((item) => (
                               <button
                                 key={item}
-                                // 🔥 CHANGED: Mobile dropdown route specifically to ServiceDetails
                                 onClick={() => handleNavigation(`/servicedetails/${getServiceSlug(item)}`)}
                                 className="text-left text-[15px] text-gray-600 hover:text-[#163B73]"
                               >
@@ -342,16 +344,24 @@ const Header: React.FC = () => {
 
                   {link.name === 'Infrastructure' && isOpen && (
                     <div className="flex flex-col ml-4 mt-2 space-y-3 border-l-2 border-gray-100 pl-4 animate-in slide-in-from-top-2 duration-300">
-                      {(infrastructureData as string[]).map((item) => (
-                        <button
-                          key={item}
-                          // 🔥 CHANGED: Mobile dropdown route specifically to ServiceDetails if not Team
-                          onClick={() => handleNavigation(item.toLowerCase() === 'team' ? '/team' : `/servicedetails/${getServiceSlug(item)}`)}
-                          className="text-left text-[15px] text-gray-600 hover:text-[#163B73]"
-                        >
-                          {item}
-                        </button>
-                      ))}
+                      {(infrastructureData as string[]).map((item) => {
+                        const lowerItem = item.toLowerCase();
+                        const infraTarget = lowerItem === 'team' 
+                          ? '/team' 
+                          : lowerItem === 'equipments' || lowerItem === 'equipment'
+                            ? '/infrastructure'
+                            : `/servicedetails/${getServiceSlug(item)}`;
+
+                        return (
+                          <button
+                            key={item}
+                            onClick={() => handleNavigation(infraTarget)}
+                            className="text-left text-[15px] text-gray-600 hover:text-[#163B73]"
+                          >
+                            {item}
+                          </button>
+                        );
+                      })}
                     </div>
                   )}
                 </div>
