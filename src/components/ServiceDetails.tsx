@@ -63,6 +63,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
   }, [images, activeService?.title]);
 
   const openViewer = useCallback((index: number) => {
+    if (typeof index !== 'number') return;
     openTimeRef.current = Date.now();
     setViewerIndex(index);
     document.body.style.overflow = 'hidden';
@@ -74,17 +75,19 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
     document.body.style.overflow = '';
   }, []);
 
-  // Infinite Loop Logic
-  const showNext = useCallback((e?: React.MouseEvent | React.TouchEvent) => {
-    e?.stopPropagation();
-    if (images.length === 0) return;
-    setViewerIndex((prev) => (prev !== null ? (prev + 1) % images.length : 0));
+  // Safe Infinite Loop Logic
+  const showNext = useCallback(() => {
+    setViewerIndex((prev) => {
+      if (prev === null || images.length === 0) return 0;
+      return (prev + 1) % images.length;
+    });
   }, [images.length]);
 
-  const showPrev = useCallback((e?: React.MouseEvent | React.TouchEvent) => {
-    e?.stopPropagation();
-    if (images.length === 0) return;
-    setViewerIndex((prev) => (prev !== null ? (prev - 1 + images.length) % images.length : 0));
+  const showPrev = useCallback(() => {
+    setViewerIndex((prev) => {
+      if (prev === null || images.length === 0) return 0;
+      return (prev - 1 + images.length) % images.length;
+    });
   }, [images.length]);
 
   // Swipe Gesture Handlers for Mobile
@@ -167,6 +170,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
           justify-content: center;
           border-radius: 8px;
           overflow: hidden; 
+          z-index: 100000;
         }
 
         .lightbox-img { 
@@ -193,7 +197,8 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
           justify-content: center;
           font-size: 1.5rem;
           transition: background 0.2s;
-          z-index: 100001;
+          z-index: 100005;
+          pointer-events: auto;
         }
         .nav-btn:hover { background: rgba(255, 255, 255, 0.3); }
         .prev-btn { left: 30px; }
@@ -206,7 +211,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
           color: white; 
           font-size: 3rem; 
           cursor: pointer; 
-          z-index: 100002;
+          z-index: 100005;
           line-height: 1;
         }
 
@@ -232,7 +237,17 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
       {viewerIndex !== null && images.length > 0 && (
         <div className="lightbox-overlay" onClick={closeViewer}>
           <div className="close-btn-new" onClick={closeViewer}>&times;</div>
-          <button className="nav-btn prev-btn" onClick={showPrev}>&#8592;</button>
+          
+          <button 
+            className="nav-btn prev-btn" 
+            onClick={(e) => { 
+              e.preventDefault(); 
+              e.stopPropagation(); 
+              showPrev(); 
+            }}
+          >
+            &#8592;
+          </button>
           
           <div 
             className="image-frame" 
@@ -252,17 +267,25 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
             </div>
           </div>
           
-          <button className="nav-btn next-btn" onClick={showNext}>&#8594;</button>
+          <button 
+            className="nav-btn next-btn" 
+            onClick={(e) => { 
+              e.preventDefault(); 
+              e.stopPropagation(); 
+              showNext(); 
+            }}
+          >
+            &#8594;
+          </button>
         </div>
       )}
 
       {/* SPLIT HERO SECTION WITH ADJUSTED FONT & ALIGNMENT */}
       <div className="w-full flex flex-col lg:flex-row min-h-[70vh] lg:min-h-screen bg-[#BBB791]">
         
-        {/* Left Side: Text Details - Added "relative" here so the button positions correctly inside it */}
+        {/* Left Side: Text Details */}
         <div className="w-full lg:w-1/2 relative flex flex-col justify-center px-8 py-16 lg:px-16 xl:px-24 [@media(min-width:2400px)]:px-[8rem]">
           
-          {/* 🔥 FIX: Exact same button, moved into the Left Side (Text Details) */}
           <button 
             onClick={() => navigate(-1)} 
             className="absolute top-6 left-6 lg:top-8 lg:left-8 z-50 text-white drop-shadow-lg hover:text-gray-200 transition-colors bg-black/20 rounded-full p-2 backdrop-blur-sm"
@@ -278,7 +301,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
             SERVICE DETAILS
           </h4>
           
-          {/* Title - Reduced Size */}
+          {/* Title */}
           <h1 className="font-imperial text-4xl md:text-5xl lg:text-6xl xl:text-7xl [@media(min-width:2400px)]:text-[100px] text-white font-bold leading-tight mb-8">
             {activeService.title.split('/').map((part: string, index: number, array: string[]) => (
               <React.Fragment key={index}>
@@ -289,7 +312,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
             ))}
           </h1>
 
-          {/* Numbered Bullet Points - Reduced Size & Tighter Alignment */}
+          {/* Numbered Bullet Points */}
           {activeService.description_points && (
             <ul className="space-y-6 md:space-y-8 max-w-[650px] [@media(min-width:2400px)]:max-w-[1000px]">
               {activeService.description_points.map((point: string, index: number) => (
@@ -306,10 +329,8 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
           )}
         </div>
 
-        {/* Right Side: Large Cover Image / Video with absolute Close Button */}
+        {/* Right Side: Large Cover Image / Video */}
         <div className="w-full lg:w-1/2 relative min-h-[40vh] lg:min-h-screen bg-black">
-          
-          {/* Override global CSS height constraints to prevent cropping */}
           {activeService.videoUrl ? (
             <video 
               src={activeService.videoUrl} 
@@ -330,7 +351,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
         </div>
       </div>
 
-      {/* 🔥 LEFT-ALIGNED Dynamic Gallery Header Section */}
+      {/* Dynamic Gallery Header Section */}
       {!isLedVideoWall && galleryItems.length > 0 && (
         <div className="pt-24 pb-8 px-8 lg:px-16 xl:px-[120px] [@media(min-width:2400px)]:px-[10rem] text-left bg-[#BBB791]">
           <h2 className="font-imperial text-4xl md:text-5xl lg:text-6xl font-semibold text-white tracking-tight mb-4">
