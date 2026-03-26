@@ -49,7 +49,7 @@ import Hs1 from "../assets/outdoor 10.png";
 import Hs2 from "../assets/outdoor 11.png";
 import Hs3 from "../assets/outdoor 12.png";
 import Hs4 from "../assets/outdoorHoarding4.png"
-import Hs5 from "../assets/facadeNewOne.png"
+
 import M1 from "../assets/outdoor 13.png";
 import M2 from "../assets/outdoor 14.png";
 import M3 from "../assets/outdoorsletter4.jpeg";
@@ -126,7 +126,7 @@ import facade11 from "../assets/facade11.png";
 import facade12 from "../assets/facade12.png";
 import facade13 from "../assets/facade13.png";
 import facade14 from "../assets/facade14.png";
-
+import facade15 from "../assets/facadeNewOne.png"
 
 import p1 from "../assets/p1.jpg";
 import p2 from "../assets/p2.jpg";
@@ -413,7 +413,7 @@ testimonials: {
         { 
       id: 6, 
       title: "Facade / Signages", 
-      images: [facade7, facade1,facade5, facade3,facade6,facade4,facade2,facade12,facade11,facade10,facade9,facade8,facade13,facade14],
+      images: [facade15,facade7, facade1,facade5, facade3,facade6,facade4,facade2,facade12,facade11,facade10,facade9,facade8,facade13,facade14],
       description_points: [
         "Complete building-front branding solutions designed to enhance visibility and create a strong first impression.",
         "Customized facade signages crafted with premium materials, precision fabrication, and durable outdoor finishing.",
@@ -454,7 +454,7 @@ testimonials: {
     { 
       id: 4, 
       title: "Hoardings & Structures", 
-      images: [Hs5,Hs1, Hs2, Hs3,Hs4],
+      images: [Hs1, Hs2, Hs3,Hs4],
       description_points: [
         "High-impact outdoor advertising solutions designed to capture attention across busy roads, commercial zones, and prime locations.",
         "Fabricated with strong structural support and premium materials to ensure stability, safety, and long-term durability.",

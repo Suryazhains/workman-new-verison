@@ -5,11 +5,11 @@ import { LANDING_CONTENT } from './content';
 
 // Asset Imports
 import Home_1 from '../assets/home 4.png'; 
-import Home_2 from '../assets/home 2.png';
+import Home_2 from '../assets/home 7.png';
 import Home_3 from '../assets/home 3.jpg';
 import Home_4 from '../assets/home 1.jpg';
 import Home_5 from '../assets/home 5.png';
-import Home_7 from '../assets/home 7.png';
+import Home_7 from '../assets/home 2.png';
 import AboutVideo from '../assets/0225.mp4'; 
 
 const useScrollToHash = () => {
