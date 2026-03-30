@@ -58,7 +58,16 @@ import M4 from "../assets/outdoor 15.png";
 import retail1 from "../assets/outdoor 16.png";
 import retail2 from "../assets/outdoor 17.png";
 import retail3 from "../assets/outdoor 18.png";
-
+import retail4 from "../assets/outdoorretail4.jpeg";
+import retail5 from "../assets/outdoorretail5.jpeg";
+import retail6 from "../assets/outdoorretail6.jpeg";
+import retail7 from "../assets/outdoorretail7.jpeg";
+import retail8 from "../assets/outdoorretail8.jpeg";
+import retail9 from "../assets/outdoorretail9.jpeg";
+import retail10 from "../assets/outdoorretail10.jpeg";
+import retail11 from "../assets/outdoorretail11.jpeg";
+import retail12 from "../assets/outdoorretail12.jpeg";
+import retail13 from "../assets/outdoorretail13.jpeg";
 // Exhibition Stalls
 import exhibit1 from "../assets/portfolio 1.png";
 import exhibit2 from "../assets/outdoor 20.png";
@@ -475,7 +484,7 @@ testimonials: {
     { 
       id: 7, 
       title: "Retail Interiors", 
-      images: [retail1, retail2, retail3],
+      images: [retail1, retail2, retail3,retail4,retail5,retail6,retail7,retail8,retail9,retail10,retail11,retail12,retail13],
       description_points: [
         "Customized interior branding solutions designed to enhance store aesthetics and improve customer experience.",
         "Includes wall graphics, display units, reception branding, and signage elements crafted with premium finishing.",
