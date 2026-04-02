@@ -13,7 +13,6 @@ interface ServiceProps {
   };
 }
 
-// Helper function to match the URL slug from the header
 const generateSlug = (title: string) => {
   return title
     .toLowerCase()
@@ -33,18 +32,16 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
   // Lightbox State
   const [viewerIndex, setViewerIndex] = useState<number | null>(null);
   const openTimeRef = useRef<number>(0);
-  
-  // Refs to track swipe gestures on mobile for Lightbox
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
 
-  // Scroll Container State (For Horizontal Track)
+  // Scroll Container State (Using Refs for high-performance animation)
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [isDown, setIsDown] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
+  const isDown = useRef(false);
+  const isDraggingRef = useRef(false);
+  const startX = useRef(0);
+  const isHovered = useRef(false);
 
-  // Fetch the data from content.ts if we routed here via URL
   useEffect(() => {
     if (!propService && serviceId) {
       window.scrollTo(0, 0);
@@ -59,13 +56,108 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
   }, [serviceId, propService]);
 
   const images = activeService?.images || [];
-  const duplicatedImages = [...images, ...images, ...images];
+  
+  // Create exactly 3 sets of images. This allows us to have a center track, 
+  // and seamlessly teleport if the user drags too far left or right.
+  const REPEAT_COUNT = 3;
+  const sets = Array.from({ length: REPEAT_COUNT }, (_, i) => i);
+
+  // --- True Infinite Loop Engine ---
+  useEffect(() => {
+    if (!scrollRef.current || images.length === 0) return;
+    
+    let animationId: number;
+    const el = scrollRef.current;
+
+    // Wait a brief moment for images to render so we can measure their width
+    setTimeout(() => {
+      if (!el) return;
+      const setWidth = el.scrollWidth / REPEAT_COUNT;
+      // Start the user exactly in the middle set to allow dragging in both directions immediately
+      el.scrollLeft = setWidth;
+    }, 100);
+
+    const tick = () => {
+      if (el) {
+        const setWidth = el.scrollWidth / REPEAT_COUNT;
+
+        // 1. Auto-scroll logic: Move right steadily if not hovered or dragging
+        if (!isHovered.current && !isDown.current) {
+          el.scrollLeft += 1.5; // Adjust this number to change auto-scroll speed
+        }
+
+        // 2. Seamless Teleportation logic
+        // If we scroll too far left (into Set 1), teleport forward to Set 2
+        if (el.scrollLeft <= 0) {
+          el.scrollLeft += setWidth;
+        } 
+        // If we scroll too far right (into Set 3), teleport backward to Set 2
+        else if (el.scrollLeft >= setWidth * 2) {
+          el.scrollLeft -= setWidth;
+        }
+      }
+      animationId = requestAnimationFrame(tick);
+    };
+
+    animationId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(animationId);
+  }, [images]);
+
+  // --- Horizontal Drag Scroll Logic ---
+  const handleMouseDown = (e: React.MouseEvent) => {
+    isDown.current = true;
+    isDraggingRef.current = false;
+    if (!scrollRef.current) return;
+    startX.current = e.pageX;
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDown.current || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX;
+    const delta = (startX.current - x) * 1.5; // Drag sensitivity
+    
+    if (Math.abs(delta) > 5) {
+      isDraggingRef.current = true;
+    }
+    
+    if (delta !== 0) {
+      scrollRef.current.scrollLeft += delta;
+      startX.current = x; // Reset startX to constantly calculate delta
+    }
+  };
+
+  const handleMouseUpOrLeave = () => {
+    isDown.current = false;
+  };
+
+  const handleTouchStartScroll = (e: React.TouchEvent) => {
+    if (!scrollRef.current) return;
+    isDown.current = true;
+    isDraggingRef.current = false;
+    startX.current = e.touches[0].pageX;
+  };
+
+  const handleTouchMoveScroll = (e: React.TouchEvent) => {
+    if (!isDown.current || !scrollRef.current) return;
+    const x = e.touches[0].pageX;
+    const delta = (startX.current - x) * 1.5;
+
+    if (Math.abs(delta) > 5) {
+      isDraggingRef.current = true;
+    }
+
+    if (delta !== 0) {
+      scrollRef.current.scrollLeft += delta;
+      startX.current = x;
+    }
+  };
 
   // --- Lightbox Handlers ---
   const openViewer = useCallback((index: number) => {
     if (typeof index !== 'number') return;
     openTimeRef.current = Date.now();
-    setViewerIndex(index % images.length); // Modulo ensures correct image from duplicated track
+    setViewerIndex(index % images.length); 
     document.body.style.overflow = 'hidden';
   }, [images.length]);
 
@@ -89,39 +181,6 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
     });
   }, [images.length]);
 
-  // --- Horizontal Drag Scroll Logic ---
-  const handleMouseDown = (e: React.MouseEvent) => {
-    setIsDown(true);
-    if (!scrollRef.current) return;
-    setStartX(e.pageX - scrollRef.current.offsetLeft);
-    setScrollLeft(scrollRef.current.scrollLeft);
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDown || !scrollRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
-    scrollRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  const handleMouseUpOrLeave = () => setIsDown(false);
-
-  const handleTouchStartScroll = (e: React.TouchEvent) => {
-    if (!scrollRef.current) return;
-    setIsDown(true);
-    setStartX(e.touches[0].pageX - scrollRef.current.offsetLeft);
-    setScrollLeft(scrollRef.current.scrollLeft);
-  };
-
-  const handleTouchMoveScroll = (e: React.TouchEvent) => {
-    if (!isDown || !scrollRef.current) return;
-    const x = e.touches[0].pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
-    scrollRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  // --- Lightbox Swipe Gesture Handlers for Mobile ---
   const handleTouchStartLightbox = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
     touchEndX.current = e.touches[0].clientX; 
@@ -178,21 +237,8 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
         .font-crimson { font-family: 'Crimson Pro', serif !important; }
         .font-imperial { font-family: "ImperialStd-BoldItalic", serif !important; }
 
-        /* Animation & Scroll Bar for Horizontal Gallery */
-        @keyframes infiniteScroll {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-33.33%); }
-        }
-
-        .animate-infinite {
-          animation: infiniteScroll 60s linear infinite;
-        }
-
-        .expert-container:active .animate-infinite,
-        .expert-container:hover .animate-infinite {
-          animation-play-state: paused;
-        }
-
+        /* No CSS Animation here anymore - it's all handled cleanly by JS */
+        
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
@@ -278,7 +324,6 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
           z-index: 100002;
         }
 
-        /* Responsive Fixes - HORIZONTAL RECTANGLES TO MATCH SCREENSHOT */
         @media (min-width: 1440px) and (max-width: 1919px) {
           .team-card { width: 650px !important; height: 450px !important; border-radius: 20px !important; }
           .team-scroll-container { padding-left: 40px; padding-right: 40px; }
@@ -298,23 +343,11 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
         <div 
           className="lightbox-overlay" 
           onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              closeViewer();
-            }
+            if (e.target === e.currentTarget) closeViewer();
           }}
         >
           <div className="close-btn-new" onClick={closeViewer}>&times;</div>
-          
-          <button 
-            className="nav-btn prev-btn" 
-            onClick={(e) => { 
-              e.preventDefault(); 
-              e.stopPropagation(); 
-              showPrev(); 
-            }}
-          >
-            &#8592;
-          </button>
+          <button className="nav-btn prev-btn" onClick={(e) => { e.preventDefault(); e.stopPropagation(); showPrev(); }}>&#8592;</button>
           
           <div 
             className="image-frame" 
@@ -323,98 +356,52 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
             onTouchMove={handleTouchMoveLightbox}
             onTouchEnd={handleTouchEndLightbox}
           >
-            <img 
-              key={viewerIndex} 
-              src={images[viewerIndex]} 
-              className="lightbox-img" 
-              alt={`Project Gallery ${viewerIndex + 1}`} 
-              draggable={false}
-            />
-            <div className="image-counter" onClick={(e) => e.stopPropagation()}>
-              {viewerIndex + 1} / {images.length}
-            </div>
+            <img key={viewerIndex} src={images[viewerIndex]} className="lightbox-img" alt={`Project Gallery ${viewerIndex + 1}`} draggable={false} />
+            <div className="image-counter" onClick={(e) => e.stopPropagation()}>{viewerIndex + 1} / {images.length}</div>
           </div>
           
-          <button 
-            className="nav-btn next-btn" 
-            onClick={(e) => { 
-              e.preventDefault(); 
-              e.stopPropagation(); 
-              showNext(); 
-            }}
-          >
-            &#8594;
-          </button>
+          <button className="nav-btn next-btn" onClick={(e) => { e.preventDefault(); e.stopPropagation(); showNext(); }}>&#8594;</button>
         </div>
       )}
 
       {/* SPLIT HERO SECTION */}
       <div className="w-full flex flex-col lg:flex-row min-h-[70vh] lg:min-h-screen bg-[#BBB791]">
-        
-        {/* Left Side: Text Details */}
         <div className="w-full lg:w-1/2 relative flex flex-col justify-center px-8 py-16 lg:px-16 xl:px-24 [@media(min-width:2400px)]:px-[8rem]">
-          
-          <button 
-            onClick={() => navigate(-1)} 
-            className="absolute top-6 left-6 lg:top-8 lg:left-8 z-50 text-white drop-shadow-lg hover:text-gray-200 transition-colors bg-black/20 rounded-full p-2 backdrop-blur-sm"
-            aria-label="Back"
-          >
+          <button onClick={() => navigate(-1)} className="absolute top-6 left-6 lg:top-8 lg:left-8 z-50 text-white drop-shadow-lg hover:text-gray-200 transition-colors bg-black/20 rounded-full p-2 backdrop-blur-sm" aria-label="Back">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
           </button>
+          <h4 className="text-white/80 font-bold tracking-[0.2em] uppercase text-xs md:text-sm mb-4 mt-8 md:mt-0">SERVICE DETAILS</h4>
+          <h1 className="font-imperial text-2xl md:text-3xl lg:text-4xl xl:text-4xl [@media(min-width:2400px)]:text-[100px] text-white font-bold leading-tight mb-8 whitespace-nowrap">
+  {activeService.title.split('/').map((part: string, index: number, array: string[]) => (
+    <React.Fragment key={index}>
+      {part.trim()}
+      {index < array.length - 1 && <span className="opacity-80 mx-2">/</span>}
+    </React.Fragment>
+  ))}
+</h1>
 
-          <h4 className="text-white/80 font-bold tracking-[0.2em] uppercase text-xs md:text-sm mb-4 mt-8 md:mt-0">
-            SERVICE DETAILS
-          </h4>
-          
-          {/* Title */}
-          <h1 className="font-imperial text-4xl md:text-5xl lg:text-6xl xl:text-7xl [@media(min-width:2400px)]:text-[100px] text-white font-bold leading-tight mb-8">
-            {activeService.title.split('/').map((part: string, index: number, array: string[]) => (
-              <React.Fragment key={index}>
-                {part.trim()}
-                {index < array.length - 1 && <span className="opacity-80 mx-2">/</span>}
-                <br />
-              </React.Fragment>
-            ))}
-          </h1>
-
-          {/* Numbered Bullet Points */}
           {activeService.description_points && (
             <ul className="space-y-6 md:space-y-8 max-w-[650px] [@media(min-width:2400px)]:max-w-[1000px]">
               {activeService.description_points.map((point: string, index: number) => (
                 <li key={index} className="flex items-start gap-4">
-                  <span className="flex items-center justify-center w-6 h-6 md:w-8 md:h-8 [@media(min-width:2400px)]:w-10 [@media(min-width:2400px)]:h-10 shrink-0 bg-white text-[#BBB791] rounded-full font-bold text-sm md:text-base mt-1">
-                    {index + 1}
-                  </span>
-                  <p className="text-white/95 text-base md:text-lg lg:text-xl [@media(min-width:2400px)]:text-[28px] leading-relaxed font-light">
-                    {point}
-                  </p>
+                  <span className="flex items-center justify-center w-6 h-6 md:w-8 md:h-8 [@media(min-width:2400px)]:w-10 [@media(min-width:2400px)]:h-10 shrink-0 bg-white text-[#BBB791] rounded-full font-bold text-sm md:text-base mt-1">{index + 1}</span>
+                  <p className="text-white/95 text-base md:text-lg lg:text-xl [@media(min-width:2400px)]:text-[28px] leading-relaxed font-light">{point}</p>
                 </li>
               ))}
             </ul>
           )}
         </div>
 
-        {/* Right Side: Large Cover Image / Video */}
         <div className="w-full lg:w-1/2 relative min-h-[40vh] lg:min-h-screen bg-black">
           {activeService.videoUrl ? (
-            <video 
-              src={activeService.videoUrl} 
-              autoPlay loop muted playsInline 
-              className="absolute inset-0 !w-full !h-full !object-cover" 
-            />
+            <video src={activeService.videoUrl} autoPlay loop muted playsInline className="absolute inset-0 !w-full !h-full !object-cover" />
           ) : images.length > 0 ? (
-            <img 
-              src={images[0]} 
-              alt={activeService.title} 
-              className="absolute inset-0 !w-full !h-full !object-cover"
-            />
+            <img src={images[0]} alt={activeService.title} className="absolute inset-0 !w-full !h-full !object-cover" />
           ) : (
-            <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
-              <span className="text-white/50">No media available</span>
-            </div>
+            <div className="absolute inset-0 bg-black/10 flex items-center justify-center"><span className="text-white/50">No media available</span></div>
           )}
         </div>
       </div>
@@ -422,12 +409,8 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
       {/* Dynamic Gallery Header Section */}
       {!isLedVideoWall && images.length > 0 && (
         <div className="pt-24 pb-8 px-8 lg:px-16 xl:px-[120px] [@media(min-width:2400px)]:px-[10rem] text-left bg-[#BBB791]">
-          <h2 className="font-imperial text-4xl md:text-5xl lg:text-6xl font-semibold text-white tracking-tight mb-4">
-            {activeService.title} Project Gallery
-          </h2>
-          <p className="text-white/80 text-lg font-light max-w-2xl">
-            Drag horizontally to explore. Click any image to expand.
-          </p>
+          <h2 className="font-imperial text-4xl md:text-5xl lg:text-6xl font-semibold text-white tracking-tight mb-4">{activeService.title} Project Gallery</h2>
+          <p className="text-white/80 text-lg font-light max-w-2xl">Drag horizontally to explore. Click any image to expand.</p>
         </div>
       )}
 
@@ -436,28 +419,35 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
         <section className="expert-section w-full expert-container py-12 relative">
           <div
             ref={scrollRef}
-            className="relative z-10 overflow-x-auto no-scrollbar cursor-grab active:cursor-grabbing select-none team-scroll-container"
+            className="relative z-10 overflow-x-hidden no-scrollbar cursor-grab active:cursor-grabbing select-none team-scroll-container"
+            onMouseEnter={() => { isHovered.current = true; }}
+            onMouseLeave={() => { isHovered.current = false; handleMouseUpOrLeave(); }}
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUpOrLeave}
-            onMouseLeave={handleMouseUpOrLeave}
             onMouseMove={handleMouseMove}
             onTouchStart={handleTouchStartScroll}
             onTouchMove={handleTouchMoveScroll}
             onTouchEnd={handleMouseUpOrLeave}
           >
-            <div className="flex w-max animate-infinite gap-8 md:gap-12 px-4">
-              {duplicatedImages.map((img, index) => (
-                <div
-                  key={index}
-                  onClick={() => openViewer(index)}
-                  className="team-card w-[350px] h-[250px] md:w-[550px] md:h-[400px] flex-shrink-0 overflow-hidden rounded-[12px] bg-black/10 transition-all duration-500 hover:rounded-[20px] hover:shadow-2xl cursor-pointer"
-                >
-                  <img
-                    src={img}
-                    alt={`${activeService.title} Image ${index}`}
-                    className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-110 pointer-events-none"
-                    draggable="false"
-                  />
+            <div className="flex w-max">
+              {sets.map((setIndex) => (
+                <div key={setIndex} className="flex gap-8 md:gap-12 pr-8 md:pr-12">
+                  {images.map((img: string, index: number) => (
+                    <div
+                      key={`${setIndex}-${index}`}
+                      onClick={(e) => {
+                        if (isDraggingRef.current) {
+                          e.stopPropagation();
+                          e.preventDefault();
+                          return;
+                        }
+                        openViewer(index);
+                      }}
+                      className="team-card w-[350px] h-[250px] md:w-[550px] md:h-[400px] flex-shrink-0 overflow-hidden rounded-[12px] bg-black/10 transition-all duration-500 hover:rounded-[20px] hover:shadow-2xl cursor-pointer"
+                    >
+                      <img src={img} alt={`${activeService.title} Image ${index}`} className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-110 pointer-events-none" draggable="false" />
+                    </div>
+                  ))}
                 </div>
               ))}
             </div>
@@ -470,20 +460,13 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
         <div className={`px-6 md:px-12 lg:px-[8%] bg-[#BBB791] ${isLedVideoWall ? 'py-24' : 'pb-24 pt-8'}`}>
           <div className="max-w-[1920px] mx-auto">
             <div className="aspect-video w-full overflow-hidden rounded-xl shadow-2xl bg-gray-900">
-              <video 
-                src={activeService.videoUrl} 
-                controls autoPlay loop muted playsInline
-                className="w-full h-full object-cover" 
-              />
+              <video src={activeService.videoUrl} controls autoPlay loop muted playsInline className="w-full h-full object-cover" />
             </div>
           </div>
         </div>
       )}
 
-      {/* Footer */}
-      <div className="w-full">
-        <LandingPageThree />
-      </div>
+      <div className="w-full"><LandingPageThree /></div>
     </div>
   );
 };

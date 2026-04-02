@@ -49,7 +49,9 @@ import Hs1 from "../assets/outdoor 10.png";
 import Hs2 from "../assets/outdoor 11.png";
 import Hs3 from "../assets/outdoor 12.png";
 import Hs4 from "../assets/outdoorHoarding4.png"
-
+import Hs5 from "../assets/outdoorHoarding5.png"
+import Hs6 from "../assets/outdoorHoarding6.png"
+import Hs7 from "../assets/outdoorHoarding7.png"
 import M1 from "../assets/outdoor 13.png";
 import M2 from "../assets/outdoor 14.png";
 import M3 from "../assets/outdoorsletter4.jpeg";
@@ -121,7 +123,7 @@ import clip1 from "../assets/outdoor 49.png";
 import clip2 from "../assets/outdoor 50.png";
 import clip3 from "../assets/outdoor 51.png";
 // Facade / Signages
-import facade1 from "../assets/home 3.jpg";
+import facade1 from "../assets/home 3.png";
 import facade2 from "../assets/facade1.png";
 import facade3 from "../assets/facade2.png";
 import facade4 from "../assets/facade3.png";
@@ -463,7 +465,7 @@ testimonials: {
     { 
       id: 4, 
       title: "Hoardings & Structures", 
-      images: [Hs1, Hs2, Hs3,Hs4],
+      images: [Hs5,Hs1, Hs2, Hs3,Hs4,Hs6,Hs7],
       description_points: [
         "High-impact outdoor advertising solutions designed to capture attention across busy roads, commercial zones, and prime locations.",
         "Fabricated with strong structural support and premium materials to ensure stability, safety, and long-term durability.",

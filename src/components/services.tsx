@@ -4,10 +4,10 @@ import { LANDING_CONTENT } from './content';
 import LandingPageThree from './landingthree';
 
 // --- ASSET IMPORTS ---
-import out1 from '../assets/out 1.jpg';
-import out2 from '../assets/out 2.jpg';
-import out3 from '../assets/out 3.jpg';
-import out4 from '../assets/out 4.jpg';
+import out1 from '../assets/facadeNewOne.png';
+import out2 from '../assets/pylolfinal4.png';
+import out3 from '../assets/outdoor 4.png';
+import out4 from '../assets/outdoorHoarding5.png';
 
 import in1 from '../assets/in 1.png';
 import in2 from '../assets/in 2.png';

@@ -87,7 +87,7 @@ const Header: React.FC = () => {
       'Kiosk': 'kiosk',
       'Display Stands': 'display-stands',
       'Metal Stands': 'metal-stands',
-      'Wall Graphics / Inshop Branding': 'wall-graphics',
+ 
       'LED video wall': 'led-video-wall',
       'Standees': 'standees',
       'Scrollers': 'scrollers',
@@ -374,7 +374,7 @@ const Header: React.FC = () => {
                 e.preventDefault();
                 handleNavigation('/#contact');
               }}
-              className="w-full bg-white border-2 border-[#51A147] text-[#51A147] text-center py-4 rounded-md font-bold block mt-4"
+              className="w-full bg-white border-2 border-[#BBB791] text-[#BBB791] text-center py-4 rounded-md font-bold block mt-4"
             >
               {contactBtn}
             </Link>
