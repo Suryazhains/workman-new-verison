@@ -6,7 +6,7 @@ import { LANDING_CONTENT } from './content';
 // Asset Imports
 import Home_1 from '../assets/home 4.png'; 
 import Home_2 from '../assets/home 7.png';
-import Home_3 from '../assets/home 3.png';
+import Home_3 from '../assets/homeAbid3.png';
 import Home_4 from '../assets/home 1.jpg';
 import Home_5 from '../assets/home 5.png';
 import Home_7 from '../assets/home 2.png';
@@ -105,7 +105,7 @@ const LandingPage: React.FC = () => {
         <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/40 to-transparent pointer-events-none" />
 
         <div className="relative z-20 h-full flex items-center">
-          <div className="w-full px-6 md:px-12 lg:pl-12"> 
+    <div className="w-full px-10 md:px-20 lg:px-24">
             <div className="max-w-[43.75rem]">
               <h1 className="font-imperial text-[3rem] md:text-[4.25rem] lg:text-[5.25rem] font-bold leading-[1.05] tracking-tight text-white mb-8 text-readable-shadow">
                 {hero.title.join(" ")}
@@ -133,61 +133,65 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* --- ABOUT SECTION --- */}
-      <section 
-        id="about" 
-        className="relative w-full bg-[#FFFDE8] py-16 md:py-24 px-6 md:px-12 lg:pl-12 lg:pr-[3.125rem] scroll-mt-24 overflow-hidden"
-      >
-        <div className="max-w-[90rem] flex flex-col lg:flex-row items-center justify-between">
-          
-          {/* 🔥 FIX: Changed lg:w-[60%] to lg:w-[50%] and added lg:pr-10 to create distance from video */}
-          <div className="w-full lg:w-[50%] text-left z-10 lg:pr-10">
-            <span className="text-black font-imperial font-bold text-lg md:text-[1.25rem] leading-none tracking-[-0.04em] mb-4 block uppercase lg:normal-case">
-              {about.label}
-            </span>
+    <section 
+  id="about" 
+  // Increased px-6 to px-10, md:px-12 to md:px-20, and the lg padding to lg:px-24
+  className="relative w-full bg-[#FFFDE8] py-16 md:py-36 px-10 md:px-20 lg:px-24 scroll-mt-24 overflow-hidden"
+>
+  {/* Added mx-auto here to ensure the max-w container centers properly, creating equal margins on ultra-wide screens */}
+  <div className="max-w-[90rem] mx-auto flex flex-col lg:flex-row items-center justify-between">
+    
+    <div className="w-full lg:w-[50%] text-left z-10 lg:pr-10">
+      {/* Reduced exactly 5px: 18px -> 13px, 20px -> 15px */}
+      <span className="text-black font-imperial font-bold text-[13px] md:text-[15px] leading-none tracking-[-0.04em] mb-4 block uppercase lg:normal-case">
+        {about.label}
+      </span>
 
-            {/* 🔥 FIX: Reduced md:text-[3rem] to md:text-[2.75rem] to prevent heading collision */}
-            <h2 className="font-inter font-bold text-[2rem] sm:text-[2.625rem] md:text-[2.75rem] xl:text-[3rem] leading-[1.1] tracking-[-0.04em] text-black mb-6 w-full">
-              {about.heading}
-            </h2>
 
-            {/* 🔥 FIX: Reduced text size to 1rem and added max-w-[95%] to force words to next line */}
-            <p className="text-gray-800 text-[0.9375rem] md:text-[1rem] leading-relaxed w-full max-w-[95%] mb-12">
-              {about.description}
-            </p>
+      <h2 className="font-inter font-bold text-[27px] sm:text-[37px] md:text-[39px] xl:text-[43px] leading-[1.1] tracking-[-0.04em] text-black mb-6 w-full">
+        {about.heading}
+      </h2>
 
-            {/* Adjusted gap slightly to fit the new 50% container width safely */}
-            <div className="grid grid-cols-3 lg:flex lg:flex-wrap gap-4 sm:gap-8 lg:gap-12">
-              {about.stats.map((stat, index) => (
-                <div key={index} className="flex flex-col">
-                  <div className="flex items-center gap-1 md:gap-2">
-                    <p className="text-[1.75rem] sm:text-[2.25rem] md:text-[2.75rem] font-bold text-black">
-                      {stat.value}
-                    </p>
-                    <span className="text-[#FF7A00] text-sm sm:text-xl md:text-2xl font-bold">↗</span>
-                  </div>
-                  <p className="text-[#6B7280] text-[0.625rem] sm:text-sm md:text-base font-medium">
-                    {stat.label}
-                  </p>
-                </div>
-              ))}
+
+      <p className="text-gray-800 text-[14px] md:text-[16px] leading-relaxed w-full max-w-[95%] mb-12">
+        {about.description}
+      </p>
+
+      <div className="grid grid-cols-3 lg:flex lg:flex-wrap gap-4 sm:gap-8 lg:gap-12">
+        {about.stats.map((stat, index) => (
+          <div key={index} className="flex flex-col">
+            <div className="flex items-center gap-1 md:gap-2">
+    
+              <p className="text-[23px] sm:text-[31px] md:text-[39px] font-bold text-black">
+                {stat.value}
+              </p>
+           
+              <span className="text-[#FF7A00] text-[9px] sm:text-[15px] md:text-[19px] font-bold">↗</span>
             </div>
-          </div>
 
-          {/* Video is UNTOUCHED and remains exactly where it was */}
-          <div className="w-full lg:absolute lg:right-0 lg:top-0 lg:h-full lg:w-1/2 mt-12 lg:mt-0 flex items-center justify-end z-0">
-            <video 
-              src={AboutVideo}
-              autoPlay 
-              loop 
-              muted 
-              playsInline
-              className="w-full h-auto lg:h-[110%] lg:w-auto object-cover lg:object-contain object-right"
-            />
+            <p className="text-[#6B7280] text-[5px] sm:text-[9px] md:text-[11px] font-medium">
+              {stat.label}
+            </p>
           </div>
+        ))}
+      </div>
+    </div>
 
-          <div className="hidden lg:block lg:w-[40%] h-1"></div>
-        </div>
-      </section>
+
+    <div className="w-full lg:absolute lg:right-0 lg:top-0 lg:h-full lg:w-1/2 mt-12 lg:mt-0 flex items-center justify-end z-0">
+      <video 
+        src={AboutVideo}
+        autoPlay 
+        loop 
+        muted 
+        playsInline
+        className="w-[calc(100%-80px)] h-auto lg:h-[calc(110%-80px)] lg:w-auto object-cover lg:object-contain object-right"
+      />
+    </div>
+
+    <div className="hidden lg:block lg:w-[40%] h-1"></div>
+  </div>
+</section>
       
       <LandingTwo />
     </main>

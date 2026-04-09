@@ -70,7 +70,7 @@ const LandingTwo: React.FC = () => {
         id="portfolio"
         className="w-full bg-[#BBB791] pt-[4.5rem] pb-[5.5rem] overflow-hidden scroll-mt-[6rem] lg:scroll-mt-[8rem]"
       >
-        <div className="max-w-[90rem] px-6 md:px-12 lg:pl-12 mb-10">
+       <div className="max-w-[90rem] mx-auto px-10 md:px-20 lg:px-24 mb-10">
           <h2 className="font-imperial font-bold text-3xl md:text-[3.5rem] text-[#FFFFFF] mb-4">
             {portfolio.heading}
           </h2>
@@ -95,7 +95,7 @@ const LandingTwo: React.FC = () => {
               {row1Images.map((src, i) => (
                 <div
                   key={`row1-${i}`}
-                  className="relative overflow-hidden w-[12.5rem] h-[7.5rem] md:w-[27rem] md:h-[14.5rem] shrink-0 rounded-sm"
+                  className="relative overflow-hidden w-[12.5rem] h-[7.5rem] md:w-[20rem] md:h-[10.5rem] shrink-0 rounded-sm"
                 >
                   <img
                     src={src}
@@ -115,7 +115,7 @@ const LandingTwo: React.FC = () => {
               {row2Images.map((src, i) => (
                 <div
                   key={`row2-${i}`}
-                  className="relative overflow-hidden w-[12.5rem] h-[7.5rem] md:w-[27rem] md:h-[14.5rem] shrink-0 rounded-sm"
+                  className="relative overflow-hidden w-[12.5rem] h-[7.5rem] md:w-[20rem] md:h-[10.5rem] shrink-0 rounded-sm"
                 >
                   <img
                     src={src}
@@ -135,7 +135,7 @@ const LandingTwo: React.FC = () => {
               {row3Images.map((src, i) => (
                 <div
                   key={`row3-${i}`}
-                  className="relative overflow-hidden w-[12.5rem] h-[7.5rem] md:w-[27rem] md:h-[14.5rem] shrink-0 rounded-sm"
+                  className="relative overflow-hidden w-[12.5rem] h-[7.5rem] md:w-[20rem] md:h-[10.5rem] shrink-0 rounded-sm"
                 >
                   <img
                     src={src}
@@ -156,12 +156,12 @@ const LandingTwo: React.FC = () => {
           <h2 className="font-imperial text-[2rem] md:text-[3.5rem] font-bold text-[#BBB791] mb-4 text-center">
             {testimonials.heading}
           </h2>
-          <p className="text-[#535353] text-center text-sm md:text-lg mb-8 md:mb-12 max-w-[75rem] mx-auto leading-relaxed px-2">
+          <p className="text-[#535353] text-center text-sm md:text-sm mb-8 md:mb-12 max-w-[75rem] mx-auto leading-relaxed px-2">
             {testimonials.description}
           </p>
 
           <div className="relative flex flex-col items-center justify-center">
-            <div className="relative w-full flex items-center justify-center min-h-[25rem] md:min-h-[28rem]">
+            <div className="relative w-full flex items-center justify-center min-h-[22rem] md:min-h-[24rem]">
               
               <button 
                 onClick={prevSlide} 
@@ -191,24 +191,27 @@ const LandingTwo: React.FC = () => {
                     <div
                       key={index}
                       className={`transition-all duration-700 ease-in-out transform 
-                        bg-white p-8 md:p-12 border rounded-xl 
-                        w-[90%] md:w-full max-w-[40.6rem] 
-                        text-left h-[21.8rem] md:h-[25rem] 
-                        flex flex-col justify-between ${positionClass}`}
+                        bg-white border rounded-xl flex flex-col justify-between
+                        p-6 md:p-8 
+                        w-[90%] md:w-full max-w-[30rem] 
+                        text-left h-[18rem] md:h-[21rem] 
+                        ${positionClass}`}
                     >
                       <div className="overflow-y-auto testimonial-scroll pr-2">
-                        <p className="font-crimson text-[#333333] text-[1.125rem] md:text-[1.5rem] leading-relaxed pt-0">
+                        {/* REDUCED FURTHER: Quote text size now 14px on mobile, 16px on desktop */}
+                        <p className="font-crimson text-[#333333] text-[0.875rem] md:text-[1rem] leading-relaxed pt-0">
                           {item.quote}
                         </p>
                       </div>
 
                       <div className="mt-6 pt-6 border-t border-[#BBB791] flex items-center gap-3 md:gap-4 flex-shrink-0">
-                        <div className="w-10 h-10 md:w-14 md:h-14 rounded-full bg-[#BBB791] flex items-center justify-center text-white font-bold text-base md:text-xl shadow-lg flex-shrink-0">
+                        <div className="w-8 h-8 md:w-12 md:h-12 rounded-full bg-[#BBB791] flex items-center justify-center text-white font-bold text-sm md:text-lg shadow-lg flex-shrink-0">
                           {item.name.charAt(0)}
                         </div>
                         <div className="overflow-hidden text-ellipsis">
-                          <p className="font-bold text-[#1A1A1A] text-base md:text-lg truncate">{item.name}</p>
-                          <p className="text-[#888888] text-[0.625rem] md:text-sm font-medium uppercase truncate">{item.company}</p>
+                          {/* REDUCED FURTHER: Name and company text sizes */}
+                          <p className="font-bold text-[#1A1A1A] text-xs md:text-sm truncate">{item.name}</p>
+                          <p className="text-[#888888] text-[0.5rem] md:text-[0.65rem] font-medium uppercase truncate">{item.company}</p>
                         </div>
                       </div>
                     </div>
@@ -257,7 +260,6 @@ const LandingTwo: React.FC = () => {
           </div>
         </div>
       </section>
-
       <div className="mt-0 pb-0">
         <LandingThree />
       </div>

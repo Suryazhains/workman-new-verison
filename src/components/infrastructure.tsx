@@ -63,12 +63,13 @@ const Infrastructure: React.FC = () => {
         id="infrastructure" 
         className="w-full pt-[4rem] md:pt-[5rem] pb-[4rem] md:pb-[5rem] scroll-mt-[7rem] font-inter"
       >
-        {/* Page Heading - Slashed sizes to counter the 1.11vw global scaling */}
-        <div className="w-full mx-auto mb-[2.5rem] px-[1.5rem] lg:px-[3rem] xl:px-[5rem] 2xl:px-[6rem] max-w-[120rem]">
-          <h2 className="font-imperial text-[2.5rem] md:text-[3rem] lg:text-[3.25rem] xl:text-[3.5rem] 2xl:text-[4rem] min-[2000px]:text-[5rem] font-bold text-white mb-4 leading-tight transition-all">
+        {/* Page Heading - Reduced mb to bring the first item closer */}
+        <div className="w-full mx-auto mb-[1rem] px-[1.5rem] lg:px-[3rem] xl:px-[5rem] 2xl:px-[6rem] max-w-[120rem]">
+          <h2 className="font-imperial text-[1.5rem] md:text-[1.75rem] lg:text-[2.25rem] xl:text-[2.5rem] 2xl:text-[3rem] min-[2000px]:text-[3.5rem] font-bold text-white mb-3 leading-tight transition-all">
             {infrastructurePage.heading}
           </h2>
-          <p className="text-white/90 max-w-[70rem] text-[1.125rem] md:text-[1.125rem] lg:text-[1.125rem] xl:text-[1.25rem] 2xl:text-[1.5rem] min-[2000px]:text-[2rem] leading-relaxed transition-all">
+
+          <p className="text-white/90 max-w-[70rem] text-[0.85rem] md:text-[0.95rem] lg:text-[1rem] xl:text-[1.05rem] 2xl:text-[1.2rem] min-[2000px]:text-[1.4rem] leading-relaxed transition-all">
             {infrastructurePage.description}
           </p>
         </div>
@@ -79,7 +80,9 @@ const Infrastructure: React.FC = () => {
             <div
               key={item.id}
               id={getServiceSlug(item.title)}
-              className={`flex flex-col lg:flex-row items-center w-full border-b border-white/5 py-[2.5rem] lg:py-[3rem] xl:py-[3.5rem] transition-all ${
+              className={`flex flex-col lg:flex-row items-center w-full border-b border-white/5 pb-[2.5rem] lg:pb-[3rem] xl:pb-[3.5rem] ${
+                index === 0 ? 'pt-[1rem]' : 'pt-[2.5rem] lg:pt-[3rem] xl:pt-[3.5rem]'
+              } transition-all ${
                 index % 2 !== 0 ? 'lg:flex-row-reverse' : ''
               }`}
             >
@@ -102,12 +105,12 @@ const Infrastructure: React.FC = () => {
                     {item.model}
                   </span>
 
-                  <h3 className="font-imperial text-[1.875rem] md:text-[2.25rem] lg:text-[2.5rem] xl:text-[2.75rem] 2xl:text-[3.5rem] min-[2000px]:text-[4.5rem] font-bold text-white mb-4 leading-tight transition-all">
+                  <h3 className="font-imperial text-[1.25rem] md:text-[1.5rem] lg:text-[1.75rem] xl:text-[2rem] 2xl:text-[2.4rem] min-[2000px]:text-[3rem] font-bold text-white mb-3 leading-tight transition-all">
                     {item.title}
                   </h3>
 
                   <div className="w-full">
-                    <p className="text-white/90 leading-relaxed text-[1rem] md:text-[1rem] lg:text-[1.125rem] xl:text-[1.125rem] 2xl:text-[1.375rem] min-[2000px]:text-[1.75rem] font-inter w-full text-left md:text-justify [text-justify:inter-word] transition-all">
+                    <p className="text-white/90 leading-relaxed text-[0.8rem] md:text-[0.9rem] lg:text-[1rem] xl:text-[1.05rem] 2xl:text-[1.15rem] min-[2000px]:text-[1.3rem] font-inter w-full text-left md:text-justify [text-justify:inter-word] transition-all">
                       {item.description}
                     </p>
                   </div>
@@ -121,7 +124,7 @@ const Infrastructure: React.FC = () => {
       {/* ✅ DRIVE-STYLE PREVIEW WITH HIGH Z-INDEX */}
       {selectedImage && (
         <div 
-          className="fixed inset-0 z-[99999] flex items-center justify-center preview-fade-in"
+          className="fixed inset-0 z- flex items-center justify-center preview-fade-in"
           style={{ 
             backgroundColor: 'rgba(0, 0, 0, 0.85)',
             backdropFilter: 'blur(8px)',
@@ -131,7 +134,7 @@ const Infrastructure: React.FC = () => {
         >
           <button 
             onClick={() => setSelectedImage(null)}
-            className="absolute top-[2rem] right-[2rem] lg:top-[3rem] lg:right-[3rem] 2xl:top-[4rem] 2xl:right-[4rem] text-white hover:text-gray-300 transition-colors z-[100000]"
+            className="absolute top-[2rem] right-[2rem] lg:top-[3rem] lg:right-[3rem] 2xl:top-[4rem] 2xl:right-[4rem] text-white hover:text-gray-300 transition-colors z-"
           >
             <X className="w-[2.5rem] h-[2.5rem] lg:w-[3rem] lg:h-[3rem] 2xl:w-[4rem] 2xl:h-[4rem]" strokeWidth={2} />
           </button>

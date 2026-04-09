@@ -1,38 +1,38 @@
 // import printer1 from "../assets/equiment 1.png";
 // import printer2 from "../assets/equiment 2.png";
 import printer3 from "../assets/equiment 3.png";
-import printer4 from "../assets/equiment 4.png";
+// import printer4 from "../assets/equiment 4.png";
 import printer5 from "../assets/equiment 5.png";
 // import printer6 from "../assets/equiment 6.png";
 // import printer7 from "../assets/equiment 7.png";
 // import printer8 from "../assets/equiment 8.png";
 // import printer9 from "../assets/equiment 9.jpeg";
-import printer10 from "../assets/equiment 10.png";
+// import printer10 from "../assets/equiment 10.png";
 import printer11 from "../assets/printer11.png";
 import printer12 from "../assets/printer12.png";
 import printer13 from "../assets/printer13.png";
-import printer14 from "../assets/printer14.png";
+// import printer14 from "../assets/printer14.png";
 import printer15 from "../assets/printer15.png";
 // import printer16 from "../assets/printer16.png";
 import printer17 from "../assets/printer23.png";
 import printer18 from "../assets/printer18.png";
 import printer19 from "../assets/printer19.png";
 import printer20 from "../assets/printer20.png";
-import printer21 from "../assets/printer21.png";
+// import printer21 from "../assets/printer21.png";
 import printer22 from "../assets/printer22.png";
-import portfolio1 from "../assets/portfolio 1.png";
-import portfolio2 from "../assets/portfolio 2.png";
-import portfolio3 from "../assets/portfolio 3.png";
-import portfolio4 from "../assets/portfolio 4.png";
-import portfolio5 from "../assets/portfolio 5.png";
-import portfolio6 from "../assets/portfolio 6.png";
-import portfolio7 from "../assets/portfolio 7.png";
-import portfolio8 from "../assets/portfolio 8.png";
+import portfolio1 from "../assets/outdoor 16.png";
+import portfolio2 from "../assets/outdoorHoarding5.png";
+import portfolio3 from "../assets/outdoormetal4.png";
+import portfolio4 from "../assets/outdoorclip.png";
+import portfolio5 from "../assets/outdoor 25.png";
+import portfolio6 from "../assets/outdoordisplay4.png";
+import portfolio7 from "../assets/outdoorexhibit6.jpeg";
+import portfolio8 from "../assets/outdoorretail13.jpeg";
 
-import portfolio9 from "../assets/row1.png";
-import portfolio10 from "../assets/outdoor 51.png";
-import portfolio11 from "../assets/outdoor 31.png";
-import portfolio12 from "../assets/outdoor 33.png";
+import portfolio9 from "../assets/outdoorstand.png";
+import portfolio10 from "../assets/outdoorsletter4.jpeg";
+import portfolio11 from "../assets/outdoor 21.jpeg";
+import portfolio12 from "../assets/outdoorHoarding7.png";
 import pylon1 from "../assets/pylolfinal4.png";
 import pylon2 from "../assets/pylolfinal1.png";
 import pylon3 from "../assets/pylolfinal2.png";
@@ -70,10 +70,16 @@ import retail10 from "../assets/outdoorretail10.jpeg";
 import retail11 from "../assets/outdoorretail11.jpeg";
 import retail12 from "../assets/outdoorretail12.jpeg";
 import retail13 from "../assets/outdoorretail13.jpeg";
+import retail14 from "../assets/indoorretail1.png";
 // Exhibition Stalls
-import exhibit1 from "../assets/portfolio 1.png";
-import exhibit2 from "../assets/outdoor 20.png";
-import exhibit3 from "../assets/outdoor 21.png";
+import exhibit1 from "../assets/outdoorexhibit5.jpeg";
+import exhibit2 from "../assets/outdoor 21.jpeg";
+import exhibit3 from "../assets/outdoor 20.png";
+import exhibit4 from "../assets/outdoorexhibit4.jpeg";
+import exhibit5 from "../assets/outdoorexhibit1.jpeg";
+import exhibit6 from "../assets/outdoorexhibit6.jpeg";
+import exhibit7 from "../assets/outdoorexhibit8.png";
+import exhibit8 from "../assets/outdoorexhibit7.jpeg";
 
 // Kiosk
 import kiosk1 from "../assets/outdoor 22.png";
@@ -85,28 +91,45 @@ import kiosk4 from "../assets/outdoorkisok1.png";
 import display1 from "../assets/outdoor 25.png";
 import display2 from "../assets/outdoor 26.png";
 import display3 from "../assets/outdoor 27.png";
+import display4 from "../assets/outdoordisplay1.png";
+import display5 from "../assets/outdoordisplay2.png";
+import display6 from "../assets/outdoordisplay3.png";
+import display7 from "../assets/outdoordisplay4.png";
+import display8 from "../assets/outdoordisplay5.png";
+
 
 // Metal Stands
 import metal1 from "../assets/outdoor 28.png";
 import metal2 from "../assets/outdoor 29.png";
 import metal3 from "../assets/outdoor 30.png";
+import metal4 from "../assets/outdoormetal4.png";
+import metal5 from "../assets/outdoormetal5.png";
+import metal6 from "../assets/outdoormetal6.png";
+import metal7 from "../assets/outdoormetal7.png";
+import metal8 from "../assets/outdoormetal8.png";
+import metal9 from "../assets/outdoormetal9.png";
+import metal10 from "../assets/outdoormetal10.png";
 
 // Wall Graphics / Inshop Branding
 import wall1 from "../assets/outdoor 31.png";
 import wall2 from "../assets/outdoor 32.png";
 import wall3 from "../assets/outdoor 33.png";
+import wall4 from "../assets/outdoorWall.png";
 // LED Video Wall (34–36)
 
 
 // Standees (37–39)
 import standee1 from "../assets/outdoor 37.png";
 import standee2 from "../assets/outdoor 38.png";
-import standee3 from "../assets/outdoor 39.png";
 
+import standee4 from "../assets/outdoorstand.png";
+import standee5 from "../assets/outdoorstand2.png";
+import standee6 from "../assets/outdoorstand3.png";
 // Scrollers (40–42)
 import scroller1 from "../assets/outdoor 40.png";
 import scroller2 from "../assets/outdoor 41.png";
 import scroller3 from "../assets/outdoor 42.png";
+import scroller4 from "../assets/outdooScoller.png";
 
 // Catalogue Stands (43–45)
 import catalogue1 from "../assets/outdoor 43.png";
@@ -117,11 +140,13 @@ import catalogue3 from "../assets/outdoor 45.png";
 import category1 from "../assets/outdoor 46.png";
 import category2 from "../assets/outdoor 47.png";
 import category3 from "../assets/outdoor 48.png";
+import category4 from "../assets/outdoorCategory.png";
 
 // Clip On Frames (49–52)
 import clip1 from "../assets/outdoor 49.png";
 import clip2 from "../assets/outdoor 50.png";
 import clip3 from "../assets/outdoor 51.png";
+import clip4 from "../assets/outdoorclip.png";
 // Facade / Signages
 import facade1 from "../assets/home 3.png";
 import facade2 from "../assets/facade1.png";
@@ -138,10 +163,30 @@ import facade12 from "../assets/facade12.png";
 import facade13 from "../assets/facade13.png";
 import facade14 from "../assets/facade14.png";
 import facade15 from "../assets/facadeNewOne.png"
+ import feather1 from "../assets/feather1.png";
+import feather2 from "../assets/feather2.png";
+import feather3 from "../assets/feather3.png";
 
-import p1 from "../assets/p1.jpg";
-import p2 from "../assets/p2.jpg";
-import p3 from "../assets/p3.png";
+ import promoTable1 from "../assets/promotable1.png";
+ import promoTable2 from "../assets/promotable2.png";
+ import promoTable3 from "../assets/promotable3.png";
+ import promoTable4 from "../assets/promotable4.png";
+ import umbrella1 from "../assets/umbrella1.png";
+ import umbrella2 from "../assets/umbrella2.png";
+ import umbrella3 from "../assets/umbrella3.png";
+ import umbrella4 from "../assets/umbrella4.png";
+ import ledFlange1 from "../assets/ledflange1.png";
+ import ledFlange2 from "../assets/ledflange2.png";
+ import ledFlange3 from "../assets/ledflange3.png";
+ import ledFlange4 from "../assets/ledflange4.png";
+import gazebo1 from "../assets/gazebo1.png";
+ import gazebo2 from "../assets/gazebo2.png";
+ import gazebo3 from "../assets/gazebo3.png";
+import gazebo4 from "../assets/gazebo4.png";
+import p1 from "../assets/popsimage1.png";
+import p2 from "../assets/popsimage2.png";
+import p3 from "../assets/popsimage3.png";
+import p4 from "../assets/popsimage4.png";
 import ledVideo from "../assets/ledvideo.mp4";
 
 export const PORTFOLIO_IMAGES = [
@@ -196,7 +241,12 @@ export const LANDING_CONTENT = {
         'Scrollers',
         'Catalogue Stands',
         'Category Signage',
-        'Clip On Frames'
+        'Clip On Frames',
+       'Feather Flags',       
+  'Promotional Tables',  
+  'Garden Umbrella',      
+  'LED Flanges',         
+  'Gazebo'
       ],
     },
     infrastructureData: ['Equipments', 'Team'],
@@ -486,7 +536,7 @@ testimonials: {
     { 
       id: 7, 
       title: "Retail Interiors", 
-      images: [retail1, retail2, retail3,retail4,retail5,retail6,retail7,retail8,retail9,retail10,retail11,retail12,retail13],
+      images: [retail1, retail2, retail3,retail4,retail5,retail6,retail7,retail8,retail9,retail10,retail11,retail12,retail13,retail14],
       description_points: [
         "Customized interior branding solutions designed to enhance store aesthetics and improve customer experience.",
         "Includes wall graphics, display units, reception branding, and signage elements crafted with premium finishing.",
@@ -496,7 +546,7 @@ testimonials: {
     { 
       id: 8, 
       title: "Exhibition Stalls", 
-      images: [exhibit1, exhibit2, exhibit3],
+      images: [exhibit4,exhibit1, exhibit2, exhibit3,exhibit5,exhibit6,exhibit7,exhibit8],
       description_points: [
         "Custom-designed stall setups created to attract visitors and showcase your brand with maximum impact.",
         "Includes modular structures, branding panels, display units, lighting, and premium finishing for a professional look.",
@@ -516,7 +566,7 @@ testimonials: {
     { 
       id: 10, 
       title: "Display Stands", 
-      images: [display1, display2, display3],
+      images: [display1, display2, display3,display4,display5,display6,display7,display8],
       description_points: [
         "Custom-designed display stands created to highlight products and improve in-store visibility.",
         "Built with durable materials and premium finishing to ensure long-lasting use in high-traffic environments.",
@@ -526,7 +576,7 @@ testimonials: {
     { 
       id: 11, 
       title: "Metal Stands", 
-      images: [metal1, metal2, metal3],
+      images: [metal1, metal2, metal3,metal4,metal5,metal6,metal7,metal8,metal9,metal10],
       description_points: [
         "Strong and durable metal display stands designed for long-term use in retail and commercial environments.",
         "Fabricated with precision welding and premium finishing to ensure stability and a professional appearance.",
@@ -536,7 +586,7 @@ testimonials: {
     { 
       id: 12, 
       title: "Wall Graphics / Inshop Branding", 
-      images: [wall1, wall2, wall3],
+      images: [wall1, wall2, wall3,wall4],
       description_points: [
         "High-quality wall branding solutions designed to enhance interiors and create a strong visual impact.",
         "Includes customized graphics, wallpapers, vinyl branding, and promotional visuals with premium print finishing.",
@@ -556,7 +606,7 @@ testimonials: {
     { 
       id: 14, 
       title: "Standees", 
-      images: [standee1, standee2, standee3],
+      images: [standee2, standee1,standee4,standee5,standee6],
       description_points: [
         "Portable and attractive promotional displays designed to grab attention and highlight key offers instantly.",
         "Made with high-quality printing and durable materials for long-lasting use in retail and event environments.",
@@ -566,7 +616,7 @@ testimonials: {
     { 
       id: 15, 
       title: "Scrollers", 
-      images: [scroller1, scroller2, scroller3],
+      images: [scroller1, scroller2, scroller3,scroller4],
       description_points: [
         "Dynamic scrolling display systems designed to showcase multiple advertisements in a single high-visibility unit.",
         "Built with durable structures and smooth mechanical performance for consistent long-term operation.",
@@ -586,7 +636,7 @@ testimonials: {
     { 
       id: 17, 
       title: "Category Signage", 
-      images: [category1, category2, category3],
+      images: [category4,category1, category2, category3],
       description_points: [
         "Clear and attractive signage designed to highlight product categories and improve customer navigation within stores.",
         "Custom-designed with premium materials and high-quality printing for strong visibility and brand consistency.",
@@ -596,7 +646,7 @@ testimonials: {
     { 
       id: 18, 
       title: "Clip On Frames", 
-      images: [clip1, clip2, clip3],
+      images: [clip1, clip2, clip3,clip4],
       description_points: [
         "Easy-to-use display frames designed for quick poster changes and frequent promotional updates.",
         "Built with durable aluminium frames and secure clip-lock mechanisms for a clean and professional finish.",
@@ -606,13 +656,66 @@ testimonials: {
     { 
       id: 19, 
       title: "POP", 
-      images: [p1, p2, p3],
+      images: [p1, p2, p3,p4],
       description_points: [
         "Eye-catching Point of Purchase branding designed to increase product visibility and influence decisions instantly.",
         "Includes standees, danglers, shelf strips, wobblers, and counter displays with premium printing.",
         "Ideal for retail outlets and promotional campaigns to boost engagement and improve conversions."
       ] 
-    }
+    },
+
+ {
+   id: 20,
+   title: "Feather Flags",
+   images: [feather1, feather2, feather3],
+   description_points: [
+     "Lightweight and portable advertising flags designed to attract attention from long distances.",
+     "Made with durable fabric and flexible poles for both indoor and outdoor usage.",
+     "Ideal for events, storefront promotions, exhibitions, and roadside branding."
+   ]
+ },
+
+ {
+   id: 21,
+   title: "Promotional Tables",
+   images: [promoTable1, promoTable2, promoTable3,promoTable4],
+   description_points: [
+     "Compact and professional display tables designed for product promotions and brand interactions.",
+     "Easy to assemble with customizable graphics for strong visual branding.",
+     "Ideal for malls, exhibitions, retail campaigns, and in-store activations."
+   ]
+ },
+ {
+   id: 22,
+   title: "Garden Umbrella",
+   images: [umbrella1, umbrella2, umbrella3,umbrella4],
+   description_points: [
+     "Branded outdoor umbrellas designed to provide shade while enhancing brand visibility.",
+     "Built with strong frames and weather-resistant materials for long-term outdoor use.",
+     "Ideal for cafes, outdoor events, kiosks, and promotional setups."
+   ]
+ },
+
+ {
+   id: 23,
+   title: "LED Flanges",
+   images: [ledFlange1, ledFlange2, ledFlange3,ledFlange4],
+   description_points: [
+     "Illuminated flange signage designed for high visibility and modern brand presentation.",
+     "Built with LED lighting systems for uniform brightness and energy efficiency.",
+     "Ideal for storefronts, indoor branding, and premium signage applications."
+   ]
+ },
+ {
+  id: 24,
+  title: "Gazebo",
+ images: [gazebo1, gazebo2, gazebo3,gazebo4],
+  description_points: [
+    "Portable canopy structures designed for outdoor promotions and event branding.",
+         "Easy to install with strong frames and customizable printed covers.",
+    "Ideal for exhibitions, roadshows, product launches, and outdoor campaigns."
+  ]
+ }
     ],
   },
 
@@ -628,14 +731,14 @@ testimonials: {
         imageUrl: printer5,
         isImageLeft: true
       },
-          {
-        id: 4,
-        title: "RF/ZF Flatbed UV Printer",
-        model: "RF/ZF Series",
-        description: "The RF/ZF Flatbed UV Printer is designed for direct printing on rigid and thick materials with high precision and durability. It supports a wide range of substrates such as glass, acrylic, wood, metal, PVC boards, foam boards, and other flat media up to heavy thickness. Built with a robust industrial frame and advanced UV curing system, this printer delivers sharp details, vibrant colors, and excellent adhesion, making it ideal for signage, interior décor, industrial printing, and customized applications.",
-        imageUrl: printer4,
-        isImageLeft: true
-      },
+      //     {
+      //   id: 4,
+      //   title: "RF/ZF Flatbed UV Printer",
+      //   model: "RF/ZF Series",
+      //   description: "The RF/ZF Flatbed UV Printer is designed for direct printing on rigid and thick materials with high precision and durability. It supports a wide range of substrates such as glass, acrylic, wood, metal, PVC boards, foam boards, and other flat media up to heavy thickness. Built with a robust industrial frame and advanced UV curing system, this printer delivers sharp details, vibrant colors, and excellent adhesion, making it ideal for signage, interior décor, industrial printing, and customized applications.",
+      //   imageUrl: printer4,
+      //   isImageLeft: true
+      // },
     {
   id: 11,
   title: "Eco Solvent Roll-to-Roll Printer",
@@ -653,22 +756,22 @@ testimonials: {
         imageUrl: printer3,
         isImageLeft: true
       },
-     {
-    id: 10,
-    title: "Sun Laser CO₂ Laser Cutting Machine",
-    model: "1325MG-P-1",
-    description: "The Sun Laser 1325MG-P-1 is a professional CO₂ laser cutting and engraving machine for wood, acrylic, MDF, leather, fabric, and other non-metal materials. It offers high precision, a large working area, and reliable performance for signage, prototyping, and workshop applications.",
-    imageUrl: printer10,
-    specifications: {
-      laserType: "CO₂ Laser",
-      laserPower: "100W – 150W",
-      workingArea: "1300 × 2500 mm",
-      controlSystem: "DSP Controller",
-      coolingSystem: "Water Chiller",
-      supportedFormats: ["AI", "DXF", "PLT"]
-    },
-    isImageLeft: true
-  },
+  //    {
+  //   id: 10,
+  //   title: "Sun Laser CO₂ Laser Cutting Machine",
+  //   model: "1325MG-P-1",
+  //   description: "The Sun Laser 1325MG-P-1 is a professional CO₂ laser cutting and engraving machine for wood, acrylic, MDF, leather, fabric, and other non-metal materials. It offers high precision, a large working area, and reliable performance for signage, prototyping, and workshop applications.",
+  //   imageUrl: printer10,
+  //   specifications: {
+  //     laserType: "CO₂ Laser",
+  //     laserPower: "100W – 150W",
+  //     workingArea: "1300 × 2500 mm",
+  //     controlSystem: "DSP Controller",
+  //     coolingSystem: "Water Chiller",
+  //     supportedFormats: ["AI", "DXF", "PLT"]
+  //   },
+  //   isImageLeft: true
+  // },
   // {
   //   id: 7,
   //   title: "CO₂ Laser Cutting & Engraving Machine",
@@ -700,7 +803,7 @@ testimonials: {
    title: "Channel Letter Bending Machine",
    model: "LB Series",
    description: "The Channel Letter Bending Machine is a precision solution designed for accurate bending and shaping of metal strips used in channel letter signage. It is suitable for materials such as aluminum, stainless steel, and galvanized steel, enabling the creation of 3D letters and logo signage with high precision. Equipped with advanced control systems and automated feeding, the LB Series ensures smooth bending, consistent shapes, and efficient production. This machine is ideal for signage manufacturers, advertising companies, and fabrication workshops looking to produce professional-quality channel letters with speed and accuracy.",
-   imageUrl: printer14,
+   imageUrl: printer17,
    isImageLeft: true
  },
 {
@@ -719,14 +822,14 @@ testimonials: {
 //   imageUrl: printer16,
 //   isImageLeft: true
 // },
-{
-  id: 17,
-  title: "Metal Punching Machine",
-  model: "MP Series",
-  description: "The Metal Punching Machine is a high-performance solution designed for precise punching, perforating, and forming of metal sheets and components. It is suitable for materials such as mild steel, stainless steel, aluminum, and galvanized sheets. Built with a robust structure and advanced control system, the MP Series ensures accurate hole placement, smooth operation, and high productivity. This machine is ideal for sheet metal fabrication, electrical panel manufacturing, automotive components, signage production, and industrial workshops requiring reliable and efficient punching operations.",
-  imageUrl: printer17,
-  isImageLeft: true
-},
+// {
+//   id: 17,
+//   title: "Metal Punching Machine",
+//   model: "MP Series",
+//   description: "The Metal Punching Machine is a high-performance solution designed for precise punching, perforating, and forming of metal sheets and components. It is suitable for materials such as mild steel, stainless steel, aluminum, and galvanized sheets. Built with a robust structure and advanced control system, the MP Series ensures accurate hole placement, smooth operation, and high productivity. This machine is ideal for sheet metal fabrication, electrical panel manufacturing, automotive components, signage production, and industrial workshops requiring reliable and efficient punching operations.",
+//   imageUrl: printer17,
+//   isImageLeft: true
+// },
 
 {
   id: 18,
@@ -754,16 +857,16 @@ testimonials: {
   imageUrl: printer20,
   isImageLeft: true
 },
+// {
+//   id: 21,
+//   title: "Edge Banding Machine",
+//   model: "EB Pro Series",
+//   description: "The Edge Banding Machine (EB Pro Series) is an advanced woodworking solution engineered for high-speed and precise edge finishing of panels and boards. It supports materials such as MDF, plywood, particle board, and solid wood, and is compatible with PVC, ABS, veneer, and melamine edge tapes. Equipped with automatic feeding, pre-milling, gluing, trimming, scraping, and polishing units, the EB Pro Series ensures seamless edge application, superior finish quality, and consistent performance. Designed for heavy-duty industrial use, it is ideal for furniture manufacturing, modular kitchen production, cabinetry units, and large-scale woodworking facilities seeking efficiency and precision.",
+//   imageUrl: printer21,
+//   isImageLeft: false
+// },
 {
-  id: 21,
-  title: "Edge Banding Machine",
-  model: "EB Pro Series",
-  description: "The Edge Banding Machine (EB Pro Series) is an advanced woodworking solution engineered for high-speed and precise edge finishing of panels and boards. It supports materials such as MDF, plywood, particle board, and solid wood, and is compatible with PVC, ABS, veneer, and melamine edge tapes. Equipped with automatic feeding, pre-milling, gluing, trimming, scraping, and polishing units, the EB Pro Series ensures seamless edge application, superior finish quality, and consistent performance. Designed for heavy-duty industrial use, it is ideal for furniture manufacturing, modular kitchen production, cabinetry units, and large-scale woodworking facilities seeking efficiency and precision.",
-  imageUrl: printer21,
-  isImageLeft: false
-},
-{
-  id: 21,
+  id: 22,
   title: "Hot Press Machine",
   model: "HP Series",
   description: "The Hot Press Machine (HP Series) is a high-performance solution designed for laminating, bonding, and pressing wood panels with precision and uniform heat distribution. It is suitable for materials such as plywood, MDF, particle board, veneer, laminates, and decorative sheets. Equipped with a robust hydraulic system and advanced temperature control, the HP Series ensures strong bonding, smooth surface finishing, and consistent pressure across the panel. Built for durability and efficiency, this machine is ideal for furniture manufacturing, plywood industries, door production, laminate pressing, and woodworking facilities requiring reliable and high-quality pressing operations.",

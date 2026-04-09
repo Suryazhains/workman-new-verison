@@ -94,6 +94,11 @@ const Header: React.FC = () => {
       'Catalogue Stands': 'catalogue-stands',
       'Category Signage': 'category-signage',
       'Clip On Frames': 'clip-on-frames',
+       'Feather Flags': 'feather-flags',
+    'Promotional Tables': 'promotional-tables',
+    'Garden Umbrella': 'garden-umbrella',
+    'Led flanges': 'led-flanges',
+    'Gazebo': 'gazebo',
       'Equipments': 'equipments',
       'Team': 'team' 
     };
