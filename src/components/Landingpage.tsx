@@ -143,7 +143,7 @@ const LandingPage: React.FC = () => {
     
     <div className="w-full lg:w-[50%] text-left z-10 lg:pr-10">
       {/* Reduced exactly 5px: 18px -> 13px, 20px -> 15px */}
-      <span className="text-black font-imperial font-bold text-[13px] md:text-[15px] leading-none tracking-[-0.04em] mb-4 block uppercase lg:normal-case">
+      <span className="text-black font-imperial font-bold text-[23px] md:text-[30px] leading-none tracking-[-0.04em] mb-4 block uppercase lg:normal-case">
         {about.label}
       </span>
 

@@ -214,12 +214,12 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
     return () => { document.body.style.overflow = ''; };
   }, []);
 
-  if (isLoading) return <div className="min-h-screen bg-[#BBB791]"></div>;
+  if (isLoading) return <div className="min-h-screen bg-[#959064]"></div>;
   if (!activeService) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#BBB791] text-white">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#959064] text-white">
         <h1 className="text-4xl font-bold font-imperial mb-4">Service Not Found</h1>
-        <button onClick={() => navigate(-1)} className="px-6 py-3 bg-white text-[#BBB791] font-bold rounded-lg mt-4">
+        <button onClick={() => navigate(-1)} className="px-6 py-3 bg-white text-[#959064] font-bold rounded-lg mt-4">
           Go Back
         </button>
       </div>
@@ -229,7 +229,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
   const isLedVideoWall = activeService.title.toLowerCase().includes('led video wall') || activeService.id === 13;
 
   return (
-    <div className="w-full bg-[#BBB791] font-inter overflow-hidden">
+    <div className="w-full bg-[#959064] font-inter overflow-hidden">
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
         @import url('https://db.onlinewebfonts.com/c/59d406a1ae963118d955b267eb04f9f3?family=ImperialStd-BoldItalic');
@@ -365,7 +365,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
       )}
 
       {/* SPLIT HERO SECTION */}
-      <div className="w-full flex flex-col lg:flex-row min-h-[70vh] lg:min-h-screen bg-[#BBB791]">
+      <div className="w-full flex flex-col lg:flex-row min-h-[70vh] lg:min-h-screen bg-[#959064]">
         <div className="w-full lg:w-1/2 relative flex flex-col justify-center px-8 py-16 lg:px-16 xl:px-24 [@media(min-width:2400px)]:px-[8rem]">
           <button onClick={() => navigate(-1)} className="absolute top-6 left-6 lg:top-8 lg:left-8 z-50 text-white drop-shadow-lg hover:text-gray-200 transition-colors bg-black/20 rounded-full p-2 backdrop-blur-sm" aria-label="Back">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -383,17 +383,28 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
   ))}
 </h1>
 
-          {activeService.description_points && (
-            <ul className="space-y-6 md:space-y-8 max-w-[650px] [@media(min-width:2400px)]:max-w-[1000px]">
-              {activeService.description_points.map((point: string, index: number) => (
-                <li key={index} className="flex items-start gap-4">
-                  <span className="flex items-center justify-center w-6 h-6 md:w-8 md:h-8 [@media(min-width:2400px)]:w-10 [@media(min-width:2400px)]:h-10 shrink-0 bg-white text-[#BBB791] rounded-full font-bold text-sm md:text-base mt-1">{index + 1}</span>
-                  <p className="text-white/95 text-base md:text-lg lg:text-xl [@media(min-width:2400px)]:text-[28px] leading-relaxed font-light">{point}</p>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+{activeService.description_points && (
+  <ul className="space-y-4 md:space-y-6 max-w-[650px] [@media(min-width:2400px)]:max-w-[900px]">
+    {activeService.description_points.map((point: string, index: number) => (
+      
+      <li key={index} className="flex items-start gap-3">
+        
+        {/* Number circle (slightly smaller) */}
+        <span className="flex items-center justify-center w-5 h-5 md:w-6 md:h-6 [@media(min-width:2400px)]:w-8 [@media(min-width:2400px)]:h-8 shrink-0 bg-white text-[#BBB791] rounded-full font-bold text-xs md:text-sm mt-1">
+          {index + 1}
+        </span>
+
+        {/* Text reduced */}
+        <p className="text-white/95 text-sm md:text-base lg:text-lg [@media(min-width:2400px)]:text-[22px] leading-relaxed font-light">
+          {point}
+        </p>
+
+      </li>
+
+    ))}
+  </ul>
+)}
+</div>
 
         <div className="w-full lg:w-1/2 relative min-h-[40vh] lg:min-h-screen bg-black">
           {activeService.videoUrl ? (
@@ -408,7 +419,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
 
       {/* Dynamic Gallery Header Section */}
       {!isLedVideoWall && images.length > 0 && (
-        <div className="pt-24 pb-8 px-8 lg:px-16 xl:px-[120px] [@media(min-width:2400px)]:px-[10rem] text-left bg-[#BBB791]">
+        <div className="pt-24 pb-8 px-8 lg:px-16 xl:px-[120px] [@media(min-width:2400px)]:px-[10rem] text-left bg-[#959064">
           <h2 className="font-imperial text-4xl md:text-5xl lg:text-6xl font-semibold text-white tracking-tight mb-4">{activeService.title} Project Gallery</h2>
           <p className="text-white/80 text-lg font-light max-w-2xl">Drag horizontally to explore. Click any image to expand.</p>
         </div>
@@ -457,7 +468,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
 
       {/* Optional Bottom Video Section */}
       {activeService.videoUrl && (
-        <div className={`px-6 md:px-12 lg:px-[8%] bg-[#BBB791] ${isLedVideoWall ? 'py-24' : 'pb-24 pt-8'}`}>
+        <div className={`px-6 md:px-12 lg:px-[8%] bg-[#959064] ${isLedVideoWall ? 'py-24' : 'pb-24 pt-8'}`}>
           <div className="max-w-[1920px] mx-auto">
             <div className="aspect-video w-full overflow-hidden rounded-xl shadow-2xl bg-gray-900">
               <video src={activeService.videoUrl} controls autoPlay loop muted playsInline className="w-full h-full object-cover" />

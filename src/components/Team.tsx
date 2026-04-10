@@ -87,7 +87,7 @@ const Team: React.FC = () => {
   }, [selectedIndex]);
 
   return (
-    <main className="bg-[#BBB791] w-full overflow-hidden">
+    <main className="bg-[#959064] w-full overflow-hidden">
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
         @import url('https://db.onlinewebfonts.com/c/59d406a1ae963118d955b267eb04f9f3?family=ImperialStd-BoldItalic');
@@ -149,7 +149,7 @@ const Team: React.FC = () => {
       `}} />
 
       {/* Header Area */}
-      <div className="pt-20 pb-10 text-center bg-[#BBB791] team-header">
+      <div className="pt-20 pb-10 text-center bg-[#959064] team-header">
         <h2 className="font-imperial text-[50px] md:text-[72px] font-bold text-white mb-4">
           Meet our experts
         </h2>
@@ -233,7 +233,7 @@ const Team: React.FC = () => {
       )}
 
       {/* Bottom Spacer */}
-      <div className="bg-[#BBB791] h-20 w-full" />
+      <div className="bg-[#959064] h-20 w-full" />
 
       <LandingPageThree />
     </main>

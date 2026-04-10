@@ -21,11 +21,16 @@ const LandingTwo: React.FC = () => {
     setCurrentIndex((prev) => (prev === 0 ? allTestimonials.length - 1 : prev - 1));
   };
 
-  // Duplicate images for seamless loop
-  const row1Images = [...PORTFOLIO_IMAGES.slice(0, 4), ...PORTFOLIO_IMAGES.slice(0, 4)];
-  const row2Images = [...PORTFOLIO_IMAGES.slice(4, 8), ...PORTFOLIO_IMAGES.slice(4, 8)];
-  const baseRow3 = [...PORTFOLIO_IMAGES.slice(8, 12)]; 
-  const row3Images = [...baseRow3, ...baseRow3];
+  // --- PORTFOLIO SEAMLESS LOOP LOGIC ---
+  // We duplicate the slice enough times so a single block is wider than any ultrawide screen
+  const getRowImages = (start: number, end: number) => {
+    const slice = PORTFOLIO_IMAGES.slice(start, end);
+    return [...slice, ...slice, ...slice, ...slice]; 
+  };
+
+  const row1 = getRowImages(0, 4);
+  const row2 = getRowImages(4, 8);
+  const row3 = getRowImages(8, 12);
 
   return (
     <>
@@ -42,13 +47,14 @@ const LandingTwo: React.FC = () => {
             font-family: "ImperialStd-BoldItalic", serif !important;
         }
 
+        /* Seamless Marquee Keyframes (Translating exactly 1 container width + 1 gap) */
         @keyframes marqueeLeft {
           0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+          100% { transform: translateX(calc(-100% - 6px)); }
         }
 
         @keyframes marqueeRight {
-          0% { transform: translateX(-50%); }
+          0% { transform: translateX(calc(-100% - 6px)); }
           100% { transform: translateX(0); }
         }
 
@@ -68,84 +74,83 @@ const LandingTwo: React.FC = () => {
       {/* PORTFOLIO SECTION */}
       <section
         id="portfolio"
-        className="w-full bg-[#BBB791] pt-[4.5rem] pb-[5.5rem] overflow-hidden scroll-mt-[6rem] lg:scroll-mt-[8rem]"
+        className="w-full bg-[#959064] pt-[4.5rem] pb-[5.5rem] overflow-hidden scroll-mt-[6rem] lg:scroll-mt-[8rem]"
       >
        <div className="max-w-[90rem] mx-auto px-10 md:px-20 lg:px-24 mb-10">
-          <h2 className="font-imperial font-bold text-3xl md:text-[3.5rem] text-[#FFFFFF] mb-4">
+          <h2 className="font-imperial font-bold text-3xl md:text-[2.5rem] text-[#FFFFFF] mb-4">
             {portfolio.heading}
           </h2>
-          <p className="text-[#FFFFFF] max-w-full text-lg leading-relaxed">
+          <p className="text-[#FFFFFF] max-w-full text-base leading-relaxed">
             {portfolio.description}
           </p>
         </div>
 
         <div className="relative w-full overflow-hidden">
           <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-[3.75rem] md:w-[10rem]
-            bg-gradient-to-r from-[#BBB791] via-[#BBB791] to-transparent" />
+            bg-gradient-to-r from-[#959064] via-[#959064] to-transparent" />
 
           <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-[3.75rem] md:w-[10rem]
-            bg-gradient-to-l from-[#BBB791] via-[#BBB791] to-transparent" />
+            bg-gradient-to-l from-[#959064] via-[#959064] to-transparent" />
 
           <div className="flex flex-col gap-[6px]">
+            
             {/* ROW 1 */}
-            <div
-              className="flex flex-nowrap gap-[6px] w-max"
-              style={{ animation: 'marqueeLeft 40s linear infinite' }}
-            >
-              {row1Images.map((src, i) => (
-                <div
-                  key={`row1-${i}`}
-                  className="relative overflow-hidden w-[12.5rem] h-[7.5rem] md:w-[20rem] md:h-[10.5rem] shrink-0 rounded-sm"
-                >
-                  <img
-                    src={src}
-                    alt="Portfolio"
-                    className="absolute inset-0 w-full h-full object-cover"
-                    draggable={false}
-                  />
-                </div>
-              ))}
+            <div className="flex flex-nowrap gap-[6px] overflow-hidden w-full">
+              <div className="flex shrink-0 gap-[6px] w-max" style={{ animation: 'marqueeLeft 60s linear infinite' }}>
+                {row1.map((src, i) => (
+                  <div key={`r1a-${i}`} className="relative overflow-hidden w-[9.5rem] h-[6.5rem] md:w-[16rem] md:h-[8.5rem] shrink-0 rounded-sm">
+                    <img src={src} alt="Portfolio" className="absolute inset-0 w-full h-full object-cover" draggable={false} />
+                  </div>
+                ))}
+              </div>
+              {/* Duplicate track for seamless loop */}
+              <div className="flex shrink-0 gap-[6px] w-max" style={{ animation: 'marqueeLeft 60s linear infinite' }}>
+                {row1.map((src, i) => (
+                  <div key={`r1b-${i}`} className="relative overflow-hidden w-[9.5rem] h-[6.5rem] md:w-[16rem] md:h-[8.5rem] shrink-0 rounded-sm">
+                    <img src={src} alt="Portfolio" className="absolute inset-0 w-full h-full object-cover" draggable={false} />
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* ROW 2 */}
-            <div
-              className="flex flex-nowrap gap-[6px] w-max"
-              style={{ animation: 'marqueeRight 35s linear infinite' }}
-            >
-              {row2Images.map((src, i) => (
-                <div
-                  key={`row2-${i}`}
-                  className="relative overflow-hidden w-[12.5rem] h-[7.5rem] md:w-[20rem] md:h-[10.5rem] shrink-0 rounded-sm"
-                >
-                  <img
-                    src={src}
-                    alt="Portfolio"
-                    className="absolute inset-0 w-full h-full object-cover"
-                    draggable={false}
-                  />
-                </div>
-              ))}
+            <div className="flex flex-nowrap gap-[6px] overflow-hidden w-full">
+              <div className="flex shrink-0 gap-[6px] w-max" style={{ animation: 'marqueeRight 50s linear infinite' }}>
+                {row2.map((src, i) => (
+                  <div key={`r2a-${i}`} className="relative overflow-hidden w-[9.5rem] h-[6.5rem] md:w-[16rem] md:h-[8.5rem] shrink-0 rounded-sm">
+                    <img src={src} alt="Portfolio" className="absolute inset-0 w-full h-full object-cover" draggable={false} />
+                  </div>
+                ))}
+              </div>
+              {/* Duplicate track for seamless loop */}
+              <div className="flex shrink-0 gap-[6px] w-max" style={{ animation: 'marqueeRight 50s linear infinite' }}>
+                {row2.map((src, i) => (
+                  <div key={`r2b-${i}`} className="relative overflow-hidden w-[9.5rem] h-[6.5rem] md:w-[16rem] md:h-[8.5rem] shrink-0 rounded-sm">
+                    <img src={src} alt="Portfolio" className="absolute inset-0 w-full h-full object-cover" draggable={false} />
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* ROW 3 */}
-            <div
-              className="flex flex-nowrap gap-[6px] w-max"
-              style={{ animation: 'marqueeLeft 45s linear infinite' }}
-            >
-              {row3Images.map((src, i) => (
-                <div
-                  key={`row3-${i}`}
-                  className="relative overflow-hidden w-[12.5rem] h-[7.5rem] md:w-[20rem] md:h-[10.5rem] shrink-0 rounded-sm"
-                >
-                  <img
-                    src={src}
-                    alt="Portfolio"
-                    className="absolute inset-0 w-full h-full object-cover"
-                    draggable={false}
-                  />
-                </div>
-              ))}
+            <div className="flex flex-nowrap gap-[6px] overflow-hidden w-full">
+              <div className="flex shrink-0 gap-[6px] w-max" style={{ animation: 'marqueeLeft 70s linear infinite' }}>
+                {row3.map((src, i) => (
+                  <div key={`r3a-${i}`} className="relative overflow-hidden w-[9.5rem] h-[6.5rem] md:w-[16rem] md:h-[8.5rem] shrink-0 rounded-sm">
+                    <img src={src} alt="Portfolio" className="absolute inset-0 w-full h-full object-cover" draggable={false} />
+                  </div>
+                ))}
+              </div>
+              {/* Duplicate track for seamless loop */}
+              <div className="flex shrink-0 gap-[6px] w-max" style={{ animation: 'marqueeLeft 70s linear infinite' }}>
+                {row3.map((src, i) => (
+                  <div key={`r3b-${i}`} className="relative overflow-hidden w-[9.5rem] h-[6.5rem] md:w-[16rem] md:h-[8.5rem] shrink-0 rounded-sm">
+                    <img src={src} alt="Portfolio" className="absolute inset-0 w-full h-full object-cover" draggable={false} />
+                  </div>
+                ))}
+              </div>
             </div>
+
           </div>
         </div>
       </section>
@@ -153,7 +158,7 @@ const LandingTwo: React.FC = () => {
       {/* TESTIMONIALS SECTION */}
       <section id="testimonials" className="w-full bg-[#F9FAFB] pt-[3.75rem] md:pt-[5.5rem] pb-[3.75rem] md:pb-[5.5rem] overflow-hidden scroll-mt-[6rem] lg:scroll-mt-[8rem]">
         <div className="max-w-[90rem] mx-auto px-4">
-          <h2 className="font-imperial text-[2rem] md:text-[3.5rem] font-bold text-[#BBB791] mb-4 text-center">
+          <h2 className="font-imperial text-[2rem] md:text-[3.5rem] font-bold text-[#959064] mb-4 text-center">
             {testimonials.heading}
           </h2>
           <p className="text-[#535353] text-center text-sm md:text-sm mb-8 md:mb-12 max-w-[75rem] mx-auto leading-relaxed px-2">
@@ -198,18 +203,16 @@ const LandingTwo: React.FC = () => {
                         ${positionClass}`}
                     >
                       <div className="overflow-y-auto testimonial-scroll pr-2">
-                        {/* REDUCED FURTHER: Quote text size now 14px on mobile, 16px on desktop */}
                         <p className="font-crimson text-[#333333] text-[0.875rem] md:text-[1rem] leading-relaxed pt-0">
                           {item.quote}
                         </p>
                       </div>
 
-                      <div className="mt-6 pt-6 border-t border-[#BBB791] flex items-center gap-3 md:gap-4 flex-shrink-0">
-                        <div className="w-8 h-8 md:w-12 md:h-12 rounded-full bg-[#BBB791] flex items-center justify-center text-white font-bold text-sm md:text-lg shadow-lg flex-shrink-0">
+                      <div className="mt-6 pt-6 border-t border-[#959064] flex items-center gap-3 md:gap-4 flex-shrink-0">
+                        <div className="w-8 h-8 md:w-12 md:h-12 rounded-full bg-[#959064] flex items-center justify-center text-white font-bold text-sm md:text-lg shadow-lg flex-shrink-0">
                           {item.name.charAt(0)}
                         </div>
                         <div className="overflow-hidden text-ellipsis">
-                          {/* REDUCED FURTHER: Name and company text sizes */}
                           <p className="font-bold text-[#1A1A1A] text-xs md:text-sm truncate">{item.name}</p>
                           <p className="text-[#888888] text-[0.5rem] md:text-[0.65rem] font-medium uppercase truncate">{item.company}</p>
                         </div>
@@ -224,7 +227,7 @@ const LandingTwo: React.FC = () => {
             <div className="flex md:hidden items-center justify-between w-[90%] mt-8 gap-4">
                 <button 
                   onClick={prevSlide} 
-                  className="w-12 h-12 flex items-center justify-center rounded-full bg-white shadow-lg text-[#BBB791] text-xl font-bold border border-gray-100 active:scale-90"
+                  className="w-12 h-12 flex items-center justify-center rounded-full bg-white shadow-lg text-[#959064] text-xl font-bold border border-gray-100 active:scale-90"
                 >
                   ←
                 </button>
@@ -234,7 +237,7 @@ const LandingTwo: React.FC = () => {
                     <button
                       key={i}
                       onClick={() => setCurrentIndex(i)}
-                      className={`transition-all duration-300 h-1.5 rounded-full ${currentIndex === i ? 'bg-[#BBB791] w-8' : 'bg-gray-200 w-1.5'}`}
+                      className={`transition-all duration-300 h-1.5 rounded-full ${currentIndex === i ? 'bg-[#959064] w-8' : 'bg-gray-200 w-1.5'}`}
                     />
                   ))}
                 </div>
@@ -253,7 +256,7 @@ const LandingTwo: React.FC = () => {
                 <button
                   key={i}
                   onClick={() => setCurrentIndex(i)}
-                  className={`transition-all duration-300 h-2.5 rounded-full ${currentIndex === i ? 'bg-[#BBB791] w-12' : 'bg-gray-200 w-2.5'}`}
+                  className={`transition-all duration-300 h-2.5 rounded-full ${currentIndex === i ? 'bg-[#959064] w-12' : 'bg-gray-200 w-2.5'}`}
                 />
               ))}
             </div>

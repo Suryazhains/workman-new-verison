@@ -3,14 +3,14 @@ import React, { useEffect, useState } from 'react';
 import LandingPageThree from './landingthree';
 
 // import main1 from "../assets/main 1.jpg";
-import main2 from "../assets/main 2.jpg";
+import main2 from "../assets/ourspecialization.png";
 // PORTFOLIO IMAGES
-import portfolio3 from "../assets/portfolio 3.png";
-import portfolio4 from "../assets/portfolio 4.png";
-import portfolio5 from "../assets/portfolio 5.png";
-import portfolio6 from "../assets/portfolio 6.png";
-import portfolio7 from "../assets/portfolio 7.png";
-import portfolio8 from "../assets/portfolio 8.png";
+import portfolio3 from "../assets/outdooScoller.png";
+import portfolio4 from "../assets/outdoor 13.png";
+import portfolio5 from "../assets/outdoor 17.png";
+import portfolio6 from "../assets/outdoor 20.png";
+import portfolio7 from "../assets/outdoor 27.png";
+import portfolio8 from "../assets/outdoor 44.png";
 
 // BRAND IMAGES (18 Imports)
 import brand1 from "../assets/brand 1.png";
@@ -40,7 +40,8 @@ const BRANDS = [
 ];
 
 const About: React.FC = () => {
-    const [activeIndex, setActiveIndex] = useState<number | null>(null);
+    // Default state is 0 so the first section is open by default
+    const [activeIndex, setActiveIndex] = useState<number | null>(0);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -84,7 +85,7 @@ const About: React.FC = () => {
     ];
 
     return (
-        <main className="bg-[#BBB791] font-inter text-white w-full overflow-hidden">
+        <main className="bg-[#959064] font-inter text-white w-full overflow-hidden">
             <style dangerouslySetInnerHTML={{ __html: `
                 @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
                 @import url('https://db.onlinewebfonts.com/c/59d406a1ae963118d955b267eb04f9f3?family=ImperialStd-BoldItalic');
@@ -104,19 +105,15 @@ const About: React.FC = () => {
             `}} />
 
             {/* SECTION 1: ABOUT US BRIEF */}
-            {/* CHANGED: Removed max-w-[1440px] so it stretches completely across ALL desktop sizes */}
-            <section className="w-full max-w-full mx-auto px-6 lg:px-12 xl:px-20 [@media(min-width:2400px)]:px-[8rem] pt-16 md:pt-24 [@media(min-width:2400px)]:pt-32 pb-16">
-                <h1 className="font-imperial text-[48px] md:text-[72px] [@media(min-width:2400px)]:text-[120px] font-bold mb-6 [@media(min-width:2400px)]:mb-10">About Us</h1>
+            <section className="w-full max-w-[90rem] mx-auto px-10 md:px-20 lg:px-24 pt-16 md:pt-24 [@media(min-width:2400px)]:pt-32 pb-16">
+                <h1 className="font-imperial text-[38px] md:text-[52px] [@media(min-width:2400px)]:text-[120px] font-bold mb-6 [@media(min-width:2400px)]:mb-10">About Us</h1>
                 
-                {/* CHANGED: Text max-width removed to allow full stretch on all desktops */}
                 <p className="text-white/90 text-lg md:text-xl [@media(min-width:2400px)]:text-[32px] w-full max-w-full leading-relaxed mb-12 md:mb-16 [@media(min-width:2400px)]:mb-24">
                     Workman Advertising is a Chennai-based branding and signage solutions company delivering high-quality indoor, outdoor, and digital display services.
                 </p>
 
-                {/* CHANGED: items-stretch applied to standard lg: breakpoints too */}
                 <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 [@media(min-width:2400px)]:gap-24 items-stretch">
                     <div className="w-full lg:w-1/2 flex flex-col">
-                        {/* CHANGED: Removed static h-[500px]. Added h-full, aspect-video, and flex-grow to stretch properly on any desktop */}
                         <video 
                             src={AboutVideo} 
                             autoPlay 
@@ -137,34 +134,38 @@ const About: React.FC = () => {
 
             {/* SECTION 2: PORTFOLIO MARQUEE */}
             <section className="py-12 [@media(min-width:2400px)]:py-24 overflow-hidden">
-                <div className="animate-marquee flex">
+                <div className="animate-marquee flex gap-6">
                     {[...PORTFOLIO_SCROLL, ...PORTFOLIO_SCROLL].map((img, i) => (
-                        <div key={i} className="w-[300px] h-[180px] md:w-[480px] md:h-[280px] xl:w-[600px] xl:h-[350px] [@media(min-width:2400px)]:w-[800px] [@media(min-width:2400px)]:h-[480px] px-3 flex-shrink-0">
-                            <img src={img} alt="Work" className="w-full h-full object-cover rounded-xl shadow-lg" />
+                        <div key={i} className="w-[300px] h-[180px] md:w-[480px] md:h-[280px] xl:w-[600px] xl:h-[350px] [@media(min-width:2400px)]:w-[800px] [@media(min-width:2400px)]:h-[480px] flex-shrink-0 rounded-xl overflow-hidden shadow-lg">
+                            <img src={img} alt="Work" className="w-full h-full object-cover" />
                         </div>
                     ))}
                 </div>
             </section>
 
             {/* SECTION 3: OUR SPECIALIZATION */}
-            <section className="bg-[#BBB791] text-white py-20 [@media(min-width:2400px)]:py-32 px-6 lg:px-12 xl:px-20 [@media(min-width:2400px)]:px-[8rem]">
-                {/* CHANGED: max-w-full to stretch across all desktops */}
-                <div className="w-full max-w-full mx-auto">
-                    <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 [@media(min-width:2400px)]:gap-32">
+            <section className="bg-[#959064] text-white py-20 [@media(min-width:2400px)]:py-32 px-10 md:px-20 lg:px-24">
+                <div className="w-full max-w-[90rem] mx-auto">
+                    
+                    {/* items-start prevents columns from affecting each other */}
+                    <div className="flex flex-col lg:flex-row items-start gap-12 lg:gap-16 [@media(min-width:2400px)]:gap-32">
                         
-                        <div className="lg:w-1/2 w-full">
+                        {/* LEFT COLUMN - IMAGE */}
+                        <div className="lg:w-1/2 w-full sticky top-24">
                             <h2 className="font-imperial text-[42px] md:text-[56px] [@media(min-width:2400px)]:text-[96px] font-bold mb-8 [@media(min-width:2400px)]:mb-16 leading-tight border-t border-white/30 pt-4 inline-block">
                                 Our Specialization
                             </h2>
-                            <div className="rounded-xl overflow-hidden shadow-2xl">
+                            
+                            <div className="flex flex-col w-full rounded-xl overflow-hidden shadow-2xl h-[450px] md:h-[500px] lg:h-[580px] xl:h-[620px] [@media(min-width:2400px)]:h-[850px] bg-black/10">
                                 <img 
                                     src={main2} 
                                     alt="Specialization" 
-                                    className="w-full h-auto object-cover" 
+                                    className="flex-1 w-full h-full object-cover block" 
                                 />
                             </div>
                         </div>
 
+                        {/* RIGHT COLUMN - ACCORDION */}
                         <div className="lg:w-1/2 w-full space-y-6 [@media(min-width:2400px)]:space-y-12">
                             {specializationData.map((item, index) => (
                                 <div key={index} className="border-b border-white/20 pb-6 [@media(min-width:2400px)]:pb-10">
@@ -204,14 +205,14 @@ const About: React.FC = () => {
                                 </div>
                             ))}
                         </div>
+                        
                     </div>
                 </div>
             </section>
 
             {/* SECTION 4: CLIENT BRANDS */}
             <section className="bg-white py-12 md:py-20 [@media(min-width:2400px)]:py-32">
-                {/* CHANGED: max-w-full to stretch across all desktops */}
-                <div className="w-full max-w-full mx-auto px-6 lg:px-12 xl:px-20 [@media(min-width:2400px)]:px-[8rem] text-center">
+                <div className="w-full max-w-[90rem] mx-auto px-10 md:px-20 lg:px-24 text-center">
                     <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-8 md:gap-x-16 md:gap-y-12 [@media(min-width:2400px)]:gap-x-24 [@media(min-width:2400px)]:gap-y-20">
                         {BRANDS.map((logo, i) => (
                             <div 
