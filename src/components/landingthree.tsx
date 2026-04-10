@@ -9,7 +9,8 @@ import { CheckCircle } from 'lucide-react';
 import { LANDING_CONTENT } from './content';
 
 const LandingPageThree: React.FC = () => {
-  const { contactSection, footer, header } = LANDING_CONTENT;
+  // Removed unused 'contactSection' and 'header' variables
+  const { footer } = LANDING_CONTENT;
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -88,17 +89,7 @@ const LandingPageThree: React.FC = () => {
     }
   };
 
-  const getRoutePath = (name: string) => {
-    switch (name) {
-      case 'Home': return '/';
-      case 'About us': return '/aboutbrief'; 
-      case 'Our services': return '/services';
-      case 'Infrastructure': return '/infrastructure'; 
-      case 'Testimonials': return '/#testimonials';
-      case 'Portfolio': return '/#portfolio';
-      default: return null; 
-    }
-  };
+  // Removed unused 'getRoutePath' function
 
   const getCategoryPath = (category: string) => {
     const cat = category.toUpperCase();
@@ -260,15 +251,15 @@ const LandingPageThree: React.FC = () => {
               {/* LEFT: Logo & Branding */}
               <div className="w-full xl:w-[25%] space-y-4 shrink-0">
               <img
-  src={circlelogo}
-  alt="Logo"
-  className="w-[9rem] h-auto cursor-pointer mt-[6px]"
-  onClick={() => handleNavigation('/')}
-/>
+                src={circlelogo}
+                alt="Logo"
+                className="w-[9rem] h-auto cursor-pointer mt-[6px]"
+                onClick={() => handleNavigation('/')}
+              />
 
-<p className="text-[0.7rem] leading-relaxed font-normal text-white opacity-100 pr-4">
-  {contactInfo.quote}
-</p>
+              <p className="text-[0.7rem] leading-relaxed font-normal text-white opacity-100 pr-4">
+                {contactInfo.quote}
+              </p>
                 <button 
                   onClick={() => handleNavigation('/#contact')}
                   className="bg-white text-[#959064] px-8 py-3 rounded-[0.375rem] font-bold text-[0.75rem] hover:bg-gray-100 transition"
@@ -353,12 +344,12 @@ const LandingPageThree: React.FC = () => {
                 {/* MAP (Takes 3/12 width) - Shifted upward with negative margin */}
                 <div className="w-full lg:col-span-3 flex flex-col">
                <iframe
-  title="The Workman Advertising Location"
-  src="https://www.google.com/maps?q=No16,2nd+Main+Rd,Pallavan+Nagar,Maduravoyal,Chennai,Tamil+Nadu+600095&output=embed"
-  className="w-full h-[12rem] xl:h-auto xl:aspect-square 2xl:aspect-auto 2xl:h-[15rem] rounded-lg border border-white/20 bg-green-50/10 object-cover -mt-2 lg:-mt-4"
-  loading="lazy"
-  referrerPolicy="no-referrer-when-downgrade"
-/>
+                  title="The Workman Advertising Location"
+                  src="https://www.google.com/maps?q=No16,2nd+Main+Rd,Pallavan+Nagar,Maduravoyal,Chennai,Tamil+Nadu+600095&output=embed"
+                  className="w-full h-[12rem] xl:h-auto xl:aspect-square 2xl:aspect-auto 2xl:h-[15rem] rounded-lg border border-white/20 bg-green-50/10 object-cover -mt-2 lg:-mt-4"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
                 </div>
 
               </div>
