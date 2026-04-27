@@ -831,17 +831,17 @@ testimonials: {
 //   isImageLeft: true
 // },
 
-{
-  id: 18,
-  title: "Wood Press Machine",
-  model: "WP Series",
-  description: "The Wood Press Machine is a high-performance solution designed for pressing, laminating, and bonding wood panels and engineered boards with precision and consistency. It is suitable for materials such as plywood, MDF, particle board, veneer, laminates, and solid wood panels. Built with a strong frame and advanced pressure control system, the WP Series ensures uniform pressure distribution, smooth operation, and reliable performance. This machine is ideal for furniture manufacturing, woodworking industries, interior décor production, and panel processing applications requiring durable and high-quality finishing.",
-  imageUrl: printer18,
-  isImageLeft: true
-}
+// {
+//   id: 18,
+//   title: "Wood Press Machine",
+//   model: "WP Series",
+//   description: "The Wood Press Machine is a high-performance solution designed for pressing, laminating, and bonding wood panels and engineered boards with precision and consistency. It is suitable for materials such as plywood, MDF, particle board, veneer, laminates, and solid wood panels. Built with a strong frame and advanced pressure control system, the WP Series ensures uniform pressure distribution, smooth operation, and reliable performance. This machine is ideal for furniture manufacturing, woodworking industries, interior décor production, and panel processing applications requiring durable and high-quality finishing.",
+//   imageUrl: printer18,
+//   isImageLeft: true
+// }
 
 
-     , {
+      {
   id: 19,
   title: "Wood Edge Banding Machine",
   model: "EB Series",

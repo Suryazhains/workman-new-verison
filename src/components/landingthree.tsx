@@ -174,7 +174,7 @@ const LandingPageThree: React.FC = () => {
                 <form className="flex flex-col gap-2.5" onSubmit={handleSubmit}>
                   
                   <div className="space-y-0.5 text-left">
-                    <label className="text-[0.7rem] text-gray-600">Full name *</label>
+                    <label className="text-[0.7rem] text-gray-600">Full name </label>
                     <input
                       type="text"
                       name="name"
@@ -185,7 +185,7 @@ const LandingPageThree: React.FC = () => {
                   </div>
 
                   <div className="space-y-0.5 text-left">
-                    <label className="text-[0.7rem] text-gray-600">Contact number *</label>
+                    <label className="text-[0.7rem] text-gray-600">Contact number </label>
                     <input
                       type="tel"
                       name="phone"
@@ -228,8 +228,6 @@ const LandingPageThree: React.FC = () => {
 
                 </form>
               </div>
-
-              {/* Explicitly Sized Image Container */}
               <div className="w-full lg:w-1/2 flex justify-center lg:justify-end items-center mt-4 lg:mt-0 lg:pr-8">
                 <img
                   src={conectus}
@@ -242,13 +240,13 @@ const LandingPageThree: React.FC = () => {
           </div>
         </section>
 
-        {/* --- FOOTER SECTION --- */}
+     
         <footer className="bg-[#959064] w-full text-white py-[2.5rem] md:py-[4rem] px-6 lg:px-[5rem] xl:px-[7.5rem]">
           <div className="max-w-[105rem] 2xl:max-w-[130rem] mx-auto w-full">
             
             <div className="flex flex-col xl:flex-row gap-8 lg:gap-10 xl:gap-12 mb-10 text-left items-start">
 
-              {/* LEFT: Logo & Branding */}
+    
               <div className="w-full xl:w-[25%] space-y-4 shrink-0">
               <img
                 src={circlelogo}
@@ -268,10 +266,10 @@ const LandingPageThree: React.FC = () => {
                 </button>
               </div>
 
-              {/* RIGHT: Grid Layout - 12-COL PROPORTIONAL GRID */}
+            
               <div className="w-full xl:w-[75%] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-4 xl:gap-8 items-start">
 
-                {/* Address (Takes 3/12 width) */}
+         
                 <div className="w-full lg:col-span-3 flex flex-col">
                   <h4 className="font-imperial font-medium text-[1rem] xl:text-[1.1rem] mb-5 text-white">
                     Address
@@ -302,7 +300,6 @@ const LandingPageThree: React.FC = () => {
                   </ul>
                 </div>
 
-                {/* Contacts (Takes 4/12 width - gives enough room for the long email) */}
                 <div className="w-full lg:col-span-4 flex flex-col">
                   <h4 className="font-imperial font-medium text-[1rem] xl:text-[1.1rem] mb-5 text-white">
                     {contactInfo.title}
@@ -341,7 +338,6 @@ const LandingPageThree: React.FC = () => {
                   </div>
                 </div>
 
-                {/* MAP (Takes 3/12 width) - Shifted upward with negative margin */}
                 <div className="w-full lg:col-span-3 flex flex-col">
                <iframe
                   title="The Workman Advertising Location"
