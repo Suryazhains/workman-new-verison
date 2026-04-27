@@ -15,7 +15,7 @@ import printer13 from "../assets/printer13.png";
 import printer15 from "../assets/printer15.png";
 // import printer16 from "../assets/printer16.png";
 import printer17 from "../assets/printer23.png";
-import printer18 from "../assets/printer18.png";
+// import printer18 from "../assets/printer18.png";
 import printer19 from "../assets/printer19.png";
 import printer20 from "../assets/printer20.png";
 // import printer21 from "../assets/printer21.png";
