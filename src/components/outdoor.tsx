@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 
 import './outdoor.css';
 import LandingPageThree from './landingthree';
@@ -15,7 +16,7 @@ interface Service {
 }
 
 // --- Slower Paragraph Animation Variants ---
-const paragraphVariants = {
+const paragraphVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -26,14 +27,14 @@ const paragraphVariants = {
   },
 };
 
-const wordVariants = {
+const wordVariants: Variants = {
   hidden: { opacity: 0, y: 10 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
       duration: 0.4, // Slower, smoother reveal for each word
-ease: [0.22, 1, 0.36, 1]
+      ease: "easeOut",
     },
   },
 };
@@ -118,7 +119,7 @@ const OutdoorServices: React.FC = () => {
   }, [currentCategoryKey, header.servicesData, outdoorPage.services]);
 
   // Extract the first service for full-width views
-  const singleService = filteredServices[0]; // Assuming you meant to extract the first one here
+  const singleService = filteredServices[0]; 
 
   useEffect(() => {
     if (isFullWidthCategory) return;

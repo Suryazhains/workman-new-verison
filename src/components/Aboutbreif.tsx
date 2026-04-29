@@ -1,6 +1,7 @@
 import AboutVideo from '../assets/0225.mp4'; 
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import type { Variants } from 'framer-motion'; // ✅ FIXED: Added "type" so Vite doesn't crash
 import LandingPageThree from './landingthree';
 
 import main2 from "../assets/ourspecialization.png";
@@ -15,7 +16,7 @@ import portfolio8 from "../assets/outdoor 44.png";
 const PORTFOLIO_SCROLL = [portfolio3, portfolio4, portfolio5, portfolio6, portfolio7, portfolio8];
 
 // --- Slower Paragraph Animation Variants ---
-const paragraphVariants = {
+const paragraphVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
         opacity: 1,
@@ -26,14 +27,14 @@ const paragraphVariants = {
     },
 };
 
-const wordVariants = {
+const wordVariants: Variants = {
     hidden: { opacity: 0, y: 10 },
     visible: {
         opacity: 1,
         y: 0,
         transition: {
             duration: 0.4, // Slower, smoother reveal for each word
-            ease: "easeOut",
+            ease: [0.2, 0.65, 0.3, 0.9], // Using array instead of string to prevent TS Easing errors
         },
     },
 };

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import LandingPageThree from './landingthree';
 import { LANDING_CONTENT } from './content';
 import { X } from 'lucide-react';
@@ -7,7 +8,7 @@ import { X } from 'lucide-react';
 // --- Smooth Animation Variants (TIMINGS DECREASED FOR FASTER SPEED) ---
 
 // For main sections and headings (Snappy & Elegant)
-const sectionVariants = {
+const sectionVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -18,7 +19,7 @@ const sectionVariants = {
   },
 };
 
-const textVariants = {
+const textVariants: Variants = {
   hidden: { opacity: 0, y: 15 },
   visible: {
     opacity: 1,
@@ -30,7 +31,7 @@ const textVariants = {
   },
 };
 
-const paragraphVariants = {
+const paragraphVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -41,7 +42,7 @@ const paragraphVariants = {
   },
 };
 
-const wordVariants = {
+const wordVariants: Variants = {
   hidden: { opacity: 0, y: 6 },
   visible: {
     opacity: 1,
@@ -53,7 +54,7 @@ const wordVariants = {
   },
 };
 
-const imageVariants = {
+const imageVariants: Variants = {
   hidden: { opacity: 0, scale: 0.98 },
   visible: {
     opacity: 1,

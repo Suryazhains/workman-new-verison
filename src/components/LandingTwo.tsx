@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import { LANDING_CONTENT, PORTFOLIO_IMAGES } from './content';
 import LandingThree from './landingthree';
 
 // --- Slower Paragraph Animation Variants ---
-const paragraphVariants = {
+const paragraphVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -15,7 +16,7 @@ const paragraphVariants = {
   },
 };
 
-const wordVariants = {
+const wordVariants: Variants = {
   hidden: { opacity: 0, y: 10 },
   visible: {
     opacity: 1,
@@ -46,7 +47,6 @@ const LandingTwo: React.FC = () => {
     setCurrentIndex((prev) => (prev === 0 ? allTestimonials.length - 1 : prev - 1));
   };
 
- 
   const getRowImages = (start: number, end: number) => {
     const slice = PORTFOLIO_IMAGES.slice(start, end);
     return [...slice, ...slice, ...slice, ...slice]; 
@@ -101,7 +101,7 @@ const LandingTwo: React.FC = () => {
         className="w-full bg-[#959064] pt-[4.5rem] pb-[5.5rem] overflow-hidden scroll-mt-[6rem] lg:scroll-mt-[8rem]"
       >
        <div className="max-w-[90rem] mx-auto px-10 md:px-20 lg:px-24 mb-10">
-          {/* Animated Portfolio Heading */}
+         {/* Animated Portfolio Heading */}
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

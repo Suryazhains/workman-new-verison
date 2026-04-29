@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion'; 
+import type { Variants } from 'framer-motion';
 import LandingTwo from './LandingTwo';
 import { LANDING_CONTENT } from './content';
 
@@ -14,7 +15,7 @@ import Home_7 from '../assets/home 2.png';
 import AboutVideo from '../assets/0225.mp4'; 
 
 // --- Slower Paragraph Animation Variants ---
-const paragraphVariants = {
+const paragraphVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -25,7 +26,7 @@ const paragraphVariants = {
   },
 };
 
-const wordVariants = {
+const wordVariants: Variants = {
   hidden: { opacity: 0, y: 10 },
   visible: {
     opacity: 1,
