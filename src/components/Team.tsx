@@ -47,17 +47,17 @@ const Team: React.FC = () => {
 
   const handleMouseUpOrLeave = () => setIsDown(false);
 
-  // Touch Logic
+  // Touch Logic (Fixed e.touches[0].pageX)
   const handleTouchStart = (e: React.TouchEvent) => {
     if (!scrollRef.current) return;
     setIsDown(true);
-    setStartX(e.touches.pageX - scrollRef.current.offsetLeft);
+    setStartX(e.touches[0].pageX - scrollRef.current.offsetLeft);
     setScrollLeft(scrollRef.current.scrollLeft);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!isDown || !scrollRef.current) return;
-    const x = e.touches.pageX - scrollRef.current.offsetLeft;
+    const x = e.touches[0].pageX - scrollRef.current.offsetLeft;
     const walk = (x - startX) * 2;
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
@@ -153,8 +153,7 @@ const Team: React.FC = () => {
       {/* Header Area */}
       <div className="pt-20 pb-10 text-center bg-[#959064] team-header">
         {/* Animated Title - Word by Word */}
-        {/* CHANGED: Added font-dm-sans, font-extralight, and uppercase */}
-        <h2 className="font-dm-sans font-extralight  text-[50px] md:text-[72px] text-white mb-4">
+        <h2 className="font-dm-sans font-extralight text-[50px] md:text-[72px] text-white mb-4">
           {"Meet our experts".split(" ").map((word, index, array) => (
             <React.Fragment key={index}>
               <motion.span
@@ -218,12 +217,12 @@ const Team: React.FC = () => {
       {/* LIGHTBOX MODAL */}
       {selectedIndex !== null && (
         <div 
-          className="fixed inset-0 z- bg-black/95 flex items-center justify-center lightbox-blur"
+          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center lightbox-blur"
           onClick={closeLightbox}
         >
           {/* Close Icon */}
           <button 
-            className="absolute top-6 right-6 text-white/70 hover:text-white text-5xl transition-colors z-"
+            className="absolute top-6 right-6 text-white/70 hover:text-white text-5xl transition-colors z-50"
             onClick={closeLightbox}
           >
             &times;
@@ -231,7 +230,7 @@ const Team: React.FC = () => {
 
           {/* Left Arrow */}
           <button 
-            className="absolute left-6 md:left-12 text-white/50 hover:text-white text-6xl md:text-8xl transition-all z-"
+            className="absolute left-6 md:left-12 text-white/50 hover:text-white text-6xl md:text-8xl transition-all z-50"
             onClick={prevImage}
           >
             &#8249;
@@ -249,7 +248,7 @@ const Team: React.FC = () => {
 
           {/* Right Arrow */}
           <button 
-            className="absolute right-6 md:right-12 text-white/50 hover:text-white text-6xl md:text-8xl transition-all z-"
+            className="absolute right-6 md:right-12 text-white/50 hover:text-white text-6xl md:text-8xl transition-all z-50"
             onClick={nextImage}
           >
             &#8250;
