@@ -56,7 +56,7 @@ const Header: React.FC = () => {
       case 'Team': return '/team';
       case 'Testimonials': return '/#testimonials';
       case 'Portfolio': return '/#portfolio';
-      case 'Contact': return '/contact';
+      case 'Contact': return '/Contact';
       default: return null; 
     }
   };

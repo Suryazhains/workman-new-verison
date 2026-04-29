@@ -8,7 +8,7 @@ import OutdoorServices from './components/outdoor';
 import Team from './components/Team';
 import Aboutbreif from './components/Aboutbreif';
 import ServiceDetails from './components/ServiceDetails'; 
-import Contact from './components/contact'; 
+import Contact from './components/Contact'; 
 import '../src/components/global-layout.css'; // Add this at the top!
 
 interface Service {
@@ -86,7 +86,7 @@ function App() {
           
           <Route path="/outdoor" element={<OutdoorServices />} />
           <Route path="/indoor" element={<OutdoorServices />} />
-                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/Contact" element={<Contact />} />
           <Route path="/led" element={<OutdoorServices />} />
           <Route path="/modular" element={<OutdoorServices />} />
           <Route path="/pop" element={<OutdoorServices />} />

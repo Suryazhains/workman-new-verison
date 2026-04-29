@@ -1,255 +1,168 @@
-import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion'; 
-import LandingTwo from './LandingTwo';
-import { LANDING_CONTENT } from './content';
+import React, { useState } from 'react';
+import { Phone, Mail, MapPin, CheckCircle } from 'lucide-react';
 
-// Asset Imports
-import Home_1 from '../assets/home 4.png'; 
-import Home_2 from '../assets/home 7.png';
-import Home_3 from '../assets/homeAbid3.png';
-import Home_4 from '../assets/home 1.jpg';
-import Home_5 from '../assets/home 5.png';
-import Home_7 from '../assets/home 2.png';
-import AboutVideo from '../assets/0225.mp4'; 
+const ContactPage: React.FC = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
-const useScrollToHash = () => {
-  const location = useLocation();
+  // Real data pulled from your LandingPageThree code
+  const contactInfo = {
+    phone1: "+91 98403 27575",
+    phone2: "+91 44 4238 5222",
+    phone3: "+91 97908 09675",
+    email: "workmansign@hotmail.com",
+    address: "No16, 2nd Main Rd, Pallavan Nagar, Maduravoyal, Chennai, Tamil Nadu 600095, India",
+    quote: "Our range of services is designed to cover all your branding and signage needs, no matter the scale."
+  };
 
-  useEffect(() => {
-    if (location.hash) {
-      const id = location.hash.replace("#", "");
-      
-      const executeScroll = () => {
-        const element = document.getElementById(id);
-        if (element) {
-          // Converted scroll offset to scale with the root font size for massive screens
-          const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
-          const offset = window.innerWidth < 1024 ? (70 / 16) * rootFontSize : (120 / 16) * rootFontSize;
-          const y = element.getBoundingClientRect().top + window.scrollY - offset;
+  // Connected Form Submission Logic
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (isSubmitting) return;
 
-          window.scrollTo({
-            top: y,
-            behavior: "smooth",
-          });
+    setIsSubmitting(true);
+    setSubmitted(false);
+    const formElement = e.currentTarget;
+    const formData = new FormData(formElement);
+
+    try {
+      await fetch(
+        "https://script.google.com/macros/s/AKfycbz7QGTDDDOkSasd9GM8Y2KzgWqulEwcWUPhLe9xhiatuQR95GyuFobhTGRapE9l7fo-XA/exec",
+        {
+          method: "POST",
+          body: formData,
+          mode: "no-cors", 
         }
-      };
+      );
 
-      setTimeout(executeScroll, 50);
-      setTimeout(executeScroll, 400);
-      setTimeout(executeScroll, 1000);
-    } else {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      setSubmitted(true);
+      formElement.reset();
+      setTimeout(() => setSubmitted(false), 5000);
+    } catch (error) {
+      console.error("Submission error:", error);
+      alert("There was a network error. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
-  }, [location]);
-};
-
-const LandingPage: React.FC = () => {
-  const { hero, about } = LANDING_CONTENT;
-  
-  useScrollToHash();
-
-  const heroImages = [Home_1, Home_2, Home_3, Home_4, Home_5, Home_7];
+  };
 
   return (
-    <main className=" w-full min-h-screen bg-white overflow-x-hidden selection:bg-red-200 font-inter">
-      <style dangerouslySetInnerHTML={{ __html: `
-        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-        @import url('https://db.onlinewebfonts.com/c/59d406a1ae963118d955b267eb04f9f3?family=ImperialStd-BoldItalic');
+    <div className="min-h-screen bg-[#959064] flex items-center justify-center p-6 md:p-12 font-sans m-0">
+      <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
         
-        .font-crimson { font-family: 'Crimson Pro', serif !important; }
-        .font-imperial { font-family: "ImperialStd-BoldItalic", serif !important; }
+        {/* Left Section: Content & Form */}
+        <div className="flex flex-col text-white">
+          {/* Title font updated to DM Sans and uppercase */}
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-wide font-['DM_Sans'] uppercase">
+            Contact Us
+          </h1>
+          <p className="text-white/90 mb-10 max-w-md text-sm md:text-base leading-relaxed">
+            {contactInfo.quote}
+          </p>
 
-        .hero-track {
-          display: flex;
-          width: 600%; 
-          height: 100%;
-          animation: heroScroll 36s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-        }
-
-        .hero-track img {
-          width: calc(100% / 6); 
-          height: 100%;
-          object-fit: cover;
-          flex-shrink: 0;
-          filter: brightness(0.85);
-        }
-
-        @keyframes heroScroll {
-          0%, 14% { transform: translateX(0); }
-          16.66%, 30.66% { transform: translateX(calc(-100% / 6 * 1)); }
-          33.32%, 47.32% { transform: translateX(calc(-100% / 6 * 2)); }
-          49.98%, 63.98% { transform: translateX(calc(-100% / 6 * 3)); }
-          66.64%, 80.64% { transform: translateX(calc(-100% / 6 * 4)); }
-          83.30%, 97.30% { transform: translateX(calc(-100% / 6 * 5)); }
-          100% { transform: translateX(0); }
-        }
-
-        .text-readable-shadow {
-          text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-      `}} />
-
-      {/* --- HERO SECTION --- */}
-      <section 
-        id="home" 
-        className="relative w-full h-[85vh] min-h-[40.625rem] overflow-hidden bg-black scroll-mt-[7.5rem]"
-      >
-        <div className="absolute inset-0 z-0">
-          <div className="hero-track">
-            {heroImages.map((img, index) => (
-              <img key={index} src={img} alt={`portfolio-${index}`} />
-            ))}
-          </div>
-        </div>
-
-        <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/40 to-transparent pointer-events-none" />
-
-        <div className="relative z-20 h-full flex items-center">
-          <div className="w-full px-10 md:px-20 lg:px-24">
-            <div className="max-w-[43.75rem]">
-              {/* Animated Hero Title - Now strictly splitting by space for individual words */}
-              <h1 className="font-imperial text-[3rem] md:text-[4.25rem] lg:text-[5.25rem] font-bold leading-[1.05] tracking-tight text-white mb-8 text-readable-shadow">
-                {hero.title.join(" ").split(" ").map((word, index, array) => (
-                  <React.Fragment key={index}>
-                    <motion.span
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.8, ease: "easeOut", delay: index * 0.15 }}
-                      className="inline-block"
-                    >
-                      {word}
-                    </motion.span>
-                    {/* Add space after every word except the very last one */}
-                    {index < array.length - 1 && " "}
-                  </React.Fragment>
-                ))}
-              </h1>
-              
-              {/* Animated Hero Description */}
-              <motion.p 
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-                className="text-white text-lg md:text-xl leading-relaxed max-w-[34.375rem] mb-12 text-readable-shadow font-medium"
-              >
-                {hero.description}
-              </motion.p>
-              
-              {/* Animated Hero Button */}
-              <motion.button
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
-                onClick={() => {
-                  const el = document.getElementById("contact");
-                  if (el) {
-                    const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
-                    const offset = window.innerWidth < 1024 ? (70 / 16) * rootFontSize : (120 / 16) * rootFontSize;
-                    const position = el.getBoundingClientRect().top + window.scrollY - offset;
-                    window.scrollTo({ top: position, behavior: 'smooth' });
-                  }
-                }}
-                className="bg-[#BBB791] text-white rounded-[4px] px-12 h-[3.625rem] font-inter font-bold text-[1rem] hover:shadow-2xl transition-all active:scale-95 hover:bg-[#ff5f6d]"
-              >
-                Contact now
-              </motion.button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* --- ABOUT SECTION --- */}
-      <section 
-        id="about" 
-        className="relative w-full bg-[#FFFDE8] py-16 md:py-36 px-10 md:px-20 lg:px-24 scroll-mt-24 overflow-hidden"
-      >
-        <div className="max-w-[90rem] mx-auto flex flex-col lg:flex-row items-center justify-between">
-          
-          <div className="w-full lg:w-[50%] text-left z-10 lg:pr-10">
-            {/* Animated About Label */}
-            <motion.span 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="text-black font-imperial font-bold text-[23px] md:text-[30px] leading-none tracking-[-0.04em] mb-4 block uppercase lg:normal-case"
-            >
-              {about.label}
-            </motion.span>
-
-            {/* Animated About Heading */}
-            <motion.h2 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
-              className="font-inter font-bold text-[27px] sm:text-[37px] md:text-[39px] xl:text-[43px] leading-[1.1] tracking-[-0.04em] text-black mb-6 w-full"
-            >
-              {about.heading}
-            </motion.h2>
-
-            {/* Animated About Description */}
-            <motion.p 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-              className="text-gray-800 text-[14px] md:text-[16px] leading-relaxed w-full max-w-[95%] mb-12"
-            >
-              {about.description}
-            </motion.p>
-
-            <div className="grid grid-cols-3 lg:flex lg:flex-wrap gap-4 sm:gap-8 lg:gap-12">
-              {about.stats.map((stat, index) => (
-                /* Animated Stats Items */
-                <motion.div 
-                  key={index} 
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 + (index * 0.1) }}
-                  className="flex flex-col"
-                >
-                  <div className="flex items-center gap-1 md:gap-2">
-          
-                    <p className="text-[23px] sm:text-[31px] md:text-[39px] font-bold text-black">
-                      {stat.value}
-                    </p>
-                
-                    <span className="text-[#FF7A00] text-[9px] sm:text-[15px] md:text-[19px] font-bold">↗</span>
-                  </div>
-
-                  <p className="text-[#6B7280] text-[5px] sm:text-[9px] md:text-[11px] font-medium">
-                    {stat.label}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Unanimated Video Element */}
-          <div className="w-full lg:absolute lg:right-10 lg:top-0 lg:h-full lg:w-1/2 mt-12 lg:mt-0 flex items-center justify-center lg:justify-end z-0">
-            <video 
-              src={AboutVideo}
-              autoPlay 
-              loop 
-              muted 
-              playsInline
-              className="w-full h-[350px] sm:h-[400px] md:h-[450px] lg:h-[calc(110%-80px)] lg:w-auto object-cover lg:object-contain object-center lg:object-right"
+          <form className="space-y-5 flex flex-col mb-12" onSubmit={handleSubmit}>
+            <input 
+              type="text" 
+              name="name"
+              placeholder="Name *" 
+              className="w-full bg-white/10 placeholder-white/70 text-white px-5 py-4 rounded outline-none focus:ring-2 focus:ring-white/50 transition-all border border-transparent"
+              required
             />
-          </div>
+            <input 
+              type="tel" 
+              name="phone"
+              placeholder="Phone number *" 
+              maxLength={10}
+              pattern="[0-9]{10}"
+              onInput={(e) => {
+                e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '');
+              }}
+              className="w-full bg-white/10 placeholder-white/70 text-white px-5 py-4 rounded outline-none focus:ring-2 focus:ring-white/50 transition-all border border-transparent"
+              required
+            />
+            <textarea 
+              name="message"
+              placeholder="Message *" 
+              rows={4}
+              className="w-full bg-white/10 placeholder-white/70 text-white px-5 py-4 rounded outline-none focus:ring-2 focus:ring-white/50 transition-all border border-transparent resize-none"
+              required
+            />
+            
+            {submitted && (
+              <div className="flex items-center gap-2 text-[#bdebb5] text-sm font-medium">
+                <CheckCircle size={16} />
+                <span>Submitted successfully!</span>
+              </div>
+            )}
 
-          <div className="hidden lg:block lg:w-[40%] h-1"></div>
+            <button 
+              type="submit" 
+              disabled={isSubmitting}
+              className={`w-full bg-white text-[#959064] font-bold tracking-widest text-sm px-5 py-4 rounded mt-2 transition-all ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:bg-gray-100'}`}
+            >
+              {isSubmitting ? 'SENDING...' : 'SEND'}
+            </button>
+          </form>
+
+          {/* Contact Information */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12 text-sm">
+            
+            {/* Clickable Phones */}
+            <div className="flex items-start gap-3">
+              <Phone className="w-5 h-5 mt-0.5 opacity-90 shrink-0" />
+              <div className="flex flex-col gap-1.5">
+                <p className="font-bold tracking-widest mb-1 text-xs">PHONE</p>
+                <a href={`tel:${contactInfo.phone1.replace(/\s/g, '')}`} className="opacity-90 hover:text-white hover:underline transition-all">{contactInfo.phone1}</a>
+                <a href={`tel:${contactInfo.phone2.replace(/\s/g, '')}`} className="opacity-90 hover:text-white hover:underline transition-all">{contactInfo.phone2}</a>
+                <a href={`tel:${contactInfo.phone3.replace(/\s/g, '')}`} className="opacity-90 hover:text-white hover:underline transition-all">{contactInfo.phone3}</a>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-8">
+              {/* Clickable Email */}
+              <div className="flex items-start gap-3">
+                <Mail className="w-5 h-5 mt-0.5 opacity-90 shrink-0" />
+                <div>
+                  <p className="font-bold tracking-widest mb-1 text-xs">EMAIL</p>
+                  <a href={`mailto:${contactInfo.email}`} className="opacity-90 hover:text-white hover:underline transition-all break-all">
+                    {contactInfo.email}
+                  </a>
+                </div>
+              </div>
+
+              {/* Address section added from your real data */}
+              <div className="flex items-start gap-3">
+                <MapPin className="w-5 h-5 mt-0.5 opacity-90 shrink-0" />
+                <div>
+                  <p className="font-bold tracking-widest mb-1 text-xs">ADDRESS</p>
+                  <p className="opacity-90 leading-relaxed pr-4">
+                    {contactInfo.address}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
-      </section>
-      
-      <LandingTwo />
-    </main>
+
+        {/* Right Section: Real Map */}
+        <div className="h-[500px] lg:h-[650px] w-full rounded-lg overflow-hidden shadow-xl lg:shadow-none">
+          <iframe
+            title="The Workman Advertising Location"
+            src="https://www.google.com/maps?q=No16,2nd+Main+Rd,Pallavan+Nagar,Maduravoyal,Chennai,Tamil+Nadu+600095&output=embed"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen={false}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            className="w-full h-full object-cover rounded-lg"
+          />
+        </div>
+
+      </div>
+    </div>
   );
 };
 
-export default LandingPage;
+export default ContactPage;
