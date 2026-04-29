@@ -14,6 +14,30 @@ import portfolio8 from "../assets/outdoor 44.png";
 
 const PORTFOLIO_SCROLL = [portfolio3, portfolio4, portfolio5, portfolio6, portfolio7, portfolio8];
 
+// --- Slower Paragraph Animation Variants ---
+const paragraphVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.015, // Slower stagger for a more deliberate cascade
+            delayChildren: 0.3,     // Waits slightly for the heading to start
+        },
+    },
+};
+
+const wordVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            duration: 0.4, // Slower, smoother reveal for each word
+            ease: "easeOut",
+        },
+    },
+};
+
 const About: React.FC = () => {
     // Default state is 0 so the first section is open by default
     const [activeIndex, setActiveIndex] = useState<number | null>(0);
@@ -58,6 +82,9 @@ const About: React.FC = () => {
             ]
         }
     ];
+
+    // Consolidated text string to allow for seamless line-by-line and word-by-word animation
+    const aboutDescriptionText = `Workman Advertising is a Chennai-based branding and signage solutions company delivering high-quality indoor, outdoor, and digital display services. Workman Advertising, Chennai, India is a leading provider of complete branding and signage solutions, delivering high-quality visual communication for businesses across multiple industries.\nOur core strength lies in delivering customized signage and advertising solutions for corporate, retail, showroom, and commercial environments. We specialize in indoor and outdoor signage, facade branding, LED video walls, POP displays, and modular signage.\nWith a reputation built on trust, craftsmanship, and customer satisfaction, we continue to be a preferred signage partner for brands looking for long-lasting and high-impact advertising solutions.`;
 
     return (
         <main className="bg-[#959064] font-inter text-white w-full overflow-hidden">
@@ -114,37 +141,27 @@ const About: React.FC = () => {
                         />
                     </div>
 
-                    {/* Description Section */}
-                    <div className="w-full lg:w-1/2 flex flex-col justify-center space-y-6 [@media(min-width:2400px)]:space-y-10 text-white/80 font-normal leading-snug text-[16px] md:text-[16px] lg:text-[18px] [@media(min-width:2400px)]:text-[27px] [@media(min-width:2400px)]:leading-[1.4] pt-4 lg:pt-0 text-left">
-                        
-                        <motion.p 
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.3 }}
-                            transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
-                        >
-                            Workman Advertising is a Chennai-based branding and signage solutions company delivering high-quality indoor, outdoor, and digital display services. Workman Advertising, Chennai, India is a leading provider of complete branding and signage solutions, delivering high-quality visual communication for businesses across multiple industries.
-                        </motion.p>
-
-                        <motion.p 
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.3 }}
-                            transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 }}
-                        >
-                            Our core strength lies in delivering customized signage and advertising solutions for corporate, retail, showroom, and commercial environments. We specialize in indoor and outdoor signage, facade branding, LED video walls, POP displays, and modular signage.
-                        </motion.p>
-
-                        <motion.p 
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.3 }}
-                            transition={{ duration: 0.5, ease: "easeOut", delay: 0.4 }}
-                        >
-                            With a reputation built on trust, craftsmanship, and customer satisfaction, we continue to be a preferred signage partner for brands looking for long-lasting and high-impact advertising solutions.
-                        </motion.p>
-
-                    </div>
+                    {/* Description Section - Animated Paragraphs */}
+                    <motion.div 
+                        variants={paragraphVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.3 }}
+                        className="w-full lg:w-1/2 flex flex-col justify-center text-white/80 font-normal leading-snug text-[16px] md:text-[16px] lg:text-[18px] [@media(min-width:2400px)]:text-[27px] [@media(min-width:2400px)]:leading-[1.4] pt-4 lg:pt-0 text-left"
+                    >
+                        {aboutDescriptionText.split('\n').map((line, lineIndex) => (
+                            <p key={`about-desc-line-${lineIndex}`} className="mb-6 [@media(min-width:2400px)]:mb-10 min-h-[1rem]">
+                                {line.split(" ").map((word, wordIndex, array) => (
+                                    <React.Fragment key={`about-desc-word-${lineIndex}-${wordIndex}`}>
+                                        <motion.span variants={wordVariants} className="inline-block">
+                                            {word}
+                                        </motion.span>
+                                        {wordIndex < array.length - 1 && " "}
+                                    </React.Fragment>
+                                ))}
+                            </p>
+                        ))}
+                    </motion.div>
                 </div>
             </section>
 

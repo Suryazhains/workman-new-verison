@@ -13,6 +13,30 @@ import Home_5 from '../assets/home 5.png';
 import Home_7 from '../assets/home 2.png';
 import AboutVideo from '../assets/0225.mp4'; 
 
+// --- Slower Paragraph Animation Variants ---
+const paragraphVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.015, // Slower stagger for a more deliberate cascade
+      delayChildren: 0.4,     // Waits for the heading to animate first
+    },
+  },
+};
+
+const wordVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.4, // Slower, smoother reveal for each word
+      ease: "easeOut",
+    },
+  },
+};
+
 const useScrollToHash = () => {
   const location = useLocation();
 
@@ -111,7 +135,6 @@ const LandingPage: React.FC = () => {
           <div className="w-full px-10 md:px-20 lg:px-24">
             <div className="max-w-[43.75rem]">
               {/* Animated Hero Title - Word by Word */}
-              {/* CHANGED: font-imperial -> font-dm-sans, and added uppercase */}
               <h1 className="font-dm-sans  text-[3rem] md:text-[4.25rem] lg:text-[5.25rem] font-extralight leading-[1.05]  text-white mb-8 text-readable-shadow">
                 {hero.title.join(" ").split(" ").map((word, index, array) => (
                   <React.Fragment key={index}>
@@ -130,23 +153,34 @@ const LandingPage: React.FC = () => {
                 ))}
               </h1>
               
-              {/* Animated Hero Description */}
-              <motion.p 
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+              {/* Animated Hero Description - Paragraph Splitting Logic Applied */}
+              <motion.div 
+                variants={paragraphVariants}
+                initial="hidden"
+                whileInView="visible"
                 viewport={{ once: true }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
                 className="text-white text-lg md:text-xl leading-relaxed max-w-[34.375rem] mb-12 text-readable-shadow font-medium"
               >
-                {hero.description}
-              </motion.p>
+                {String(hero.description).split('\n').map((line, lineIndex) => (
+                  <span key={`hero-desc-line-${lineIndex}`} className="block min-h-[1rem] mb-2">
+                    {line.split(" ").map((word, wordIndex, array) => (
+                      <React.Fragment key={`hero-desc-word-${lineIndex}-${wordIndex}`}>
+                        <motion.span variants={wordVariants} className="inline-block">
+                          {word}
+                        </motion.span>
+                        {wordIndex < array.length - 1 && " "}
+                      </React.Fragment>
+                    ))}
+                  </span>
+                ))}
+              </motion.div>
               
               {/* Animated Hero Button */}
               <motion.button
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.7 }} // Slightly delayed to let text finish
                 onClick={() => {
                   const el = document.getElementById("contact");
                   if (el) {
@@ -209,16 +243,27 @@ const LandingPage: React.FC = () => {
               ))}
             </h2>
 
-            {/* Animated About Description */}
-            <motion.p 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
+            {/* Animated About Description - Paragraph Splitting Logic Applied */}
+            <motion.div 
+              variants={paragraphVariants}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
               className="text-gray-800 text-[14px] md:text-[16px] leading-relaxed w-full max-w-[95%] mb-12"
             >
-              {about.description}
-            </motion.p>
+              {String(about.description).split('\n').map((line, lineIndex) => (
+                <span key={`about-desc-line-${lineIndex}`} className="block mb-4 min-h-[1rem]">
+                  {line.split(" ").map((word, wordIndex, array) => (
+                    <React.Fragment key={`about-desc-word-${lineIndex}-${wordIndex}`}>
+                      <motion.span variants={wordVariants} className="inline-block">
+                        {word}
+                      </motion.span>
+                      {wordIndex < array.length - 1 && " "}
+                    </React.Fragment>
+                  ))}
+                </span>
+              ))}
+            </motion.div>
 
             <div className="grid grid-cols-3 lg:flex lg:flex-wrap gap-4 sm:gap-8 lg:gap-12">
               {about.stats.map((stat, index) => (
@@ -228,7 +273,7 @@ const LandingPage: React.FC = () => {
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 + (index * 0.1) }}
+                  transition={{ duration: 0.5, ease: "easeOut", delay: 0.6 + (index * 0.1) }} // Delayed to follow paragraph
                   className="flex flex-col"
                 >
                   <div className="flex items-center gap-1 md:gap-2">

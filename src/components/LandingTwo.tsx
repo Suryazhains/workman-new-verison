@@ -3,6 +3,30 @@ import { motion } from 'framer-motion';
 import { LANDING_CONTENT, PORTFOLIO_IMAGES } from './content';
 import LandingThree from './landingthree';
 
+// --- Slower Paragraph Animation Variants ---
+const paragraphVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.015, // Slower stagger for a more deliberate cascade
+      delayChildren: 0.4,     // Waits for the heading to animate first
+    },
+  },
+};
+
+const wordVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.4, // Slower, smoother reveal for each word
+      ease: "easeOut",
+    },
+  },
+};
+
 const LandingTwo: React.FC = () => {
   const { portfolio, testimonials } = LANDING_CONTENT;
 
@@ -79,25 +103,36 @@ const LandingTwo: React.FC = () => {
        <div className="max-w-[90rem] mx-auto px-10 md:px-20 lg:px-24 mb-10">
           {/* Animated Portfolio Heading */}
         <motion.h2
-  initial={{ opacity: 0, y: 30 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  viewport={{ once: true, amount: 0.3 }}
-  transition={{ duration: 0.6, ease: "easeOut" }}
-  className="font-dm-sans-light text-3xl md:text-[2.5rem] text-[#FFFFFF] mb-4 tracking-[0.05em] "
->
-  {portfolio.heading}
-</motion.h2>
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="font-dm-sans-light text-3xl md:text-[2.5rem] text-[#FFFFFF] mb-4 tracking-[0.05em] "
+        >
+          {portfolio.heading}
+        </motion.h2>
           
-          {/* Animated Portfolio Description */}
-          <motion.p 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+          {/* Animated Portfolio Description - Line by Line / Word by Word cascade */}
+          <motion.div 
+            variants={paragraphVariants}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
             className="text-[#FFFFFF] max-w-full text-base leading-relaxed"
           >
-            {portfolio.description}
-          </motion.p>
+            {String(portfolio.description).split('\n').map((line, lineIndex) => (
+              <span key={`portfolio-desc-line-${lineIndex}`} className="block min-h-[1rem]">
+                {line.split(" ").map((word, wordIndex, array) => (
+                  <React.Fragment key={`portfolio-desc-word-${lineIndex}-${wordIndex}`}>
+                    <motion.span variants={wordVariants} className="inline-block">
+                      {word}
+                    </motion.span>
+                    {wordIndex < array.length - 1 && " "}
+                  </React.Fragment>
+                ))}
+              </span>
+            ))}
+          </motion.div>
         </div>
 
         {/* UNTOUCHED: Image Marquee Grid */}
@@ -186,16 +221,27 @@ const LandingTwo: React.FC = () => {
             {testimonials.heading}
           </motion.h2>
           
-          {/* Animated Testimonials Description */}
-          <motion.p 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+          {/* Animated Testimonials Description - Line by Line / Word by Word cascade */}
+          <motion.div 
+            variants={paragraphVariants}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
             className="text-[#535353] text-center text-sm md:text-sm mb-8 md:mb-12 max-w-[75rem] mx-auto leading-relaxed px-2"
           >
-            {testimonials.description}
-          </motion.p>
+            {String(testimonials.description).split('\n').map((line, lineIndex) => (
+              <span key={`test-desc-line-${lineIndex}`} className="block min-h-[1rem]">
+                {line.split(" ").map((word, wordIndex, array) => (
+                  <React.Fragment key={`test-desc-word-${lineIndex}-${wordIndex}`}>
+                    <motion.span variants={wordVariants} className="inline-block">
+                      {word}
+                    </motion.span>
+                    {wordIndex < array.length - 1 && " "}
+                  </React.Fragment>
+                ))}
+              </span>
+            ))}
+          </motion.div>
 
           {/* UNTOUCHED: Testimonial Slider System */}
           <div className="relative flex flex-col items-center justify-center">

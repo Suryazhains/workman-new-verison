@@ -14,6 +14,30 @@ interface Service {
   description_points?: string[];
 }
 
+// --- Slower Paragraph Animation Variants ---
+const paragraphVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.015, // Slower stagger for a more deliberate cascade
+      delayChildren: 0.4,      // Waits for the heading to animate first
+    },
+  },
+};
+
+const wordVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.4, // Slower, smoother reveal for each word
+      ease: "easeOut",
+    },
+  },
+};
+
 // --- Helper for generating the slug ---
 const getServiceSlug = (name: string) => {
   return name
@@ -94,7 +118,7 @@ const OutdoorServices: React.FC = () => {
   }, [currentCategoryKey, header.servicesData, outdoorPage.services]);
 
   // Extract the first service for full-width views
-  const singleService = filteredServices[0];
+  const singleService = filteredServices[0]; // Assuming you meant to extract the first one here
 
   useEffect(() => {
     if (isFullWidthCategory) return;
@@ -276,13 +300,26 @@ const OutdoorServices: React.FC = () => {
                 ))}
               </div>
 
+              {/* FAST Animated Full-Width Description - Paragraph Splitting Logic Applied */}
               <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.7, delay: 0.5 }}
+                variants={paragraphVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
                 className="space-y-4 text-white/80 text-sm md:text-lg min-[2560px]:text-3xl min-[3840px]:text-4xl font-light leading-relaxed min-[2560px]:leading-loose description-text w-full"
               >
-                {formattedParagraphs.map((para, i) => <p key={i} className="w-full">{para}</p>)}
+                {formattedParagraphs.map((para, i) => (
+                  <p key={i} className="w-full">
+                    {para.split(" ").map((word, wordIndex, array) => (
+                      <React.Fragment key={`full-desc-word-${i}-${wordIndex}`}>
+                        <motion.span variants={wordVariants} className="inline-block">
+                          {word}
+                        </motion.span>
+                        {wordIndex < array.length - 1 && " "}
+                      </React.Fragment>
+                    ))}
+                  </p>
+                ))}
               </motion.div>
               
               {singleService && (
@@ -306,7 +343,7 @@ const OutdoorServices: React.FC = () => {
               {singleService?.videoUrl ? (
                 <video src={singleService.videoUrl} autoPlay loop muted playsInline className="split-video-bg" />
               ) : (
-                <img src={singleService?.images ? singleService.images[0] : ''} className="split-video-bg" alt="" />
+                <img src={singleService?.images && singleService.images.length > 0 ? singleService.images[0] : ''} className="split-video-bg" alt="" />
               )}
             </motion.div>
           </div>
@@ -344,16 +381,24 @@ const OutdoorServices: React.FC = () => {
                 ))}
               </h1>
 
+              {/* FAST Animated Stacked Description - Paragraph Splitting Logic Applied */}
               <motion.div 
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
+                variants={paragraphVariants}
+                initial="hidden"
+                whileInView="visible"
                 viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.3 }}
                 className="text-white w-full description-text"
               >
                 {formattedParagraphs.map((para, index) => (
                   <p key={index} className="mb-6 min-[2560px]:mb-10 text-sm md:text-base min-[2560px]:text-3xl min-[3840px]:text-4xl leading-relaxed min-[2560px]:leading-loose w-full">
-                    {para}
+                    {para.split(" ").map((word, wordIndex, array) => (
+                      <React.Fragment key={`stack-desc-word-${index}-${wordIndex}`}>
+                        <motion.span variants={wordVariants} className="inline-block">
+                          {word}
+                        </motion.span>
+                        {wordIndex < array.length - 1 && " "}
+                      </React.Fragment>
+                    ))}
                   </p>
                 ))}
               </motion.div>
@@ -421,7 +466,7 @@ const OutdoorServices: React.FC = () => {
                       </motion.button>
                     </div>
                     <div className="w-full md:w-1/2 overflow-hidden bg-black">
-                      {/* Pull index 0 so it successfully renders the first image string instead of an array */}
+                      {/* Fixed: Pulling index 0 so it successfully renders the first image string instead of an array */}
                       <img 
                         src={service.images && service.images.length > 0 ? service.images[0] : ''} 
                         alt={service.title} 
