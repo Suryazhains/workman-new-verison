@@ -4,6 +4,67 @@ import LandingPageThree from './landingthree';
 import { LANDING_CONTENT } from './content';
 import { X } from 'lucide-react';
 
+// --- Smooth Animation Variants (TIMINGS DECREASED FOR FASTER SPEED) ---
+
+// For main sections and headings (Snappy & Elegant)
+const sectionVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.02,
+      delayChildren: 0.03,
+    },
+  },
+};
+
+const textVariants = {
+  hidden: { opacity: 0, y: 15 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.22,
+      ease: "easeOut",
+    },
+  },
+};
+
+const paragraphVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.003,
+      delayChildren: 0.02,
+    },
+  },
+};
+
+const wordVariants = {
+  hidden: { opacity: 0, y: 6 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.18,
+      ease: "easeOut",
+    },
+  },
+};
+
+const imageVariants = {
+  hidden: { opacity: 0, scale: 0.98 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.28,
+      ease: "easeOut",
+    },
+  },
+};
+
 const Infrastructure: React.FC = () => {
   const { infrastructurePage } = LANDING_CONTENT;
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -64,17 +125,43 @@ const Infrastructure: React.FC = () => {
         id="infrastructure" 
         className="w-full pt-[4rem] md:pt-[5rem] pb-[4rem] md:pb-[5rem] scroll-mt-[7rem] font-inter"
       >
-        {/* Standardized Page Wrapper - Reduced bottom margin to shrink the gap */}
-        <div className="w-full max-w-[90rem] mx-auto px-10 md:px-20 lg:px-24 mb-6 lg:mb-10 text-left">
-          {/* Animated Main Heading - Word by Word */}
-          <h2 className="font-dm-sans tracking-normal text-[1.5rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem] font-extralight text-white mb-4 leading-tight transition-all">
-            {String(infrastructurePage.heading || "Infrastructure").split(" ").map((word, index, array) => (
-              <React.Fragment key={`main-heading-${index}`}>
+        {/* Animated Main Header Section */}
+        <div className="w-full max-w-[90rem] mx-auto px-10 md:px-20 lg:px-24 mb-4 lg:mb-6 text-left">
+          
+          <motion.div
+            variants={sectionVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px 0px" }}
+          >
+            {/* Animated Main Heading - Word by Word */}
+            <h2 className="font-dm-sans tracking-normal text-[1.5rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem] font-extralight text-white mb-4 leading-tight transition-all">
+              {String(infrastructurePage.heading || "Infrastructure").split(" ").map((word, index, array) => (
+                <React.Fragment key={`main-heading-${index}`}>
+                  <motion.span
+                    variants={textVariants}
+                    className="inline-block"
+                  >
+                    {word}
+                  </motion.span>
+                  {index < array.length - 1 && " "}
+                </React.Fragment>
+              ))}
+            </h2>
+          </motion.div>
+
+          {/* Animated Main Description - Line by Line / Word by Word cascade */}
+          <motion.p 
+            variants={paragraphVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px 0px" }}
+            className="text-white/90 max-w-[70rem] text-[14px] md:text-[15px] lg:text-[17px] leading-relaxed transition-all"
+          >
+            {String(infrastructurePage.description).split(" ").map((word, index, array) => (
+              <React.Fragment key={`main-desc-${index}`}>
                 <motion.span
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.15 }}
+                  variants={wordVariants}
                   className="inline-block"
                 >
                   {word}
@@ -82,34 +169,27 @@ const Infrastructure: React.FC = () => {
                 {index < array.length - 1 && " "}
               </React.Fragment>
             ))}
-          </h2>
-
-          {/* Animated Main Description - Text size adjusted to 17px on Desktop */}
-          <motion.p 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
-            className="text-white/90 max-w-[70rem] text-[14px] md:text-[15px] lg:text-[17px] leading-relaxed transition-all"
-          >
-            {infrastructurePage.description}
           </motion.p>
         </div>
 
         {/* Machines List */}
         <div className="w-full flex flex-col max-w-[90rem] mx-auto px-10 md:px-20 lg:px-24">
           {infrastructurePage.equipments.map((item, index) => (
-            <div
+            <motion.div
               key={item.id}
               id={getServiceSlug(item.title)}
-              className={`flex flex-col lg:flex-row items-center justify-between w-full border-white/10 py-[2.5rem] lg:py-[3rem] gap-8 lg:gap-12 transition-all ${
-                index !== infrastructurePage.equipments.length - 1 ? 'border-b' : ''
-              } ${
+              variants={sectionVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px 0px" }}
+              /* ✅ REDUCED VERTICAL PADDING HERE TO TIGHTEN SPACING */
+              className={`flex flex-col lg:flex-row items-center justify-between w-full py-[1rem] lg:py-[1.5rem] gap-8 lg:gap-12 transition-all ${
                 index % 2 !== 0 ? 'lg:flex-row-reverse' : ''
               }`}
             >
-              {/* Image Container - Reduced padding to tighten the layout further */}
-              <div 
+              {/* Animated Image Container */}
+              <motion.div 
+                variants={imageVariants}
                 className="w-full lg:w-1/2 flex items-center justify-center cursor-pointer p-4 lg:p-6"
                 onClick={() => setSelectedImage(item.imageUrl)}
               >
@@ -118,7 +198,7 @@ const Infrastructure: React.FC = () => {
                   alt={item.title}
                   className="w-full max-w-[95%] lg:max-w-[90%] h-auto object-contain block transition-transform hover:scale-[1.03] duration-300 drop-shadow-2xl"
                 />
-              </div>
+              </motion.div>
 
               {/* Text Container */}
               <div className="w-full lg:w-1/2 flex flex-col justify-center">
@@ -128,10 +208,7 @@ const Infrastructure: React.FC = () => {
                     {String(item.title).split(" ").map((word, wIndex, wArray) => (
                       <React.Fragment key={`${item.id}-${wIndex}`}>
                         <motion.span
-                          initial={{ opacity: 0, y: 20 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          viewport={{ once: true, amount: 0.3 }}
-                          transition={{ duration: 0.5, ease: "easeOut", delay: wIndex * 0.08 }}
+                          variants={textVariants}
                           className="inline-block"
                         >
                           {word}
@@ -141,21 +218,31 @@ const Infrastructure: React.FC = () => {
                     ))}
                   </h3>
 
-                  {/* Animated Item Description */}
+                  {/* Animated Item Description - Line by Line / Word by Word cascade */}
                   <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
-                    className="w-full"
+                    variants={paragraphVariants} 
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px 0px" }}
+                    className="w-full mt-2"
                   >
                     <p className="text-white/90 leading-relaxed text-[14px] md:text-[15px] lg:text-[17px] font-inter w-full text-left transition-all">
-                      {item.description}
+                      {String(item.description).split(" ").map((word, wIndex, wArray) => (
+                        <React.Fragment key={`desc-${item.id}-${wIndex}`}>
+                          <motion.span
+                            variants={wordVariants}
+                            className="inline-block"
+                          >
+                            {word}
+                          </motion.span>
+                          {wIndex < wArray.length - 1 && " "}
+                        </React.Fragment>
+                      ))}
                     </p>
                   </motion.div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
