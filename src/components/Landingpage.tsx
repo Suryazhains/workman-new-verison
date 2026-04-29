@@ -92,6 +92,9 @@ const LandingPage: React.FC = () => {
           width: 600%; 
           height: 100%;
           animation: heroScroll 36s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+          /* Hardware acceleration for smoother animation */
+          transform: translateZ(0); 
+          will-change: transform;
         }
 
         .hero-track img {
@@ -100,6 +103,8 @@ const LandingPage: React.FC = () => {
           object-fit: cover;
           flex-shrink: 0;
           filter: brightness(0.85);
+          /* Prevents visual flickering while images decode */
+          content-visibility: auto; 
         }
 
         @keyframes heroScroll {
@@ -125,7 +130,15 @@ const LandingPage: React.FC = () => {
         <div className="absolute inset-0 z-0">
           <div className="hero-track">
             {heroImages.map((img, index) => (
-              <img key={index} src={img} alt={`portfolio-${index}`} />
+              <img 
+                key={index} 
+                src={img} 
+                alt={`portfolio-${index}`}
+                /* --- PERFORMANCE OPTIMIZATIONS --- */
+                fetchPriority="high" // Tells browser to prioritize these images over other assets
+                loading="eager"      // Bypasses lazy loading constraints
+                decoding="async"     // Decodes image off the main thread to prevent UI freezing
+              />
             ))}
           </div>
         </div>
@@ -302,6 +315,7 @@ const LandingPage: React.FC = () => {
               loop 
               muted 
               playsInline
+              preload="metadata" // Slightly improves initial page load if video isn't primary
               className="w-full h-[350px] sm:h-[400px] md:h-[450px] lg:h-[calc(110%-80px)] lg:w-auto object-cover lg:object-contain object-center lg:object-right"
             />
           </div>
