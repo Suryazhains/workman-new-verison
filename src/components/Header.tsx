@@ -56,6 +56,7 @@ const Header: React.FC = () => {
       case 'Team': return '/team';
       case 'Testimonials': return '/#testimonials';
       case 'Portfolio': return '/#portfolio';
+      case 'Contact': return '/contact';
       default: return null; 
     }
   };
@@ -87,18 +88,17 @@ const Header: React.FC = () => {
       'Kiosk': 'kiosk',
       'Display Stands': 'display-stands',
       'Metal Stands': 'metal-stands',
- 
       'LED video wall': 'led-video-wall',
       'Standees': 'standees',
       'Scrollers': 'scrollers',
       'Catalogue Stands': 'catalogue-stands',
       'Category Signage': 'category-signage',
       'Clip On Frames': 'clip-on-frames',
-       'Feather Flags': 'feather-flags',
-    'Promotional Tables': 'promotional-tables',
-    'Garden Umbrella': 'garden-umbrella',
-    'Led flanges': 'led-flanges',
-    'Gazebo': 'gazebo',
+      'Feather Flags': 'feather-flags',
+      'Promotional Tables': 'promotional-tables',
+      'Garden Umbrella': 'garden-umbrella',
+      'Led flanges': 'led-flanges',
+      'Gazebo': 'gazebo',
       'Equipments': 'equipments',
       'Team': 'team' 
     };
@@ -180,7 +180,6 @@ const Header: React.FC = () => {
                 {link.name === 'Our services' && activeDropdown === 'Our services' && (
                   <div className="absolute top-[110px] [@media(min-width:2400px)]:top-[180px] left-1/2 -translate-x-1/2 w-[1000px] [@media(min-width:2400px)]:w-[2000px] bg-white shadow-2xl rounded-xl p-8 [@media(min-width:2400px)]:p-16 grid grid-cols-5 gap-6 [@media(min-width:2400px)]:gap-14 border border-gray-100 z-[60] outline-none transition-all duration-300">
                     {Object.entries(servicesData).map(([category, items]) => {
-                      // Click on the Category Header still goes to the main category page
                       const categoryTarget = getCategoryPath(category);
 
                       return (
@@ -197,7 +196,6 @@ const Header: React.FC = () => {
                           </Link>
                           <ul className="space-y-3 [@media(min-width:2400px)]:space-y-6">
                             {(items as string[]).map((item) => {
-                              // Route specifically to ServiceDetails
                               const itemTarget = `/servicedetails/${getServiceSlug(item)}`;
                               
                               return (
@@ -226,7 +224,6 @@ const Header: React.FC = () => {
                   <div className="absolute top-[110px] [@media(min-width:2400px)]:top-[180px] left-0 w-[220px] [@media(min-width:2400px)]:w-[440px] bg-white shadow-2xl rounded-lg p-4 [@media(min-width:2400px)]:p-12 border border-gray-100 z-[60] outline-none transition-all duration-300">
                     <ul className="space-y-3 [@media(min-width:2400px)]:space-y-6">
                       {(infrastructureData as string[]).map((item) => {
-                        // Route specifically to ServiceDetails if not Team or Equipments
                         const lowerItem = item.toLowerCase();
                         const infraTarget = lowerItem === 'team' 
                           ? '/team' 
@@ -259,12 +256,12 @@ const Header: React.FC = () => {
 
         <div className="flex items-center space-x-4">
           <Link 
-            to="/#contact"
+            to="/contact"
             onClick={(e) => {
               e.preventDefault();
-              handleNavigation('/#contact');
+              handleNavigation('/contact');
             }}
-            className="hidden md:flex items-center justify-center bg-white text-[#BBB791] rounded-[6px] [@media(min-width:2400px)]:rounded-[12px] w-[150px] h-[45px] lg:w-[170px] lg:h-[50px] [@media(min-width:2400px)]:w-[340px] [@media(min-width:2400px)]:h-[90px] font-inter font-bold text-[15px] lg:text-[16px] [@media(min-width:2400px)]:text-[32px] hover:bg-gray-100 transition-all duration-300 shadow-sm"
+            className="hidden md:flex items-center justify-center bg-white text-[#00000] rounded-[6px] [@media(min-width:2400px)]:rounded-[12px] w-[150px] h-[45px] lg:w-[170px] lg:h-[50px] [@media(min-width:2400px)]:w-[340px] [@media(min-width:2400px)]:h-[90px] font-inter font-bold text-[15px] lg:text-[16px] [@media(min-width:2400px)]:text-[32px] hover:bg-gray-100 transition-all duration-300 shadow-sm"
           >
             {contactBtn}
           </Link>
@@ -374,12 +371,12 @@ const Header: React.FC = () => {
             })}
             
             <Link 
-              to="/#contact"
+              to="/contact"
               onClick={(e) => {
                 e.preventDefault();
-                handleNavigation('/#contact');
+                handleNavigation('/contact');
               }}
-              className="w-full bg-white border-2 border-[#BBB791] text-[#BBB791] text-center py-4 rounded-md font-bold block mt-4"
+              className="w-full bg-white border-2 border-[#BBB791] text-[#00000] text-center py-4 rounded-md font-bold block mt-4"
             >
               {contactBtn}
             </Link>

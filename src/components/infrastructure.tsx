@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import LandingPageThree from './landingthree';
 import { LANDING_CONTENT } from './content';
 import { X } from 'lucide-react';
@@ -39,14 +40,14 @@ const Infrastructure: React.FC = () => {
       {/* GLOBAL FONT IMPORT & CLASSES */}
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
-        @import url('https://db.onlinewebfonts.com/c/59d406a1ae963118d955b267eb04f9f3?family=ImperialStd-BoldItalic');
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap');
         
         .font-crimson {
             font-family: 'Crimson Pro', serif !important;
         }
 
-        .font-imperial {
-            font-family: "ImperialStd-BoldItalic", serif !important;
+        .font-dm-sans {
+            font-family: 'DM Sans', sans-serif !important;
         }
 
         .preview-fade-in {
@@ -64,14 +65,35 @@ const Infrastructure: React.FC = () => {
         className="w-full pt-[4rem] md:pt-[5rem] pb-[4rem] md:pb-[5rem] scroll-mt-[7rem] font-inter"
       >
         {/* Standardized Page Wrapper - Reduced bottom margin to shrink the gap */}
-        <div className="w-full max-w-[90rem] mx-auto px-10 md:px-20 lg:px-24 mb-[1rem] lg:mb-[2rem]">
-          <h2 className="font-imperial text-[1.5rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem] font-bold text-white mb-4 leading-tight transition-all">
-            {infrastructurePage.heading}
+        <div className="w-full max-w-[90rem] mx-auto px-10 md:px-20 lg:px-24 mb-6 lg:mb-10 text-left">
+          {/* Animated Main Heading - Word by Word */}
+          <h2 className="font-dm-sans tracking-normal text-[1.5rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem] font-extralight text-white mb-4 leading-tight transition-all">
+            {String(infrastructurePage.heading || "Infrastructure").split(" ").map((word, index, array) => (
+              <React.Fragment key={`main-heading-${index}`}>
+                <motion.span
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.15 }}
+                  className="inline-block"
+                >
+                  {word}
+                </motion.span>
+                {index < array.length - 1 && " "}
+              </React.Fragment>
+            ))}
           </h2>
 
-          <p className="text-white/90 max-w-[70rem] text-[0.85rem] md:text-[0.95rem] lg:text-[1.1rem] leading-relaxed transition-all">
+          {/* Animated Main Description - Text size adjusted to 17px on Desktop */}
+          <motion.p 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+            className="text-white/90 max-w-[70rem] text-[14px] md:text-[15px] lg:text-[17px] leading-relaxed transition-all"
+          >
             {infrastructurePage.description}
-          </p>
+          </motion.p>
         </div>
 
         {/* Machines List */}
@@ -80,19 +102,17 @@ const Infrastructure: React.FC = () => {
             <div
               key={item.id}
               id={getServiceSlug(item.title)}
-              // ✅ FIX: Split 'py' into 'pb' and conditional 'pt' to remove top padding strictly for the first item
-              className={`flex flex-col lg:flex-row items-center justify-between w-full border-b border-white/10 pb-[3rem] lg:pb-[4rem] gap-10 lg:gap-16 transition-all ${
-                index === 0 ? 'pt-4 lg:pt-0' : 'pt-[3rem] lg:pt-[4rem]'
+              className={`flex flex-col lg:flex-row items-center justify-between w-full border-white/10 py-[2.5rem] lg:py-[3rem] gap-8 lg:gap-12 transition-all ${
+                index !== infrastructurePage.equipments.length - 1 ? 'border-b' : ''
               } ${
                 index % 2 !== 0 ? 'lg:flex-row-reverse' : ''
               }`}
             >
-              {/* Image Container - Increased padding to guarantee shadow/bottom edge isn't clipped */}
+              {/* Image Container - Reduced padding to tighten the layout further */}
               <div 
-                className="w-full lg:w-1/2 flex items-center justify-center cursor-pointer p-6 lg:p-10"
+                className="w-full lg:w-1/2 flex items-center justify-center cursor-pointer p-4 lg:p-6"
                 onClick={() => setSelectedImage(item.imageUrl)}
               >
-                {/* FIX: Removed all max-h constraints. We let the width dictate the size with h-auto so it never gets vertically chopped. */}
                 <img
                   src={item.imageUrl}
                   alt={item.title}
@@ -103,19 +123,36 @@ const Infrastructure: React.FC = () => {
               {/* Text Container */}
               <div className="w-full lg:w-1/2 flex flex-col justify-center">
                 <div className="w-full max-w-[40rem] mx-auto lg:mx-0">
-                  <span className="text-white/70 text-[0.75rem] md:text-[0.85rem] lg:text-[0.95rem] font-medium mb-3 block font-inter uppercase tracking-[0.3em] transition-all">
-                    {item.model}
-                  </span>
-
-                  <h3 className="font-imperial text-[1.25rem] md:text-[1.5rem] lg:text-[2rem] xl:text-[2.25rem] font-bold text-white mb-4 leading-tight transition-all">
-                    {item.title}
+                  {/* Animated Item Title - Word by Word */}
+                  <h3 className="font-dm-sans tracking-normal text-[1.25rem] md:text-[1.5rem] lg:text-[2rem] xl:text-[2.25rem] font-extralight text-white mb-4 leading-tight transition-all">
+                    {String(item.title).split(" ").map((word, wIndex, wArray) => (
+                      <React.Fragment key={`${item.id}-${wIndex}`}>
+                        <motion.span
+                          initial={{ opacity: 0, y: 20 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true, amount: 0.3 }}
+                          transition={{ duration: 0.5, ease: "easeOut", delay: wIndex * 0.08 }}
+                          className="inline-block"
+                        >
+                          {word}
+                        </motion.span>
+                        {wIndex < wArray.length - 1 && " "}
+                      </React.Fragment>
+                    ))}
                   </h3>
 
-                  <div className="w-full">
-                    <p className="text-white/90 leading-relaxed text-[0.85rem] md:text-[0.95rem] lg:text-[1.05rem] font-inter w-full text-left md:text-justify [text-justify:inter-word] transition-all">
+                  {/* Animated Item Description */}
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
+                    className="w-full"
+                  >
+                    <p className="text-white/90 leading-relaxed text-[14px] md:text-[15px] lg:text-[17px] font-inter w-full text-left transition-all">
                       {item.description}
                     </p>
-                  </div>
+                  </motion.div>
                 </div>
               </div>
             </div>

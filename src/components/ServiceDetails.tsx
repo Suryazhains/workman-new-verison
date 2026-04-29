@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import LandingPageThree from './landingthree';
 import { LANDING_CONTENT } from './content';
 
@@ -35,7 +36,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
 
-  // Scroll Container State (Using Refs for high-performance animation)
+  // Scroll Container State
   const scrollRef = useRef<HTMLDivElement>(null);
   const isDown = useRef(false);
   const isDraggingRef = useRef(false);
@@ -57,8 +58,6 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
 
   const images = activeService?.images || [];
   
-  // Create exactly 3 sets of images. This allows us to have a center track, 
-  // and seamlessly teleport if the user drags too far left or right.
   const REPEAT_COUNT = 3;
   const sets = Array.from({ length: REPEAT_COUNT }, (_, i) => i);
 
@@ -69,11 +68,9 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
     let animationId: number;
     const el = scrollRef.current;
 
-    // Wait a brief moment for images to render so we can measure their width
     setTimeout(() => {
       if (!el) return;
       const setWidth = el.scrollWidth / REPEAT_COUNT;
-      // Start the user exactly in the middle set to allow dragging in both directions immediately
       el.scrollLeft = setWidth;
     }, 100);
 
@@ -81,17 +78,13 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
       if (el) {
         const setWidth = el.scrollWidth / REPEAT_COUNT;
 
-        // 1. Auto-scroll logic: Move right steadily if not hovered or dragging
         if (!isHovered.current && !isDown.current) {
-          el.scrollLeft += 1.5; // Adjust this number to change auto-scroll speed
+          el.scrollLeft += 1.5; 
         }
 
-        // 2. Seamless Teleportation logic
-        // If we scroll too far left (into Set 1), teleport forward to Set 2
         if (el.scrollLeft <= 0) {
           el.scrollLeft += setWidth;
         } 
-        // If we scroll too far right (into Set 3), teleport backward to Set 2
         else if (el.scrollLeft >= setWidth * 2) {
           el.scrollLeft -= setWidth;
         }
@@ -115,7 +108,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
     if (!isDown.current || !scrollRef.current) return;
     e.preventDefault();
     const x = e.pageX;
-    const delta = (startX.current - x) * 1.5; // Drag sensitivity
+    const delta = (startX.current - x) * 1.5; 
     
     if (Math.abs(delta) > 5) {
       isDraggingRef.current = true;
@@ -123,7 +116,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
     
     if (delta !== 0) {
       scrollRef.current.scrollLeft += delta;
-      startX.current = x; // Reset startX to constantly calculate delta
+      startX.current = x; 
     }
   };
 
@@ -218,7 +211,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
   if (!activeService) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-[#959064] text-white">
-        <h1 className="text-4xl font-bold font-imperial mb-4">Service Not Found</h1>
+        <h1 className="text-4xl font-dm-sans-extralight tracking-normal mb-4">Service Not Found</h1>
         <button onClick={() => navigate(-1)} className="px-6 py-3 bg-white text-[#959064] font-bold rounded-lg mt-4">
           Go Back
         </button>
@@ -232,12 +225,14 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
     <div className="w-full bg-[#959064] font-inter overflow-hidden">
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
-        @import url('https://db.onlinewebfonts.com/c/59d406a1ae963118d955b267eb04f9f3?family=ImperialStd-BoldItalic');
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400;9..40,500;9..40,700&display=swap');
 
         .font-crimson { font-family: 'Crimson Pro', serif !important; }
-        .font-imperial { font-family: "ImperialStd-BoldItalic", serif !important; }
-
-        /* No CSS Animation here anymore - it's all handled cleanly by JS */
+        
+        .font-dm-sans-extralight { 
+            font-family: 'DM Sans', sans-serif !important; 
+            font-weight: 200 !important;
+        }
         
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -324,12 +319,13 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
           z-index: 100002;
         }
 
+        /* Reduced box sizes for large desktops here */
         @media (min-width: 1440px) and (max-width: 1919px) {
-          .team-card { width: 650px !important; height: 450px !important; border-radius: 20px !important; }
+          .team-card { width: 550px !important; height: 380px !important; border-radius: 20px !important; }
           .team-scroll-container { padding-left: 40px; padding-right: 40px; }
         }
         @media (min-width: 1920px) {
-          .team-card { width: 800px; height: 550px; }
+          .team-card { width: 680px; height: 460px; }
         }
         
         @media (max-width: 768px) {
@@ -338,7 +334,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
         }
       `}} />
 
-      {/* Lightbox Overlay */}
+      {/* Lightbox Overlay - standard divs without framer motion */}
       {viewerIndex !== null && images.length > 0 && (
         <div 
           className="lightbox-overlay" 
@@ -367,45 +363,79 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
       {/* SPLIT HERO SECTION */}
       <div className="w-full flex flex-col lg:flex-row min-h-[70vh] lg:min-h-screen bg-[#959064]">
         <div className="w-full lg:w-1/2 relative flex flex-col justify-center px-8 py-16 lg:px-16 xl:px-24 [@media(min-width:2400px)]:px-[8rem]">
-          <button onClick={() => navigate(-1)} className="absolute top-6 left-6 lg:top-8 lg:left-8 z-50 text-white drop-shadow-lg hover:text-gray-200 transition-colors bg-black/20 rounded-full p-2 backdrop-blur-sm" aria-label="Back">
+          
+          <motion.button 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            onClick={() => navigate(-1)} 
+            className="absolute top-6 left-6 lg:top-8 lg:left-8 z-50 text-white drop-shadow-lg hover:text-gray-200 transition-colors bg-black/20 rounded-full p-2 backdrop-blur-sm" 
+            aria-label="Back"
+          >
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
-          </button>
-          <h4 className="text-white/80 font-bold tracking-[0.2em] uppercase text-xs md:text-sm mb-4 mt-8 md:mt-0">SERVICE DETAILS</h4>
-          <h1 className="font-imperial text-2xl md:text-3xl lg:text-4xl xl:text-4xl [@media(min-width:2400px)]:text-[100px] text-white font-bold leading-tight mb-8 whitespace-nowrap">
-  {activeService.title.split('/').map((part: string, index: number, array: string[]) => (
-    <React.Fragment key={index}>
-      {part.trim()}
-      {index < array.length - 1 && <span className="opacity-80 mx-2">/</span>}
-    </React.Fragment>
-  ))}
-</h1>
+          </motion.button>
+          
+          {/* Animated Sub-Heading - Word by Word */}
+          <h4 className="text-white/80 font-bold tracking-[0.2em] uppercase text-xs md:text-sm mb-4 mt-8 md:mt-0">
+            {"SERVICE DETAILS".split(" ").map((word, wIndex, wArray) => (
+              <React.Fragment key={`sub-${wIndex}`}>
+                <motion.span
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1 + (wIndex * 0.1), ease: "easeOut" }}
+                  className="inline-block"
+                >
+                  {word}
+                </motion.span>
+                {wIndex < wArray.length - 1 && " "}
+              </React.Fragment>
+            ))}
+          </h4>
 
-{activeService.description_points && (
-  <ul className="space-y-4 md:space-y-6 max-w-[650px] [@media(min-width:2400px)]:max-w-[900px]">
-    {activeService.description_points.map((point: string, index: number) => (
-      
-      <li key={index} className="flex items-start gap-3">
-        
-        {/* Number circle (slightly smaller) */}
-        <span className="flex items-center justify-center w-5 h-5 md:w-6 md:h-6 [@media(min-width:2400px)]:w-8 [@media(min-width:2400px)]:h-8 shrink-0 bg-white text-[#BBB791] rounded-full font-bold text-xs md:text-sm mt-1">
-          {index + 1}
-        </span>
+          {/* Animated Main Title - Part by Part (split by '/') */}
+          <h1 className="font-dm-sans-extralight tracking-normal text-2xl md:text-3xl lg:text-4xl xl:text-4xl [@media(min-width:2400px)]:text-[100px] text-white leading-tight mb-8 whitespace-nowrap">
+            {activeService.title.split('/').map((part: string, index: number, array: string[]) => (
+              <React.Fragment key={index}>
+                <motion.span
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 + (index * 0.1), ease: "easeOut" }}
+                  className="inline-block"
+                >
+                  {part.trim()}
+                </motion.span>
+                {index < array.length - 1 && <span className="opacity-80 mx-2">/</span>}
+              </React.Fragment>
+            ))}
+          </h1>
 
-        {/* Text reduced */}
-        <p className="text-white/95 text-sm md:text-base lg:text-lg [@media(min-width:2400px)]:text-[22px] leading-relaxed font-light">
-          {point}
-        </p>
+          {activeService.description_points && (
+            <ul className="space-y-4 md:space-y-6 max-w-[650px] [@media(min-width:2400px)]:max-w-[900px]">
+              {activeService.description_points.map((point: string, index: number) => (
+                <motion.li 
+                  key={index} 
+                  initial={{ opacity: 0, x: -15 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.3 + (index * 0.1), ease: "easeOut" }}
+                  className="flex items-start gap-3"
+                >
+                  <span className="flex items-center justify-center w-5 h-5 md:w-6 md:h-6 [@media(min-width:2400px)]:w-8 [@media(min-width:2400px)]:h-8 shrink-0 bg-white text-[#BBB791] rounded-full font-bold text-xs md:text-sm mt-1">
+                    {index + 1}
+                  </span>
+                  <p className="text-white/95 text-sm md:text-base lg:text-lg [@media(min-width:2400px)]:text-[22px] leading-relaxed font-light">
+                    {point}
+                  </p>
+                </motion.li>
+              ))}
+            </ul>
+          )}
+        </div>
 
-      </li>
-
-    ))}
-  </ul>
-)}
-</div>
-
+        {/* Removed framer motion from split hero media div */}
         <div className="w-full lg:w-1/2 relative min-h-[40vh] lg:min-h-screen bg-black">
           {activeService.videoUrl ? (
             <video src={activeService.videoUrl} autoPlay loop muted playsInline className="absolute inset-0 !w-full !h-full !object-cover" />
@@ -419,13 +449,37 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
 
       {/* Dynamic Gallery Header Section */}
       {!isLedVideoWall && images.length > 0 && (
-        <div className="pt-24 pb-8 px-8 lg:px-16 xl:px-[120px] [@media(min-width:2400px)]:px-[10rem] text-left bg-[#959064">
-          <h2 className="font-imperial text-4xl md:text-5xl lg:text-6xl font-semibold text-white tracking-tight mb-4">{activeService.title} Project Gallery</h2>
-          <p className="text-white/80 text-lg font-light max-w-2xl">Drag horizontally to explore. Click any image to expand.</p>
+        <div className="pt-24 pb-8 px-8 lg:px-16 xl:px-[120px] [@media(min-width:2400px)]:px-[10rem] text-left bg-[#959064]">
+          {/* Animated Gallery Heading - Word by Word */}
+          <h2 className="font-dm-sans-extralight tracking-normal text-4xl md:text-5xl lg:text-6xl text-white mb-4">
+            {String(`${activeService.title} Project Gallery`).split(" ").map((word, index, array) => (
+              <React.Fragment key={index}>
+                <motion.span
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.8 }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.08 }}
+                  className="inline-block"
+                >
+                  {word}
+                </motion.span>
+                {index < array.length - 1 && " "}
+              </React.Fragment>
+            ))}
+          </h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.8 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+            className="text-white/80 text-lg font-light max-w-2xl"
+          >
+            Drag horizontally to explore. Click any image to expand.
+          </motion.p>
         </div>
       )}
 
-      {/* SCROLLING GALLERY TRACK */}
+      {/* SCROLLING GALLERY TRACK (Removed motion) */}
       {!isLedVideoWall && images.length > 0 && (
         <section className="expert-section w-full expert-container py-12 relative">
           <div
@@ -454,7 +508,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
                         }
                         openViewer(index);
                       }}
-                      className="team-card w-[350px] h-[250px] md:w-[550px] md:h-[400px] flex-shrink-0 overflow-hidden rounded-[12px] bg-black/10 transition-all duration-500 hover:rounded-[20px] hover:shadow-2xl cursor-pointer"
+                      className="team-card w-[300px] h-[210px] md:w-[450px] md:h-[320px] flex-shrink-0 overflow-hidden rounded-[12px] bg-black/10 transition-all duration-500 hover:rounded-[20px] hover:shadow-2xl cursor-pointer"
                     >
                       <img src={img} alt={`${activeService.title} Image ${index}`} className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-110 pointer-events-none" draggable="false" />
                     </div>
@@ -466,7 +520,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
         </section>
       )}
 
-      {/* Optional Bottom Video Section */}
+      {/* Optional Bottom Video Section (Removed motion) */}
       {activeService.videoUrl && (
         <div className={`px-6 md:px-12 lg:px-[8%] bg-[#959064] ${isLedVideoWall ? 'py-24' : 'pb-24 pt-8'}`}>
           <div className="max-w-[1920px] mx-auto">

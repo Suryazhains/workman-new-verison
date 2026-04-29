@@ -12,7 +12,7 @@ import printer11 from "../assets/printer11.png";
 import printer12 from "../assets/printer12.png";
 import printer13 from "../assets/printer13.png";
 // import printer14 from "../assets/printer14.png";
-import printer15 from "../assets/printer15.png";
+// import printer15 from "../assets/printer15.png";
 // import printer16 from "../assets/printer16.png";
 import printer17 from "../assets/printer23.png";
 // import printer18 from "../assets/printer18.png";
@@ -74,7 +74,7 @@ import retail14 from "../assets/indoorretail1.png";
 // Exhibition Stalls
 import exhibit1 from "../assets/outdoorexhibit5.jpeg";
 import exhibit2 from "../assets/outdoor 21.jpeg";
-import exhibit3 from "../assets/outdoor 20.png";
+// import exhibit3 from "../assets/outdoor 20.png";
 import exhibit4 from "../assets/outdoorexhibit4.jpeg";
 import exhibit5 from "../assets/outdoorexhibit1.jpeg";
 import exhibit6 from "../assets/outdoorexhibit6.jpeg";
@@ -546,7 +546,7 @@ testimonials: {
     { 
       id: 8, 
       title: "Exhibition Stalls", 
-      images: [exhibit4,exhibit1, exhibit2, exhibit3,exhibit5,exhibit6,exhibit7,exhibit8],
+      images: [exhibit4,exhibit1, exhibit2,exhibit5,exhibit6,exhibit7,exhibit8],
       description_points: [
         "Custom-designed stall setups created to attract visitors and showcase your brand with maximum impact.",
         "Includes modular structures, branding panels, display units, lighting, and premium finishing for a professional look.",
@@ -806,14 +806,14 @@ testimonials: {
    imageUrl: printer17,
    isImageLeft: true
  },
-{
-  id: 15,
-  title: "Metal Bending Machine",
-  model: "MB Series",
-  description: "The Metal Bending Machine is a high-precision forming solution designed for accurate bending and shaping of various metal sheets and components. It is suitable for materials such as stainless steel, mild steel, aluminum, and galvanized sheets. Built with a robust frame and advanced control system, the MB Series ensures smooth operation, consistent bending angles, and high productivity. This machine is ideal for fabrication workshops, sheet metal industries, signage manufacturing, and industrial production environments requiring reliable and precise metal forming.",
-  imageUrl: printer15,
-  isImageLeft: true
-},
+// {
+//   id: 15,
+//   title: "Metal Bending Machine",
+//   model: "MB Series",
+//   description: "The Metal Bending Machine is a high-precision forming solution designed for accurate bending and shaping of various metal sheets and components. It is suitable for materials such as stainless steel, mild steel, aluminum, and galvanized sheets. Built with a robust frame and advanced control system, the MB Series ensures smooth operation, consistent bending angles, and high productivity. This machine is ideal for fabrication workshops, sheet metal industries, signage manufacturing, and industrial production environments requiring reliable and precise metal forming.",
+//   imageUrl: printer15,
+//   isImageLeft: true
+// },
 // {
 //   id: 16,
 //   title: "CNC Metal Engraving Machine",

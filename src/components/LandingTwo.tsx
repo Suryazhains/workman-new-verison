@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { LANDING_CONTENT, PORTFOLIO_IMAGES } from './content';
 import LandingThree from './landingthree';
 
@@ -21,8 +22,7 @@ const LandingTwo: React.FC = () => {
     setCurrentIndex((prev) => (prev === 0 ? allTestimonials.length - 1 : prev - 1));
   };
 
-  // --- PORTFOLIO SEAMLESS LOOP LOGIC ---
-  // We duplicate the slice enough times so a single block is wider than any ultrawide screen
+ 
   const getRowImages = (start: number, end: number) => {
     const slice = PORTFOLIO_IMAGES.slice(start, end);
     return [...slice, ...slice, ...slice, ...slice]; 
@@ -37,14 +37,15 @@ const LandingTwo: React.FC = () => {
       {/* GLOBAL STYLES: Font Import and Animations */}
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-        @import url('https://db.onlinewebfonts.com/c/59d406a1ae963118d955b267eb04f9f3?family=ImperialStd-BoldItalic');
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300&display=swap');
         
         .font-crimson {
             font-family: 'Crimson Pro', serif !important;
         }
         
-        .font-imperial {
-            font-family: "ImperialStd-BoldItalic", serif !important;
+        .font-dm-sans-light {
+            font-family: 'DM Sans', sans-serif !important;
+            font-weight: 300 !important;
         }
 
         /* Seamless Marquee Keyframes (Translating exactly 1 container width + 1 gap) */
@@ -71,20 +72,35 @@ const LandingTwo: React.FC = () => {
         }
       `}} />
 
-      {/* PORTFOLIO SECTION */}
       <section
         id="portfolio"
         className="w-full bg-[#959064] pt-[4.5rem] pb-[5.5rem] overflow-hidden scroll-mt-[6rem] lg:scroll-mt-[8rem]"
       >
        <div className="max-w-[90rem] mx-auto px-10 md:px-20 lg:px-24 mb-10">
-          <h2 className="font-imperial font-bold text-3xl md:text-[2.5rem] text-[#FFFFFF] mb-4">
-            {portfolio.heading}
-          </h2>
-          <p className="text-[#FFFFFF] max-w-full text-base leading-relaxed">
+          {/* Animated Portfolio Heading */}
+        <motion.h2
+  initial={{ opacity: 0, y: 30 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, amount: 0.3 }}
+  transition={{ duration: 0.6, ease: "easeOut" }}
+  className="font-dm-sans-light text-3xl md:text-[2.5rem] text-[#FFFFFF] mb-4 tracking-[0.05em] "
+>
+  {portfolio.heading}
+</motion.h2>
+          
+          {/* Animated Portfolio Description */}
+          <motion.p 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+            className="text-[#FFFFFF] max-w-full text-base leading-relaxed"
+          >
             {portfolio.description}
-          </p>
+          </motion.p>
         </div>
 
+        {/* UNTOUCHED: Image Marquee Grid */}
         <div className="relative w-full overflow-hidden">
           <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-[3.75rem] md:w-[10rem]
             bg-gradient-to-r from-[#959064] via-[#959064] to-transparent" />
@@ -103,7 +119,7 @@ const LandingTwo: React.FC = () => {
                   </div>
                 ))}
               </div>
-              {/* Duplicate track for seamless loop */}
+             
               <div className="flex shrink-0 gap-[6px] w-max" style={{ animation: 'marqueeLeft 60s linear infinite' }}>
                 {row1.map((src, i) => (
                   <div key={`r1b-${i}`} className="relative overflow-hidden w-[9.5rem] h-[6.5rem] md:w-[16rem] md:h-[8.5rem] shrink-0 rounded-sm">
@@ -141,7 +157,7 @@ const LandingTwo: React.FC = () => {
                   </div>
                 ))}
               </div>
-              {/* Duplicate track for seamless loop */}
+             
               <div className="flex shrink-0 gap-[6px] w-max" style={{ animation: 'marqueeLeft 70s linear infinite' }}>
                 {row3.map((src, i) => (
                   <div key={`r3b-${i}`} className="relative overflow-hidden w-[9.5rem] h-[6.5rem] md:w-[16rem] md:h-[8.5rem] shrink-0 rounded-sm">
@@ -155,16 +171,33 @@ const LandingTwo: React.FC = () => {
         </div>
       </section>
 
-      {/* TESTIMONIALS SECTION */}
+ 
       <section id="testimonials" className="w-full bg-[#F9FAFB] pt-[3.75rem] md:pt-[5.5rem] pb-[3.75rem] md:pb-[5.5rem] overflow-hidden scroll-mt-[6rem] lg:scroll-mt-[8rem]">
         <div className="max-w-[90rem] mx-auto px-4">
-          <h2 className="font-imperial text-[2rem] md:text-[3.5rem] font-bold text-[#959064] mb-4 text-center">
+          
+          {/* Animated Testimonials Heading */}
+          <motion.h2 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="font-dm-sans-light text-[2rem] md:text-[3.5rem] text-[#00000] mb-4 text-center"
+          >
             {testimonials.heading}
-          </h2>
-          <p className="text-[#535353] text-center text-sm md:text-sm mb-8 md:mb-12 max-w-[75rem] mx-auto leading-relaxed px-2">
+          </motion.h2>
+          
+          {/* Animated Testimonials Description */}
+          <motion.p 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+            className="text-[#535353] text-center text-sm md:text-sm mb-8 md:mb-12 max-w-[75rem] mx-auto leading-relaxed px-2"
+          >
             {testimonials.description}
-          </p>
+          </motion.p>
 
+          {/* UNTOUCHED: Testimonial Slider System */}
           <div className="relative flex flex-col items-center justify-center">
             <div className="relative w-full flex items-center justify-center min-h-[22rem] md:min-h-[24rem]">
               

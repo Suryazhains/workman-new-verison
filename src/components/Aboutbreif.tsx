@@ -1,8 +1,8 @@
 import AboutVideo from '../assets/0225.mp4'; 
 import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import LandingPageThree from './landingthree';
 
-// import main1 from "../assets/main 1.jpg";
 import main2 from "../assets/ourspecialization.png";
 // PORTFOLIO IMAGES
 import portfolio3 from "../assets/outdooScoller.png";
@@ -12,32 +12,7 @@ import portfolio6 from "../assets/outdoor 20.png";
 import portfolio7 from "../assets/outdoor 27.png";
 import portfolio8 from "../assets/outdoor 44.png";
 
-// BRAND IMAGES (18 Imports)
-import brand1 from "../assets/brand 1.png";
-import brand2 from "../assets/brand 2.png";
-import brand3 from "../assets/brand 3.png";
-import brand4 from "../assets/brand 4.png";
-import brand5 from "../assets/brand 5.png";
-import brand6 from "../assets/brand 6.png";
-import brand7 from "../assets/brand 7.png";
-import brand8 from "../assets/brand 8.png";
-import brand9 from "../assets/brand 9.png";
-import brand10 from "../assets/brand 10.png";
-import brand11 from "../assets/brand 11.png";
-import brand12 from "../assets/brand 12.png";
-import brand13 from "../assets/brand 13.png";
-import brand14 from "../assets/brand 14.png";
-import brand15 from "../assets/brand 15.png";
-import brand16 from "../assets/brand 16.png";
-import brand17 from "../assets/brand 17.png";
-import brand18 from "../assets/brand 18.png";
-
 const PORTFOLIO_SCROLL = [portfolio3, portfolio4, portfolio5, portfolio6, portfolio7, portfolio8];
-const BRANDS = [
-    brand1, brand2, brand3, brand4, brand5, brand6,
-    brand7, brand8, brand9, brand10, brand11, brand12,
-    brand13, brand14, brand15, brand16, brand17, brand18
-];
 
 const About: React.FC = () => {
     // Default state is 0 so the first section is open by default
@@ -88,10 +63,10 @@ const About: React.FC = () => {
         <main className="bg-[#959064] font-inter text-white w-full overflow-hidden">
             <style dangerouslySetInnerHTML={{ __html: `
                 @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
-                @import url('https://db.onlinewebfonts.com/c/59d406a1ae963118d955b267eb04f9f3?family=ImperialStd-BoldItalic');
+                @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap');
 
                 .font-crimson { font-family: 'Crimson Pro', serif !important; }
-                .font-imperial { font-family: "ImperialStd-BoldItalic", serif !important; }
+                .font-dm-sans { font-family: 'DM Sans', sans-serif !important; }
 
                 @keyframes marquee {
                     0% { transform: translateX(0); }
@@ -106,13 +81,28 @@ const About: React.FC = () => {
 
             {/* SECTION 1: ABOUT US BRIEF */}
             <section className="w-full max-w-[90rem] mx-auto px-10 md:px-20 lg:px-24 pt-16 md:pt-24 [@media(min-width:2400px)]:pt-32 pb-16">
-                <h1 className="font-imperial text-[38px] md:text-[52px] [@media(min-width:2400px)]:text-[120px] font-bold mb-6 [@media(min-width:2400px)]:mb-10">About Us</h1>
                 
-                <p className="text-white/90 text-lg md:text-xl [@media(min-width:2400px)]:text-[32px] w-full max-w-full leading-relaxed mb-12 md:mb-16 [@media(min-width:2400px)]:mb-24">
-                    Workman Advertising is a Chennai-based branding and signage solutions company delivering high-quality indoor, outdoor, and digital display services.
-                </p>
+                {/* Animated Heading - Word by Word */}
+                <h1 className="font-dm-sans tracking-normal text-[28px] md:text-[39px] [@media(min-width:2400px)]:text-[90px] font-extralight mb-6 [@media(min-width:2400px)]:mb-10 text-left">
+                    {"About Us".split(" ").map((word, index, array) => (
+                        <React.Fragment key={index}>
+                            <motion.span
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, amount: 0.3 }}
+                                transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.15 }}
+                                className="inline-block"
+                            >
+                                {word}
+                            </motion.span>
+                            {index < array.length - 1 && " "}
+                        </React.Fragment>
+                    ))}
+                </h1>
 
                 <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 [@media(min-width:2400px)]:gap-24 items-stretch">
+                    
+                    {/* Video Section */}
                     <div className="w-full lg:w-1/2 flex flex-col">
                         <video 
                             src={AboutVideo} 
@@ -123,11 +113,37 @@ const About: React.FC = () => {
                             className="rounded-2xl shadow-2xl w-full h-full min-h-[350px] lg:min-h-full object-cover flex-grow aspect-video"
                         />
                     </div>
-                    
-                    <div className="w-full lg:w-1/2 flex flex-col justify-center space-y-8 [@media(min-width:2400px)]:space-y-16 text-white/80 leading-relaxed text-lg [@media(min-width:2400px)]:text-[36px] [@media(min-width:2400px)]:leading-[1.8] pt-4 lg:pt-0 text-justify">
-                        <p>Workman Advertising, Chennai, India is a leading provider of complete branding and signage solutions, delivering high-quality visual communication for businesses across multiple industries.</p>
-                        <p>Our core strength lies in delivering customized signage and advertising solutions for corporate, retail, showroom, and commercial environments. We specialize in indoor and outdoor signage, facade branding, LED video walls, POP displays, and modular signage.</p>
-                        <p>With a reputation built on trust, craftsmanship, and customer satisfaction, we continue to be a preferred signage partner for brands looking for long-lasting and high-impact advertising solutions.</p>
+
+                    {/* Description Section */}
+                    <div className="w-full lg:w-1/2 flex flex-col justify-center space-y-6 [@media(min-width:2400px)]:space-y-10 text-white/80 font-normal leading-snug text-[16px] md:text-[16px] lg:text-[18px] [@media(min-width:2400px)]:text-[27px] [@media(min-width:2400px)]:leading-[1.4] pt-4 lg:pt-0 text-left">
+                        
+                        <motion.p 
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.3 }}
+                            transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
+                        >
+                            Workman Advertising is a Chennai-based branding and signage solutions company delivering high-quality indoor, outdoor, and digital display services. Workman Advertising, Chennai, India is a leading provider of complete branding and signage solutions, delivering high-quality visual communication for businesses across multiple industries.
+                        </motion.p>
+
+                        <motion.p 
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.3 }}
+                            transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 }}
+                        >
+                            Our core strength lies in delivering customized signage and advertising solutions for corporate, retail, showroom, and commercial environments. We specialize in indoor and outdoor signage, facade branding, LED video walls, POP displays, and modular signage.
+                        </motion.p>
+
+                        <motion.p 
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.3 }}
+                            transition={{ duration: 0.5, ease: "easeOut", delay: 0.4 }}
+                        >
+                            With a reputation built on trust, craftsmanship, and customer satisfaction, we continue to be a preferred signage partner for brands looking for long-lasting and high-impact advertising solutions.
+                        </motion.p>
+
                     </div>
                 </div>
             </section>
@@ -137,7 +153,14 @@ const About: React.FC = () => {
                 <div className="animate-marquee flex gap-6">
                     {[...PORTFOLIO_SCROLL, ...PORTFOLIO_SCROLL].map((img, i) => (
                         <div key={i} className="w-[300px] h-[180px] md:w-[480px] md:h-[280px] xl:w-[600px] xl:h-[350px] [@media(min-width:2400px)]:w-[800px] [@media(min-width:2400px)]:h-[480px] flex-shrink-0 rounded-xl overflow-hidden shadow-lg">
-                            <img src={img} alt="Work" className="w-full h-full object-cover" />
+                            <img 
+                                src={img} 
+                                alt="Work" 
+                                className="w-full h-full object-cover" 
+                                fetchPriority="high" 
+                                loading="eager" 
+                                decoding="sync" 
+                            />
                         </div>
                     ))}
                 </div>
@@ -152,15 +175,33 @@ const About: React.FC = () => {
                         
                         {/* LEFT COLUMN - IMAGE */}
                         <div className="lg:w-1/2 w-full sticky top-24">
-                            <h2 className="font-imperial text-[42px] md:text-[56px] [@media(min-width:2400px)]:text-[96px] font-bold mb-8 [@media(min-width:2400px)]:mb-16 leading-tight border-t border-white/30 pt-4 inline-block">
-                                Our Specialization
+                            {/* Animated Specialization Heading - Word by Word */}
+                            <h2 className="font-dm-sans tracking-normal text-[42px] md:text-[56px] [@media(min-width:2400px)]:text-[96px] font-extralight mb-8 [@media(min-width:2400px)]:mb-16 leading-tight border-t border-white/30 pt-4 inline-block w-full">
+                                {"Our Specialization".split(" ").map((word, index, array) => (
+                                    <React.Fragment key={index}>
+                                        <motion.span
+                                            initial={{ opacity: 0, y: 30 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            viewport={{ once: true, amount: 0.3 }}
+                                            transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.15 }}
+                                            className="inline-block"
+                                        >
+                                            {word}
+                                        </motion.span>
+                                        {index < array.length - 1 && " "}
+                                    </React.Fragment>
+                                ))}
                             </h2>
                             
+                            {/* Unanimated Image Element */}
                             <div className="flex flex-col w-full rounded-xl overflow-hidden shadow-2xl h-[450px] md:h-[500px] lg:h-[580px] xl:h-[620px] [@media(min-width:2400px)]:h-[850px] bg-black/10">
                                 <img 
                                     src={main2} 
                                     alt="Specialization" 
                                     className="flex-1 w-full h-full object-cover block" 
+                                    fetchPriority="high"
+                                    loading="eager"
+                                    decoding="sync"
                                 />
                             </div>
                         </div>
@@ -168,7 +209,15 @@ const About: React.FC = () => {
                         {/* RIGHT COLUMN - ACCORDION */}
                         <div className="lg:w-1/2 w-full space-y-6 [@media(min-width:2400px)]:space-y-12">
                             {specializationData.map((item, index) => (
-                                <div key={index} className="border-b border-white/20 pb-6 [@media(min-width:2400px)]:pb-10">
+                                /* Animated Accordion Item */
+                                <motion.div 
+                                    key={index} 
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true, amount: 0.3 }}
+                                    transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.15 }}
+                                    className="border-b border-white/20 pb-6 [@media(min-width:2400px)]:pb-10"
+                                >
                                     <div 
                                         className="flex items-start gap-6 [@media(min-width:2400px)]:gap-10 cursor-pointer" 
                                         onClick={() => toggleAccordion(index)}
@@ -178,8 +227,22 @@ const About: React.FC = () => {
                                         </span>
                                         
                                         <div className="flex-1">
-                                            <h3 className="text-2xl md:text-3xl [@media(min-width:2400px)]:text-5xl font-bold font-imperial mb-2 [@media(min-width:2400px)]:mb-6">
-                                                {item.title}
+                                            {/* Animated Accordion Title - Word by Word */}
+                                            <h3 className="text-2xl md:text-3xl [@media(min-width:2400px)]:text-5xl font-extralight font-dm-sans tracking-normal mb-2 [@media(min-width:2400px)]:mb-6">
+                                                {item.title.split(" ").map((word, wIndex, wArray) => (
+                                                    <React.Fragment key={wIndex}>
+                                                        <motion.span
+                                                            initial={{ opacity: 0, y: 20 }}
+                                                            whileInView={{ opacity: 1, y: 0 }}
+                                                            viewport={{ once: true }}
+                                                            transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 + (wIndex * 0.05) }}
+                                                            className="inline-block"
+                                                        >
+                                                            {word}
+                                                        </motion.span>
+                                                        {wIndex < wArray.length - 1 && " "}
+                                                    </React.Fragment>
+                                                ))}
                                             </h3>
                                             
                                             <div 
@@ -202,30 +265,10 @@ const About: React.FC = () => {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </motion.div>
                             ))}
                         </div>
                         
-                    </div>
-                </div>
-            </section>
-
-            {/* SECTION 4: CLIENT BRANDS */}
-            <section className="bg-white py-12 md:py-20 [@media(min-width:2400px)]:py-32">
-                <div className="w-full max-w-[90rem] mx-auto px-10 md:px-20 lg:px-24 text-center">
-                    <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-8 md:gap-x-16 md:gap-y-12 [@media(min-width:2400px)]:gap-x-24 [@media(min-width:2400px)]:gap-y-20">
-                        {BRANDS.map((logo, i) => (
-                            <div 
-                                key={i} 
-                                className="flex items-center justify-center w-[calc(50%-1rem)] md:w-auto"
-                            >
-                                <img 
-                                    src={logo} 
-                                    alt={`Brand ${i + 1}`} 
-                                    className="w-[100px] sm:w-[120px] md:w-[160px] [@media(min-width:2400px)]:w-[320px] h-[50px] md:h-[75px] [@media(min-width:2400px)]:h-[150px] object-contain" 
-                                />
-                            </div>
-                        ))}
                     </div>
                 </div>
             </section>

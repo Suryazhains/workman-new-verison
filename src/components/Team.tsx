@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import LandingPageThree from "./landingthree";
 
 // ✅ IMPORT TEAM IMAGES
@@ -50,13 +51,13 @@ const Team: React.FC = () => {
   const handleTouchStart = (e: React.TouchEvent) => {
     if (!scrollRef.current) return;
     setIsDown(true);
-    setStartX(e.touches[0].pageX - scrollRef.current.offsetLeft);
+    setStartX(e.touches.pageX - scrollRef.current.offsetLeft);
     setScrollLeft(scrollRef.current.scrollLeft);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!isDown || !scrollRef.current) return;
-    const x = e.touches[0].pageX - scrollRef.current.offsetLeft;
+    const x = e.touches.pageX - scrollRef.current.offsetLeft;
     const walk = (x - startX) * 2;
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
@@ -89,11 +90,12 @@ const Team: React.FC = () => {
   return (
     <main className="bg-[#959064] w-full overflow-hidden">
       <style dangerouslySetInnerHTML={{ __html: `
-        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Crimson+Pro:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
         @import url('https://db.onlinewebfonts.com/c/59d406a1ae963118d955b267eb04f9f3?family=ImperialStd-BoldItalic');
 
         .font-crimson { font-family: 'Crimson Pro', serif !important; }
         .font-imperial { font-family: "ImperialStd-BoldItalic", serif !important; }
+        .font-dm-sans { font-family: 'DM Sans', sans-serif !important; }
 
         @keyframes infiniteScroll {
           0% { transform: translateX(0); }
@@ -150,12 +152,35 @@ const Team: React.FC = () => {
 
       {/* Header Area */}
       <div className="pt-20 pb-10 text-center bg-[#959064] team-header">
-        <h2 className="font-imperial text-[50px] md:text-[72px] font-bold text-white mb-4">
-          Meet our experts
+        {/* Animated Title - Word by Word */}
+        {/* CHANGED: Added font-dm-sans, font-extralight, and uppercase */}
+        <h2 className="font-dm-sans font-extralight  text-[50px] md:text-[72px] text-white mb-4">
+          {"Meet our experts".split(" ").map((word, index, array) => (
+            <React.Fragment key={index}>
+              <motion.span
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.15 }}
+                className="inline-block"
+              >
+                {word}
+              </motion.span>
+              {index < array.length - 1 && " "}
+            </React.Fragment>
+          ))}
         </h2>
-        <p className="text-white max-w-2xl mx-auto px-6 text-lg md:text-xl opacity-90 leading-relaxed font-inter font-light">
+        
+        {/* Animated Subtitle */}
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+          className="text-white max-w-2xl mx-auto px-6 text-lg md:text-xl opacity-90 leading-relaxed font-inter font-light"
+        >
           A balanced perspective in every frame. Discover the team that makes it happen.
-        </p>
+        </motion.p>
       </div>
 
       {/* Grid Track Section */}
@@ -193,12 +218,12 @@ const Team: React.FC = () => {
       {/* LIGHTBOX MODAL */}
       {selectedIndex !== null && (
         <div 
-          className="fixed inset-0 z-[999] bg-black/95 flex items-center justify-center lightbox-blur"
+          className="fixed inset-0 z- bg-black/95 flex items-center justify-center lightbox-blur"
           onClick={closeLightbox}
         >
           {/* Close Icon */}
           <button 
-            className="absolute top-6 right-6 text-white/70 hover:text-white text-5xl transition-colors z-[1001]"
+            className="absolute top-6 right-6 text-white/70 hover:text-white text-5xl transition-colors z-"
             onClick={closeLightbox}
           >
             &times;
@@ -206,7 +231,7 @@ const Team: React.FC = () => {
 
           {/* Left Arrow */}
           <button 
-            className="absolute left-6 md:left-12 text-white/50 hover:text-white text-6xl md:text-8xl transition-all"
+            className="absolute left-6 md:left-12 text-white/50 hover:text-white text-6xl md:text-8xl transition-all z-"
             onClick={prevImage}
           >
             &#8249;
@@ -224,7 +249,7 @@ const Team: React.FC = () => {
 
           {/* Right Arrow */}
           <button 
-            className="absolute right-6 md:right-12 text-white/50 hover:text-white text-6xl md:text-8xl transition-all"
+            className="absolute right-6 md:right-12 text-white/50 hover:text-white text-6xl md:text-8xl transition-all z-"
             onClick={nextImage}
           >
             &#8250;

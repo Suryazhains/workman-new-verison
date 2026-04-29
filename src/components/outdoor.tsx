@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 import './outdoor.css';
 import LandingPageThree from './landingthree';
@@ -77,8 +78,6 @@ const OutdoorServices: React.FC = () => {
     navigate(`/servicedetails/${slug}`);
   };
   
-  // FIX: Removed the 40-word arbitrary split. 
-  // Now it splits by actual newlines if they exist, or just renders full horizontal width.
   const formattedParagraphs = useMemo(() => {
     const text = pageHeader?.description || "";
     return text.split('\n').filter(p => p.trim() !== '');
@@ -93,6 +92,9 @@ const OutdoorServices: React.FC = () => {
       )
     );
   }, [currentCategoryKey, header.servicesData, outdoorPage.services]);
+
+  // Extract the first service for full-width views
+  const singleService = filteredServices[0];
 
   useEffect(() => {
     if (isFullWidthCategory) return;
@@ -125,19 +127,21 @@ const OutdoorServices: React.FC = () => {
     <div className="flex flex-col w-full bg-[#959064]">
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
-        @import url('https://db.onlinewebfonts.com/c/59d406a1ae963118d955b267eb04f9f3?family=ImperialStd-BoldItalic');
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400;9..40,500;9..40,700&display=swap');
         
         .font-crimson { font-family: 'Crimson Pro', serif !important; }
         .font-inter { font-family: 'Inter', sans-serif !important; }
-        .font-imperial { font-family: "ImperialStd-BoldItalic", serif !important; }
+        
+        .font-dm-sans-extralight { 
+            font-family: 'DM Sans', sans-serif !important; 
+            font-weight: 200 !important;
+        }
 
-        /* ============== ALWAYS FULL HORIZONTAL WIDTH TEXT ============== */
         .description-text p {
           max-width: 100% !important;
           width: 100% !important;
         }
 
-        /* 32-inch ultra wide screen scroll stack scaling */
         @media (min-width: 2560px) {
           .scroll-stack-card {
             height: 75vh !important;
@@ -147,7 +151,6 @@ const OutdoorServices: React.FC = () => {
           .split-hero-left, .fs-left-content { padding: 10% 10% !important; }
         }
 
-        /* Base Styles */
         .split-hero-container {
             display: flex;
             width: 100%;
@@ -181,62 +184,6 @@ const OutdoorServices: React.FC = () => {
             object-fit: cover;
         }
 
-        .fs-split-overlay {
-          position: fixed;
-          inset: 0;
-          z-index: 9999;
-          background: white;
-          overflow-y: auto;
-          display: block;
-          animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        @keyframes slideUp {
-          from { transform: translateY(100%); }
-          to { transform: translateY(0); }
-        }
-
-        .fs-top-horizontal-row {
-          display: flex;
-          width: 100%;
-          height: 100vh;
-        }
-
-        .fs-left-content {
-          width: 50%;
-          height: 100%;
-          background: #9590641;
-          color: white;
-          padding: 8% 8%;
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-start;
-        }
-
-        .fs-right-media {
-          width: 50%;
-          height: 100%;
-          position: relative;
-          background: #000;
-        }
-
-        .fs-static-media-container img, 
-        .fs-static-media-container video { 
-          height: 100vh; 
-          width: 100%; 
-          object-fit: cover; 
-        }
-
-        .fs-close { 
-            position: fixed !important; 
-            top: 20px; 
-            right: 20px; 
-            color: #ffffff !important; 
-            font-size: 2.5rem; 
-            cursor: pointer; 
-            z-index: 10001; 
-        }
-
         .btn-view-details {
           margin-top: 24px;
           padding: 14px 32px;
@@ -258,11 +205,11 @@ const OutdoorServices: React.FC = () => {
         }
 
         @media (max-width: 1024px) { 
-          .split-hero-container, .fs-top-horizontal-row { 
+          .split-hero-container { 
             flex-direction: column; 
             height: auto; 
           }
-          .split-hero-left, .split-hero-right, .fs-left-content, .fs-right-media { 
+          .split-hero-left, .split-hero-right { 
             width: 100%; 
             height: auto; 
             min-height: 40vh; 
@@ -270,71 +217,146 @@ const OutdoorServices: React.FC = () => {
         }
       `}} />
 
-      {/* MAIN PAGE LAYOUT */}
       {isFullWidthCategory ? (
         <div className="flex flex-col w-full">
           <div className="split-hero-container">
             <div className="split-hero-left pt-24 md:pt-32 min-[2560px]:pt-48">
-              <button className="flex items-center text-white/80 hover:text-white transition-colors mb-8 group w-fit min-[2560px]:text-2xl" onClick={handleBack}>
+              
+              <motion.button 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+                className="flex items-center text-white/80 hover:text-white transition-colors mb-8 group w-fit min-[2560px]:text-2xl" 
+                onClick={handleBack}
+              >
                 <span className="mr-2 text-xl min-[2560px]:text-3xl transition-transform group-hover:-translate-x-1">←</span> Back to Services
-              </button>
-              <span className="uppercase tracking-[0.2em] font-bold text-white/60 mb-4 block text-[10px] md:text-xs min-[2560px]:text-xl">
+              </motion.button>
+
+              <motion.span 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="uppercase tracking-[0.2em] font-bold text-white/60 mb-4 block text-[10px] md:text-xs min-[2560px]:text-xl"
+              >
                 Service Overview
-              </span>
-              <h1 className={`font-imperial font-bold mb-6 leading-[1.1] min-[2560px]:mb-12 ${currentCategoryKey === 'LED VIDEO WALL' ? 'text-3xl md:text-5xl lg:text-6xl min-[2560px]:text-[90px] min-[3840px]:text-[120px]' : 'text-4xl md:text-7xl lg:text-8xl min-[2560px]:text-[110px] min-[3840px]:text-[150px]'}`}>
-                {pageHeader?.heading}
+              </motion.span>
+
+              {/* Animated Full-Width Heading - Word by Word */}
+              <h1 className={`font-dm-sans-extralight tracking-normal mb-6 leading-[1.1] min-[2560px]:mb-12 ${currentCategoryKey === 'LED VIDEO WALL' ? 'text-3xl md:text-5xl lg:text-6xl min-[2560px]:text-[90px] min-[3840px]:text-[120px]' : 'text-4xl md:text-7xl lg:text-8xl min-[2560px]:text-[110px] min-[3840px]:text-[150px]'}`}>
+                {String(pageHeader?.heading || "").split(" ").map((word, index, array) => (
+                  <React.Fragment key={index}>
+                    <motion.span
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: 0.2 + (index * 0.1), ease: "easeOut" }}
+                      className="inline-block"
+                    >
+                      {word}
+                    </motion.span>
+                    {index < array.length - 1 && " "}
+                  </React.Fragment>
+                ))}
               </h1>
+
               <div className="space-y-4 mb-8 min-[2560px]:mb-16">
-                {filteredServices[0]?.description_points?.slice(0, 2).map((point, index) => (
-                  <div key={index} className="flex items-start gap-4 min-[2560px]:gap-8">
+                {/* Safe array slice without optional chaining method */}
+                {(singleService?.description_points || []).slice(0, 2).map((point, index) => (
+                  <motion.div 
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 + (index * 0.1) }}
+                    key={index} 
+                    className="flex items-start gap-4 min-[2560px]:gap-8"
+                  >
                     <span className="bg-white text-[#959064] w-5 h-5 min-[2560px]:w-10 min-[2560px]:h-10 rounded-full flex items-center justify-center shrink-0 font-bold text-[9px] min-[2560px]:text-lg mt-1 min-[2560px]:mt-2">
                       {index + 1}
                     </span>
                     <p className="text-white/90 text-sm md:text-base min-[2560px]:text-3xl min-[3840px]:text-4xl font-light leading-relaxed min-[2560px]:leading-loose">{point}</p>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
-              <div className="space-y-4 text-white/80 text-sm md:text-lg min-[2560px]:text-3xl min-[3840px]:text-4xl font-light leading-relaxed min-[2560px]:leading-loose description-text w-full">
+
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.7, delay: 0.5 }}
+                className="space-y-4 text-white/80 text-sm md:text-lg min-[2560px]:text-3xl min-[3840px]:text-4xl font-light leading-relaxed min-[2560px]:leading-loose description-text w-full"
+              >
                 {formattedParagraphs.map((para, i) => <p key={i} className="w-full">{para}</p>)}
-              </div>
+              </motion.div>
               
-              {filteredServices[0] && (
-                <button 
-                  onClick={() => handleViewDetails(filteredServices[0].title)}
+              {singleService && (
+                <motion.button 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.6 }}
+                  onClick={() => handleViewDetails(singleService.title)}
                   className="btn-view-details min-[2560px]:px-12 min-[2560px]:py-6 min-[2560px]:text-2xl min-[2560px]:rounded-[2rem] mt-6"
                 >
                   View Project Details
-                </button>
+                </motion.button>
               )}
             </div>
-            <div className="split-hero-right min-h-[40vh]">
-              {filteredServices[0]?.videoUrl ? (
-                <video src={filteredServices[0].videoUrl} autoPlay loop muted playsInline className="split-video-bg" />
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+              className="split-hero-right min-h-[40vh]"
+            >
+              {singleService?.videoUrl ? (
+                <video src={singleService.videoUrl} autoPlay loop muted playsInline className="split-video-bg" />
               ) : (
-                <img src={filteredServices[0]?.images?.[0]} className="split-video-bg" alt="" />
+                <img src={singleService?.images ? singleService.images[0] : ''} className="split-video-bg" alt="" />
               )}
-            </div>
+            </motion.div>
           </div>
         </div>
       ) : (
         <>
-          {/* THE FIXED HORIZONTAL TEXT SECTION */}
           <section className="w-full pt-24 md:pt-32 min-[2560px]:pt-[180px] min-[3840px]:pt-[250px] pb-12 min-[2560px]:pb-24">
             <div className="w-full mx-auto px-6 md:px-[8%] min-[2560px]:px-[10%]">
-              <button className="flex items-center text-white hover:text-black transition-colors mb-8 group w-fit min-[2560px]:text-2xl" onClick={handleBack}>
+              
+              <motion.button 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+                className="flex items-center text-white hover:text-black transition-colors mb-8 group w-fit min-[2560px]:text-2xl" 
+                onClick={handleBack}
+              >
                 <span className="mr-2 text-xl min-[2560px]:text-3xl transition-transform group-hover:-translate-x-1">←</span> Back to Services
-              </button>
-              <h1 className="font-imperial text-4xl md:text-[64px] min-[2560px]:text-[100px] min-[3840px]:text-[130px] font-bold text-white mb-8 min-[2560px]:mb-12 leading-tight w-full">
-                {pageHeader?.heading}
+              </motion.button>
+
+              {/* Animated Stacked Category Heading - Word by Word */}
+              <h1 className="font-dm-sans-extralight tracking-normal text-4xl md:text-[64px] min-[2560px]:text-[100px] min-[3840px]:text-[130px] text-white mb-8 min-[2560px]:mb-12 leading-tight w-full">
+                {String(pageHeader?.heading || "").split(" ").map((word, index, array) => (
+                  <React.Fragment key={index}>
+                    <motion.span
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.6, delay: 0.1 + (index * 0.1), ease: "easeOut" }}
+                      className="inline-block"
+                    >
+                      {word}
+                    </motion.span>
+                    {index < array.length - 1 && " "}
+                  </React.Fragment>
+                ))}
               </h1>
-              {/* Text will now span 100% full width naturally without forced wrapping */}
-              <div className="text-white w-full description-text">
+
+              <motion.div 
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className="text-white w-full description-text"
+              >
                 {formattedParagraphs.map((para, index) => (
                   <p key={index} className="mb-6 min-[2560px]:mb-10 text-sm md:text-base min-[2560px]:text-3xl min-[3840px]:text-4xl leading-relaxed min-[2560px]:leading-loose w-full">
                     {para}
                   </p>
                 ))}
-              </div>
+              </motion.div>
             </div>
           </section>
 
@@ -344,36 +366,64 @@ const OutdoorServices: React.FC = () => {
                 <ScrollStackItem key={service.id} onClick={() => handleViewDetails(service.title)}>
                   <div className="flex flex-col md:flex-row h-full">
                     <div className="w-full md:w-1/2 p-8 md:p-12 min-[2560px]:p-20 flex flex-col justify-center bg-white text-left">
-                      <h3 className="font-imperial service-card-title text-3xl md:text-6xl min-[2560px]:text-[90px] min-[3840px]:text-[120px] font-bold text-black mb-6 min-[2560px]:mb-12 leading-tight">
-                        {service.title}
+                      
+                      {/* Animated Service Card Title - Word by Word */}
+                      <h3 className="font-dm-sans-extralight tracking-normal service-card-title text-2xl md:text-4xl min-[2560px]:text-[70px] min-[3840px]:text-[100px] text-black mb-6 min-[2560px]:mb-12 leading-tight">
+                        {String(service.title).split(" ").map((word, index, array) => (
+                          <React.Fragment key={index}>
+                            <motion.span
+                              initial={{ opacity: 0, y: 15 }}
+                              whileInView={{ opacity: 1, y: 0 }}
+                              viewport={{ once: true, amount: 0.5 }}
+                              transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
+                              className="inline-block"
+                            >
+                              {word}
+                            </motion.span>
+                            {index < array.length - 1 && " "}
+                          </React.Fragment>
+                        ))}
                       </h3>
                       
                       <div className="space-y-4 mb-8 min-[2560px]:mb-16">
-                        {service.description_points?.slice(0, 2).map((point, idx) => (
-                          <div key={idx} className="flex items-start gap-3 min-[2560px]:gap-6">
+                        {/* Safe array slice without optional chaining method */}
+                        {(service.description_points || []).slice(0, 2).map((point, idx) => (
+                          <motion.div 
+                            initial={{ opacity: 0, x: -10 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true, amount: 0.8 }}
+                            transition={{ duration: 0.4, delay: idx * 0.1 }}
+                            key={idx} 
+                            className="flex items-start gap-3 min-[2560px]:gap-6"
+                          >
                             <span className="bg-[#959064] text-white w-5 h-5 min-[2560px]:w-10 min-[2560px]:h-10 rounded-full flex items-center justify-center shrink-0 text-[10px] min-[2560px]:text-lg font-bold mt-1 min-[2560px]:mt-2">
                               {idx + 1}
                             </span>
                             <p className="text-gray-600 text-sm md:text-base min-[2560px]:text-3xl min-[3840px]:text-4xl font-light line-clamp-2 min-[2560px]:leading-relaxed">
                               {point}
                             </p>
-                          </div>
+                          </motion.div>
                         ))}
                       </div>
 
-                      <button 
+                      <motion.button 
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.4, delay: 0.2 }}
                         onClick={(e) => {
-                          e.stopPropagation(); // Prevents double firing since the parent card also has an onClick
+                          e.stopPropagation(); 
                           handleViewDetails(service.title);
                         }}
                         className="btn-view-details min-[2560px]:px-12 min-[2560px]:py-6 min-[2560px]:text-2xl min-[2560px]:rounded-[2rem]"
                       >
                         View Project Details
-                      </button>
+                      </motion.button>
                     </div>
                     <div className="w-full md:w-1/2 overflow-hidden bg-black">
+                      {/* Pull index 0 so it successfully renders the first image string instead of an array */}
                       <img 
-                        src={service.images?.[0]} 
+                        src={service.images && service.images.length > 0 ? service.images[0] : ''} 
                         alt={service.title} 
                         className="w-full h-full object-cover transition-transform duration-1000 hover:scale-110" 
                       />
