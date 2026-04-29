@@ -233,7 +233,7 @@ const LandingPageThree: React.FC = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
                   onClick={() => handleNavigation('/contact')} 
-                  className="bg-white text-[#959064] px-8 py-3 rounded-[0.375rem] font-bold text-[0.75rem] hover:bg-gray-100 transition"
+                  className="bg-white text-[#000000] px-8 py-3 rounded-[0.375rem] font-bold text-[0.75rem] hover:bg-gray-100 transition"
                 >
                   Contact now
                 </motion.button>
