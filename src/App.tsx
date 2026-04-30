@@ -8,7 +8,7 @@ import OutdoorServices from './components/outdoor';
 import Team from './components/Team';
 import Aboutbreif from './components/Aboutbreif';
 import ServiceDetails from './components/ServiceDetails'; 
-import Contact from './components/Contact'; 
+import Contact from './components/contact'; 
 import '../src/components/global-layout.css'; // Add this at the top!
 
 interface Service {
