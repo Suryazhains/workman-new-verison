@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Phone, Mail, MapPin, CheckCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const ContactPage: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -47,25 +48,39 @@ const ContactPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#959064] flex items-center justify-center p-6 md:p-12 font-sans m-0">
-      <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+    // Kept the padding but reduced the container width and gaps slightly
+    <div className="min-h-screen bg-[#959064] flex items-center justify-center p-4 pt-2 md:p-8 md:pt-3 font-sans m-0 overflow-hidden">
+      {/* Reduced max-width from 7xl to 6xl and slightly reduced grid gaps */}
+      <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-center">
         
         {/* Left Section: Content & Form */}
         <div className="flex flex-col text-white">
-          {/* Title font updated to DM Sans and uppercase */}
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-wide font-['DM_Sans'] uppercase">
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="text-3xl md:text-4xl font-bold mb-2 tracking-wide font-['DM_Sans'] uppercase"
+          >
             Contact Us
-          </h1>
-          <p className="text-white/90 mb-10 max-w-md text-sm md:text-base leading-relaxed">
+          </motion.h1>
+          
+          {/* Slightly reduced bottom margin */}
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
+            className="text-white/90 mb-4 max-w-md text-sm md:text-base leading-relaxed"
+          >
             {contactInfo.quote}
-          </p>
+          </motion.p>
 
-          <form className="space-y-5 flex flex-col mb-12" onSubmit={handleSubmit}>
+          {/* Slightly reduced bottom margin for the form */}
+          <form className="space-y-3 flex flex-col mb-6" onSubmit={handleSubmit}>
             <input 
               type="text" 
               name="name"
               placeholder="Name *" 
-              className="w-full bg-white/10 placeholder-white/70 text-white px-5 py-4 rounded outline-none focus:ring-2 focus:ring-white/50 transition-all border border-transparent"
+              className="w-full bg-white/10 placeholder-white/70 text-white px-4 py-3 rounded outline-none focus:ring-2 focus:ring-white/50 transition-all border border-transparent text-sm"
               required
             />
             <input 
@@ -77,14 +92,14 @@ const ContactPage: React.FC = () => {
               onInput={(e) => {
                 e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '');
               }}
-              className="w-full bg-white/10 placeholder-white/70 text-white px-5 py-4 rounded outline-none focus:ring-2 focus:ring-white/50 transition-all border border-transparent"
+              className="w-full bg-white/10 placeholder-white/70 text-white px-4 py-3 rounded outline-none focus:ring-2 focus:ring-white/50 transition-all border border-transparent text-sm"
               required
             />
             <textarea 
               name="message"
               placeholder="Message *" 
-              rows={4}
-              className="w-full bg-white/10 placeholder-white/70 text-white px-5 py-4 rounded outline-none focus:ring-2 focus:ring-white/50 transition-all border border-transparent resize-none"
+              rows={3}
+              className="w-full bg-white/10 placeholder-white/70 text-white px-4 py-3 rounded outline-none focus:ring-2 focus:ring-white/50 transition-all border border-transparent resize-none text-sm"
               required
             />
             
@@ -98,55 +113,51 @@ const ContactPage: React.FC = () => {
             <button 
               type="submit" 
               disabled={isSubmitting}
-              className={`w-full bg-white text-[#959064] font-bold tracking-widest text-sm px-5 py-4 rounded mt-2 transition-all ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:bg-gray-100'}`}
+              className={`w-full bg-white text-[#959064] font-bold tracking-widest text-sm px-5 py-3 rounded mt-1 transition-all ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:bg-gray-100'}`}
             >
               {isSubmitting ? 'SENDING...' : 'SEND'}
             </button>
           </form>
 
-          {/* Contact Information */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12 text-sm">
+          {/* Contact Information Text with Animation */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+            className="grid grid-cols-1 sm:grid-cols-2 gap-5 text-sm"
+          >
             
-            {/* Clickable Phones */}
             <div className="flex items-start gap-3">
-              <Phone className="w-5 h-5 mt-0.5 opacity-90 shrink-0" />
-              <div className="flex flex-col gap-1.5">
-                <p className="font-bold tracking-widest mb-1 text-xs">PHONE</p>
+              <Phone className="w-5 h-5 opacity-90 shrink-0" />
+              <div className="flex flex-col gap-1">
                 <a href={`tel:${contactInfo.phone1.replace(/\s/g, '')}`} className="opacity-90 hover:text-white hover:underline transition-all">{contactInfo.phone1}</a>
                 <a href={`tel:${contactInfo.phone2.replace(/\s/g, '')}`} className="opacity-90 hover:text-white hover:underline transition-all">{contactInfo.phone2}</a>
                 <a href={`tel:${contactInfo.phone3.replace(/\s/g, '')}`} className="opacity-90 hover:text-white hover:underline transition-all">{contactInfo.phone3}</a>
               </div>
             </div>
 
-            <div className="flex flex-col gap-8">
-              {/* Clickable Email */}
-              <div className="flex items-start gap-3">
-                <Mail className="w-5 h-5 mt-0.5 opacity-90 shrink-0" />
-                <div>
-                  <p className="font-bold tracking-widest mb-1 text-xs">EMAIL</p>
-                  <a href={`mailto:${contactInfo.email}`} className="opacity-90 hover:text-white hover:underline transition-all break-all">
-                    {contactInfo.email}
-                  </a>
-                </div>
+            <div className="flex flex-col gap-5">
+              <div className="flex items-center gap-3">
+                <Mail className="w-5 h-5 opacity-90 shrink-0" />
+                <a href={`mailto:${contactInfo.email}`} className="opacity-90 hover:text-white hover:underline transition-all break-all">
+                  {contactInfo.email}
+                </a>
               </div>
 
-              {/* Address section added from your real data */}
               <div className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 mt-0.5 opacity-90 shrink-0" />
-                <div>
-                  <p className="font-bold tracking-widest mb-1 text-xs">ADDRESS</p>
-                  <p className="opacity-90 leading-relaxed pr-4">
-                    {contactInfo.address}
-                  </p>
-                </div>
+                <MapPin className="w-5 h-5 opacity-90 shrink-0" />
+                <p className="opacity-90 leading-relaxed pr-4">
+                  {contactInfo.address}
+                </p>
               </div>
             </div>
 
-          </div>
+          </motion.div>
         </div>
 
         {/* Right Section: Real Map */}
-        <div className="h-[500px] lg:h-[650px] w-full rounded-lg overflow-hidden shadow-xl lg:shadow-none">
+        {/* Slightly reduced the height dimensions to 280px / 450px */}
+        <div className="h-[280px] lg:h-[450px] w-full rounded-lg overflow-hidden shadow-xl lg:shadow-none">
           <iframe
             title="The Workman Advertising Location"
             src="https://www.google.com/maps?q=No16,2nd+Main+Rd,Pallavan+Nagar,Maduravoyal,Chennai,Tamil+Nadu+600095&output=embed"
@@ -154,7 +165,7 @@ const ContactPage: React.FC = () => {
             height="100%"
             style={{ border: 0 }}
             allowFullScreen={false}
-            loading="lazy"
+            loading="eager" // Eager loading loads the map immediately
             referrerPolicy="no-referrer-when-downgrade"
             className="w-full h-full object-cover rounded-lg"
           />
