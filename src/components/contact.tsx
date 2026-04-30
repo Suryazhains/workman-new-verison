@@ -49,7 +49,7 @@ const ContactPage: React.FC = () => {
 
   return (
     // Kept the padding but reduced the container width and gaps slightly
-    <div className="min-h-screen bg-[#959064] flex items-center justify-center p-4 pt-2 md:p-8 md:pt-3 font-sans m-0 overflow-hidden">
+    <div className="min-h-screen bg-[#959064] flex items-center justify-center p-4 pt-1 md:p-8 md:pt-1 font-sans m-0 overflow-hidden">
       {/* Reduced max-width from 7xl to 6xl and slightly reduced grid gaps */}
       <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-center">
         
