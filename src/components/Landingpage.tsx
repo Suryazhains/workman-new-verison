@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion'; 
 import type { Variants } from 'framer-motion';
 import LandingTwo from './LandingTwo';
@@ -71,6 +71,7 @@ const useScrollToHash = () => {
 
 const LandingPage: React.FC = () => {
   const { hero, about } = LANDING_CONTENT;
+  const navigate = useNavigate();
   
   useScrollToHash();
 
@@ -195,15 +196,7 @@ const LandingPage: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, ease: "easeOut", delay: 0.7 }} // Slightly delayed to let text finish
-                onClick={() => {
-                  const el = document.getElementById("contact");
-                  if (el) {
-                    const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
-                    const offset = window.innerWidth < 1024 ? (70 / 16) * rootFontSize : (120 / 16) * rootFontSize;
-                    const position = el.getBoundingClientRect().top + window.scrollY - offset;
-                    window.scrollTo({ top: position, behavior: 'smooth' });
-                  }
-                }}
+                onClick={() => navigate('/contact')}
                 className="bg-[#BBB791] text-white rounded-[4px] px-12 h-[3.625rem] font-inter font-bold text-[1rem] hover:shadow-2xl transition-all active:scale-95 hover:bg-[#ff5f6d]"
               >
                 Contact now
