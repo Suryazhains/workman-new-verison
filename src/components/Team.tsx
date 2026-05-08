@@ -47,17 +47,17 @@ const Team: React.FC = () => {
 
   const handleMouseUpOrLeave = () => setIsDown(false);
 
-  // Touch Logic (Fixed e.touches[0].pageX)
+  // Touch Logic (Fixed to e.touches.pageX)
   const handleTouchStart = (e: React.TouchEvent) => {
     if (!scrollRef.current) return;
     setIsDown(true);
-    setStartX(e.touches[0].pageX - scrollRef.current.offsetLeft);
+    setStartX(e.touches.pageX - scrollRef.current.offsetLeft);
     setScrollLeft(scrollRef.current.scrollLeft);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!isDown || !scrollRef.current) return;
-    const x = e.touches[0].pageX - scrollRef.current.offsetLeft;
+    const x = e.touches.pageX - scrollRef.current.offsetLeft;
     const walk = (x - startX) * 2;
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
@@ -121,9 +121,9 @@ const Team: React.FC = () => {
         /* ============== 32-INCH DESKTOP SUPPORT ONLY ============== */
         @media (min-width: 1440px) and (max-width: 1919px) {
           .team-card {
-            width: 520px !important;
-            height: 520px !important;
-            border-radius: 20px !important;
+            width: 320px !important; /* Further reduced size */
+            height: 320px !important;
+            border-radius: 12px !important; /* Further reduced rounded corner */
           }
 
           .team-scroll-container {
@@ -141,17 +141,17 @@ const Team: React.FC = () => {
           }
         }
 
-        /* Normal large desktop (1920px+) - unchanged */
+        /* Normal large desktop (1920px+) - Reduced size */
         @media (min-width: 1920px) {
           .team-card {
-            width: 500px;
-            height: 500px;
+            width: 360px; /* Further reduced size */
+            height: 360px;
           }
         }
       `}} />
 
       {/* Header Area */}
-      <div className="pt-20 pb-10 text-center bg-[#959064] team-header">
+      <div className="pt-5 pb-10 text-center bg-[#959064] team-header">
         {/* Animated Title - Word by Word */}
         <h2 className="font-dm-sans font-extralight text-[50px] md:text-[72px] text-white mb-4">
           {"Meet our experts".split(" ").map((word, index, array) => (
@@ -195,12 +195,15 @@ const Team: React.FC = () => {
           onTouchMove={handleTouchMove}
           onTouchEnd={handleMouseUpOrLeave}
         >
-          <div className="flex w-max animate-infinite gap-8 md:gap-12 px-4">
+          {/* UPDATED: Reduced gap from gap-6 md:gap-10 to gap-4 md:gap-6 */}
+          <div className="flex w-max animate-infinite gap-4 md:gap-6 px-4">
             {duplicatedMembers.map((member, index) => (
               <div
                 key={index}
                 onClick={() => openLightbox(index)}
-                className="team-card w-[300px] h-[300px] md:w-[500px] md:h-[500px] flex-shrink-0 overflow-hidden rounded-[12px] bg-black/10 transition-all duration-500 hover:rounded-[20px] hover:shadow-2xl cursor-pointer"
+                // UPDATED: Reduced width and height from w-[240px]/h-[240px] and md:w-[380px]/md:h-[380px] to w-[180px]/h-[180px] and md:w-[280px]/md:h-[280px]
+                // UPDATED: Reduced border radius from rounded-[12px] to rounded-[8px], and hover from [20px] to [14px]
+                className="team-card w-[180px] h-[180px] md:w-[280px] md:h-[280px] flex-shrink-0 overflow-hidden rounded-[8px] bg-black/10 transition-all duration-500 hover:rounded-[14px] hover:shadow-2xl cursor-pointer"
               >
                 <img
                   src={member}

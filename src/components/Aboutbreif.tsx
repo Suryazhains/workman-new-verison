@@ -1,28 +1,25 @@
 import AboutVideo from '../assets/0225.mp4'; 
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import type { Variants } from 'framer-motion'; // ✅ FIXED: Added "type" so Vite doesn't crash
+import type { Variants } from 'framer-motion'; 
 import LandingPageThree from './landingthree';
 
 import main2 from "../assets/ourspecialization.png";
-// PORTFOLIO IMAGES
 import portfolio3 from "../assets/outdooScoller.png";
 import portfolio4 from "../assets/outdoor 13.png";
 import portfolio5 from "../assets/outdoor 17.png";
-import portfolio6 from "../assets/outdoor 20.png";
+import portfolio6 from "../assets/outdoor 34.png";
 import portfolio7 from "../assets/outdoor 27.png";
 import portfolio8 from "../assets/outdoor 44.png";
 
 const PORTFOLIO_SCROLL = [portfolio3, portfolio4, portfolio5, portfolio6, portfolio7, portfolio8];
-
-// --- Slower Paragraph Animation Variants ---
 const paragraphVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
         opacity: 1,
         transition: {
-            staggerChildren: 0.015, // Slower stagger for a more deliberate cascade
-            delayChildren: 0.3,     // Waits slightly for the heading to start
+            staggerChildren: 0.015, 
+            delayChildren: 0.3,  
         },
     },
 };
@@ -33,14 +30,14 @@ const wordVariants: Variants = {
         opacity: 1,
         y: 0,
         transition: {
-            duration: 0.4, // Slower, smoother reveal for each word
-            ease: [0.2, 0.65, 0.3, 0.9], // Using array instead of string to prevent TS Easing errors
+            duration: 0.4, 
+            ease: [0.2, 0.65, 0.3, 0.9], 
         },
     },
 };
 
 const About: React.FC = () => {
-    // Default state is 0 so the first section is open by default
+
     const [activeIndex, setActiveIndex] = useState<number | null>(0);
 
     useEffect(() => {
@@ -84,7 +81,6 @@ const About: React.FC = () => {
         }
     ];
 
-    // Consolidated text string to allow for seamless line-by-line and word-by-word animation
     const aboutDescriptionText = `Workman Advertising is a Chennai-based branding and signage solutions company delivering high-quality indoor, outdoor, and digital display services. Workman Advertising, Chennai, India is a leading provider of complete branding and signage solutions, delivering high-quality visual communication for businesses across multiple industries.\nOur core strength lies in delivering customized signage and advertising solutions for corporate, retail, showroom, and commercial environments. We specialize in indoor and outdoor signage, facade branding, LED video walls, POP displays, and modular signage.\nWith a reputation built on trust, craftsmanship, and customer satisfaction, we continue to be a preferred signage partner for brands looking for long-lasting and high-impact advertising solutions.`;
 
     return (
@@ -107,10 +103,8 @@ const About: React.FC = () => {
                 }
             `}} />
 
-            {/* SECTION 1: ABOUT US BRIEF */}
-            <section className="w-full max-w-[90rem] mx-auto px-10 md:px-20 lg:px-24 pt-16 md:pt-24 [@media(min-width:2400px)]:pt-32 pb-16">
+            <section className="w-full max-w-[90rem] mx-auto px-10 md:px-20 lg:px-24 pt-16 md:pt-1-4 [@media(min-width:2400px)]:pt-32 pb-16">
                 
-                {/* Animated Heading - Word by Word */}
                 <h1 className="font-dm-sans tracking-normal text-[28px] md:text-[39px] [@media(min-width:2400px)]:text-[90px] font-extralight mb-6 [@media(min-width:2400px)]:mb-10 text-left">
                     {"About Us".split(" ").map((word, index, array) => (
                         <React.Fragment key={index}>
@@ -130,7 +124,6 @@ const About: React.FC = () => {
 
                 <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 [@media(min-width:2400px)]:gap-24 items-stretch">
                     
-                    {/* Video Section */}
                     <div className="w-full lg:w-1/2 flex flex-col">
                         <video 
                             src={AboutVideo} 
@@ -142,7 +135,6 @@ const About: React.FC = () => {
                         />
                     </div>
 
-                    {/* Description Section - Animated Paragraphs */}
                     <motion.div 
                         variants={paragraphVariants}
                         initial="hidden"
@@ -165,8 +157,6 @@ const About: React.FC = () => {
                     </motion.div>
                 </div>
             </section>
-
-            {/* SECTION 2: PORTFOLIO MARQUEE */}
             <section className="py-12 [@media(min-width:2400px)]:py-24 overflow-hidden">
                 <div className="animate-marquee flex gap-6">
                     {[...PORTFOLIO_SCROLL, ...PORTFOLIO_SCROLL].map((img, i) => (
@@ -184,16 +174,12 @@ const About: React.FC = () => {
                 </div>
             </section>
 
-            {/* SECTION 3: OUR SPECIALIZATION */}
             <section className="bg-[#959064] text-white py-20 [@media(min-width:2400px)]:py-32 px-10 md:px-20 lg:px-24">
                 <div className="w-full max-w-[90rem] mx-auto">
                     
-                    {/* items-start prevents columns from affecting each other */}
                     <div className="flex flex-col lg:flex-row items-start gap-12 lg:gap-16 [@media(min-width:2400px)]:gap-32">
                         
-                        {/* LEFT COLUMN - IMAGE */}
                         <div className="lg:w-1/2 w-full sticky top-24">
-                            {/* Animated Specialization Heading - Word by Word */}
                             <h2 className="font-dm-sans tracking-normal text-[42px] md:text-[56px] [@media(min-width:2400px)]:text-[96px] font-extralight mb-8 [@media(min-width:2400px)]:mb-16 leading-tight border-t border-white/30 pt-4 inline-block w-full">
                                 {"Our Specialization".split(" ").map((word, index, array) => (
                                     <React.Fragment key={index}>
@@ -211,7 +197,6 @@ const About: React.FC = () => {
                                 ))}
                             </h2>
                             
-                            {/* Unanimated Image Element */}
                             <div className="flex flex-col w-full rounded-xl overflow-hidden shadow-2xl h-[450px] md:h-[500px] lg:h-[580px] xl:h-[620px] [@media(min-width:2400px)]:h-[850px] bg-black/10">
                                 <img 
                                     src={main2} 
@@ -224,10 +209,8 @@ const About: React.FC = () => {
                             </div>
                         </div>
 
-                        {/* RIGHT COLUMN - ACCORDION */}
                         <div className="lg:w-1/2 w-full space-y-6 [@media(min-width:2400px)]:space-y-12">
                             {specializationData.map((item, index) => (
-                                /* Animated Accordion Item */
                                 <motion.div 
                                     key={index} 
                                     initial={{ opacity: 0, y: 20 }}
@@ -245,7 +228,6 @@ const About: React.FC = () => {
                                         </span>
                                         
                                         <div className="flex-1">
-                                            {/* Animated Accordion Title - Word by Word */}
                                             <h3 className="text-2xl md:text-3xl [@media(min-width:2400px)]:text-5xl font-extralight font-dm-sans tracking-normal mb-2 [@media(min-width:2400px)]:mb-6">
                                                 {item.title.split(" ").map((word, wIndex, wArray) => (
                                                     <React.Fragment key={wIndex}>

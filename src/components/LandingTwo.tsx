@@ -4,6 +4,14 @@ import type { Variants } from 'framer-motion';
 import { LANDING_CONTENT, PORTFOLIO_IMAGES } from './content';
 import LandingThree from './landingthree';
 
+// --- NEW LOGO IMPORTS ---
+import newLogo1 from '../assets/newlogo5.png';
+import newLogo2 from '../assets/newlogo2.png';
+import newLogo3 from '../assets/newlogo3.png';
+import newLogo4 from '../assets/newlogo4.png';
+import newLogo5 from '../assets/newlogo1.png';
+import newLogo6 from '../assets/newlogo6.png';
+
 // --- Slower Paragraph Animation Variants ---
 const paragraphVariants: Variants = {
   hidden: { opacity: 0 },
@@ -61,7 +69,7 @@ const LandingTwo: React.FC = () => {
       {/* GLOBAL STYLES: Font Import and Animations */}
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap');
         
         .font-crimson {
             font-family: 'Crimson Pro', serif !important;
@@ -70,6 +78,10 @@ const LandingTwo: React.FC = () => {
         .font-dm-sans-light {
             font-family: 'DM Sans', sans-serif !important;
             font-weight: 300 !important;
+        }
+
+        .font-dm-sans {
+            font-family: 'DM Sans', sans-serif !important;
         }
 
         /* Seamless Marquee Keyframes (Translating exactly 1 container width + 1 gap) */
@@ -96,9 +108,10 @@ const LandingTwo: React.FC = () => {
         }
       `}} />
 
+      {/* --- PORTFOLIO SECTION --- */}
       <section
         id="portfolio"
-        className="w-full bg-[#959064] pt-[4.5rem] pb-[5.5rem] overflow-hidden scroll-mt-[6rem] lg:scroll-mt-[8rem]"
+        className="w-full bg-[#959064] pt-[2.5rem] pb-[5.5rem] overflow-hidden scroll-mt-[6rem] lg:scroll-mt-[8rem]"
       >
        <div className="max-w-[90rem] mx-auto px-10 md:px-20 lg:px-24 mb-10">
          {/* Animated Portfolio Heading */}
@@ -206,8 +219,10 @@ const LandingTwo: React.FC = () => {
         </div>
       </section>
 
- 
-      <section id="testimonials" className="w-full bg-[#F9FAFB] pt-[3.75rem] md:pt-[5.5rem] pb-[3.75rem] md:pb-[5.5rem] overflow-hidden scroll-mt-[6rem] lg:scroll-mt-[8rem]">
+            
+
+      {/* --- TESTIMONIALS SECTION --- */}
+      <section id="testimonials" className="w-full bg-[#F9FAFB] pt-[3.75rem] md:pt-[2.25rem] pb-[3.75rem] md:pb-[5.5rem] overflow-hidden scroll-mt-[6rem] lg:scroll-mt-[8rem]">
         <div className="max-w-[90rem] mx-auto px-4">
           
           {/* Animated Testimonials Heading */}
@@ -216,18 +231,18 @@ const LandingTwo: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="font-dm-sans-light text-[2rem] md:text-[3.5rem] text-[#00000] mb-4 text-center"
+            className="font-dm-sans-light text-[2rem] md:text-[3.5rem] text-[#000000] mb-4 text-center"
           >
             {testimonials.heading}
           </motion.h2>
           
-          {/* Animated Testimonials Description - Line by Line / Word by Word cascade */}
+          {/* Animated Testimonials Description */}
           <motion.div 
             variants={paragraphVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
-            className="text-[#535353] text-center text-sm md:text-sm mb-8 md:mb-12 max-w-[75rem] mx-auto leading-relaxed px-2"
+            className="font-dm-sans-light text-[#535353] text-center text-sm md:text-sm mb-8 md:mb-12 max-w-[75rem] mx-auto leading-relaxed px-2"
           >
             {String(testimonials.description).split('\n').map((line, lineIndex) => (
               <span key={`test-desc-line-${lineIndex}`} className="block min-h-[1rem]">
@@ -342,11 +357,46 @@ const LandingTwo: React.FC = () => {
           </div>
         </div>
       </section>
+<section className="relative w-full bg-[#FAFAFA] py-12 md:py-16 overflow-hidden">
+        
+        {/* Main Content Grid */}
+        <div className="relative z-10 max-w-[85rem] mx-auto px-8 md:px-16 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          
+          {/* Left Column: Headings */}
+          <div className="flex flex-col">
+     
+            <h2 className="font-dm-sans-light text-[2rem] md:text-[3.5rem] text-[#000000] leading-[1.2] tracking-tight">
+              Our Channel<br />
+              partners<br />
+              for the long run.
+            </h2>
+          </div>
+
+          {/* Right Column: Description & Logos */}
+          <div className="flex flex-col">
+            <p className="font-dm-sans-light text-[#535353] text-sm md:text-base leading-relaxed mb-10">
+              We Build foundation of trust and commitment <strong>with our channel partners</strong> to provide top notch <strong>Signage Solutions</strong> for our customer
+            </p>
+            
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-10 items-center justify-items-center">
+              <img src={newLogo1} alt="3M Partner Logo" className="w-auto h-auto max-w-[90px] md:max-w-[110px] max-h-[40px] md:max-h-[45px] object-contain" draggable={false} />
+              <img src={newLogo2} alt="Aludecor Partner Logo" className="w-auto h-auto max-w-[90px] md:max-w-[110px] max-h-[40px] md:max-h-[45px] object-contain" draggable={false} />
+              <img src={newLogo3} alt="Lighting Technologies Partner Logo" className="w-auto h-auto max-w-[90px] md:max-w-[110px] max-h-[40px] md:max-h-[45px] object-contain" draggable={false} />
+              <img src={newLogo4} alt="Astariglas Partner Logo" className="w-auto h-auto max-w-[90px] md:max-w-[110px] max-h-[40px] md:max-h-[45px] object-contain" draggable={false} />
+              <img src={newLogo5} alt="Ecolite Partner Logo" className="w-auto h-auto max-w-[90px] md:max-w-[110px] max-h-[40px] md:max-h-[45px] object-contain" draggable={false} />
+              <img src={newLogo6} alt="HP Latex Partner Logo" className="w-auto h-auto max-w-[90px] md:max-w-[110px] max-h-[40px] md:max-h-[45px] object-contain" draggable={false} />
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
       <div className="mt-0 pb-0">
         <LandingThree />
       </div>
     </>
   );
 };
-
+ 
 export default LandingTwo;

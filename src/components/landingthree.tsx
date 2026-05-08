@@ -160,7 +160,7 @@ const LandingPageThree: React.FC = () => {
       <div className="w-full font-inter overflow-x-hidden min-h-screen flex flex-col m-0 p-0 bg-white">
         
         {/* --- OUR CLIENTS SECTION --- */}
-        <section className="bg-white py-12 md:py-16 [@media(min-width:2400px)]:py-24">
+        <section className="bg-white py-12 md:py-13 [@media(min-width:2400px)]:py-24">
           <div className="w-full max-w-[90rem] mx-auto px-4 md:px-8 lg:px-12">
             
             <motion.h2 
@@ -168,7 +168,7 @@ const LandingPageThree: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, ease: "easeOut" }}
-              className="text-black text-center font-dm-sans-extralight tracking-normal text-3xl md:text-4xl mb-10 pt-2"
+              className="text-black text-center font-dm-sans-extralight tracking-normal text-3xl md:text-4xl mb-10 "
             >
               Our Clients
             </motion.h2>

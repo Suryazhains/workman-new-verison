@@ -12,7 +12,7 @@ import printer11 from "../assets/printer11.png";
 import printer12 from "../assets/printer12.png";
 import printer13 from "../assets/printer13.png";
 // import printer14 from "../assets/printer14.png";
-// import printer15 from "../assets/printer15.png";
+ import printer15 from "../assets/printer15.png";
 // import printer16 from "../assets/printer16.png";
 import printer17 from "../assets/printer23.png";
 // import printer18 from "../assets/printer18.png";
@@ -361,48 +361,66 @@ export const LANDING_CONTENT = {
   },
 
 testimonials: {
-    heading: 'Testimonials',
-    description: 'Hear from our clients who trust us for delivering high-quality branding and signage solutions with consistent professionalism. From small-scale installations to large commercial projects, we ensure smooth execution, timely delivery, and premium output. Their feedback reflects our commitment to reliability, strong coordination, and long-term service support.',
-    large: {
-      quote:
-        'From the initial discussion to the final installation, Workman Advertising managed our LED video wall project in a very structured and professional manner. Their technical expertise, clear communication, and strong on-site coordination ensured smooth execution without delays. The display quality significantly enhanced our showroom presence.',
-      name: 'Suresh Balaji',
-      company: 'Director, VCMart Retail Pvt. Ltd., Chennai',
-    },
-    small: [
-      {
-        quote:
-          'Their understanding of retail branding and attention to detail really stood out. The POP displays and in-store branding looked premium and consistent across all our outlets.',
-        name: 'Priya Anand',
-        company: 'Marketing Manager, Care Retail, Tamil Nadu',
-      },
-      {
-        quote:
-          "Workman Advertising handled our Kiosk stand installation with great professionalism and technical clarity. Their team ensured everything was planned properly, executed on time, and coordinated smoothly at the site. The communication throughout the project was transparent, and the final output was sharp, vibrant, and exactly as promised. It has added a premium feel to our store environment.",
-        name: "R. Prakash",
-        company: "Managing Partner, Sri Murugan Electronics, Coimbatore",
-      },
-      {
-        quote:
-          'They consistently deliver practical designs with strong visual appeal while maintaining cost efficiency. Reliable execution and continued support make them a dependable branding partner.',
-        name: 'Karthik Velmurugan',
-        company: 'Proprietor, Renesson Displays, Coimbatore',
-      },
-      // --- NEW MEMBERS ADDED BELOW ---
-      {
-        quote:
-          'The quality of the ACP signage and the precision in the LED illumination was top-notch. They handled our multi-city rollout with incredible speed and structural integrity. Truly a professional team.',
-        name: 'Arun Kumar',
-        company: 'Project Head, TechPark Solutions, Chennai',
-      },
-      {
-        quote:
-          'Workman Advertising has been our go-to for architectural signage. Their ability to translate complex design concepts into durable physical structures is what makes them stand out in the industry.',
-        name: 'Santhosh Raj',
-        company: 'Creative Lead, Urban Spaces, Bangalore',
-      },
-    ],
+  heading: 'Testimonials',
+  description:
+    'Hear from our clients who trust us for delivering high-quality branding and signage solutions with consistent professionalism. From small-scale installations to large commercial projects, we ensure smooth execution, timely delivery, and premium output. Their feedback reflects our commitment to reliability, strong coordination, and long-term service support.',
+
+  large: {
+    quote:
+      'From the initial discussion to the final installation, Workman Advertising managed our LED video wall project in a very structured and professional manner. Their technical expertise, clear communication, and strong on-site coordination ensured smooth execution without delays. The display quality significantly enhanced our showroom presence.',
+    name: 'Lakshman Ramasamy',
+    company: 'Marketing, Daikin Airconditioning India Pvt Ltd',
   },
+
+  small: [
+    {
+      quote:"Workman Advertising handled our Kiosk stand installation with great professionalism and technical clarity. Their team ensured everything was planned properly, executed on time, and coordinated smoothly at the site. The communication throughout the project was transparent, and the final output was sharp, vibrant, and exactly as promised. It has added a premium feel to our store environment.",
+      name: 'Surrendhiran',
+      company: 'RM, Mitsubishi Electric India Pvt. Ltd.',
+    },
+
+    {
+      quote:   'Their understanding of retail branding and attention to detail really stood out. The POP displays and in-store branding looked premium and consistent across all our outlets.',
+      name: 'Keerthiharan',
+      company: 'VM, General HVAC Solutions India Private Limited',
+    },
+
+    {
+      quote:
+        'They consistently deliver practical designs with strong visual appeal while maintaining cost efficiency. Reliable execution and continued support make them a dependable branding partner.',
+      name: 'Abraham',
+      company: 'Operations, Specsmakers Optician India Ltd',
+    },
+
+    {
+      quote:
+        'The quality of the ACP signage and the precision in the LED illumination was top-notch. They handled our multi-city rollout with incredible speed and structural integrity. Truly a professional team.',
+      name: 'Bharathi',
+      company: 'MM, Lactalis India - Corporate',
+    },
+
+    {
+      quote:
+        'Workman Advertising has been our go-to for architectural signage. Their ability to translate complex design concepts into durable physical structures is what makes them stand out in the industry.',
+      name: 'Abids',
+      company: 'MD, Abids Restaurant India Ltd.',
+    },
+
+    {
+      quote:
+        'Their commitment to quality, structural precision, and project coordination was excellent throughout the branding installation process. The final output reflected strong technical expertise and premium workmanship.',
+      name: 'Ferdric Edmond',
+      company: 'GM, Zuari Cements - HeidelbergCement Group',
+    },
+
+    {
+      quote:
+        'The team handled our hospital branding and signage requirements with complete professionalism and attention to detail. Their execution was smooth, timely, and aligned perfectly with our corporate standards.',
+      name: 'Dr. Sunder Ganesh',
+      company: 'MD, Grand Care Hospital Pvt Ltd',
+    },
+  ],
+},
   contactSection: {
     heading: "Contact Us",
     description: "Let’s bring your branding vision to life with high-quality signage solutions tailored to your business needs. Whether it’s a single installation or a large-scale project, our team ensures end-to-end support with expert execution. Reach out today and we’ll help you plan, design, and deliver signage that stands out.",
@@ -806,14 +824,14 @@ testimonials: {
    imageUrl: printer17,
    isImageLeft: true
  },
-// {
-//   id: 15,
-//   title: "Metal Bending Machine",
-//   model: "MB Series",
-//   description: "The Metal Bending Machine is a high-precision forming solution designed for accurate bending and shaping of various metal sheets and components. It is suitable for materials such as stainless steel, mild steel, aluminum, and galvanized sheets. Built with a robust frame and advanced control system, the MB Series ensures smooth operation, consistent bending angles, and high productivity. This machine is ideal for fabrication workshops, sheet metal industries, signage manufacturing, and industrial production environments requiring reliable and precise metal forming.",
-//   imageUrl: printer15,
-//   isImageLeft: true
-// },
+{
+  id: 15,
+  title: "Hydraulic Shearing Machine",
+  model: "HARSLE QC12Y Series",
+  description: "The HARSLE QC12Y Hydraulic Shearing Machine is designed for accurate and efficient sheet metal cutting operations. Built with a durable hydraulic system and advanced control technology, it provides smooth cutting performance with high precision and reliability. Suitable for cutting stainless steel, mild steel, aluminum, and galvanized sheets, the machine is widely used in fabrication workshops, industrial manufacturing, HVAC production, and heavy-duty metal processing applications.",
+  imageUrl: printer15,
+  isImageLeft: true
+},
 // {
 //   id: 16,
 //   title: "CNC Metal Engraving Machine",

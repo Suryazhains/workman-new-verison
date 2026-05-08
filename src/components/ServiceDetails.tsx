@@ -319,13 +319,13 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
           z-index: 100002;
         }
 
-        /* Reduced box sizes for large desktops here */
+        /* Further Reduced box sizes for large desktops here */
         @media (min-width: 1440px) and (max-width: 1919px) {
-          .team-card { width: 550px !important; height: 380px !important; border-radius: 20px !important; }
-          .team-scroll-container { padding-left: 40px; padding-right: 40px; }
+          .team-card { width: 380px !important; height: 260px !important; border-radius: 16px !important; }
+          .team-scroll-container { padding-left: 24px; padding-right: 24px; }
         }
         @media (min-width: 1920px) {
-          .team-card { width: 680px; height: 460px; }
+          .team-card { width: 440px; height: 300px; }
         }
         
         @media (max-width: 768px) {
@@ -334,7 +334,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
         }
       `}} />
 
-      {/* Lightbox Overlay - standard divs without framer motion */}
+      {/* Lightbox Overlay */}
       {viewerIndex !== null && images.length > 0 && (
         <div 
           className="lightbox-overlay" 
@@ -395,7 +395,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
             ))}
           </h4>
 
-          {/* Animated Main Title - Part by Part (split by '/') */}
+          {/* Animated Main Title - Part by Part */}
           <h1 className="font-dm-sans-extralight tracking-normal text-2xl md:text-3xl lg:text-4xl xl:text-4xl [@media(min-width:2400px)]:text-[100px] text-white leading-tight mb-8 whitespace-nowrap">
             {activeService.title.split('/').map((part: string, index: number, array: string[]) => (
               <React.Fragment key={index}>
@@ -435,7 +435,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
           )}
         </div>
 
-        {/* Removed framer motion from split hero media div */}
+        {/* Media Block */}
         <div className="w-full lg:w-1/2 relative min-h-[40vh] lg:min-h-screen bg-black">
           {activeService.videoUrl ? (
             <video src={activeService.videoUrl} autoPlay loop muted playsInline className="absolute inset-0 !w-full !h-full !object-cover" />
@@ -450,7 +450,6 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
       {/* Dynamic Gallery Header Section */}
       {!isLedVideoWall && images.length > 0 && (
         <div className="pt-24 pb-8 px-8 lg:px-16 xl:px-[120px] [@media(min-width:2400px)]:px-[10rem] text-left bg-[#959064]">
-          {/* Animated Gallery Heading - Word by Word */}
           <h2 className="font-dm-sans-extralight tracking-normal text-4xl md:text-5xl lg:text-6xl text-white mb-4">
             {String(`${activeService.title} Project Gallery`).split(" ").map((word, index, array) => (
               <React.Fragment key={index}>
@@ -479,7 +478,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
         </div>
       )}
 
-      {/* SCROLLING GALLERY TRACK (Removed motion) */}
+      {/* SCROLLING GALLERY TRACK */}
       {!isLedVideoWall && images.length > 0 && (
         <section className="expert-section w-full expert-container py-12 relative">
           <div
@@ -496,7 +495,8 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
           >
             <div className="flex w-max">
               {sets.map((setIndex) => (
-                <div key={setIndex} className="flex gap-8 md:gap-12 pr-8 md:pr-12">
+                /* Reduced gap and right padding here (gap-4 and pr-4 for tight spacing) */
+                <div key={setIndex} className="flex gap-4 md:gap-5 pr-4 md:pr-5">
                   {images.map((img: string, index: number) => (
                     <div
                       key={`${setIndex}-${index}`}
@@ -508,7 +508,8 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
                         }
                         openViewer(index);
                       }}
-                      className="team-card w-[300px] h-[210px] md:w-[450px] md:h-[320px] flex-shrink-0 overflow-hidden rounded-[12px] bg-black/10 transition-all duration-500 hover:rounded-[20px] hover:shadow-2xl cursor-pointer"
+                      /* Substantially reduced width and height for images here */
+                      className="team-card w-[220px] h-[150px] md:w-[320px] md:h-[220px] flex-shrink-0 overflow-hidden rounded-[12px] bg-black/10 transition-all duration-500 hover:rounded-[16px] hover:shadow-2xl cursor-pointer"
                     >
                       <img src={img} alt={`${activeService.title} Image ${index}`} className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-110 pointer-events-none" draggable="false" />
                     </div>
@@ -520,7 +521,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
         </section>
       )}
 
-      {/* Optional Bottom Video Section (Removed motion) */}
+      {/* Optional Bottom Video Section */}
       {activeService.videoUrl && (
         <div className={`px-6 md:px-12 lg:px-[8%] bg-[#959064] ${isLedVideoWall ? 'py-24' : 'pb-24 pt-8'}`}>
           <div className="max-w-[1920px] mx-auto">
