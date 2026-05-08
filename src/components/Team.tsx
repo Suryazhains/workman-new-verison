@@ -47,17 +47,17 @@ const Team: React.FC = () => {
 
   const handleMouseUpOrLeave = () => setIsDown(false);
 
-  // Touch Logic (Fixed to e.touches.pageX)
+  // Touch Logic (Fixed to e.touches[0].pageX)
   const handleTouchStart = (e: React.TouchEvent) => {
     if (!scrollRef.current) return;
     setIsDown(true);
-    setStartX(e.touches.pageX - scrollRef.current.offsetLeft);
+    setStartX(e.touches[0].pageX - scrollRef.current.offsetLeft);
     setScrollLeft(scrollRef.current.scrollLeft);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!isDown || !scrollRef.current) return;
-    const x = e.touches.pageX - scrollRef.current.offsetLeft;
+    const x = e.touches[0].pageX - scrollRef.current.offsetLeft;
     const walk = (x - startX) * 2;
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
