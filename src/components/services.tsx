@@ -110,9 +110,9 @@ const Services: React.FC = () => {
         .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
       `}} />
 
-      <section id="services" className="w-full pt-[90px] xl:pt-[110px] min-[1920px]:pt-[clamp(110px,8vw,250px)] pb-[90px] xl:pb-[110px] min-[1920px]:pb-[clamp(110px,8vw,250px)] bg-[#959064] font-inter">
+      <section id="services" className="w-full pt-[80px] xl:pt-[90px] min-[1920px]:pt-[clamp(110px,8vw,250px)] pb-[90px] xl:pb-[110px] min-[1920px]:pb-[clamp(110px,8vw,250px)] bg-[#959064] font-inter">
         
-        {/* STANDARDIZED ALIGNMENT WRAPPER */}
+     
         <div className="w-full max-w-[90rem] mx-auto px-10 md:px-20 lg:px-24">
 
           <motion.div 
@@ -122,7 +122,7 @@ const Services: React.FC = () => {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="mb-10 xl:mb-14 min-[1920px]:mb-[clamp(3.5rem,5vw,6rem)] text-left"
           >
-            {/* Animated Main Heading - Word by Word */}
+ 
             <h2 className="font-dm-sans-extralight tracking-normal text-3xl md:text-[38px] xl:text-[45px] min-[1920px]:text-[clamp(45px,3.6vw,96px)] text-white mb-4 min-[1920px]:mb-[clamp(1rem,2vw,2rem)]">
               {"Our Services".split(" ").map((word, index, array) => (
                 <React.Fragment key={index}>
@@ -229,7 +229,7 @@ const Services: React.FC = () => {
               <div className="order-2 xl:order-1 px-10 pb-10 pt-6 xl:px-[70px] xl:pt-[28px] xl:pb-[28px] min-[1920px]:px-[clamp(70px,6vw,160px)] min-[1920px]:pt-[clamp(28px,2vw,55px)] min-[1920px]:pb-[clamp(28px,2vw,55px)] flex flex-col justify-start overflow-hidden">
                 
                 <motion.div 
-                  key={activeTab} // Important: This forces Framer Motion to remount and replay animations on tab change
+                  key={activeTab} 
                   initial={{ opacity: 0, x: -15 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.4, ease: "easeOut" }}

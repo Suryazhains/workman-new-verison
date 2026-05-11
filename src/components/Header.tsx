@@ -261,7 +261,7 @@ const Header: React.FC = () => {
               e.preventDefault();
               handleNavigation('/contact');
             }}
-            className="hidden md:flex items-center justify-center bg-white text-[#00000] rounded-[6px] [@media(min-width:2400px)]:rounded-[12px] w-[150px] h-[45px] lg:w-[170px] lg:h-[50px] [@media(min-width:2400px)]:w-[340px] [@media(min-width:2400px)]:h-[90px] font-inter font-bold text-[15px] lg:text-[16px] [@media(min-width:2400px)]:text-[32px] hover:bg-gray-100 transition-all duration-300 shadow-sm"
+            className="hidden md:flex items-center justify-center bg-white text-[#00000] rounded-[6px] [@media(min-width:2400px)]:rounded-[12px] w-[150px] h-[45px] lg:w-[170px] lg:h-[50px] [@media(min-width:2400px)]:w-[340px] [@media(min-width:2400px)]:h-[90px] font-inter font-medium text-[15px] lg:text-[16px] [@media(min-width:2400px)]:text-[32px] hover:bg-gray-100 transition-all duration-300 shadow-sm"
           >
             {contactBtn}
           </Link>

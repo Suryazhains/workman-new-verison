@@ -158,9 +158,7 @@ const LandingPageThree: React.FC = () => {
       `}} />
 
       <div className="w-full font-inter overflow-x-hidden min-h-screen flex flex-col m-0 p-0 bg-white">
-        
-        {/* --- OUR CLIENTS SECTION --- */}
-        <section className="bg-white py-12 md:py-13 [@media(min-width:2400px)]:py-24">
+        <section className="bg-white py-12 md:py-13 [@media(min-width:2400px)]:py-20">
           <div className="w-full max-w-[90rem] mx-auto px-4 md:px-8 lg:px-12">
             
             <motion.h2 
@@ -190,8 +188,6 @@ const LandingPageThree: React.FC = () => {
 
           </div>
         </section>
-
-        {/* --- FOOTER --- */}
         <footer className="bg-[#959064] w-full text-white py-[2.5rem] md:py-[4rem] px-6 lg:px-[5rem] xl:px-[7.5rem]">
           <div className="max-w-[105rem] 2xl:max-w-[130rem] mx-auto w-full">
             
@@ -209,7 +205,6 @@ const LandingPageThree: React.FC = () => {
                   onClick={() => handleNavigation('/')}
                 />
                 
-                {/* Footer Quote - Word by Word from Side */}
                 <p className="text-[0.7rem] leading-relaxed font-normal text-white opacity-100 pr-4">
                   {contactInfo.quote.split(" ").map((word, index, array) => (
                     <React.Fragment key={`quote-${index}`}>
@@ -233,7 +228,7 @@ const LandingPageThree: React.FC = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
                   onClick={() => handleNavigation('/contact')} 
-                  className="bg-white text-[#000000] px-8 py-3 rounded-[0.375rem] font-bold text-[0.75rem] hover:bg-gray-100 transition"
+                  className="bg-white text-[#000000] px-8 py-3 rounded-[0.375rem] font-medium text-[0.75rem] hover:bg-gray-100 transition"
                 >
                   Contact now
                 </motion.button>
@@ -242,7 +237,7 @@ const LandingPageThree: React.FC = () => {
               <div className="w-full xl:w-[75%] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-4 xl:gap-8 items-start">
                 
                 <div className="w-full lg:col-span-3 flex flex-col">
-                  {/* Address Heading - Word by Word from Side */}
+            
                   <h4 className="font-dm-sans-extralight tracking-normal text-[1rem] xl:text-[1.1rem] mb-5 text-white">
                     {"Address".split(" ").map((word, index, array) => (
                       <React.Fragment key={`address-${index}`}>
@@ -276,7 +271,7 @@ const LandingPageThree: React.FC = () => {
                 </div>
 
                 <div className="w-full lg:col-span-2 flex flex-col">
-                  {/* Products Heading - Word by Word from Side */}
+           
                   <h4 className="font-dm-sans-extralight tracking-normal text-[1rem] xl:text-[1.1rem] mb-5 text-white">
                     {String(footer.productTitle).split(" ").map((word, index, array) => (
                       <React.Fragment key={`prod-title-${index}`}>
@@ -311,7 +306,7 @@ const LandingPageThree: React.FC = () => {
                 </div>
 
                 <div className="w-full lg:col-span-4 flex flex-col">
-                  {/* Contact Links Heading - Word by Word from Side */}
+                 
                   <h4 className="font-dm-sans-extralight tracking-normal text-[1rem] xl:text-[1.1rem] mb-5 text-white">
                     {String(contactInfo.title).split(" ").map((word, index, array) => (
                       <React.Fragment key={`contact-title-${index}`}>
@@ -362,7 +357,7 @@ const LandingPageThree: React.FC = () => {
                 </div>
 
                 <div className="w-full lg:col-span-3 flex flex-col">
-                  {/* Google Map Embed */}
+          
                   <motion.iframe
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
@@ -380,7 +375,7 @@ const LandingPageThree: React.FC = () => {
             </div>
 
             <div className="pt-6 border-t border-white/20 text-center">
-              {/* Copyright Text - Word by Word from Side */}
+         
               <p className="text-[0.65rem] tracking-wide text-white opacity-100">
                 {String(footer.copyright).split(" ").map((word, index, array) => (
                   <React.Fragment key={`copyright-${index}`}>

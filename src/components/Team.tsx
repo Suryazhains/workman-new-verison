@@ -239,7 +239,7 @@ const Team: React.FC = () => {
             &#8249;
           </button>
 
-          {/* Centered Image */}
+
           <div className="lightbox-image-container w-[85vw] h-[80vh] flex items-center justify-center p-4">
             <img 
               src={allTeamMembers[selectedIndex]} 
@@ -249,7 +249,7 @@ const Team: React.FC = () => {
             />
           </div>
 
-          {/* Right Arrow */}
+     
           <button 
             className="absolute right-6 md:right-12 text-white/50 hover:text-white text-6xl md:text-8xl transition-all z-50"
             onClick={nextImage}
@@ -259,7 +259,7 @@ const Team: React.FC = () => {
         </div>
       )}
 
-      {/* Bottom Spacer */}
+
       <div className="bg-[#959064] h-20 w-full" />
 
       <LandingPageThree />

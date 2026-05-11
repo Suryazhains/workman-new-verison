@@ -14,14 +14,13 @@ import Home_5 from '../assets/home 5.png';
 import Home_7 from '../assets/home 2.png';
 import AboutVideo from '../assets/0225.mp4'; 
 
-// --- Slower Paragraph Animation Variants ---
 const paragraphVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.015, // Slower stagger for a more deliberate cascade
-      delayChildren: 0.4,     // Waits for the heading to animate first
+      staggerChildren: 0.015,
+      delayChildren: 0.4,     
     },
   },
 };
@@ -32,7 +31,7 @@ const wordVariants: Variants = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.4, // Slower, smoother reveal for each word
+      duration: 0.4, 
       ease: "easeOut",
     },
   },
@@ -48,7 +47,6 @@ const useScrollToHash = () => {
       const executeScroll = () => {
         const element = document.getElementById(id);
         if (element) {
-          // Converted scroll offset to scale with the root font size for massive screens
           const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
           const offset = window.innerWidth < 1024 ? (70 / 16) * rootFontSize : (120 / 16) * rootFontSize;
           const y = element.getBoundingClientRect().top + window.scrollY - offset;
@@ -79,7 +77,7 @@ const LandingPage: React.FC = () => {
 
   return (
     <main className=" w-full min-h-screen bg-white overflow-x-hidden selection:bg-red-200 font-inter">
-      {/* Added DM Sans import here alongside the existing ones if it wasn't already imported globally */}
+
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
         @import url('https://db.onlinewebfonts.com/c/59d406a1ae963118d955b267eb04f9f3?family=ImperialStd-BoldItalic');
@@ -123,7 +121,7 @@ const LandingPage: React.FC = () => {
         }
       `}} />
 
-      {/* --- HERO SECTION --- */}
+    
       <section 
         id="home" 
         className="relative w-full h-[85vh] min-h-[40.625rem] overflow-hidden bg-black scroll-mt-[7.5rem]"
@@ -135,10 +133,10 @@ const LandingPage: React.FC = () => {
                 key={index} 
                 src={img} 
                 alt={`portfolio-${index}`}
-                /* --- PERFORMANCE OPTIMIZATIONS --- */
-                fetchPriority="high" // Tells browser to prioritize these images over other assets
-                loading="eager"      // Bypasses lazy loading constraints
-                decoding="async"     // Decodes image off the main thread to prevent UI freezing
+  
+                fetchPriority="high" 
+                loading="eager"     
+                decoding="async"     
               />
             ))}
           </div>
@@ -149,7 +147,7 @@ const LandingPage: React.FC = () => {
         <div className="relative z-20 h-full flex items-center">
           <div className="w-full px-10 md:px-20 lg:px-24">
             <div className="max-w-[43.75rem]">
-              {/* Animated Hero Title - Word by Word */}
+
               <h1 className="font-dm-sans  text-[3rem] md:text-[4.25rem] lg:text-[5.25rem] font-extralight leading-[1.05]  text-white mb-8 text-readable-shadow">
                 {hero.title.join(" ").split(" ").map((word, index, array) => (
                   <React.Fragment key={index}>
@@ -162,13 +160,13 @@ const LandingPage: React.FC = () => {
                     >
                       {word}
                     </motion.span>
-                    {/* Add space after every word except the very last one */}
+        
                     {index < array.length - 1 && " "}
                   </React.Fragment>
                 ))}
               </h1>
               
-              {/* Animated Hero Description - Paragraph Splitting Logic Applied */}
+            
               <motion.div 
                 variants={paragraphVariants}
                 initial="hidden"
@@ -189,15 +187,14 @@ const LandingPage: React.FC = () => {
                   </span>
                 ))}
               </motion.div>
-              
-              {/* Animated Hero Button */}
+     
               <motion.button
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.7 }} // Slightly delayed to let text finish
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.7 }} 
                 onClick={() => navigate('/contact')}
-                className="bg-[#BBB791] text-white rounded-[4px] px-12 h-[3.625rem] font-inter font-bold text-[1rem] hover:shadow-2xl transition-all active:scale-95 hover:bg-[#ff5f6d]"
+                className="bg-[#BBB791] text-white rounded-[4px] px-12 h-[3.625rem] font-inter font-medium text-[1rem] hover:shadow-2xl transition-all active:scale-95 hover:bg-[#8F8B69]"
               >
                 Contact now
               </motion.button>
@@ -206,15 +203,14 @@ const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* --- ABOUT SECTION --- */}
       <section 
         id="about" 
-        className="relative w-full bg-[#FFFDE8] py-16 md:py-36 px-10 md:px-20 lg:px-24 scroll-mt-24 overflow-hidden"
+        className="relative w-full bg-[#FFFDE8] py-16 md:py-26 px-10 md:px-20 lg:px-24 scroll-mt-24 overflow-hidden"
       >
         <div className="max-w-[90rem] mx-auto flex flex-col lg:flex-row items-center justify-between">
           
           <div className="w-full lg:w-[50%] text-left z-10 lg:pr-10">
-            {/* Animated About Label - Word by Word */}
+           
             <span className="text-black font-dm-sans font-extralight text-[23px] md:text-[30px] leading-none tracking-[0em] mb-4 block ">
               {about.label.split(" ").map((word, index, array) => (
                 <React.Fragment key={index}>
@@ -232,7 +228,6 @@ const LandingPage: React.FC = () => {
               ))}
             </span>
 
-            {/* Animated About Heading - Word by Word */}
             <h2 className="font-inter font-bold text-[27px] sm:text-[37px] md:text-[39px] xl:text-[43px] leading-[1.1] tracking-[-0.04em] text-black mb-6 w-full">
               {about.heading.split(" ").map((word, index, array) => (
                 <React.Fragment key={index}>
@@ -250,7 +245,7 @@ const LandingPage: React.FC = () => {
               ))}
             </h2>
 
-            {/* Animated About Description - Paragraph Splitting Logic Applied */}
+
             <motion.div 
               variants={paragraphVariants}
               initial="hidden"
@@ -274,13 +269,13 @@ const LandingPage: React.FC = () => {
 
             <div className="grid grid-cols-3 lg:flex lg:flex-wrap gap-4 sm:gap-8 lg:gap-12">
               {about.stats.map((stat, index) => (
-                /* Animated Stats Items */
+
                 <motion.div 
                   key={index} 
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.5, ease: "easeOut", delay: 0.6 + (index * 0.1) }} // Delayed to follow paragraph
+                  transition={{ duration: 0.5, ease: "easeOut", delay: 0.6 + (index * 0.1) }}
                   className="flex flex-col"
                 >
                   <div className="flex items-center gap-1 md:gap-2">
@@ -300,7 +295,6 @@ const LandingPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Unanimated Video Element */}
           <div className="w-full lg:absolute lg:right-10 lg:top-0 lg:h-full lg:w-1/2 mt-12 lg:mt-0 flex items-center justify-center lg:justify-end z-0">
             <video 
               src={AboutVideo}
@@ -308,7 +302,7 @@ const LandingPage: React.FC = () => {
               loop 
               muted 
               playsInline
-              preload="metadata" // Slightly improves initial page load if video isn't primary
+              preload="metadata" 
               className="w-full h-[350px] sm:h-[400px] md:h-[450px] lg:h-[calc(110%-80px)] lg:w-auto object-cover lg:object-contain object-center lg:object-right"
             />
           </div>

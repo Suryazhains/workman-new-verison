@@ -6,7 +6,6 @@ const ContactPage: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  // Real data pulled from your LandingPageThree code
   const contactInfo = {
     phone1: "+91 98403 27575",
     phone2: "+91 44 4238 5222",
@@ -16,7 +15,6 @@ const ContactPage: React.FC = () => {
     quote: "Our range of services is designed to cover all your branding and signage needs, no matter the scale."
   };
 
-  // Connected Form Submission Logic
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isSubmitting) return;
@@ -48,9 +46,7 @@ const ContactPage: React.FC = () => {
   };
 
   return (
-    // Kept the padding but reduced the container width and gaps slightly
     <div className="min-h-screen bg-[#959064] flex items-center justify-center p-4 pt-1 md:p-8 md:pt-1 font-sans m-0 overflow-hidden">
-      {/* Reduced max-width from 7xl to 6xl and slightly reduced grid gaps */}
       <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-center">
         
         {/* Left Section: Content & Form */}
@@ -59,12 +55,11 @@ const ContactPage: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-3xl md:text-4xl font-bold mb-2 tracking-wide font-['DM_Sans'] uppercase"
+   className="text-3xl md:text-4xl font-extralight mb-2 tracking-wide font-dm-sans uppercase"
           >
             Contact Us
           </motion.h1>
           
-          {/* Slightly reduced bottom margin */}
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -74,7 +69,6 @@ const ContactPage: React.FC = () => {
             {contactInfo.quote}
           </motion.p>
 
-          {/* Slightly reduced bottom margin for the form */}
           <form className="space-y-3 flex flex-col mb-6" onSubmit={handleSubmit}>
             <input 
               type="text" 
@@ -156,16 +150,15 @@ const ContactPage: React.FC = () => {
         </div>
 
         {/* Right Section: Real Map */}
-        {/* Slightly reduced the height dimensions to 280px / 450px */}
         <div className="h-[280px] lg:h-[450px] w-full rounded-lg overflow-hidden shadow-xl lg:shadow-none">
           <iframe
             title="The Workman Advertising Location"
-            src="https://www.google.com/maps?q=No16,2nd+Main+Rd,Pallavan+Nagar,Maduravoyal,Chennai,Tamil+Nadu+600095&output=embed"
+            src="https://maps.google.com/maps?q=The%20Workman%20Advertising,%20Maduravoyal,%20Chennai&t=&z=15&ie=UTF8&iwloc=&output=embed"
             width="100%"
             height="100%"
             style={{ border: 0 }}
             allowFullScreen={false}
-            loading="eager" // Eager loading loads the map immediately
+            loading="eager"
             referrerPolicy="no-referrer-when-downgrade"
             className="w-full h-full object-cover rounded-lg"
           />

@@ -235,8 +235,6 @@ const LandingTwo: React.FC = () => {
           >
             {testimonials.heading}
           </motion.h2>
-          
-          {/* Animated Testimonials Description */}
           <motion.div 
             variants={paragraphVariants}
             initial="hidden"
@@ -390,9 +388,7 @@ const LandingTwo: React.FC = () => {
           </div>
         </div>
       </section>
-
-
-      <div className="mt-0 pb-0">
+<div className="mt-0 pb-0">
         <LandingThree />
       </div>
     </>
