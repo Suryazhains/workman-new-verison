@@ -55,7 +55,7 @@ const ContactPage: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-   className="text-3xl md:text-4xl font-extralight mb-2 tracking-wide font-dm-sans uppercase"
+   className="text-3xl md:text-4xl font-extralight mb-2 tracking-wide font-dm-sans"
           >
             Contact Us
           </motion.h1>
