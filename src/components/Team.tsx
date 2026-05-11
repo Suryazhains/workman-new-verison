@@ -151,9 +151,9 @@ const Team: React.FC = () => {
       `}} />
 
       {/* Header Area */}
-      <div className="pt-5 pb-10 text-center bg-[#959064] team-header">
+      <div className="pt-5 pb-8 text-center bg-[#959064] team-header">
         {/* Animated Title - Word by Word */}
-        <h2 className="font-dm-sans font-extralight text-[50px] md:text-[72px] text-white mb-4">
+        <h2 className="font-dm-sans font-extralight text-[50px] md:text-[72px] text-white mb-6">
           {"Meet our experts".split(" ").map((word, index, array) => (
             <React.Fragment key={index}>
               <motion.span
@@ -170,20 +170,22 @@ const Team: React.FC = () => {
           ))}
         </h2>
         
-        {/* Animated Subtitle */}
-        <motion.p 
+        {/* First Animated Subtitle */}
+        <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
-          className="text-white max-w-2xl mx-auto px-6 text-lg md:text-xl opacity-90 leading-relaxed font-inter font-light"
+          className="text-white max-w-7xl mx-auto px-6 text-base md:text-lg opacity-90 leading-relaxed font-inter font-light text-center"
         >
-          A balanced perspective in every frame. Discover the team that makes it happen.
-        </motion.p>
+          <p>
+            At WorkMan Advertising, every project is powered by skilled professionals, creative thinkers, and experienced production specialists who transform ideas into impactful visual experiences. From concept development to final execution, our team works with precision, innovation, and attention to detail to deliver advertising solutions that truly stand out.
+          </p>
+        </motion.div>
       </div>
 
       {/* Grid Track Section */}
-      <section className="expert-section w-full expert-container py-12 relative">
+      <section className="expert-section w-full expert-container py-8 relative">
         <div
           ref={scrollRef}
           className="relative z-10 overflow-x-auto no-scrollbar cursor-grab active:cursor-grabbing select-none team-scroll-container"
@@ -216,6 +218,21 @@ const Team: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Second Animated Subtitle (Below the images) */}
+      <div className="pb-10 pt-4 bg-[#959064]">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+          className="text-white max-w-7xl mx-auto px-6 text-base md:text-lg opacity-90 leading-relaxed font-inter font-light text-center"
+        >
+          <p>
+            Our production space is equipped with modern machinery and handled by experienced professionals who understand the importance of accuracy, durability, and finishing. Every stage of the process — from cutting and fabrication to printing and installation — is managed with complete dedication and technical expertise.
+          </p>
+        </motion.div>
+      </div>
 
       {/* LIGHTBOX MODAL */}
       {selectedIndex !== null && (
@@ -260,7 +277,7 @@ const Team: React.FC = () => {
       )}
 
 
-      <div className="bg-[#959064] h-20 w-full" />
+      <div className="bg-[#959064] h-10 w-full" />
 
       <LandingPageThree />
     </main>

@@ -8,29 +8,29 @@ import { LANDING_CONTENT } from './content';
 
 // BRAND IMAGES
 import brand1 from "../assets/brand 1.png";
-import brand2 from "../assets/brand 2.png";
-import brand3 from "../assets/brand 3.png";
-import brand4 from "../assets/brand 4.png";
-import brand5 from "../assets/brand 5.png";
-import brand6 from "../assets/brand 6.png";
+import brand2 from "../assets/brand 20.png";
+import brand3 from "../assets/brand 21.jpg";
+import brand4 from "../assets/brand 18.png";
+import brand5 from "../assets/brand25.png";
+import brand6 from "../assets/brand 16.png";
 import brand7 from "../assets/brand 7.png";
-import brand8 from "../assets/brand 8.png";
-import brand9 from "../assets/brand 9.png";
-import brand10 from "../assets/brand 10.png";
+import brand8 from "../assets/brand 23.jpg";
+import brand9 from "../assets/brand 2.png";
+import brand10 from "../assets/brand 9.png";
 import brand11 from "../assets/brand 11.png";
 import brand12 from "../assets/brand 12.png";
 import brand13 from "../assets/brand 13.png";
 import brand14 from "../assets/brand 14.png";
 import brand15 from "../assets/brand 15.png";
-import brand16 from "../assets/brand 16.png";
+import brand16 from "../assets/brand 6.png";
 import brand17 from "../assets/brand 17.png";
-import brand18 from "../assets/brand 18.png";
-import brand19 from "../assets/brand 20.png";
-import brand20 from "../assets/brand 21.jpg";
+import brand18 from "../assets/brand 4.png";
+import brand19 from "../assets/brand 10.png";
+import brand20 from "../assets/brand 3.png";
 import brand21 from "../assets/brand 22.svg";
-import brand22 from "../assets/brand 23.jpg";
+import brand22 from "../assets/brand 8.png";
 import brand23 from "../assets/brand 24.png";
-import brand24 from "../assets/brand25.png";
+import brand24 from "../assets/brand 5.png";
 
 // SEPARATED BRAND DATA
 // You can now adjust the sizing classes independently for every single brand below.
