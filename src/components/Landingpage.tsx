@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion'; 
 import type { Variants } from 'framer-motion';
@@ -11,7 +11,7 @@ import Home_2 from '../assets/home 7.png';
 import Home_3 from '../assets/homeAbid3.png';
 import Home_4 from '../assets/home 1.jpg';
 import Home_5 from '../assets/home 5.png';
-import Home_7 from '../assets/home 2.png';
+import Home_7 from '../assets/homeTwo.jpg';
 import AboutVideo from '../assets/0225.mp4'; 
 
 const paragraphVariants: Variants = {
@@ -74,9 +74,32 @@ const LandingPage: React.FC = () => {
   useScrollToHash();
 
   const heroImages = [Home_1, Home_2, Home_3, Home_4, Home_5, Home_7];
+  
+  // Explicitly clone ONLY the first image to create the seamless loop anchor
+  const displayImages = [...heroImages, heroImages];
+  
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+
+  useEffect(() => {
+    const preloadImages = async () => {
+      const promises = heroImages.map((src) => {
+        return new Promise((resolve) => {
+          const img = new Image();
+          img.src = src;
+          img.onload = resolve;
+          img.onerror = resolve; 
+        });
+      });
+
+      await Promise.all(promises);
+      setImagesLoaded(true);
+    };
+
+    preloadImages();
+  }, []); 
 
   return (
-    <main className=" w-full min-h-screen bg-white overflow-x-hidden selection:bg-red-200 font-inter">
+    <main className="w-full min-h-screen bg-white overflow-x-hidden selection:bg-red-200 font-inter">
 
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
@@ -88,32 +111,37 @@ const LandingPage: React.FC = () => {
 
         .hero-track {
           display: flex;
-          width: 600%; 
+          width: 700%; 
           height: 100%;
-          animation: heroScroll 36s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-          /* Hardware acceleration for smoother animation */
+          /* CHANGED: Sped up animation from 36s to 24s */
+          animation: heroScroll 24s cubic-bezier(0.45, 0, 0.55, 1) infinite;
           transform: translateZ(0); 
           will-change: transform;
         }
 
         .hero-track img {
-          width: calc(100% / 6); 
+          width: calc(100% / 7); 
           height: 100%;
           object-fit: cover;
           flex-shrink: 0;
           filter: brightness(0.85);
-          /* Prevents visual flickering while images decode */
-          content-visibility: auto; 
+          /* GPU Acceleration to prevent unloading flashes */
+          transform: translateZ(0); 
+          backface-visibility: hidden;
+          perspective: 1000px;
         }
 
+        /* Mathematically perfect step keyframes */
+        /* Each phase is exactly 16.66% of the duration. */
         @keyframes heroScroll {
-          0%, 14% { transform: translateX(0); }
-          16.66%, 30.66% { transform: translateX(calc(-100% / 6 * 1)); }
-          33.32%, 47.32% { transform: translateX(calc(-100% / 6 * 2)); }
-          49.98%, 63.98% { transform: translateX(calc(-100% / 6 * 3)); }
-          66.64%, 80.64% { transform: translateX(calc(-100% / 6 * 4)); }
-          83.30%, 97.30% { transform: translateX(calc(-100% / 6 * 5)); }
-          100% { transform: translateX(0); }
+          0%, 13.33% { transform: translateX(0); }
+          16.66%, 30.00% { transform: translateX(calc(-100% / 7 * 1)); }
+          33.33%, 46.66% { transform: translateX(calc(-100% / 7 * 2)); }
+          50.00%, 63.33% { transform: translateX(calc(-100% / 7 * 3)); }
+          66.66%, 80.00% { transform: translateX(calc(-100% / 7 * 4)); }
+          83.33%, 96.66% { transform: translateX(calc(-100% / 7 * 5)); }
+          /* At 100%, it hits the clone and instantly resets to 0% to start the next pause */
+          100% { transform: translateX(calc(-100% / 7 * 6)); }
         }
 
         .text-readable-shadow {
@@ -124,31 +152,33 @@ const LandingPage: React.FC = () => {
     
       <section 
         id="home" 
-        className="relative w-full h-[85vh] min-h-[40.625rem] overflow-hidden bg-black scroll-mt-[7.5rem]"
+        className="relative w-full h-[85vh] min-h-[40.625rem] overflow-hidden bg-[#1a1a1a] scroll-mt-[7.5rem]"
       >
-        <div className="absolute inset-0 z-0">
+        {!imagesLoaded && (
+          <div className="absolute inset-0 z-0 bg-[#2a2a2a] animate-pulse" />
+        )}
+
+        <div className={`absolute inset-0 z-0 transition-opacity duration-1000 ${imagesLoaded ? 'opacity-100' : 'opacity-0'}`}>
           <div className="hero-track">
-            {heroImages.map((img, index) => (
+            {displayImages.map((img, index) => (
               <img 
-                key={index} 
-                src={img} 
+                key={`hero-img-${index}`} 
+                src={img as string} 
                 alt={`portfolio-${index}`}
-  
-                fetchPriority="high" 
-                loading="eager"     
-                decoding="async"     
+                fetchPriority={index === 0 ? "high" : "auto"}
+                loading="eager"    
               />
             ))}
           </div>
         </div>
 
-        <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/40 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/60 to-transparent pointer-events-none" />
 
         <div className="relative z-20 h-full flex items-center">
           <div className="w-full px-10 md:px-20 lg:px-24">
             <div className="max-w-[43.75rem]">
 
-              <h1 className="font-dm-sans  text-[3rem] md:text-[4.25rem] lg:text-[5.25rem] font-extralight leading-[1.05]  text-white mb-8 text-readable-shadow">
+              <h1 className="font-dm-sans text-[3rem] md:text-[4.25rem] lg:text-[5.25rem] font-extralight leading-[1.05] text-white mb-8 text-readable-shadow">
                 {hero.title.join(" ").split(" ").map((word, index, array) => (
                   <React.Fragment key={index}>
                     <motion.span
@@ -203,6 +233,7 @@ const LandingPage: React.FC = () => {
         </div>
       </section>
 
+      {/* About Section */}
       <section 
         id="about" 
         className="relative w-full bg-[#FFFDE8] py-16 md:py-26 px-10 md:px-20 lg:px-24 scroll-mt-24 overflow-hidden"

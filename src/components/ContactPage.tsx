@@ -7,9 +7,10 @@ const ContactPage: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
 
   const contactInfo = {
-    phone1: "+91 98403 27575",
-    phone2: "+91 44 4238 5222",
-    phone3: "+91 97908 09675",
+    phone3: "+91 8883222286",
+    phone1: "+91 44 4238 5222",
+    phone2: "+91 97908 09675",
+    phone4: "+91 9840327575",
     email: "workmansign@hotmail.com",
     address1: "No16, 2nd Main Rd, Pallavan Nagar, Maduravoyal, Chennai, Tamil Nadu 600095, India",
     address2: "82, Periyas pathiai, Choolaimedu, Chennai - 600094",
@@ -50,6 +51,16 @@ const ContactPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#959064] flex items-center justify-center p-4 pt-1 md:p-8 md:pt-1 font-sans m-0 overflow-hidden">
+      
+      {/* Bringing in the custom font style from your landing page for consistency */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400;9..40,500;9..40,700&display=swap');
+        .font-dm-sans-extralight { 
+            font-family: 'DM Sans', sans-serif !important; 
+            font-weight: 200 !important;
+        }
+      `}} />
+
       <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-center">
         
         {/* Left Section: Content & Form */}
@@ -126,13 +137,13 @@ const ContactPage: React.FC = () => {
             
             {/* Column 1: Phones & Email */}
             <div className="flex flex-col gap-4">
-              
-              <div className="flex items-start gap-2">
+              <div className="flex items-start gap-2 pt-[2.35rem]"> {/* Padding to align perfectly with the animated headers in other columns */}
                 <Phone className="w-4 h-4 opacity-90 shrink-0 mt-0.5" />
                 <div className="flex flex-col gap-1">
                   <a href={`tel:${contactInfo.phone1.replace(/\s/g, '')}`} className="opacity-90 hover:text-white hover:underline transition-all">{contactInfo.phone1}</a>
                   <a href={`tel:${contactInfo.phone2.replace(/\s/g, '')}`} className="opacity-90 hover:text-white hover:underline transition-all">{contactInfo.phone2}</a>
                   <a href={`tel:${contactInfo.phone3.replace(/\s/g, '')}`} className="opacity-90 hover:text-white hover:underline transition-all">{contactInfo.phone3}</a>
+                  <a href={`tel:${contactInfo.phone4.replace(/\s/g, '')}`} className="opacity-90 hover:text-white hover:underline transition-all">{contactInfo.phone4}</a>
                 </div>
               </div>
 
@@ -144,59 +155,80 @@ const ContactPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Column 2: Old Addresses (Center) */}
-            <div className="flex items-start gap-2">
-              <MapPin className="w-4 h-4 opacity-90 shrink-0 mt-0.5" />
-              <div className="flex flex-col gap-4">
-                
-                {/* Main Branch */}
-                <div>
-                  <span className="block font-bold uppercase text-[0.6rem] tracking-wider text-white/70 mb-0.5 underline underline-offset-4 decoration-white/50">
-                    Main Branch
-                  </span>
-                  <p className="opacity-90 leading-relaxed pr-2">
-                    {contactInfo.address1}
-                  </p>
+            {/* Column 2: Located at (Center) */}
+            <div className="flex flex-col">
+              <h4 className="font-dm-sans-extralight tracking-normal text-[1rem] xl:text-[1.1rem] mb-5 text-white">
+                {"Located at".split(" ").map((word, index, array) => (
+                  <React.Fragment key={`address-${index}`}>
+                    <motion.span
+                      initial={{ opacity: 0, x: -15 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, ease: "easeOut", delay: index * 0.05 }}
+                      className="inline-block"
+                    >
+                      {word}
+                    </motion.span>
+                    {index < array.length - 1 && " "}
+                  </React.Fragment>
+                ))}
+              </h4>
+              <div className="flex items-start gap-2">
+                <MapPin className="w-4 h-4 opacity-90 shrink-0 mt-0.5" />
+                <div className="flex flex-col gap-6">
+                  <div>
+                    <p className="opacity-90 leading-relaxed pr-2">
+                      {contactInfo.address1}
+                    </p>
+                  </div>
                 </div>
-
-                {/* Second Address */}
-                <div>
-                  <span className="block font-bold uppercase text-[0.6rem] tracking-wider text-white/70 mb-0.5 underline underline-offset-4 decoration-white/50">
-                    WorkShop 1
-                  </span>
-                  <p className="opacity-90 leading-relaxed pr-2">
-                    {contactInfo.address2}
-                  </p>
-                </div>
-
               </div>
             </div>
             
-            {/* Column 3: New Addresses (Right) */}
-            <div className="flex items-start gap-2">
-              <MapPin className="w-4 h-4 opacity-90 shrink-0 mt-0.5" />
-              <div className="flex flex-col gap-4">
-                
-                {/* Maduravoyal Unit */}
-                <div>
-                  <span className="block font-bold uppercase text-[0.6rem] tracking-wider text-white/70 mb-0.5 underline underline-offset-4 decoration-white/50">
-                    WorkShop 2
-                  </span>
-                  <p className="opacity-90 leading-relaxed pr-2">
-                    {contactInfo.address3}
-                  </p>
-                </div>
+            {/* Column 3: Works (Right) */}
+            <div className="flex flex-col">
+              <h4 className="font-dm-sans-extralight tracking-normal text-[1rem] xl:text-[1.1rem] mb-5 text-white">
+                {"Works".split(" ").map((word, index, array) => (
+                  <React.Fragment key={`works-${index}`}>
+                    <motion.span
+                      initial={{ opacity: 0, x: -15 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, ease: "easeOut", delay: index * 0.05 }}
+                      className="inline-block"
+                    >
+                      {word}
+                    </motion.span>
+                    {index < array.length - 1 && " "}
+                  </React.Fragment>
+                ))}
+              </h4>
+              <div className="flex items-start gap-2">
+                <MapPin className="w-4 h-4 opacity-90 shrink-0 mt-0.5" />
+                <div className="flex flex-col gap-6">
+                  
+                  {/* Maduravoyal Unit */}
+                  <div>
+                    <p className="opacity-90 leading-relaxed pr-2">
+                      {contactInfo.address3}
+                    </p>
+                  </div>
 
-                {/* Korattur Unit */}
-                <div>
-                  <span className="block font-bold uppercase text-[0.6rem] tracking-wider text-white/70 mb-0.5 underline underline-offset-4 decoration-white/50">
-                    WorkShop 3
-                  </span>
-                  <p className="opacity-90 leading-relaxed pr-2">
-                    {contactInfo.address4}
-                  </p>
-                </div>
+                  {/* Korattur Unit */}
+                  <div>
+                    <p className="opacity-90 leading-relaxed pr-2">
+                      {contactInfo.address4}
+                    </p>
+                  </div>
 
+                  {/* Choolaimedu Unit */}
+                  <div>
+                    <p className="opacity-90 leading-relaxed pr-2">
+                      {contactInfo.address2}
+                    </p>
+                  </div>
+
+                </div>
               </div>
             </div>
 
@@ -204,7 +236,7 @@ const ContactPage: React.FC = () => {
         </div>
 
         {/* Right Section: Real Map */}
-        <div className="h-[300px] lg:h-[500px] w-full rounded-lg overflow-hidden shadow-xl lg:shadow-none mt-4 lg:mt-0">
+        <div className="h-[300px] lg:h-[500px] w-full rounded-lg overflow-hidden shadow-xl lg:shadow-none  lg:mt-0">
           <iframe
             title="The Workman Advertising Location"
             src="https://maps.google.com/maps?q=The%20Workman%20Advertising,%20Maduravoyal,%20Chennai&t=&z=15&ie=UTF8&iwloc=&output=embed"

@@ -11,7 +11,7 @@ import brand1 from "../assets/brand 1.png";
 import brand2 from "../assets/brand 20.png";
 import brand3 from "../assets/brand 21.jpg";
 import brand4 from "../assets/brand 18.png";
-import brand5 from "../assets/brand25.png";
+import brand5 from "../assets/brand 25.png";
 import brand6 from "../assets/brand 16.png";
 import brand7 from "../assets/brand 7.png";
 import brand8 from "../assets/brand 23.jpg";
@@ -29,31 +29,35 @@ import brand21 from "../assets/brand 22.png";
 import brand22 from "../assets/brand 8.png";
 import brand23 from "../assets/brand 24.png";
 import brand24 from "../assets/brand 5.png";
+import brand25 from "../assets/brand 26.png";
+import brand26 from "../assets/brand 27.png";
 
 // SEPARATED BRAND DATA
 const BRANDS_DATA = [
   { id: 1, logo: brand1, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[124px] lg:h-[100px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
-  { id: 2, logo: brand2, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
-  { id: 3, logo: brand3, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
+  { id: 2, logo: brand2, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[114px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
+  { id: 3, logo: brand3, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[70px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
   { id: 4, logo: brand4, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
-  { id: 5, logo: brand5, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[134px] lg:h-[100px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
+  { id: 5, logo: brand5, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[114px] lg:h-[100px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
   { id: 6, logo: brand6, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
   { id: 7, logo: brand7, sizing: "w-[65px] h-[33px] md:w-[96px] md:h-[52px] lg:w-[159px] lg:h-[120px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
   { id: 8, logo: brand8, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
-  { id: 9, logo: brand9, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
+  { id: 9, logo: brand9, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[80px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
   { id: 10, logo: brand10, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
   { id: 12, logo: brand12, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
-  { id: 13, logo: brand13, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
-  { id: 14, logo: brand14, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
+  { id: 13, logo: brand13, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[114px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
+  { id: 14, logo: brand14, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[114px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
   { id: 15, logo: brand15, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
   { id: 16, logo: brand16, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
   { id: 17, logo: brand17, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
   { id: 18, logo: brand18, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
-  { id: 19, logo: brand19, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[124px] lg:h-[100px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
-  { id: 21, logo: brand21, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
+  { id: 19, logo: brand19, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[104px] lg:h-[100px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
+  { id: 21, logo: brand21, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[130px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
   { id: 22, logo: brand22, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
   { id: 23, logo: brand23, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
-  { id: 24, logo: brand24, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
+  { id: 24, logo: brand24, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[124px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
+  { id: 25, logo: brand25, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[72px] lg:w-[104px] lg:h-[70px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
+  { id: 26, logo: brand26, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[90px] lg:h-[60px] mb-5 [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" }
 ];
 
 const LandingPageThree: React.FC = () => {
@@ -63,9 +67,10 @@ const LandingPageThree: React.FC = () => {
 
   const contactInfo = {
     title: "Contact Link",
-    phone1: "+91 9790851275",
-    phone2: "+91 44 4238 5222",
-    phone3: "+91 97908 09675",
+    phone3: "+91 8883222286 ",
+    phone1: "+91 44 4238 5222",
+    phone2: "+91 97908 09675",
+    phone4: "+91 9840327575",
     email: "workmansign@hotmail.com",
     quote: "Our range of services is designed to cover all your branding and signage needs, no matter the scale."
   };
@@ -147,17 +152,16 @@ const LandingPageThree: React.FC = () => {
       <div className="w-full font-inter overflow-x-hidden min-h-screen flex flex-col m-0 p-0 bg-white">
         <section className="bg-white py-12 md:py-13 [@media(min-width:2400px)]:py-20">
           <div className="w-full max-w-[90rem] mx-auto px-4 md:px-8 lg:px-12">
-            
-            <motion.h2 
+             <motion.h2 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, ease: "easeOut" }}
               className="text-black text-center font-dm-sans-extralight tracking-normal text-3xl md:text-4xl mb-10 "
             >
-              Our Clients
+              Our Memorable Brands...
             </motion.h2>
-
+            
             <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-8 xl:grid-cols-8 gap-x-1 gap-y-6 md:gap-x-2 md:gap-y-8 [@media(min-width:2400px)]:gap-x-4 [@media(min-width:2400px)]:gap-y-12 items-center justify-items-center">
               {BRANDS_DATA.map((brand) => (
                 <div key={brand.id} className="flex items-center justify-center w-full">
@@ -193,7 +197,8 @@ const LandingPageThree: React.FC = () => {
                   onClick={() => handleNavigation('/')}
                 />
                 
-                <p className="text-[0.7rem] leading-relaxed font-normal text-white opacity-100 pr-4">
+                {/* Changed font-normal to font-light */}
+                <p className="text-[0.7rem] leading-relaxed font-light text-white opacity-100 pr-4">
                   {contactInfo.quote.split(" ").map((word, index, array) => (
                     <React.Fragment key={`quote-${index}`}>
                       <motion.span
@@ -227,7 +232,7 @@ const LandingPageThree: React.FC = () => {
                 {/* --- ADDRESSES COLUMN 1 --- */}
                 <div className="w-full lg:col-span-3 flex flex-col">
                   <h4 className="font-dm-sans-extralight tracking-normal text-[1rem] xl:text-[1.1rem] mb-5 text-white">
-                    {"Addresses".split(" ").map((word, index, array) => (
+                    {"Located at".split(" ").map((word, index, array) => (
                       <React.Fragment key={`address-${index}`}>
                         <motion.span
                           initial={{ opacity: 0, x: -15 }}
@@ -243,19 +248,11 @@ const LandingPageThree: React.FC = () => {
                     ))}
                   </h4>
                   
-                  <div className="flex flex-col gap-5 text-[0.75rem] text-white opacity-100">
+                  {/* Added font-light */}
+                  <div className="flex flex-col gap-8 text-[0.75rem] font-light text-white opacity-100">
                     
                     {/* First Address */}
                     <div className="flex flex-col gap-1.5">
-                      <motion.span 
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.4, ease: "easeOut" }}
-                        className="font-bold text-gray-200 uppercase text-[0.65rem] tracking-wider mb-1 underline underline-offset-4 decoration-white/50"
-                      >
-                        Main Branch
-                      </motion.span>
                       {["No16, 2nd Main Rd,", "Pallavan Nagar, Maduravoyal,", "Chennai, Tamil Nadu 600095,", "India"].map((line, index) => (
                         <motion.span 
                           key={`addr1-line-${index}`}
@@ -270,39 +267,14 @@ const LandingPageThree: React.FC = () => {
                       ))}
                     </div>
 
-                    {/* Second Address */}
-                    <div className="flex flex-col gap-1.5">
-                      <motion.span 
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.4, ease: "easeOut", delay: 0.3 }}
-                        className="font-bold text-gray-200 uppercase text-[0.65rem] tracking-wider mb-1 underline underline-offset-4 decoration-white/50"
-                      >
-                        WorkShop 1
-                      </motion.span>
-                      {["82, Periyas pathiai,", "Choolaimedu,", "Chennai - 600094"].map((line, index) => (
-                        <motion.span 
-                          key={`addr2-line-${index}`}
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 0.4, ease: "easeOut", delay: 0.4 + (index * 0.1) }}
-                          className="leading-tight block"
-                        >
-                          {line}
-                        </motion.span>
-                      ))}
-                    </div>
-
                   </div>
                 </div>
 
                 {/* --- ADDRESSES COLUMN 2 --- */}
                 <div className="w-full lg:col-span-3 flex flex-col">
                   <h4 className="font-dm-sans-extralight tracking-normal text-[1rem] xl:text-[1.1rem] mb-5 text-white">
-                    {"More Branches".split(" ").map((word, index, array) => (
-                      <React.Fragment key={`more-branches-${index}`}>
+                    {"Works".split(" ").map((word, index, array) => (
+                      <React.Fragment key={`works-${index}`}>
                         <motion.span
                           initial={{ opacity: 0, x: -15 }}
                           whileInView={{ opacity: 1, x: 0 }}
@@ -316,27 +288,19 @@ const LandingPageThree: React.FC = () => {
                       </React.Fragment>
                     ))}
                   </h4>
+                  
+                  {/* Added font-light */}
+                  <div className="flex flex-col gap-8 text-[0.75rem] font-light text-white opacity-100">
 
-                  <div className="flex flex-col gap-5 text-[0.75rem] text-white opacity-100">
-
-                    {/* Third Address (Maduravoyal Unit) */}
+                    {/* Second Address (Maduravoyal Unit) */}
                     <div className="flex flex-col gap-1.5">
-                      <motion.span 
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.4, ease: "easeOut", delay: 0.5 }}
-                        className="font-bold text-gray-200 uppercase text-[0.65rem] tracking-wider mb-1 underline underline-offset-4 decoration-white/50"
-                      >
-                        WorkShop 2
-                      </motion.span>
                       {["No.21, 7th St, 3rd Cross St,", "Dhanalakshmi Nagar, Maduravoyal", "Chennai-600095"].map((line, index) => (
                         <motion.span 
-                          key={`addr3-line-${index}`}
+                          key={`addr2-line-${index}`}
                           initial={{ opacity: 0, x: -20 }}
                           whileInView={{ opacity: 1, x: 0 }}
                           viewport={{ once: true }}
-                          transition={{ duration: 0.4, ease: "easeOut", delay: 0.6 + (index * 0.1) }}
+                          transition={{ duration: 0.4, ease: "easeOut", delay: 0.2 + (index * 0.1) }}
                           className="leading-tight block"
                         >
                           {line}
@@ -344,24 +308,31 @@ const LandingPageThree: React.FC = () => {
                       ))}
                     </div>
 
-                    {/* Fourth Address (Korattur Unit) */}
+                    {/* Third Address (Korattur Unit) */}
                     <div className="flex flex-col gap-1.5">
-                      <motion.span 
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.4, ease: "easeOut", delay: 0.7 }}
-                        className="font-bold text-gray-200 uppercase text-[0.65rem] tracking-wider mb-1 underline underline-offset-4 decoration-white/50"
-                      >
-                        WorkShop 3
-                      </motion.span>
                       {["No.5B, Kanniyamman Koil St,", "Kachinakuppam,", "Sidco Industrial Estate,", "Korattur, Chennai - 600098."].map((line, index) => (
+                        <motion.span 
+                          key={`addr3-line-${index}`}
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.4, ease: "easeOut", delay: 0.3 + (index * 0.1) }}
+                          className="leading-tight block"
+                        >
+                          {line}
+                        </motion.span>
+                      ))}
+                    </div>
+
+                    {/* Fourth Address (Moved from Column 1 - Choolaimedu) */}
+                    <div className="flex flex-col gap-1.5">
+                      {["82, Periyas pathiai,", "Choolaimedu,", "Chennai - 600094"].map((line, index) => (
                         <motion.span 
                           key={`addr4-line-${index}`}
                           initial={{ opacity: 0, x: -20 }}
                           whileInView={{ opacity: 1, x: 0 }}
                           viewport={{ once: true }}
-                          transition={{ duration: 0.4, ease: "easeOut", delay: 0.8 + (index * 0.1) }}
+                          transition={{ duration: 0.4, ease: "easeOut", delay: 0.4 + (index * 0.1) }}
                           className="leading-tight block"
                         >
                           {line}
@@ -390,7 +361,9 @@ const LandingPageThree: React.FC = () => {
                       </React.Fragment>
                     ))}
                   </h4>
-                  <div className="flex flex-col gap-3.5 text-[0.75rem]">
+                  
+                  {/* Added font-light */}
+                  <div className="flex flex-col gap-3.5 text-[0.75rem] font-light">
                     
                     <motion.div 
                       initial={{ opacity: 0, x: -20 }}
@@ -405,7 +378,7 @@ const LandingPageThree: React.FC = () => {
                       </a>
                     </motion.div>
                     
-                    {[contactInfo.phone1, contactInfo.phone2, contactInfo.phone3].map((phone, idx) => (
+                    {[contactInfo.phone1, contactInfo.phone2, contactInfo.phone3, contactInfo.phone4].map((phone, idx) => (
                       <motion.div 
                         key={`phone-${idx}`}
                         initial={{ opacity: 0, x: -20 }}
@@ -442,7 +415,8 @@ const LandingPageThree: React.FC = () => {
             </div>
 
             <div className="pt-6 border-t border-white/20 text-center">
-              <p className="text-[0.65rem] tracking-wide text-white opacity-100">
+              {/* Added font-light */}
+              <p className="text-[0.65rem] tracking-wide font-light text-white opacity-100">
                 {String(footer.copyright).split(" ").map((word, index, array) => (
                   <React.Fragment key={`copyright-${index}`}>
                     <motion.span

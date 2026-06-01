@@ -152,7 +152,7 @@ import facade1 from "../assets/home 3.png";
 import facade2 from "../assets/facade1.png";
 import facade3 from "../assets/facade2.png";
 import facade4 from "../assets/facade3.png";
-import facade5 from "../assets/home 2.png";
+import facade5 from "../assets/home TwoNow.png";
 import facade6 from "../assets/home 1.jpg";
 import facade7 from "../assets/facadeDaikin.png";
 import facade8 from "../assets/facade8.png";

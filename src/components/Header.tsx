@@ -113,7 +113,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="w-full bg-[#959064] sticky top-0 z-50 border-none outline-none">
+    <header className="w-full bg-[#BBB791] sticky top-0 z-50 border-none outline-none">
       <style>
         {`
           *:focus {
