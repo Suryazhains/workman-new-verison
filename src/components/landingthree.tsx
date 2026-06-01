@@ -17,7 +17,6 @@ import brand7 from "../assets/brand 7.png";
 import brand8 from "../assets/brand 23.jpg";
 import brand9 from "../assets/brand 2.png";
 import brand10 from "../assets/brand 9.png";
-import brand11 from "../assets/brand 11.png";
 import brand12 from "../assets/brand 12.png";
 import brand13 from "../assets/brand 13.png";
 import brand14 from "../assets/brand 14.png";
@@ -26,14 +25,12 @@ import brand16 from "../assets/brand 6.png";
 import brand17 from "../assets/brand 17.png";
 import brand18 from "../assets/brand 4.png";
 import brand19 from "../assets/brand 10.png";
-import brand20 from "../assets/brand 3.png";
-import brand21 from "../assets/brand 22.svg";
+import brand21 from "../assets/brand 22.png";
 import brand22 from "../assets/brand 8.png";
 import brand23 from "../assets/brand 24.png";
 import brand24 from "../assets/brand 5.png";
 
 // SEPARATED BRAND DATA
-// You can now adjust the sizing classes independently for every single brand below.
 const BRANDS_DATA = [
   { id: 1, logo: brand1, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[124px] lg:h-[100px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
   { id: 2, logo: brand2, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
@@ -45,7 +42,6 @@ const BRANDS_DATA = [
   { id: 8, logo: brand8, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
   { id: 9, logo: brand9, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
   { id: 10, logo: brand10, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
-  { id: 11, logo: brand11, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[124px] lg:h-[100px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
   { id: 12, logo: brand12, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
   { id: 13, logo: brand13, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
   { id: 14, logo: brand14, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
@@ -54,7 +50,6 @@ const BRANDS_DATA = [
   { id: 17, logo: brand17, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
   { id: 18, logo: brand18, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
   { id: 19, logo: brand19, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[124px] lg:h-[100px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
-  { id: 20, logo: brand20, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
   { id: 21, logo: brand21, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
   { id: 22, logo: brand22, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
   { id: 23, logo: brand23, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[94px] lg:h-[60px] [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" },
@@ -68,7 +63,7 @@ const LandingPageThree: React.FC = () => {
 
   const contactInfo = {
     title: "Contact Link",
-    phone1: "+91 98403 27575",
+    phone1: "+91 9790851275",
     phone2: "+91 44 4238 5222",
     phone3: "+91 97908 09675",
     email: "workmansign@hotmail.com",
@@ -135,14 +130,6 @@ const LandingPageThree: React.FC = () => {
     }
   };
 
-  const getCategoryPath = (category: string) => {
-    const cat = category.toUpperCase();
-    if (cat.includes('INDOOR')) return '/indoor';
-    if (cat.includes('LED')) return '/led';
-    if (cat.includes('MODULAR')) return '/modular';
-    return '/outdoor';
-  };
-
   return (
     <main>
       <style dangerouslySetInnerHTML={{ __html: `
@@ -188,6 +175,7 @@ const LandingPageThree: React.FC = () => {
 
           </div>
         </section>
+        
         <footer className="bg-[#959064] w-full text-white py-[2.5rem] md:py-[4rem] px-6 lg:px-[5rem] xl:px-[7.5rem]">
           <div className="max-w-[105rem] 2xl:max-w-[130rem] mx-auto w-full">
             
@@ -236,10 +224,10 @@ const LandingPageThree: React.FC = () => {
 
               <div className="w-full xl:w-[75%] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-4 xl:gap-8 items-start">
                 
+                {/* --- ADDRESSES COLUMN 1 --- */}
                 <div className="w-full lg:col-span-3 flex flex-col">
-            
                   <h4 className="font-dm-sans-extralight tracking-normal text-[1rem] xl:text-[1.1rem] mb-5 text-white">
-                    {"Address".split(" ").map((word, index, array) => (
+                    {"Addresses".split(" ").map((word, index, array) => (
                       <React.Fragment key={`address-${index}`}>
                         <motion.span
                           initial={{ opacity: 0, x: -15 }}
@@ -254,27 +242,67 @@ const LandingPageThree: React.FC = () => {
                       </React.Fragment>
                     ))}
                   </h4>
-                  <div className="flex flex-col gap-3.5 text-[0.75rem] text-white opacity-100">
-                    {["No16, 2nd Main Rd,", "Pallavan Nagar, Maduravoyal,", "Chennai, Tamil Nadu 600095,", "India"].map((line, index) => (
+                  
+                  <div className="flex flex-col gap-5 text-[0.75rem] text-white opacity-100">
+                    
+                    {/* First Address */}
+                    <div className="flex flex-col gap-1.5">
                       <motion.span 
-                        key={`addr-line-${index}`}
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 + (index * 0.1) }}
-                        className="leading-tight block"
+                        transition={{ duration: 0.4, ease: "easeOut" }}
+                        className="font-bold text-gray-200 uppercase text-[0.65rem] tracking-wider mb-1 underline underline-offset-4 decoration-white/50"
                       >
-                        {line}
+                        Main Branch
                       </motion.span>
-                    ))}
+                      {["No16, 2nd Main Rd,", "Pallavan Nagar, Maduravoyal,", "Chennai, Tamil Nadu 600095,", "India"].map((line, index) => (
+                        <motion.span 
+                          key={`addr1-line-${index}`}
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 + (index * 0.1) }}
+                          className="leading-tight block"
+                        >
+                          {line}
+                        </motion.span>
+                      ))}
+                    </div>
+
+                    {/* Second Address */}
+                    <div className="flex flex-col gap-1.5">
+                      <motion.span 
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.4, ease: "easeOut", delay: 0.3 }}
+                        className="font-bold text-gray-200 uppercase text-[0.65rem] tracking-wider mb-1 underline underline-offset-4 decoration-white/50"
+                      >
+                        WorkShop 1
+                      </motion.span>
+                      {["82, Periyas pathiai,", "Choolaimedu,", "Chennai - 600094"].map((line, index) => (
+                        <motion.span 
+                          key={`addr2-line-${index}`}
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.4, ease: "easeOut", delay: 0.4 + (index * 0.1) }}
+                          className="leading-tight block"
+                        >
+                          {line}
+                        </motion.span>
+                      ))}
+                    </div>
+
                   </div>
                 </div>
 
-                <div className="w-full lg:col-span-2 flex flex-col">
-           
+                {/* --- ADDRESSES COLUMN 2 --- */}
+                <div className="w-full lg:col-span-3 flex flex-col">
                   <h4 className="font-dm-sans-extralight tracking-normal text-[1rem] xl:text-[1.1rem] mb-5 text-white">
-                    {String(footer.productTitle).split(" ").map((word, index, array) => (
-                      <React.Fragment key={`prod-title-${index}`}>
+                    {"More Branches".split(" ").map((word, index, array) => (
+                      <React.Fragment key={`more-branches-${index}`}>
                         <motion.span
                           initial={{ opacity: 0, x: -15 }}
                           whileInView={{ opacity: 1, x: 0 }}
@@ -288,25 +316,64 @@ const LandingPageThree: React.FC = () => {
                       </React.Fragment>
                     ))}
                   </h4>
-                  <ul className="flex flex-col gap-3.5 text-[0.75rem]">
-                    {footer.products.map((product, idx) => (
-                      <motion.li
-                        key={`prod-${idx}`}
+
+                  <div className="flex flex-col gap-5 text-[0.75rem] text-white opacity-100">
+
+                    {/* Third Address (Maduravoyal Unit) */}
+                    <div className="flex flex-col gap-1.5">
+                      <motion.span 
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 + (idx * 0.1) }}
-                        onClick={() => handleNavigation(getCategoryPath(product))}
-                        className="text-white hover:text-green-100 cursor-pointer transition opacity-100 leading-tight block"
+                        transition={{ duration: 0.4, ease: "easeOut", delay: 0.5 }}
+                        className="font-bold text-gray-200 uppercase text-[0.65rem] tracking-wider mb-1 underline underline-offset-4 decoration-white/50"
                       >
-                        {product}
-                      </motion.li>
-                    ))}
-                  </ul>
+                        WorkShop 2
+                      </motion.span>
+                      {["No.21, 7th St, 3rd Cross St,", "Dhanalakshmi Nagar, Maduravoyal", "Chennai-600095"].map((line, index) => (
+                        <motion.span 
+                          key={`addr3-line-${index}`}
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.4, ease: "easeOut", delay: 0.6 + (index * 0.1) }}
+                          className="leading-tight block"
+                        >
+                          {line}
+                        </motion.span>
+                      ))}
+                    </div>
+
+                    {/* Fourth Address (Korattur Unit) */}
+                    <div className="flex flex-col gap-1.5">
+                      <motion.span 
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.4, ease: "easeOut", delay: 0.7 }}
+                        className="font-bold text-gray-200 uppercase text-[0.65rem] tracking-wider mb-1 underline underline-offset-4 decoration-white/50"
+                      >
+                        WorkShop 3
+                      </motion.span>
+                      {["No.5B, Kanniyamman Koil St,", "Kachinakuppam,", "Sidco Industrial Estate,", "Korattur, Chennai - 600098."].map((line, index) => (
+                        <motion.span 
+                          key={`addr4-line-${index}`}
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.4, ease: "easeOut", delay: 0.8 + (index * 0.1) }}
+                          className="leading-tight block"
+                        >
+                          {line}
+                        </motion.span>
+                      ))}
+                    </div>
+
+                  </div>
                 </div>
 
-                <div className="w-full lg:col-span-4 flex flex-col">
-                 
+                {/* --- CONTACT LINKS COLUMN --- */}
+                <div className="w-full lg:col-span-3 flex flex-col">
                   <h4 className="font-dm-sans-extralight tracking-normal text-[1rem] xl:text-[1.1rem] mb-5 text-white">
                     {String(contactInfo.title).split(" ").map((word, index, array) => (
                       <React.Fragment key={`contact-title-${index}`}>
@@ -356,8 +423,8 @@ const LandingPageThree: React.FC = () => {
                   </div>
                 </div>
 
+                {/* --- MAP COLUMN --- */}
                 <div className="w-full lg:col-span-3 flex flex-col">
-          
                   <motion.iframe
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
@@ -375,7 +442,6 @@ const LandingPageThree: React.FC = () => {
             </div>
 
             <div className="pt-6 border-t border-white/20 text-center">
-         
               <p className="text-[0.65rem] tracking-wide text-white opacity-100">
                 {String(footer.copyright).split(" ").map((word, index, array) => (
                   <React.Fragment key={`copyright-${index}`}>

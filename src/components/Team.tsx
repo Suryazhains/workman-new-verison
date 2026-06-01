@@ -218,8 +218,6 @@ const Team: React.FC = () => {
           </div>
         </div>
       </section>
-
-      {/* Second Animated Subtitle (Below the images) */}
       <div className="pb-10 pt-4 bg-[#959064]">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -234,7 +232,6 @@ const Team: React.FC = () => {
         </motion.div>
       </div>
 
-      {/* LIGHTBOX MODAL */}
       {selectedIndex !== null && (
         <div 
           className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center lightbox-blur"

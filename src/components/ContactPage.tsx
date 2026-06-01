@@ -11,7 +11,10 @@ const ContactPage: React.FC = () => {
     phone2: "+91 44 4238 5222",
     phone3: "+91 97908 09675",
     email: "workmansign@hotmail.com",
-    address: "No16, 2nd Main Rd, Pallavan Nagar, Maduravoyal, Chennai, Tamil Nadu 600095, India",
+    address1: "No16, 2nd Main Rd, Pallavan Nagar, Maduravoyal, Chennai, Tamil Nadu 600095, India",
+    address2: "82, Periyas pathiai, Choolaimedu, Chennai - 600094",
+    address3: "No.21, 7th St, 3rd Cross St, Dhanalakshmi Nagar, Maduravoyal Chennai-600095",
+    address4: "No.5B, Kanniyamman Koil St, Kachinakuppam, Sidco Industrial Estate, Korattur, Chennai - 600098.",
     quote: "Our range of services is designed to cover all your branding and signage needs, no matter the scale."
   };
 
@@ -55,7 +58,7 @@ const ContactPage: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-   className="text-3xl md:text-4xl font-extralight mb-2 tracking-wide font-dm-sans"
+            className="text-3xl md:text-4xl font-extralight mb-2 tracking-wide font-dm-sans"
           >
             Contact Us
           </motion.h1>
@@ -113,36 +116,87 @@ const ContactPage: React.FC = () => {
             </button>
           </form>
 
-          {/* Contact Information Text with Animation */}
+          {/* Contact Information Text with Animation - Updated to 3 Columns */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
-            className="grid grid-cols-1 sm:grid-cols-2 gap-5 text-sm"
+            className="grid grid-cols-1 sm:grid-cols-3 gap-4 xl:gap-5 text-[0.7rem] xl:text-[0.75rem]"
           >
             
-            <div className="flex items-start gap-3">
-              <Phone className="w-5 h-5 opacity-90 shrink-0" />
-              <div className="flex flex-col gap-1">
-                <a href={`tel:${contactInfo.phone1.replace(/\s/g, '')}`} className="opacity-90 hover:text-white hover:underline transition-all">{contactInfo.phone1}</a>
-                <a href={`tel:${contactInfo.phone2.replace(/\s/g, '')}`} className="opacity-90 hover:text-white hover:underline transition-all">{contactInfo.phone2}</a>
-                <a href={`tel:${contactInfo.phone3.replace(/\s/g, '')}`} className="opacity-90 hover:text-white hover:underline transition-all">{contactInfo.phone3}</a>
+            {/* Column 1: Phones & Email */}
+            <div className="flex flex-col gap-4">
+              
+              <div className="flex items-start gap-2">
+                <Phone className="w-4 h-4 opacity-90 shrink-0 mt-0.5" />
+                <div className="flex flex-col gap-1">
+                  <a href={`tel:${contactInfo.phone1.replace(/\s/g, '')}`} className="opacity-90 hover:text-white hover:underline transition-all">{contactInfo.phone1}</a>
+                  <a href={`tel:${contactInfo.phone2.replace(/\s/g, '')}`} className="opacity-90 hover:text-white hover:underline transition-all">{contactInfo.phone2}</a>
+                  <a href={`tel:${contactInfo.phone3.replace(/\s/g, '')}`} className="opacity-90 hover:text-white hover:underline transition-all">{contactInfo.phone3}</a>
+                </div>
               </div>
-            </div>
 
-            <div className="flex flex-col gap-5">
-              <div className="flex items-center gap-3">
-                <Mail className="w-5 h-5 opacity-90 shrink-0" />
+              <div className="flex items-start gap-2">
+                <Mail className="w-4 h-4 opacity-90 shrink-0 mt-0.5" />
                 <a href={`mailto:${contactInfo.email}`} className="opacity-90 hover:text-white hover:underline transition-all break-all">
                   {contactInfo.email}
                 </a>
               </div>
+            </div>
 
-              <div className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 opacity-90 shrink-0" />
-                <p className="opacity-90 leading-relaxed pr-4">
-                  {contactInfo.address}
-                </p>
+            {/* Column 2: Old Addresses (Center) */}
+            <div className="flex items-start gap-2">
+              <MapPin className="w-4 h-4 opacity-90 shrink-0 mt-0.5" />
+              <div className="flex flex-col gap-4">
+                
+                {/* Main Branch */}
+                <div>
+                  <span className="block font-bold uppercase text-[0.6rem] tracking-wider text-white/70 mb-0.5 underline underline-offset-4 decoration-white/50">
+                    Main Branch
+                  </span>
+                  <p className="opacity-90 leading-relaxed pr-2">
+                    {contactInfo.address1}
+                  </p>
+                </div>
+
+                {/* Second Address */}
+                <div>
+                  <span className="block font-bold uppercase text-[0.6rem] tracking-wider text-white/70 mb-0.5 underline underline-offset-4 decoration-white/50">
+                    WorkShop 1
+                  </span>
+                  <p className="opacity-90 leading-relaxed pr-2">
+                    {contactInfo.address2}
+                  </p>
+                </div>
+
+              </div>
+            </div>
+            
+            {/* Column 3: New Addresses (Right) */}
+            <div className="flex items-start gap-2">
+              <MapPin className="w-4 h-4 opacity-90 shrink-0 mt-0.5" />
+              <div className="flex flex-col gap-4">
+                
+                {/* Maduravoyal Unit */}
+                <div>
+                  <span className="block font-bold uppercase text-[0.6rem] tracking-wider text-white/70 mb-0.5 underline underline-offset-4 decoration-white/50">
+                    WorkShop 2
+                  </span>
+                  <p className="opacity-90 leading-relaxed pr-2">
+                    {contactInfo.address3}
+                  </p>
+                </div>
+
+                {/* Korattur Unit */}
+                <div>
+                  <span className="block font-bold uppercase text-[0.6rem] tracking-wider text-white/70 mb-0.5 underline underline-offset-4 decoration-white/50">
+                    WorkShop 3
+                  </span>
+                  <p className="opacity-90 leading-relaxed pr-2">
+                    {contactInfo.address4}
+                  </p>
+                </div>
+
               </div>
             </div>
 
@@ -150,7 +204,7 @@ const ContactPage: React.FC = () => {
         </div>
 
         {/* Right Section: Real Map */}
-        <div className="h-[280px] lg:h-[450px] w-full rounded-lg overflow-hidden shadow-xl lg:shadow-none">
+        <div className="h-[300px] lg:h-[500px] w-full rounded-lg overflow-hidden shadow-xl lg:shadow-none mt-4 lg:mt-0">
           <iframe
             title="The Workman Advertising Location"
             src="https://maps.google.com/maps?q=The%20Workman%20Advertising,%20Maduravoyal,%20Chennai&t=&z=15&ie=UTF8&iwloc=&output=embed"

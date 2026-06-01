@@ -218,8 +218,6 @@ const Infrastructure: React.FC = () => {
                       </React.Fragment>
                     ))}
                   </h3>
-
-                  {/* Animated Item Description - Line by Line / Word by Word cascade */}
                   <motion.div 
                     variants={paragraphVariants} 
                     initial="hidden"

@@ -495,7 +495,7 @@ const ServiceDetails: React.FC<ServiceProps> = ({ service: propService }) => {
           >
             <div className="flex w-max">
               {sets.map((setIndex) => (
-                /* Reduced gap and right padding here (gap-4 and pr-4 for tight spacing) */
+
                 <div key={setIndex} className="flex gap-4 md:gap-5 pr-4 md:pr-5">
                   {images.map((img: string, index: number) => (
                     <div
