@@ -47,7 +47,7 @@ const Team: React.FC = () => {
 
   const handleMouseUpOrLeave = () => setIsDown(false);
 
-  // Touch Logic (Fixed to e.touches.pageX)
+  // Touch Logic (Fixed by targeting the first touch point)
   const handleTouchStart = (e: React.TouchEvent) => {
     if (!scrollRef.current) return;
     setIsDown(true);
@@ -153,7 +153,7 @@ const Team: React.FC = () => {
 
       {/* Header Area */}
       <div className="pt-5 pb-8 text-center bg-[#959064] team-header">
-        {/* Animated Title - Word by Word (UPDATED: Further reduced font size here) */}
+        {/* Animated Title - Word by Word */}
         <h2 className="font-dm-sans font-extralight text-[24px] md:text-[32px] text-white mb-6">
           {"Meet our experts".split(" ").map((word, index, array) => (
             <React.Fragment key={index}>
@@ -177,7 +177,7 @@ const Team: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
-          className="text-white max-w-7xl mx-auto px-6 text-base md:text-md opacity-90 leading-relaxed font-inter font-light text-center"
+          className="text-white max-w-7xl mx-auto px-6 text-sm md:text-base opacity-90 leading-relaxed font-inter font-light text-center"
         >
           <p>
             At WorkMan Advertising, every project is powered by skilled professionals, creative thinkers, and experienced production specialists who transform ideas into impactful visual experiences. From concept development to final execution, our team works with precision, innovation, and attention to detail to deliver advertising solutions that truly stand out.
@@ -198,7 +198,6 @@ const Team: React.FC = () => {
           onTouchMove={handleTouchMove}
           onTouchEnd={handleMouseUpOrLeave}
         >
-          {/* UPDATED: Reduced gap from gap-6 md:gap-10 to gap-4 md:gap-6 */}
           <div className="flex w-max animate-infinite gap-4 md:gap-6 px-4">
             {duplicatedMembers.map((member, index) => (
               <div
@@ -223,7 +222,7 @@ const Team: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
-          className="text-white max-w-7xl mx-auto px-6 text-base md:text-md opacity-90 leading-relaxed font-inter font-light text-center"
+          className="text-white max-w-7xl mx-auto px-6 text-sm md:text-base opacity-90 leading-relaxed font-inter font-light text-center"
         >
           <p>
             Our production space is equipped with modern machinery and handled by experienced professionals who understand the importance of accuracy, durability, and finishing. Every stage of the process — from cutting and fabrication to printing and installation — is managed with complete dedication and technical expertise.
