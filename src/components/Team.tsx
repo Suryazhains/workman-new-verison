@@ -47,17 +47,17 @@ const Team: React.FC = () => {
 
   const handleMouseUpOrLeave = () => setIsDown(false);
 
-  // Touch Logic (Fixed to e.touches[0].pageX)
+  // Touch Logic (Fixed to e.touches.pageX)
   const handleTouchStart = (e: React.TouchEvent) => {
     if (!scrollRef.current) return;
     setIsDown(true);
-    setStartX(e.touches[0].pageX - scrollRef.current.offsetLeft);
+    setStartX(e.touches.pageX - scrollRef.current.offsetLeft);
     setScrollLeft(scrollRef.current.scrollLeft);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!isDown || !scrollRef.current) return;
-    const x = e.touches[0].pageX - scrollRef.current.offsetLeft;
+    const x = e.touches.pageX - scrollRef.current.offsetLeft;
     const walk = (x - startX) * 2;
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
@@ -131,8 +131,9 @@ const Team: React.FC = () => {
             padding-right: 40px;
           }
 
+          /* UPDATED: Further reduced font size for large desktop screens */
           .team-header h2 {
-            font-size: clamp(68px, 5.5vw, 92px) !important;
+            font-size: clamp(32px, 3vw, 48px) !important;
           }
 
           .lightbox-image-container {
@@ -152,8 +153,8 @@ const Team: React.FC = () => {
 
       {/* Header Area */}
       <div className="pt-5 pb-8 text-center bg-[#959064] team-header">
-        {/* Animated Title - Word by Word */}
-        <h2 className="font-dm-sans font-extralight text-[50px] md:text-[72px] text-white mb-6">
+        {/* Animated Title - Word by Word (UPDATED: Further reduced font size here) */}
+        <h2 className="font-dm-sans font-extralight text-[24px] md:text-[32px] text-white mb-6">
           {"Meet our experts".split(" ").map((word, index, array) => (
             <React.Fragment key={index}>
               <motion.span
@@ -176,7 +177,7 @@ const Team: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
-          className="text-white max-w-7xl mx-auto px-6 text-base md:text-lg opacity-90 leading-relaxed font-inter font-light text-center"
+          className="text-white max-w-7xl mx-auto px-6 text-base md:text-md opacity-90 leading-relaxed font-inter font-light text-center"
         >
           <p>
             At WorkMan Advertising, every project is powered by skilled professionals, creative thinkers, and experienced production specialists who transform ideas into impactful visual experiences. From concept development to final execution, our team works with precision, innovation, and attention to detail to deliver advertising solutions that truly stand out.
@@ -203,8 +204,6 @@ const Team: React.FC = () => {
               <div
                 key={index}
                 onClick={() => openLightbox(index)}
-                // UPDATED: Reduced width and height from w-[240px]/h-[240px] and md:w-[380px]/md:h-[380px] to w-[180px]/h-[180px] and md:w-[280px]/md:h-[280px]
-                // UPDATED: Reduced border radius from rounded-[12px] to rounded-[8px], and hover from [20px] to [14px]
                 className="team-card w-[180px] h-[180px] md:w-[280px] md:h-[280px] flex-shrink-0 overflow-hidden rounded-[8px] bg-black/10 transition-all duration-500 hover:rounded-[14px] hover:shadow-2xl cursor-pointer"
               >
                 <img
@@ -224,7 +223,7 @@ const Team: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
-          className="text-white max-w-7xl mx-auto px-6 text-base md:text-lg opacity-90 leading-relaxed font-inter font-light text-center"
+          className="text-white max-w-7xl mx-auto px-6 text-base md:text-md opacity-90 leading-relaxed font-inter font-light text-center"
         >
           <p>
             Our production space is equipped with modern machinery and handled by experienced professionals who understand the importance of accuracy, durability, and finishing. Every stage of the process — from cutting and fabrication to printing and installation — is managed with complete dedication and technical expertise.
@@ -253,7 +252,6 @@ const Team: React.FC = () => {
             &#8249;
           </button>
 
-
           <div className="lightbox-image-container w-[85vw] h-[80vh] flex items-center justify-center p-4">
             <img 
               src={allTeamMembers[selectedIndex]} 
@@ -263,7 +261,6 @@ const Team: React.FC = () => {
             />
           </div>
 
-     
           <button 
             className="absolute right-6 md:right-12 text-white/50 hover:text-white text-6xl md:text-8xl transition-all z-50"
             onClick={nextImage}
@@ -272,7 +269,6 @@ const Team: React.FC = () => {
           </button>
         </div>
       )}
-
 
       <div className="bg-[#959064] h-10 w-full" />
 

@@ -172,7 +172,7 @@ const Header: React.FC = () => {
                     e.preventDefault();
                     handleNavigation(path);
                   }}
-                  className="text-[15px] [@media(min-width:2400px)]:text-[32px] font-semibold text-white hover:text-white transition-all py-2 outline-none"
+                  className="text-[15px] [@media(min-width:2400px)]:text-[32px] font-regular text-white hover:text-white transition-all py-2 outline-none"
                 >
                   {link.name}
                 </Link>

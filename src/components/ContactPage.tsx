@@ -105,10 +105,9 @@ const ContactPage: React.FC = () => {
             />
             <textarea 
               name="message"
-              placeholder="Message *" 
+              placeholder="Message" 
               rows={3}
               className="w-full bg-white/10 placeholder-white/70 text-white px-4 py-3 rounded outline-none focus:ring-2 focus:ring-white/50 transition-all border border-transparent resize-none text-sm"
-              required
             />
             
             {submitted && (
@@ -136,22 +135,42 @@ const ContactPage: React.FC = () => {
           >
             
             {/* Column 1: Phones & Email */}
-            <div className="flex flex-col gap-4">
-              <div className="flex items-start gap-2 pt-[2.35rem]"> {/* Padding to align perfectly with the animated headers in other columns */}
-                <Phone className="w-4 h-4 opacity-90 shrink-0 mt-0.5" />
-                <div className="flex flex-col gap-1">
-                  <a href={`tel:${contactInfo.phone1.replace(/\s/g, '')}`} className="opacity-90 hover:text-white hover:underline transition-all">{contactInfo.phone1}</a>
-                  <a href={`tel:${contactInfo.phone2.replace(/\s/g, '')}`} className="opacity-90 hover:text-white hover:underline transition-all">{contactInfo.phone2}</a>
-                  <a href={`tel:${contactInfo.phone3.replace(/\s/g, '')}`} className="opacity-90 hover:text-white hover:underline transition-all">{contactInfo.phone3}</a>
-                  <a href={`tel:${contactInfo.phone4.replace(/\s/g, '')}`} className="opacity-90 hover:text-white hover:underline transition-all">{contactInfo.phone4}</a>
-                </div>
-              </div>
+            <div className="flex flex-col">
+              {/* NEW: Connect Heading added above phone numbers */}
+              <h4 className="font-dm-sans-extralight tracking-normal text-[1rem] xl:text-[1.1rem] mb-5 text-white">
+                {"Contact Now".split(" ").map((word, index, array) => (
+                  <React.Fragment key={`connect-${index}`}>
+                    <motion.span
+                      initial={{ opacity: 0, x: -15 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, ease: "easeOut", delay: index * 0.05 }}
+                      className="inline-block"
+                    >
+                      {word}
+                    </motion.span>
+                    {index < array.length - 1 && " "}
+                  </React.Fragment>
+                ))}
+              </h4>
 
-              <div className="flex items-start gap-2">
-                <Mail className="w-4 h-4 opacity-90 shrink-0 mt-0.5" />
-                <a href={`mailto:${contactInfo.email}`} className="opacity-90 hover:text-white hover:underline transition-all break-all">
-                  {contactInfo.email}
-                </a>
+              <div className="flex flex-col gap-4">
+                <div className="flex items-start gap-2"> 
+                  <Phone className="w-4 h-4 opacity-90 shrink-0 mt-0.5" />
+                  <div className="flex flex-col gap-1">
+                    <a href={`tel:${contactInfo.phone1.replace(/\s/g, '')}`} className="opacity-90 hover:text-white hover:underline transition-all">{contactInfo.phone1}</a>
+                    <a href={`tel:${contactInfo.phone2.replace(/\s/g, '')}`} className="opacity-90 hover:text-white hover:underline transition-all">{contactInfo.phone2}</a>
+                    <a href={`tel:${contactInfo.phone3.replace(/\s/g, '')}`} className="opacity-90 hover:text-white hover:underline transition-all">{contactInfo.phone3}</a>
+                    <a href={`tel:${contactInfo.phone4.replace(/\s/g, '')}`} className="opacity-90 hover:text-white hover:underline transition-all">{contactInfo.phone4}</a>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-2">
+                  <Mail className="w-4 h-4 opacity-90 shrink-0 mt-0.5" />
+                  <a href={`mailto:${contactInfo.email}`} className="opacity-90 hover:text-white hover:underline transition-all break-all">
+                    {contactInfo.email}
+                  </a>
+                </div>
               </div>
             </div>
 

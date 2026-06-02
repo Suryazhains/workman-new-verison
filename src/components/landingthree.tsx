@@ -23,14 +23,14 @@ import brand14 from "../assets/brand 14.png";
 import brand15 from "../assets/brand 15.png";
 import brand16 from "../assets/brand 6.png";
 import brand17 from "../assets/brand 17.png";
-import brand18 from "../assets/brand 4.png";
+import brand18 from "../assets/brand 27.png";
 import brand19 from "../assets/brand 10.png";
 import brand21 from "../assets/brand 22.png";
 import brand22 from "../assets/brand 8.png";
 import brand23 from "../assets/brand 24.png";
 import brand24 from "../assets/brand 5.png";
 import brand25 from "../assets/brand 26.png";
-import brand26 from "../assets/brand 27.png";
+import brand26 from "../assets/brand 4.png";
 
 // SEPARATED BRAND DATA
 const BRANDS_DATA = [
