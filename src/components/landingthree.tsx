@@ -67,7 +67,7 @@ const LandingPageThree: React.FC = () => {
 
   const contactInfo = {
     title: "Contact Link",
-    phone3: "+91 8883222286 ",
+    phone3: "+91 9790851275 ",
     phone1: "+91 44 4238 5222",
     phone2: "+91 97908 09675",
     phone4: "+91 9840327575",

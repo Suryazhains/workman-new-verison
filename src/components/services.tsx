@@ -112,7 +112,6 @@ const Services: React.FC = () => {
 
       <section id="services" className="w-full pt-[80px] xl:pt-[90px] min-[1920px]:pt-[clamp(110px,8vw,250px)] pb-[90px] xl:pb-[110px] min-[1920px]:pb-[clamp(110px,8vw,250px)] bg-[#959064] font-inter">
         
-     
         <div className="w-full max-w-[90rem] mx-auto px-10 md:px-20 lg:px-24">
 
           <motion.div 
@@ -171,7 +170,7 @@ const Services: React.FC = () => {
                   
                   <div className="p-6 space-y-4">
                     {/* Animated Mobile Box Title - Word by Word */}
-                    <h3 className="font-dm-sans-extralight tracking-normal text-xl text-[#959064]">
+                    <h3 className="font-dm-sans-extralight tracking-normal text-xl text-[#BBB791]">
                       {String(serviceContent?.heading || service.label).split(" ").map((word, wIndex, wArray) => (
                         <React.Fragment key={`${service.id}-${wIndex}`}>
                           <motion.span
@@ -207,16 +206,16 @@ const Services: React.FC = () => {
           {/* ---------------- DESKTOP VIEW ---------------- */}
           <div className="hidden md:block bg-white rounded-3xl min-[1920px]:rounded-[clamp(1.5rem,3vw,5rem)] overflow-hidden border border-white/10">
             
-            <div className="relative flex bg-[#F0FDF4] border-b border-gray-100 no-scrollbar">
+            <div className="relative flex bg-white border-b border-gray-100 no-scrollbar">
               <div
-                className="absolute top-0 left-0 h-full bg-white transition-transform duration-300 ease-in-out pointer-events-none"
+                className="absolute top-0 left-0 h-full bg-[#BBB791] transition-transform duration-300 ease-in-out pointer-events-none"
                 style={{ width: `${100 / tabs.length}%`, transform: `translateX(${activeIndex * 100}%)` }}
               />
               {tabs.map(tab => (
                 <button 
                   key={tab.id} 
                   onClick={() => setActiveTab(tab.id)} 
-                  className={`relative z-10 flex-1 py-4 xl:py-5 min-[1920px]:py-[clamp(2rem,4vw,5rem)] px-2 text-[13px] xl:text-[16px] min-[1920px]:text-[clamp(11px,1vw,19px)] font-semibold transition-all outline-none border-none ${activeTab === tab.id ? 'text-[#BBB791]' : 'text-[#BBB791]/60 hover:text-[#BBB791]'}`}
+                  className={`relative z-10 flex-1 py-4 xl:py-5 min-[1920px]:py-[clamp(2rem,4vw,5rem)] px-2 text-[13px] xl:text-[16px] min-[1920px]:text-[clamp(11px,1vw,19px)] font-semibold transition-all outline-none border-none ${activeTab === tab.id ? 'text-white' : 'text-[#BBB791] '}`}
                 >
                   {tab.label}
                 </button>
@@ -236,7 +235,7 @@ const Services: React.FC = () => {
                   className="flex flex-col overflow-hidden h-full"
                 >
                   {/* Animated Desktop Box Title - Word by Word */}
-                  <h3 className="font-dm-sans-extralight tracking-normal text-2xl md:text-[1.8rem] xl:text-[1.8rem] min-[1920px]:text-[clamp(26px,2.2vw,56px)] text-[#959064] mb-4 min-[1920px]:mb-[clamp(1rem,2vw,2.5rem)] flex-shrink-0">
+                  <h3 className="font-dm-sans-extralight tracking-normal text-2xl md:text-[1.8rem] xl:text-[1.8rem] min-[1920px]:text-[clamp(26px,2.2vw,56px)] text-[#BBB791] mb-4 min-[1920px]:mb-[clamp(1rem,2vw,2.5rem)] flex-shrink-0">
                     {String(activeContent.heading || activeTab).split(" ").map((word, wIndex, wArray) => (
                       <React.Fragment key={`desktop-${activeTab}-${wIndex}`}>
                         <motion.span

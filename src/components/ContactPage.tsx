@@ -7,7 +7,7 @@ const ContactPage: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
 
   const contactInfo = {
-    phone3: "+91 8883222286",
+    phone3: "+91 9790851275",
     phone1: "+91 44 4238 5222",
     phone2: "+91 97908 09675",
     phone4: "+91 9840327575",
@@ -30,7 +30,7 @@ const ContactPage: React.FC = () => {
 
     try {
       await fetch(
-        "https://script.google.com/macros/s/AKfycbz7QGTDDDOkSasd9GM8Y2KzgWqulEwcWUPhLe9xhiatuQR95GyuFobhTGRapE9l7fo-XA/exec",
+        "https://script.google.com/macros/s/AKfycbxa0O97_uS8pZoo0QIQhFV2vKFmYbfM-QfWtdYB0ZrazL6SGbrx4alzTmOMBHWwHjs/exec",
         {
           method: "POST",
           body: formData,
