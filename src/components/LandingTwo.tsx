@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import { LANDING_CONTENT, PORTFOLIO_IMAGES } from './content';
@@ -37,23 +37,7 @@ const wordVariants: Variants = {
 };
 
 const LandingTwo: React.FC = () => {
-  const { portfolio, testimonials } = LANDING_CONTENT;
-
-  // --- TESTIMONIAL SLIDER LOGIC ---
-  const allTestimonials = [
-    testimonials.large, 
-    ...testimonials.small
-  ];
-  
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev === allTestimonials.length - 1 ? 0 : prev + 1));
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev === 0 ? allTestimonials.length - 1 : prev - 1));
-  };
+  const { portfolio } = LANDING_CONTENT;
 
   const getRowImages = (start: number, end: number) => {
     const slice = PORTFOLIO_IMAGES.slice(start, end);
@@ -219,18 +203,13 @@ const LandingTwo: React.FC = () => {
         </div>
       </section>
 
-            
-
-      {/* --- TESTIMONIALS SECTION --- */}
-     
-<section className="relative w-full bg-[#FAFAFA] py-12 md:py-16 overflow-hidden">
-        
+      {/* --- CHANNEL PARTNERS SECTION --- */}
+      <section className="relative w-full bg-[#FAFAFA] py-12 md:py-16 overflow-hidden">
         {/* Main Content Grid */}
         <div className="relative z-10 max-w-[85rem] mx-auto px-8 md:px-16 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           
           {/* Left Column: Headings */}
           <div className="flex flex-col">
-     
             <h2 className="font-dm-sans-light text-[2rem] md:text-[3.5rem] text-[#000000] leading-[1.2] tracking-tight">
               Our Channel<br />
               partners<br />
@@ -256,7 +235,8 @@ const LandingTwo: React.FC = () => {
           </div>
         </div>
       </section>
-<div className="mt-0 pb-0">
+      
+      <div className="mt-0 pb-0">
         <LandingThree />
       </div>
     </>

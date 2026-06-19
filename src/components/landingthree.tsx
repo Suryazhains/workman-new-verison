@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import circlelogo from '../assets/whitelogo.png';
 import emailIcon from '../assets/email.png';
 import phoneIcon from '../assets/phone.png';
@@ -60,13 +60,19 @@ const BRANDS_DATA = [
   { id: 26, logo: brand26, sizing: "w-[65px] h-[33px] md:w-[86px] md:h-[42px] lg:w-[90px] lg:h-[60px] mb-5 [@media(min-width:2400px)]:w-[132px] [@media(min-width:2400px)]:h-[65px]" }
 ];
 
-// Fallback Testimonial Data in case it's missing from LANDING_CONTENT
+interface Testimonial {
+  quote: string;
+  name: string;
+  company: string;
+}
+
+// Fallback Testimonial Data
 const defaultTestimonialsInfo = {
   heading: "What Our Clients Say",
   description: "Read about the experiences of our valued clients and how we have helped them achieve their branding goals with premium signage solutions."
 };
 
-const defaultAllTestimonials = [
+const defaultAllTestimonials: Testimonial[] = [
   { quote: "Workman Advertising delivered beyond our expectations. The quality of the signs and the professionalism of the team were outstanding. They truly brought our brand to life!", name: "Sarah Jenkins", company: "Stellar Tech" },
   { quote: "From design to installation, the entire process was seamless. The attention to detail is remarkable. We've seen a noticeable increase in foot traffic since the new signage went up.", name: "David Chen", company: "Metro Retailers" },
   { quote: "A fantastic partner for our rebranding project. They understood our vision perfectly and executed it flawlessly across all our branch locations.", name: "Priya Sharma", company: "Horizon Group" },
@@ -78,7 +84,7 @@ const defaultAllTestimonials = [
 ];
 
 // Testimonial Animation Variants
-const paragraphVariants = {
+const paragraphVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -86,21 +92,23 @@ const paragraphVariants = {
   }
 };
 
-const wordVariants = {
+const wordVariants: Variants = {
   hidden: { opacity: 0, y: 10 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } }
 };
 
 const LandingPageThree: React.FC = () => {
-  const { footer, testimonials: contentTestimonials, allTestimonials: contentAllTestimonials } = LANDING_CONTENT;
+  // Cast LANDING_CONTENT to any to bypass strict property checks
+  const landingContentAny = LANDING_CONTENT as any;
+  const { footer, testimonials: contentTestimonials, allTestimonials: contentAllTestimonials } = landingContentAny || {};
   const navigate = useNavigate();
   const location = useLocation();
 
   // Testimonial Data Initialization
   const testimonials = contentTestimonials || defaultTestimonialsInfo;
   
-  // Use LANDING_CONTENT's combined array if available, otherwise fallback to the 8 default testimonials
-  const allTestimonials = contentAllTestimonials || 
+  // Array fallback
+  const allTestimonials: Testimonial[] = contentAllTestimonials || 
     (contentTestimonials?.large && contentTestimonials?.small 
       ? [contentTestimonials.large, ...contentTestimonials.small] 
       : defaultAllTestimonials);
@@ -177,7 +185,6 @@ const LandingPageThree: React.FC = () => {
     }
   };
 
-  // Testimonial Navigation Functions
   const prevSlide = () => {
     setCurrentIndex((prev) => (prev === 0 ? allTestimonials.length - 1 : prev - 1));
   };
@@ -204,7 +211,6 @@ const LandingPageThree: React.FC = () => {
             font-weight: 300 !important;
         }
 
-        /* Testimonial Scrollbar Customization */
         .testimonial-scroll::-webkit-scrollbar {
           width: 4px;
         }
@@ -292,7 +298,7 @@ const LandingPageThree: React.FC = () => {
             <div className="relative flex flex-col items-center justify-center">
               <div className="relative w-full flex items-center justify-center min-h-[16rem] md:min-h-[18rem]">
                 
-                {/* ARROWS MOVED TO ABSOLUTE LEFT & RIGHT EDGES */}
+                {/* ARROWS */}
                 <button 
                   onClick={prevSlide} 
                   className="hidden md:flex absolute -left-39 z-40 w-10 h-10 items-center justify-center rounded-full bg-white shadow-md text-[#BBB791] text-lg font-bold border border-gray-100 active:scale-95 hover:bg-gray-50"
@@ -307,7 +313,7 @@ const LandingPageThree: React.FC = () => {
                 </button>
 
                 <div className="relative w-full flex items-center justify-center overflow-visible">
-                  {allTestimonials.map((item, index) => {
+                  {allTestimonials.map((item: any, index: number) => {
                     const isActive = index === currentIndex;
                     const isLeft = index === (currentIndex - 1 + allTestimonials.length) % allTestimonials.length;
                     const isRight = index === (currentIndex + 1) % allTestimonials.length;
@@ -335,7 +341,7 @@ const LandingPageThree: React.FC = () => {
 
                         <div className="mt-4 pt-4 border-t border-[#959064] flex items-center gap-3 flex-shrink-0">
                           <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-[#959064] flex items-center justify-center text-white font-bold text-xs md:text-sm shadow-md flex-shrink-0">
-                            {item.name.charAt(0)}
+                            {item.name?.charAt(0) || 'U'}
                           </div>
                           <div className="overflow-hidden text-ellipsis">
                             <p className="font-bold text-[#1A1A1A] text-xs truncate">{item.name}</p>
@@ -358,7 +364,7 @@ const LandingPageThree: React.FC = () => {
                   </button>
                   
                   <div className="flex justify-center gap-2">
-                    {allTestimonials.map((_, i) => (
+                    {allTestimonials.map((_: any, i: number) => (
                       <button
                         key={i}
                         onClick={() => setCurrentIndex(i)}
@@ -377,7 +383,7 @@ const LandingPageThree: React.FC = () => {
 
               {/* Desktop Dots Indicator */}
               <div className="hidden md:flex justify-center gap-2 mt-8">
-                {allTestimonials.map((_, i) => (
+                {allTestimonials.map((_: any, i: number) => (
                   <button
                     key={i}
                     onClick={() => setCurrentIndex(i)}
@@ -407,7 +413,6 @@ const LandingPageThree: React.FC = () => {
                   onClick={() => handleNavigation('/')}
                 />
                 
-                {/* Changed font-normal to font-light */}
                 <p className="text-[0.7rem] leading-relaxed font-light text-white opacity-100 pr-4">
                   {contactInfo.quote.split(" ").map((word, index, array) => (
                     <React.Fragment key={`quote-${index}`}>
@@ -458,10 +463,7 @@ const LandingPageThree: React.FC = () => {
                     ))}
                   </h4>
                   
-                  {/* Added font-light */}
                   <div className="flex flex-col gap-8 text-[0.75rem] font-light text-white opacity-100">
-                    
-                    {/* First Address */}
                     <div className="flex flex-col gap-1.5">
                       {["No16, 2nd Main Rd,", "Pallavan Nagar, Maduravoyal,", "Chennai, Tamil Nadu 600095,", "India"].map((line, index) => (
                         <motion.span 
@@ -476,7 +478,6 @@ const LandingPageThree: React.FC = () => {
                         </motion.span>
                       ))}
                     </div>
-
                   </div>
                 </div>
 
@@ -499,10 +500,8 @@ const LandingPageThree: React.FC = () => {
                     ))}
                   </h4>
                   
-                  {/* Added font-light */}
                   <div className="flex flex-col gap-8 text-[0.75rem] font-light text-white opacity-100">
 
-                    {/* Second Address (Maduravoyal Unit) */}
                     <div className="flex flex-col gap-1.5">
                       {["No.21, 7th St, 3rd Cross St,", "Dhanalakshmi Nagar, Maduravoyal", "Chennai-600095"].map((line, index) => (
                         <motion.span 
@@ -518,7 +517,6 @@ const LandingPageThree: React.FC = () => {
                       ))}
                     </div>
 
-                    {/* Third Address (Korattur Unit) */}
                     <div className="flex flex-col gap-1.5">
                       {["No.5B, Kanniyamman Koil St,", "Kachinakuppam,", "Sidco Industrial Estate,", "Korattur, Chennai - 600098."].map((line, index) => (
                         <motion.span 
@@ -534,7 +532,6 @@ const LandingPageThree: React.FC = () => {
                       ))}
                     </div>
 
-                    {/* Fourth Address (Moved from Column 1 - Choolaimedu) */}
                     <div className="flex flex-col gap-1.5">
                       {["82, Periyas pathiai,", "Choolaimedu,", "Chennai - 600094"].map((line, index) => (
                         <motion.span 
@@ -572,7 +569,6 @@ const LandingPageThree: React.FC = () => {
                     ))}
                   </h4>
                   
-                  {/* Added font-light */}
                   <div className="flex flex-col gap-3.5 text-[0.75rem] font-light">
                     
                     <motion.div 
@@ -625,9 +621,8 @@ const LandingPageThree: React.FC = () => {
             </div>
 
             <div className="pt-6 border-t border-white/20 text-center">
-              {/* Added font-light */}
               <p className="text-[0.65rem] tracking-wide font-light text-white opacity-100">
-                {String(footer.copyright).split(" ").map((word, index, array) => (
+                {String(footer?.copyright || "© 2026 Workman Advertising. All rights reserved.").split(" ").map((word, index, array) => (
                   <React.Fragment key={`copyright-${index}`}>
                     <motion.span
                       initial={{ opacity: 0, x: -15 }}
